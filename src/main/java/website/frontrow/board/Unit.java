@@ -7,7 +7,7 @@ import website.frontrow.level.Square;
  */
 public class Unit
 {
-    private byte alive;
+    private byte lives;
     private Square[][] location;
 
     /**
@@ -17,7 +17,57 @@ public class Unit
      */
     public Unit(byte nAlive)
     {
-        alive = nAlive;
+        lives = nAlive;
+    }
+
+    /**
+     * Get the status of the unit, wheter it's dead or alive.
+     * @return
+     * Return true if the Unit is alive, false if it's dead.
+     */
+    public boolean getAlive()
+    {
+        return lives > 0;
+    }
+
+    /**
+     * Get the amount of lives the Unit currently has.
+     * @return
+     * Return a byte with the amount of lives.
+     */
+    public byte getLives()
+    {
+        return lives;
+    }
+
+    /**
+     * Set the amount of lives the Unit has.
+     * Checks if the unit already has 0 lives.
+     * @param lives
+     * Input a byte with the number of lives for the unit.
+     */
+    public void setLives(byte lives)
+    {
+        if (lives >= 0)
+        {
+            this.lives = lives;
+        }
+    }
+
+    /**
+     * Unit loses one life, if the unit is at 0, doesn't lose anything.
+     */
+    public void loseLife()
+    {
+        this.setLives(--lives);
+    }
+
+    /**
+     * Awards the Unit with one extra life.
+     */
+    public void gainLife()
+    {
+        this.setLives(++lives);
     }
 
     /**
