@@ -31,6 +31,10 @@
             </plugin>
         </plugins>
     </reporting>
+    <properties>
+        <!-- http://stackoverflow.com/questions/8975096/maven-checkstyle-configlocation-ignored -->
+        <checkstyle.config.location>checkstyle.xml</checkstyle.config.location>
+    </properties>
     <build>
         <plugins>
             <plugin>
