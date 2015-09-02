@@ -5,5 +5,5 @@ package website.frontrow.Board;
  */
 public class Enemy extends Unit
 {
-    
+
 }
