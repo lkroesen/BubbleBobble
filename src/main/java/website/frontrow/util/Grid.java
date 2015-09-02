@@ -1,7 +1,5 @@
 package website.frontrow.util;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-
 import java.util.ArrayList;
 
 /**
