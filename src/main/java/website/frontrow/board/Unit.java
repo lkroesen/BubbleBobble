@@ -10,13 +10,22 @@ public class Unit
     private byte alive;
     private Square[][] location;
 
-
+    /**
+     * Constructor of the Unit Class.
+     * @param nAlive
+     * Input the amount of lives the Unit has.
+     */
     public Unit(byte nAlive)
     {
         alive = nAlive;
     }
 
-    private void Move(Square[][] loc)
+    /**
+     * Class Under Construction, Moves the unit to the desired space.
+     * @param loc
+     * Input a square[][] with the location to move towards.
+     */
+    private void moveTo(Square[][] loc)
     {
 
     }

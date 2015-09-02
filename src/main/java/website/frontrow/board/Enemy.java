@@ -5,7 +5,11 @@ package website.frontrow.board;
  */
 public class Enemy extends Unit
 {
-
+    /**
+     * Constructor of the Enemy Unit.
+     * @param nAlive
+     * Input a byte with the amount of lives the Enemy has.
+     */
     public Enemy(byte nAlive)
     {
         super(nAlive);

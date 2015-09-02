@@ -6,7 +6,7 @@ package website.frontrow.board;
 public class Bubble extends Unit
 {
     /**
-     * Constructor of the Bubble Unit
+     * Constructor of the Bubble Unit.
      * @param nAlive
      * Input a byte to specify the amount of lives this unit has.
      */

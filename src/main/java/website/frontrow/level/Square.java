@@ -5,6 +5,9 @@ package website.frontrow.level;
  */
 public class Square
 {
+    /**
+     * Constructor of the Square Class.
+     */
     public Square()
     {
 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 /**
  * Class that contains a X by X grid of a certain type.
+ * @param <E>
+ * Input a Class to use the Grid with.
  */
 public class Grid<E>
 {
@@ -20,8 +22,8 @@ public class Grid<E>
      */
     public Grid(int width, int height)
     {
-        ArrayList<E> list = new ArrayList<E>(width*height);
-        for (int i = 0; i < width*height; i++)
+        ArrayList<E> list = new ArrayList<E>(width * height);
+        for (int i = 0; i < width * height; i++)
         {
             list.add(null);
         }
@@ -30,12 +32,16 @@ public class Grid<E>
 
     /**
      * Attempt to turn an ArrayList into a width x height grid.
+     * @param items     The Objects used in an ArrayList.
      * @param width     The width of the grid.
      * @param height    The height of the grid.
      */
     public Grid(ArrayList<E> items, int width, int height)
     {
-        if(items.size() != width * height) throw new RuntimeException("ArrayList is of invalid items");
+        if(items.size() != width * height)
+        {
+            throw new RuntimeException("ArrayList is of invalid items");
+        }
         this.setup(new ArrayList<E>(items), width, height);
     }
 
@@ -78,8 +84,14 @@ public class Grid<E>
      */
     public E get(int x, int y)
     {
-        if (x >= width || x < 0) throw new ArrayIndexOutOfBoundsException("Horizontal position is out of bounds.");
-        if (y >= height || y < 0) throw new ArrayIndexOutOfBoundsException("Vertical position is out of bounds.");
+        if (x >= width || x < 0)
+        {
+            throw new ArrayIndexOutOfBoundsException("Horizontal position is out of bounds.");
+        }
+        if (y >= height || y < 0)
+        {
+            throw new ArrayIndexOutOfBoundsException("Vertical position is out of bounds.");
+        }
 
         return items.get(x + y * width);
     }
@@ -92,8 +104,15 @@ public class Grid<E>
      */
     public void set(int x, int y, E item)
     {
-        if (x >= width || x < 0) throw new ArrayIndexOutOfBoundsException("Horizontal position is out of bounds.");
-        if (y >= height || y < 0) throw new ArrayIndexOutOfBoundsException("Vertical position is out of bounds.");
+        if (x >= width || x < 0)
+        {
+            throw new ArrayIndexOutOfBoundsException("Horizontal position is out of bounds.");
+        }
+
+        if (y >= height || y < 0)
+        {
+            throw new ArrayIndexOutOfBoundsException("Vertical position is out of bounds.");
+        }
 
         items.set(x + y * width, item);
     }

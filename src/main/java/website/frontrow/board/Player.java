@@ -5,7 +5,11 @@ package website.frontrow.board;
  */
 public class Player extends Unit
 {
-
+    /**
+     * The constructor of the Player Unit.
+     * @param nAlive
+     * Input a byte with the amount of lives the Player has.
+     */
     public Player(byte nAlive)
     {
         super(nAlive);
