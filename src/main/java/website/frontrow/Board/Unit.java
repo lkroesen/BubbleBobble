@@ -10,6 +10,7 @@ public class Unit
     private byte alive;
     private Square[][] location;
 
+
     public Unit(byte nAlive)
     {
         alive = nAlive;
