@@ -17,7 +17,7 @@ public class Unit
      */
     public Unit(byte nAlive)
     {
-        lives = nAlive;
+        setLives(nAlive);
     }
 
     /**
@@ -52,6 +52,10 @@ public class Unit
         {
             this.lives = lives;
         }
+        else
+        {
+            this.lives = 0;
+        }
     }
 
     /**
@@ -59,7 +63,10 @@ public class Unit
      */
     public void loseLife()
     {
-        this.setLives(--lives);
+        if (lives > 0)
+        {
+            --lives;
+        }
     }
 
     /**
@@ -67,7 +74,7 @@ public class Unit
      */
     public void gainLife()
     {
-        this.setLives(++lives);
+        ++lives;
     }
 
     /**

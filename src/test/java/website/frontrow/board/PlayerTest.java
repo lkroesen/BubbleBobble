@@ -1,9 +1,16 @@
 package website.frontrow.board;
 
+import static org.junit.Assert.assertSame;
+
 /**
- * Created by lkroesen on 9/2/2015.
+ * Tests for the Player Class.
  */
 public class PlayerTest extends UnitTest
 {
-
+    @Override
+    public void testConstructor()
+    {
+        Player p = new Player( (byte) 42);
+        assertSame( (byte) 42, p.getLives() );
+    }
 }

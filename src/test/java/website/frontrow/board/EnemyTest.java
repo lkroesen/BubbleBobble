@@ -1,9 +1,16 @@
 package website.frontrow.board;
 
+import static org.junit.Assert.assertSame;
+
 /**
- * Created by lkroesen on 9/2/2015.
+ * Tests for the Enemy Class.
  */
 public class EnemyTest extends UnitTest
 {
-
+    @Override
+    public void testConstructor()
+    {
+        Enemy e = new Enemy( (byte) 25);
+        assertSame( (byte) 25, e.getLives() );
+    }
 }
