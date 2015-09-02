@@ -1,6 +1,6 @@
 package website.frontrow;
 
-import website.frontrow.Level.Square;
+import website.frontrow.level.Square;
 
 /**
  * Created by lkroesen on 9/2/2015.

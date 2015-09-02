@@ -1,4 +1,4 @@
-package website.frontrow.Level;
+package website.frontrow.level;
 
 /**
  * Created by lkroesen on 9/2/2015.
