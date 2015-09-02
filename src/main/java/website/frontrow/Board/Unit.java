@@ -10,9 +10,9 @@ public class Unit
     private byte alive;
     private Square[][] location;
 
-    public Unit()
+    public Unit(byte nAlive)
     {
-        alive = 1;
+        alive = nAlive;
     }
 
     private void Move(Square[][] loc)
