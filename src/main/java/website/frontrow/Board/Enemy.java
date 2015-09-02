@@ -6,4 +6,8 @@ package website.frontrow.Board;
 public class Enemy extends Unit
 {
 
+    public Enemy(byte nAlive)
+    {
+        super(nAlive);
+    }
 }

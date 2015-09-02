@@ -5,5 +5,8 @@ package website.frontrow.Board;
  */
 public class Bubble extends Unit
 {
-
+    public Bubble(byte nAlive)
+    {
+        super(nAlive);
+    }
 }

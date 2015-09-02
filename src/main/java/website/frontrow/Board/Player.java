@@ -6,4 +6,8 @@ package website.frontrow.Board;
 public class Player extends Unit
 {
 
+    public Player(byte nAlive)
+    {
+        super(nAlive);
+    }
 }
