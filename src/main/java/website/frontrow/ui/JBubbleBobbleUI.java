@@ -1,7 +1,8 @@
 package website.frontrow.ui;
 
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
+import com.sun.deploy.panel.JavaPanel;
+
+import javax.swing.*;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -31,7 +32,14 @@ public class JBubbleBobbleUI extends JFrame {
         contentPanel.setLayout(new BorderLayout());
         contentPanel.add(new PlayingFieldPanel(), BorderLayout.CENTER);
         //Add the score counter
-        //Add the start button.
+
+
+        //Add the button on the bottom
+        String[] strButtonNames = new String[2];
+        strButtonNames[0] = "Restart";
+        strButtonNames[1] = "Insert Coin";
+
+        contentPanel.add(new ButtonPanel(strButtonNames), BorderLayout.SOUTH);
 
         pack();
     }
