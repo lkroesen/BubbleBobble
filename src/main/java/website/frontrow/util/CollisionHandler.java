@@ -1,4 +1,10 @@
 package website.frontrow.util;
+// This class pretty much does not work with the rest of the code
+// as-is at the moment of writing and adding this comment.
+//
+// It makes assumptions that are incorrect,
+// and as such will not be able to be used and must be rewritten.
+
 
 import website.frontrow.board.Bubble;
 import website.frontrow.board.Enemy;
@@ -93,7 +99,7 @@ public class CollisionHandler
         {
             if (uOther instanceof Enemy)
             {
-               uCurrent.loseLife();
+                // Meep
             }
             else if (uOther instanceof Bubble)
             {
@@ -103,7 +109,7 @@ public class CollisionHandler
                     // Only allowed when the player jumped from a height that was higher
                     if (currentY > otherY)
                     {
-                        ((Bubble) uOther).getContains().loseLife();
+                        // Beep
                     }
                 }
             }
@@ -116,7 +122,7 @@ public class CollisionHandler
                 // Watch out with this, because if the enemy and player moved to the same spot
                 // at the same time, that would cause an instakill
                 // TODO: Add Invincibility frames.
-                uOther.loseLife();
+                // BOOP
             }
         }
         else if (uCurrent instanceof Bubble)
@@ -126,7 +132,7 @@ public class CollisionHandler
                 // Only allowed when the player(Other) jumped from a height that was higher
                 if (otherY > currentY)
                 {
-                    ((Bubble) uCurrent).getContains().loseLife();
+                    // Dun dun
                 }
             }
         }
