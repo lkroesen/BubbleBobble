@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 import java.util.Map;
 
 /**
- * Created by Remi on 2-9-2015.
+ * Created by Remi Flinterman on 2-9-2015.
  */
 class BubbleKeyListener implements KeyListener {
 
@@ -17,9 +17,8 @@ class BubbleKeyListener implements KeyListener {
         this.mapping = keyMap;
 
     }
-
-    @Override
-    public void keyPress(KeyEvent ke) {
+    
+    public void keyPressed(KeyEvent ke) {
 
         assert ke != null;
         Action action = mapping.get(ke.getKeyCode());
@@ -29,12 +28,10 @@ class BubbleKeyListener implements KeyListener {
 
     }
 
-    @Override
     public void keyTyped(KeyEvent ke) {
         // do nothing at all
     }
 
-    @Override
     public void keyReleased(KeyEvent ke) {
         // do nothing at all
     }
