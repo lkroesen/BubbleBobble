@@ -46,6 +46,18 @@ public class Grid<E>
     }
 
     /**
+     * Clone a certain grid.
+     * @param grid Grid to clone.
+     */
+    public Grid(Grid<E> grid)
+    {
+        this.width = grid.getWidth();
+        this.height = grid.getHeight();
+
+        this.items = new ArrayList<E>(grid.items);
+    }
+
+    /**
      * Set the variables.
      * @param items Set the item list.
      * @param width Set the width.
