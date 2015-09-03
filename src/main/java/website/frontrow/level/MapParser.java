@@ -3,6 +3,7 @@ package website.frontrow.level;
 import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
 import website.frontrow.util.Grid;
+import website.frontrow.util.Point;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -115,7 +116,7 @@ public class MapParser {
                 break;
             case 'p':
                 // The player
-                units.add(new Player());
+                units.add(new Player(new Point(x, y)));
                 break;
             case ' ':
                 // Empty area. Keep it empty.
