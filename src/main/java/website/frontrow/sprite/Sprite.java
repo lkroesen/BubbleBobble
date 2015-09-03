@@ -16,7 +16,7 @@ public interface Sprite
      * @param width The width to draw the image.
      * @param height The height to draw the image.
      */
-    public void draw(Graphics graphics, int x, int y, int width, int height);
+    void draw(Graphics graphics, int x, int y, int width, int height);
 
     /**
      * Slices the image and returns the portion of the image, which is specified.
@@ -27,20 +27,20 @@ public interface Sprite
      * @param width The width of the new sprite.
      * @param height The height of the new sprite.
      */
-    public void slice(int x, int y, int width, int height);
+    void slice(int x, int y, int width, int height);
 
     /**
      * The width of the sprite.
      *
      * @return The width
      */
-    public int getWidth();
+    int getWidth();
 
     /**
      * The height of the sprite.
      *
      * @return  The height.
      */
-    public int getHeigth();
+     int getHeigth();
 
 }

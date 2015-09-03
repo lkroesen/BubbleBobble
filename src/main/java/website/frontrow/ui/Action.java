@@ -3,10 +3,11 @@ package website.frontrow.ui;
 /**
  * Created by Remi Flinterman on 2-9-2015.
  */
-public interface Action {
+public interface Action
+{
 
     /**
-     * Executes action
+     * Executes action.
      */
     void doAction();
 

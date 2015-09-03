@@ -10,13 +10,15 @@ import java.awt.Graphics;
  * Created by larsstegman on 02-09-15.
  *
  */
-public class PlayingFieldPanel extends JPanel {
+public class PlayingFieldPanel extends JPanel
+{
 
     private static final Color BACKGROUND_COLOR = Color.BLACK;
 
     private static final int BLOCK_SIZE = 16; //Pixels
 
-    PlayingFieldPanel() {
+    PlayingFieldPanel()
+    {
         super();
         this.setBackground(Color.BLACK);
 
@@ -27,7 +29,8 @@ public class PlayingFieldPanel extends JPanel {
     }
 
     @Override
-    public void paint(Graphics graphics) {
+    public void paint(Graphics graphics)
+    {
         draw(graphics, getSize()); // Add the board to draw.
 
     }
@@ -37,7 +40,8 @@ public class PlayingFieldPanel extends JPanel {
      * @param graphics the graphics context.
      * @param size The size of the window.
      */
-    public void draw(Graphics graphics, Dimension size) {
+    public void draw(Graphics graphics, Dimension size)
+    {
         //For each square in the playing field draw the sprite
         //For each occupant of the square draw the sprite.
         graphics.setColor(BACKGROUND_COLOR);
@@ -52,7 +56,8 @@ public class PlayingFieldPanel extends JPanel {
      * @param width The width
      * @param height the height
      */
-    public void draw(Graphics graphics, int x, int y, int width, int height) {
+    public void draw(Graphics graphics, int x, int y, int width, int height)
+    {
 
     }
 }

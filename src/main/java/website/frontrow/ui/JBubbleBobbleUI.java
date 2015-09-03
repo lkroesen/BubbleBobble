@@ -1,6 +1,7 @@
 package website.frontrow.ui;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -13,7 +14,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by larsstegman on 02-09-15.
  */
-public class JBubbleBobbleUI extends JFrame {
+public class JBubbleBobbleUI extends JFrame
+{
     /**
      * The number of frames per second at which the game refreshes.
      */
@@ -22,7 +24,8 @@ public class JBubbleBobbleUI extends JFrame {
     /**
      * Creates a JBubble Bobble UI.
      */
-    public JBubbleBobbleUI() {
+    public JBubbleBobbleUI()
+    {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         Container contentPanel = getContentPane();
@@ -45,15 +48,18 @@ public class JBubbleBobbleUI extends JFrame {
     /**
      * Starts the game UI.
      */
-    public final void start() {
+    public final void start()
+    {
         setVisible(true);
 
         ScheduledExecutorService service = Executors
                 .newSingleThreadScheduledExecutor();
 
-        service.scheduleAtFixedRate(new Runnable() {
+        service.scheduleAtFixedRate(new Runnable()
+        {
 
-            public void run() {
+            public void run()
+            {
                 drawNextFrame();
             }
         }, 0, FRAME_REFRESH_RATE, TimeUnit.MILLISECONDS);
@@ -62,7 +68,8 @@ public class JBubbleBobbleUI extends JFrame {
     /**
      * Draws the next frame and refreshes the score.
      */
-    public void drawNextFrame() {
+    public void drawNextFrame()
+    {
         // Do logic and graphics stuff.
     }
 }

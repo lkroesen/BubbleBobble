@@ -1,6 +1,7 @@
 package website.frontrow.ui;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  * Created by Saki on 9/2/2015.
@@ -11,7 +12,7 @@ public class ButtonPanel extends JPanel
     private JButton[] button;
 
     /**
-     * Constructor of ButtonPanel, with string input
+     * Constructor of ButtonPanel, with string input.
      * @param in
      * Input the names for the buttons
      */
@@ -30,7 +31,7 @@ public class ButtonPanel extends JPanel
     }
 
     /**
-     * Returns the Strings of the button in an array
+     * Returns the Strings of the button in an array.
      * @return
      * Returns a String array
      */
@@ -40,7 +41,7 @@ public class ButtonPanel extends JPanel
     }
 
     /**
-     * Input an array of strings with the names for the buttons
+     * Input an array of strings with the names for the buttons.
      * @param in
      * Input a string array
      */
