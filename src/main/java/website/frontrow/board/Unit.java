@@ -1,5 +1,6 @@
 package website.frontrow.board;
 
+import website.frontrow.util.CollisionHandler;
 import website.frontrow.level.Square;
 
 /**
@@ -8,16 +9,24 @@ import website.frontrow.level.Square;
 public class Unit
 {
     private byte lives;
-    private Square[][] location;
+    private Square location;
+    private Direction direction;
+    private boolean faceLeft;
 
     /**
      * Constructor of the Unit Class.
      * @param nAlive
      * Input the amount of lives the Unit has.
+     * @param direction
+     * Set the direction the unit is going in.
+     * @param faceLeft
+     * A unit always starts facing the right.
      */
     public Unit(byte nAlive)
     {
         setLives(nAlive);
+        this.direction = Direction.RIGHT;
+        setFace(false);
     }
 
     /**
@@ -76,14 +85,70 @@ public class Unit
     {
         ++lives;
     }
+    
+    /**
+     * Gets the direction the Unit is facing.
+     * @Return 
+     * Returns a bool: true for left, false for right.
+     */
+    public boolean faceLeft(){
+    	return faceLeft;
+    }
+    
+    /**
+     * Set the direction the Unit is facing.
+     * @param dir
+     * Set the boolean value for the direction the Unit faces.
+     */
+    public void setFace(Boolean dir){
+    	this.faceLeft = dir;
+    }
+    
+    /**
+     * Get the direction the Unit is facing.
+     * @return
+     * Returns a Direction value.
+     */
+    public Direction getDirection(){
+    	return this.direction;
+    }
+    
+    /**
+     * Set the direction the Unit is facing.
+     * Checks whether the direction is a movement along the x-axis 
+     * and adjusts the 'faceLeft' value accordingly
+     * @param dir
+     * Sets the Direction value.
+     */
+    public void setDirection(Direction dir){
+    	this.direction = dir;
+    	
+    	if(dir == Direction.RIGHT){
+    		setFace(false);
+    	}
+    	else if(dir == Direction.LEFT){
+    		setFace(true);
+    	}
+    }
 
     /**
-     * Class Under Construction, Moves the unit to the desired space.
-     * @param loc
-     * Input a square[][] with the location to move towards.
+     * Get the square the unit is currently located.
+     * @return
+     * Returns the square with the location.
      */
-    private void moveTo(Square[][] loc)
+    public Square getSquare(){
+    	return location;
+    }
+    
+    /**
+     * Class Under Construction, Moves the unit to the desired space.
+     * @param des
+     * Input a square with the location to move towards.
+     */
+    private void moveTo(Square des)
     {
-
+    	Square loc = this.getSquare();
+    	//should we call checkCollision here?
+    	
     }
 }
