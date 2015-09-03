@@ -1,17 +1,19 @@
 package website.frontrow.board;
 
+import website.frontrow.util.Point;
+
 /**
  * Created by lkroesen on 9/2/2015.
  */
 public class Enemy extends Unit
 {
+
     /**
      * Constructor of the Enemy Unit.
-     * @param nAlive
      * Input a byte with the amount of lives the Enemy has.
      */
-    public Enemy(byte nAlive)
+    public Enemy(Point position)
     {
-        super(nAlive);
+        super(true, position, new Point(0, 0));
     }
 }

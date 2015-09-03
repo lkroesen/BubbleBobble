@@ -1,5 +1,7 @@
 package website.frontrow.board;
 
+import website.frontrow.util.Point;
+
 /**
  * Created by lkroesen on 9/2/2015.
  */
@@ -10,12 +12,11 @@ public class Bubble extends Unit
 
     /**
      * Constructor of the Bubble Unit.
-     * @param nAlive
      * Input a byte to specify the amount of lives this unit has.
      */
-    public Bubble(byte nAlive)
+    public Bubble(Point position, Point motion)
     {
-        super(nAlive);
+        super(true, position, motion);
     }
 
     /**

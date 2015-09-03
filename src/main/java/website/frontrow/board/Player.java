@@ -1,17 +1,19 @@
 package website.frontrow.board;
 
+import website.frontrow.util.Point;
+
 /**
- * Created by lkroesen on 9/2/2015.
+ * The player as part of a game.
  */
 public class Player extends Unit
 {
+
     /**
      * The constructor of the Player Unit.
-     * @param nAlive
      * Input a byte with the amount of lives the Player has.
      */
-    public Player(byte nAlive)
+    public Player(Point position)
     {
-        super(nAlive);
+        super(true, position, new Point(0, 0));
     }
 }
