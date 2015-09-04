@@ -21,6 +21,8 @@ public class JBubbleBobbleUI extends JFrame
      */
     private static final int FRAME_REFRESH_RATE = 60;
 
+    private PlayingFieldPanel pfp;
+
     /**
      * Creates a JBubble Bobble UI.
      */
@@ -70,6 +72,7 @@ public class JBubbleBobbleUI extends JFrame
      */
     public void drawNextFrame()
     {
+        pfp.repaint();
         // Do logic and graphics stuff.
     }
 }

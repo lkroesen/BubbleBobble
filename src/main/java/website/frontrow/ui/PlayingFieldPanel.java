@@ -1,6 +1,9 @@
 package website.frontrow.ui;
 
+import website.frontrow.sprite.ImageStore;
+
 import javax.swing.JPanel;
+import javax.swing.BorderFactory;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,10 +20,20 @@ public class PlayingFieldPanel extends JPanel
 
     private static final int BLOCK_SIZE = 16; //Pixels
 
-    PlayingFieldPanel()
+    private static final int BORDER_WIDTH = 20; //Pixels
+
+    /**
+     * Creates a playing field panel in which the game is drawn.
+     * The panel is enclosed by a border.
+     */
+    public PlayingFieldPanel()
     {
         super();
         this.setBackground(Color.BLACK);
+        this.setBorder(
+                BorderFactory.createMatteBorder(BORDER_WIDTH, BORDER_WIDTH,
+                        BORDER_WIDTH, BORDER_WIDTH, new ImageStore().getBorderImage())
+        );
 
         // TODO: Will be dynamically created by using the board size.
         Dimension size = new Dimension(BLOCK_SIZE * 36, BLOCK_SIZE * 36);
@@ -31,25 +44,15 @@ public class PlayingFieldPanel extends JPanel
     @Override
     public void paint(Graphics graphics)
     {
-        draw(graphics, getSize()); // Add the board to draw.
-
-    }
-
-    /**
-     * Draw the board.
-     * @param graphics the graphics context.
-     * @param size The size of the window.
-     */
-    public void draw(Graphics graphics, Dimension size)
-    {
         //For each square in the playing field draw the sprite
         //For each occupant of the square draw the sprite.
-        graphics.setColor(BACKGROUND_COLOR);
-        graphics.fillRect(0, 0, size.width, size.height);
+        super.paint(graphics);
+        draw(graphics, BORDER_WIDTH, BORDER_WIDTH,
+                getSize().width - 2 * BORDER_WIDTH, getSize().height - 2 * BORDER_WIDTH);
     }
 
     /**
-     * Draw the square and the occcupants.
+     * Draw the square and the occupants.
      * @param graphics The graphics context.
      * @param x The x position
      * @param y The y position
@@ -58,6 +61,9 @@ public class PlayingFieldPanel extends JPanel
      */
     public void draw(Graphics graphics, int x, int y, int width, int height)
     {
-
+        // TODO: Replace this with drawing the playing field.
+        graphics.setColor(BACKGROUND_COLOR);
+        graphics.fillRect(x, y,
+                width, height);
     }
 }

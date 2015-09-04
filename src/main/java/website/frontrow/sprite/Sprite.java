@@ -26,8 +26,10 @@ public interface Sprite
      * @param y The start y coordinate
      * @param width The width of the new sprite.
      * @param height The height of the new sprite.
+     * @return The spliced image of the sprite.
      */
-    void slice(int x, int y, int width, int height);
+
+    Sprite slice(int x, int y, int width, int height);
 
     /**
      * The width of the sprite.
@@ -41,6 +43,6 @@ public interface Sprite
      *
      * @return  The height.
      */
-     int getHeigth();
+     int getHeight();
 
 }
