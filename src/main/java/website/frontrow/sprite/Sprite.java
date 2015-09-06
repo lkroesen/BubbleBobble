@@ -20,7 +20,7 @@ public interface Sprite
 
     /**
      * Slices the image and returns the portion of the image, which is specified.
-     * If the specified region is outside the image, nothing is returned.
+     * If the specified region is outside the image, an empty sprite is returned.
      *
      * @param x The start x coordinate
      * @param y The start y coordinate
@@ -44,5 +44,4 @@ public interface Sprite
      * @return  The height.
      */
      int getHeight();
-
 }
