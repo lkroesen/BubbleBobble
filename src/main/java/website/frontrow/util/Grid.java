@@ -1,6 +1,9 @@
 package website.frontrow.util;
 
+import website.frontrow.level.Cell;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class that contains a X by X grid of a certain type.
@@ -36,7 +39,7 @@ public class Grid<E>
      * @param width     The width of the grid.
      * @param height    The height of the grid.
      */
-    public Grid(ArrayList<E> items, int width, int height)
+    public Grid(List<E> items, int width, int height)
     {
         if(items.size() != width * height)
         {
@@ -127,6 +130,19 @@ public class Grid<E>
         }
 
         items.set(x + y * width, item);
+    }
+
+    @Override
+    public boolean equals(Object other)
+    {
+        if(other instanceof Grid)
+        {
+            Grid that = (Grid) other;
+            return  this.width == that.width &&
+                    this.height == that.height &&
+                    this.items.equals(that.items);
+        }
+        return false;
     }
 
 }

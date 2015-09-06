@@ -1,5 +1,6 @@
 package website.frontrow.level;
 
+import website.frontrow.board.Enemy;
 import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
 import website.frontrow.util.Grid;
@@ -117,6 +118,10 @@ public class MapParser {
             case 'p':
                 // The player
                 units.add(new Player(new Point(x, y)));
+                break;
+            case 'e':
+                // The enemy.
+                units.add(new Enemy(new Point(x, y)));
                 break;
             case ' ':
                 // Empty area. Keep it empty.

@@ -19,4 +19,11 @@ public class Level {
         this.cells = new Grid<Cell>(cells);
     }
 
+    public ArrayList<Unit> getUnits() {
+        return units;
+    }
+
+    public Grid<Cell> getCells() {
+        return cells;
+    }
 }
