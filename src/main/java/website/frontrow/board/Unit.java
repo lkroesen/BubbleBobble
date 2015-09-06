@@ -11,7 +11,7 @@ public class Unit
     private byte lives;
     private Square location;
     private Direction direction;
-    private boolean faceLeft;
+    private Direction faceLeft;
 
     /**
      * Constructor of the Unit Class.
@@ -26,11 +26,11 @@ public class Unit
     {
         setLives(nAlive);
         this.direction = Direction.RIGHT;
-        setFace(false);
+        this.faceLeft  = Direction.RIGHT;
     }
 
     /**
-     * Get the status of the unit, wheter it's dead or alive.
+     * Get the status of the unit, whether it's dead or alive.
      * @return
      * Return true if the Unit is alive, false if it's dead.
      */
@@ -89,19 +89,25 @@ public class Unit
     /**
      * Gets the direction the Unit is facing.
      * @Return 
-     * Returns a bool: true for left, false for right.
+     * Returns a Direction: either Left or Right.
      */
-    public boolean faceLeft(){
-    	return faceLeft;
+    public Direction faceLeft(){
+    	return this.faceLeft;
     }
     
     /**
-     * Set the direction the Unit is facing.
+     * Set the direction the Unit is facing. Either left or right.
      * @param dir
-     * Set the boolean value for the direction the Unit faces.
+     * Set the Direction value for the direction the Unit faces.
      */
-    public void setFace(Boolean dir){
-    	this.faceLeft = dir;
+    public void setFace(Direction dir){
+    	if(dir == Direction.LEFT || dir == Direction.RIGHT){
+    		this.faceLeft = dir;
+    	}
+    	else{
+    		throw new IllegalArgumentException(
+    				"Direction given is invalid, it should be either LEFT or RIGHT.");
+    	}
     }
     
     /**
@@ -124,10 +130,10 @@ public class Unit
     	this.direction = dir;
     	
     	if(dir == Direction.RIGHT){
-    		setFace(false);
+    		setFace(Direction.RIGHT);
     	}
     	else if(dir == Direction.LEFT){
-    		setFace(true);
+    		setFace(Direction.LEFT);
     	}
     }
 
