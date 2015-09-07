@@ -1,32 +1,51 @@
 package website.frontrow.board;
 
+import website.frontrow.util.Point;
+
+<<<<<<< HEAD
 import website.frontrow.util.CollisionHandler;
 import website.frontrow.level.Square;
+=======
+import website.frontrow.util.Point;
+>>>>>>> dev-mapreader
 
 /**
- * Created by lkroesen on 9/2/2015.
+ * A Unit, or Entity is something that is part of a level, but not restricted to grid cells.
  */
 public class Unit
 {
-    private byte lives;
-    private Square location;
     private Direction direction;
     private Direction faceLeft;
+    /**
+     * Amount of lives an entity has
+     */
+    private boolean alive;
+
+    /**
+     * Current location of an entity.
+     */
+    private Point location;
+    /**
+     * Current direction of motion.
+     */
+    private Point motion;
 
     /**
      * Constructor of the Unit Class.
-     * @param nAlive
+     * @param alive Whether this entity is alive
      * Input the amount of lives the Unit has.
      * @param direction
      * Set the direction the unit is going in.
      * @param faceLeft
      * A unit always starts facing the right.
      */
-    public Unit(byte nAlive)
+    public Unit(boolean alive, Point location, Point motion)
     {
-        setLives(nAlive);
         this.direction = Direction.RIGHT;
         this.faceLeft  = Direction.RIGHT;
+        this.alive = alive;
+        this.location = location;
+        this.motion = motion;
     }
 
     /**
@@ -34,56 +53,42 @@ public class Unit
      * @return
      * Return true if the Unit is alive, false if it's dead.
      */
-    public boolean getAlive()
+    public boolean isAlive()
     {
-        return lives > 0;
+        return alive;
     }
 
     /**
-     * Get the amount of lives the Unit currently has.
-     * @return
-     * Return a byte with the amount of lives.
+     * Get the location of a Unit.
+     * @return Location of a unit.
      */
-    public byte getLives()
-    {
-        return lives;
+    public Point getLocation() {
+        return location;
     }
 
     /**
-     * Set the amount of lives the Unit has.
-     * Checks if the unit already has 0 lives.
-     * @param lives
-     * Input a byte with the number of lives for the unit.
+     * Set the location of a unit.
+     * Warning: Does not care about walls.
+     * @param location New location of a unit.
      */
-    public void setLives(byte lives)
-    {
-        if (lives >= 0)
-        {
-            this.lives = lives;
-        }
-        else
-        {
-            this.lives = 0;
-        }
+    public void setLocation(Point location) {
+        this.location = location;
     }
 
     /**
-     * Unit loses one life, if the unit is at 0, doesn't lose anything.
+     * Set direction of motion.
+     * @return The direction of motion of this unit.
      */
-    public void loseLife()
-    {
-        if (lives > 0)
-        {
-            --lives;
-        }
+    public Point getMotion() {
+        return motion;
     }
 
     /**
-     * Awards the Unit with one extra life.
+     * Set direction of motion.
+     * @param motion The new direction of motion of this unit.
      */
-    public void gainLife()
-    {
-        ++lives;
+    public void setMotion(Point motion) {
+        this.motion = motion;
     }
     
     /**
@@ -135,26 +140,5 @@ public class Unit
     	else if(dir == Direction.LEFT){
     		setFace(Direction.LEFT);
     	}
-    }
-
-    /**
-     * Get the square the unit is currently located.
-     * @return
-     * Returns the square with the location.
-     */
-    public Square getSquare(){
-    	return location;
-    }
-    
-    /**
-     * Class Under Construction, Moves the unit to the desired space.
-     * @param des
-     * Input a square with the location to move towards.
-     */
-    private void moveTo(Square des)
-    {
-    	Square loc = this.getSquare();
-    	//should we call checkCollision here?
-    	
     }
 }
