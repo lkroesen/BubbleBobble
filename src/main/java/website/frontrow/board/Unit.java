@@ -2,13 +2,6 @@ package website.frontrow.board;
 
 import website.frontrow.util.Point;
 
-<<<<<<< HEAD
-import website.frontrow.util.CollisionHandler;
-import website.frontrow.level.Square;
-=======
-import website.frontrow.util.Point;
->>>>>>> dev-mapreader
-
 /**
  * A Unit, or Entity is something that is part of a level, but not restricted to grid cells.
  */
@@ -33,11 +26,8 @@ public class Unit
     /**
      * Constructor of the Unit Class.
      * @param alive Whether this entity is alive
-     * Input the amount of lives the Unit has.
-     * @param direction
-     * Set the direction the unit is going in.
-     * @param faceLeft
-     * A unit always starts facing the right.
+     * @param location the current location of the unit.
+     * @param motion The starting motion.
      */
     public Unit(boolean alive, Point location, Point motion)
     {
