@@ -41,7 +41,7 @@ public class Grid<E>
     {
         if(items.size() != width * height)
         {
-            throw new RuntimeException("ArrayList is of invalid items");
+            throw new IllegalArgumentException("ArrayList is of invalid items");
         }
         this.setup(new ArrayList<E>(items), width, height);
     }
@@ -97,6 +97,7 @@ public class Grid<E>
      */
     public E get(int x, int y)
     {
+
         if (x >= width || x < 0)
         {
             throw new ArrayIndexOutOfBoundsException("Horizontal position is out of bounds.");

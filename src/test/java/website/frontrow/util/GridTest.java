@@ -2,7 +2,11 @@ package website.frontrow.util;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Test the grid class.
@@ -10,14 +14,23 @@ import static org.junit.Assert.assertEquals;
 public class GridTest {
 
     /**
-     * Test the constructor
+     * Test the standard constructor
      */
     @Test
-    public void testConstructor()
+    public void testConstructor1()
     {
         Grid<Object> obj = new Grid<Object>(10, 5);
         assertEquals(10, obj.getWidth());
         assertEquals(5, obj.getHeight());
+    }
+
+    /**
+     * Test the arraylist constructor with invalid arraylist.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructor2()
+    {
+        new Grid<Object>(new ArrayList<Object>(), 2, 2);
     }
 
     /**
@@ -126,5 +139,113 @@ public class GridTest {
     {
         Grid<Object> obj = new Grid<Object>(4, 4);
         obj.set(0, 4, 2);
+    }
+
+    /**
+     *
+     * BORDER TESTS for get
+     *
+     */
+    /**
+     * HORIZONTAL
+     */
+    /**
+     * Test left in point.
+     */
+    @Test
+    public void horizontalInsideGetTest1()
+    {
+        Grid<Object> obj = new Grid<Object>(4, 4);
+        obj.get(0, 0);
+    }
+
+    /**
+     * Test left out point.
+     */
+    @Test(expected=ArrayIndexOutOfBoundsException.class)
+    public void horizontalOutsideGetTest1()
+    {
+        Grid<Object> obj = new Grid<Object>(4, 4);
+        obj.get(-1, 0);
+    }
+
+    /**
+     * Test right in point.
+     */
+    @Test
+    public void horizontalInsideGetTest2()
+    {
+        Grid<Object> obj = new Grid<Object>(4, 4);
+        obj.get(3, 0);
+    }
+
+    /**
+     * Test right out point.
+     */
+    @Test(expected=ArrayIndexOutOfBoundsException.class)
+    public void horizontalOutsideGetTest2()
+    {
+        Grid<Object> obj = new Grid<Object>(4, 4);
+        obj.get(4, 0);
+    }
+    /**
+     * VERTICAL
+     */
+    /**
+     * Test top in point.
+     */
+    @Test
+    public void verticalInsideGetTest1()
+    {
+        Grid<Object> obj = new Grid<Object>(4, 4);
+        obj.get(0, 0);
+    }
+
+    /**
+     * Test top out point.
+     */
+    @Test(expected=ArrayIndexOutOfBoundsException.class)
+    public void verticalOutsideGetTest1()
+    {
+        Grid<Object> obj = new Grid<Object>(4, 4);
+        obj.get(0, -1);
+    }
+
+    /**
+     * Test bottom in point.
+     */
+    @Test
+    public void verticalInsideGetTest2()
+    {
+        Grid<Object> obj = new Grid<Object>(4, 4);
+        obj.get(0, 3);
+    }
+
+    /**
+     * Test right out point.
+     */
+    @Test(expected=ArrayIndexOutOfBoundsException.class)
+    public void verticalOutsideGetTest2()
+    {
+        Grid<Object> obj = new Grid<Object>(4, 4);
+        obj.get(0, 4);
+    }
+
+    /**
+     * Test equals which is absolutely by object not equal.
+     */
+    @Test
+    public void testNotTypeEqual()
+    {
+        Grid<Object> obj = new Grid<Object>(4, 4);
+        // Use assertFalse instead of assertEquals, to make clear that we are testing equals.
+        assertFalse(obj.equals("Cat"));
+    }
+
+    @Test
+    public void testHashCode()
+    {
+        Grid<Object> obj = new Grid<Object>(4, 4);
+        assertEquals(1353309697, obj.hashCode());
     }
 }
