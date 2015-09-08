@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 public class StaticImageSprite
     implements Sprite
 {
-    private static Image image;
+    private Image image;
 
     /**
      * Creates an image sprite.
@@ -35,7 +35,7 @@ public class StaticImageSprite
      */
     public void draw(Graphics graphics, int x, int y, int width, int height)
     {
-        graphics.drawImage(image, x, x, width, height, null);
+        graphics.drawImage(image, x, y, width, height, null);
     }
 
     /**

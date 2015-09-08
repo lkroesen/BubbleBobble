@@ -1,5 +1,7 @@
 package website.frontrow.ui;
 
+import website.frontrow.Game;
+
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
@@ -23,17 +25,23 @@ public class JBubbleBobbleUI extends JFrame
 
     private PlayingFieldPanel pfp;
 
+    private Game game;
+
     /**
      * Creates a JBubble Bobble UI.
+     * @param game The game to display in the ui.
      */
-    public JBubbleBobbleUI()
+    public JBubbleBobbleUI(Game game)
     {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         Container contentPanel = getContentPane();
         contentPanel.setBackground(Color.white);
         contentPanel.setLayout(new BorderLayout());
-        contentPanel.add(new PlayingFieldPanel(), BorderLayout.CENTER);
+
+        pfp = new PlayingFieldPanel(game.getLevel());
+        contentPanel.add(pfp, BorderLayout.CENTER);
         //Add the score counter
 
 
