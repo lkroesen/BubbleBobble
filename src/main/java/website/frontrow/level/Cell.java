@@ -30,9 +30,10 @@ public enum Cell
         @Override
         public boolean collides(Unit unit)
         {
-            return unit.getMotion().getY() > 0;
+            return unit.getMotion().getY() <= 0;
         }
     };
+
 
     /**
      * Would this type of cell collide with the unit in its current state.

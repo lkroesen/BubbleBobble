@@ -72,7 +72,7 @@ public class MapParser
             lines.add(line);
         }
 
-        return parseMap((String[]) lines.toArray());
+        return parseMap(lines.toArray(new String[lines.size()]));
     }
 
     /**
