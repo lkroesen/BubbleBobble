@@ -5,12 +5,12 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Player test
+ * Player test.
  */
 public class PlayerTest extends UnitTest
 {
     /**
-     * Test the constructor of Player
+     * Test the constructor of Player.
      */
     @Test
     public void testConstructor()
@@ -20,7 +20,7 @@ public class PlayerTest extends UnitTest
     }
 
     /**
-     * Test the score adder of Player
+     * Test the score adder of Player.
      */
     @Test
     public void testScore()

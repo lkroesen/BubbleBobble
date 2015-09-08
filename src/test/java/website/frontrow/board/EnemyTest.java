@@ -5,15 +5,15 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Test the enemy class
+ * Test the enemy class.
  */
 public class EnemyTest extends UnitTest
 {
     /**
-     * Test the constructor of the Enemy class
+     * Test the constructor of the Enemy class.
      */
     @Test
-    public void ConstructorTest()
+    public void constructorTest()
     {
         Enemy e = new Enemy(super.p);
         assertEquals(e.getLocation(), super.p);
