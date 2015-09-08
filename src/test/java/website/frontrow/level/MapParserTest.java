@@ -15,7 +15,8 @@ import static org.junit.Assert.assertTrue;
 /**
  * Tests for the mapparser class.
  */
-public class MapParserTest {
+public class MapParserTest
+{
 
     /**
      * Test whether maps are correctly imported.
@@ -23,7 +24,7 @@ public class MapParserTest {
     @Test
     public void testSimpleMap()
     {
-        String[] map = new String[]{"X_X","X X","XXX"};
+        String[] map = new String[]{"X_X", "X X", "XXX"};
         MapParser parser = new MapParser();
         Level res = parser.parseMap(map);
 
@@ -43,7 +44,7 @@ public class MapParserTest {
     @Test
     public void testPlayerMap()
     {
-        String[] map = new String[]{"XXX","XpX","XXX"};
+        String[] map = new String[]{"XXX", "XpX", "XXX"};
         MapParser parser = new MapParser();
         Level res = parser.parseMap(map);
 
@@ -59,7 +60,7 @@ public class MapParserTest {
     @Test
     public void testEnemyMap()
     {
-        String[] map = new String[]{"XXX","XeX","XXX"};
+        String[] map = new String[]{"XXX", "XeX", "XXX"};
         MapParser parser = new MapParser();
         Level res = parser.parseMap(map);
 
@@ -76,7 +77,7 @@ public class MapParserTest {
     @Test(expected = RuntimeException.class)
     public void testFailOnInvalidCharacter()
     {
-        String[] map = new String[]{"XXX","XzX","XXX"};
+        String[] map = new String[]{"XXX", "XzX", "XXX"};
         MapParser parser = new MapParser();
         parser.parseMap(map);
     }
@@ -87,7 +88,7 @@ public class MapParserTest {
     @Test(expected = RuntimeException.class)
     public void testFailOnInvalidShape1()
     {
-        String[] map = new String[]{"XXX","XXXX","XXX"};
+        String[] map = new String[]{"XXX", "XXXX", "XXX"};
         MapParser parser = new MapParser();
         parser.parseMap(map);
     }
@@ -98,7 +99,7 @@ public class MapParserTest {
     @Test(expected = RuntimeException.class)
     public void testFailOnInvalidShape2()
     {
-        String[] map = new String[]{"XXX","","XXX"};
+        String[] map = new String[]{"XXX", "", "XXX"};
         MapParser parser = new MapParser();
         parser.parseMap(map);
     }

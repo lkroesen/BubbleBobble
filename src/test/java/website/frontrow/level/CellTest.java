@@ -15,7 +15,9 @@ import static org.junit.Assert.assertTrue;
  */
 public class CellTest
 {
-
+    /**
+     * Test collide with point 0,0.
+     */
     @Test
     public void testEmptyCollision()
     {
@@ -23,6 +25,9 @@ public class CellTest
         assertFalse(Cell.EMPTY.collides(unit));
     }
 
+    /**
+     * Test platform collision 0,5.
+     */
     @Test
     public void testPlatformCollision1()
     {
@@ -30,6 +35,9 @@ public class CellTest
         assertFalse(Cell.PLATFORM.collides(unit));
     }
 
+    /**
+     * Test platform collision with 0,0.
+     */
     @Test
     public void testPlatformCollision2()
     {
@@ -37,6 +45,9 @@ public class CellTest
         assertTrue(Cell.PLATFORM.collides(unit));
     }
 
+    /**
+     * Test Wall Collision.
+     */
     @Test
     public void testWallCollision()
     {
