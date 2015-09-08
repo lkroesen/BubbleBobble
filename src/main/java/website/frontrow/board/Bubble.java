@@ -3,7 +3,7 @@ package website.frontrow.board;
 import website.frontrow.util.Point;
 
 /**
- * Created by lkroesen on 9/2/2015.
+ * A bubble!
  */
 public class Bubble extends Unit
 {
@@ -13,6 +13,8 @@ public class Bubble extends Unit
     /**
      * Constructor of the Bubble Unit.
      * Input a byte to specify the amount of lives this unit has.
+     * @param position The starting position of the bubble.
+     * @param motion The starting motion of the bubble.
      */
     public Bubble(Point position, Point motion)
     {

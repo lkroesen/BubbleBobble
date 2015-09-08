@@ -1,7 +1,5 @@
 package website.frontrow.util;
 
-import website.frontrow.level.Cell;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,11 +136,19 @@ public class Grid<E>
         if(other instanceof Grid)
         {
             Grid that = (Grid) other;
-            return  this.width == that.width &&
-                    this.height == that.height &&
+            return  this.width == that.width
+                    &&
+                    this.height == that.height
+                    &&
                     this.items.equals(that.items);
         }
         return false;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return items.hashCode();
     }
 
 }

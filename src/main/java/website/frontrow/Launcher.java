@@ -5,8 +5,14 @@ import website.frontrow.ui.JBubbleBobbleUI;
 /**
  * Instantiates the game so it can be played.
  */
-public class Launcher
+public final class Launcher
 {
+    /**
+     * Construct a launcher, currently not doing anything.
+     */
+    private Launcher()
+    {
+    }
 
     /**
      * The starting point of the program.

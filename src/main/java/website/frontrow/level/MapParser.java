@@ -15,7 +15,8 @@ import java.util.ArrayList;
 /**
  * Parses a text file into level.
  */
-public class MapParser {
+public class MapParser
+{
 
     /**
      * Check whether a level formed by these strings would create a validly shaped level.
@@ -27,14 +28,23 @@ public class MapParser {
      */
     private boolean validateLevelShape(String[] lines)
     {
-        if(lines.length < 1) return false;
+        if(lines.length < 1)
+        {
+            return false;
+        }
 
         int len = lines[0].length();
-        if(len < 1) return false;
+        if(len < 1)
+        {
+            return false;
+        }
 
         for (String line: lines)
         {
-            if (line.length() != len) return false;
+            if (line.length() != len)
+            {
+                return false;
+            }
         }
 
         return true;
@@ -75,7 +85,10 @@ public class MapParser {
      */
     public Level parseMap(String[] lines)
     {
-        if (!validateLevelShape(lines)) throw new RuntimeException("The given lines are invalidly shaped or zero size.");
+        if (!validateLevelShape(lines))
+        {
+            throw new RuntimeException("The given lines are invalidly shaped or zero size.");
+        }
         Grid<Cell> grid = new Grid<Cell>(lines[0].length(), lines.length);
         ArrayList<Unit> units = new ArrayList<Unit>();
 
@@ -95,14 +108,15 @@ public class MapParser {
     }
 
     /**
-     * Handle behaviour of a certain character
+     * Handle behaviour of a certain character.
      * @param character The character to parse.
      * @param x x position of the character according to the grid.
      * @param y y position of the character according to the grid,
      * @param units List of where to place units in.
      * @param grid Grid to place the map in.
      */
-    private void handleCharacter(char character, int x, int y, ArrayList<Unit> units, Grid<Cell> grid)
+    private void handleCharacter(char character, int x, int y,
+                                 ArrayList<Unit> units, Grid<Cell> grid)
     {
         grid.set(x, y, Cell.EMPTY);
         switch (character)

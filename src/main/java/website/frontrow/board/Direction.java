@@ -4,7 +4,8 @@ package website.frontrow.board;
  * Created by toverklift on 9/3/2015.
  */
 
-public enum Direction {
+public enum Direction
+{
 	
 	/**
 	 * Directions:
@@ -12,10 +13,10 @@ public enum Direction {
 	 * The right digit governs the y coordinate.
 	 */
 	
-	UP(0,-1), 
-	DOWN(0,1),
-	LEFT(-1,0),
-	RIGHT(1,0);
+	UP(0, -1),
+	DOWN(0, 1),
+	LEFT(-1, 0),
+	RIGHT(1, 0);
 	
 	/**
 	 * Relative x coordinate on the grid, with the top left corner as origin.
@@ -34,7 +35,8 @@ public enum Direction {
 	 * @param y
 	 * Relative y coordinate on the grid, with the top left corner as origin.
 	 */
-	private Direction(int x, int y){
+	private Direction(int x, int y)
+	{
 		this.deltaX = x;
 		this.deltaY = y;
 	}
@@ -44,7 +46,8 @@ public enum Direction {
 	 * @return
 	 * Return the value of deltaX.
 	 */
-	public int getDeltaX(){
+	public int getDeltaX()
+	{
 		return this.deltaX;
 	}
 	
@@ -53,7 +56,8 @@ public enum Direction {
 	 * @return
 	 * Return the value of deltaY.
 	 */
-	public int getDeltaY(){
+	public int getDeltaY()
+	{
 		return this.deltaY;
 	}
 }
