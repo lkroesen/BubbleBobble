@@ -32,7 +32,7 @@ class BubbleKeyListener implements KeyListener
     /**
      * Checks the event that a key is pressed.
      * Causes the program to perform the corresponding action.
-     * @param ke
+     * @param ke The event a key is pressed.
      */
     public void keyPressed(KeyEvent ke)
     {
@@ -48,7 +48,7 @@ class BubbleKeyListener implements KeyListener
 
     /**
      * keyTyped won't interrupt the game in any way.
-     * @param ke
+     * @param ke The event a key is typed.
      */
     public void keyTyped(KeyEvent ke)
     {
@@ -57,7 +57,7 @@ class BubbleKeyListener implements KeyListener
 
     /**
      * keyReleased doesn't interrupt the game in any way.
-     * @param ke
+     * @param ke The event a key is released.
      */
     public void keyReleased(KeyEvent ke)
     {

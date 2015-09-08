@@ -15,12 +15,13 @@ import website.frontrow.board.Player;
  * In case of multiplayer, scores of both players are shown seperately.
  * Created by Remi Flinterman on 8-9-2015.
  */
-public class ScorePanel extends JPanel {
+public class ScorePanel extends JPanel
+{
 
     /**
      * Default serialization ID.
      */
-    private static final long serialUID = 1L;
+    private static final long serial = 1L;
 
     /**
      * The map of players and their labels with their scores.
@@ -30,25 +31,28 @@ public class ScorePanel extends JPanel {
     /**
      * Creates a new score panel for the player.
      * When playing multiplayer, a score panel is created for each player.
-     * @param players
+     * @param players The list of players (max. 2 players).
      */
-    ScorePanel(List<Player> players) {
+    ScorePanel(List<Player> players)
+    {
 
         super();
         assert players != null;
 
         setLayout(new GridLayout(2, players.size()));
 
-        for(int c = 0; c < players.size(); c++) {
+        for(int c = 0; c < players.size(); c++)
+        {
 
-            int i = c+1;
+            int i = c + 1;
             add(new JLabel("Player" + i, JLabel.CENTER));
 
         }
 
         labels = new LinkedHashMap();
 
-        for (Player pl : players) {
+        for (Player pl : players)
+        {
 
             JLabel sl = new JLabel("0", JLabel.CENTER);
             labels.put(pl, sl);
