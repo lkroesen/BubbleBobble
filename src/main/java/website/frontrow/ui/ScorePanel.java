@@ -13,7 +13,7 @@ import website.frontrow.board.Player;
 /**
  * A Panel containing the score for the player.
  * In case of multiplayer, scores of both players are shown seperately.
- * Created by Remi on 8-9-2015.
+ * Created by Remi Flinterman on 8-9-2015.
  */
 public class ScorePanel extends JPanel {
 
