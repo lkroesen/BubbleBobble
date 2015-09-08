@@ -14,8 +14,8 @@ import static org.junit.Assert.assertFalse;
  */
 public class UnitTest
 {
-    private Point p;
-    private Point m;
+    protected Point p;
+    protected Point m;
 
     @Before
     public void setup()
@@ -135,6 +135,17 @@ public class UnitTest
         Unit u = new Unit(true,null,null);
         u.setDirection(Direction.RIGHT);
         assertEquals(u.getDirection(), Direction.RIGHT);
+    }
+
+    /**
+     * Test setDirection
+     */
+    @Test
+    public void setDirectionDownTest()
+    {
+        Unit u = new Unit(true,null,null);
+        u.setDirection(Direction.DOWN);
+        assertEquals(u.getDirection(), Direction.DOWN);
     }
 
     /**

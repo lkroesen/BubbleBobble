@@ -1,0 +1,32 @@
+package website.frontrow.board;
+
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+/**
+ * Player test
+ */
+public class PlayerTest extends UnitTest
+{
+    /**
+     * Test the constructor of Player
+     */
+    @Test
+    public void testConstructor()
+    {
+        Player pl = new Player(super.p);
+        assertEquals(pl.getLocation(), super.p);
+    }
+
+    /**
+     * Test the score adder of Player
+     */
+    @Test
+    public void testScore()
+    {
+        Player pl = new Player(super.p);
+        pl.addScore(42);
+        assertEquals(pl.getScore(), 42);
+    }
+}
