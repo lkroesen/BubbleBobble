@@ -1,10 +1,10 @@
 package website.frontrow;
 
-import website.frontrow.level.Square;
+import website.frontrow.level.Cell;
 import website.frontrow.util.Grid;
 
 /**
- * Created by lkroesen on 9/2/2015.
+ * The current state of the game.
  */
 public class Game
 {
@@ -12,7 +12,7 @@ public class Game
     private static final int BOARD_HEIGHT = 36;
 
     private int highscore;
-    private Grid grid;
+    private Grid<Cell> grid;
 
     /**
      * Constructor of Game.
@@ -20,7 +20,7 @@ public class Game
     public Game()
     {
         highscore = 0;
-        grid = new Grid<Square>(BOARD_WIDTH, BOARD_HEIGHT);
+        grid = new Grid<Cell>(BOARD_WIDTH, BOARD_HEIGHT);
     }
 
     /**
