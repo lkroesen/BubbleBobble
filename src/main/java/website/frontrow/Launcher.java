@@ -7,6 +7,7 @@ import website.frontrow.ui.JBubbleBobbleUI;
  */
 public class Launcher
 {
+    public Launcher() {}
 
     /**
      * The starting point of the program.

@@ -7,22 +7,24 @@ import website.frontrow.board.Unit;
  */
 public enum Cell {
     /**
-     * An empty cell
+     * An empty cell.
      */
     EMPTY,
     /**
-     * A wall
+     * A wall.
      */
-    WALL {
+    WALL
+    {
         @Override
         public boolean collides(Unit unit) {
             return true;
         }
     },
     /**
-     * A platform
+     * A platform.
      */
-    PLATFORM {
+    PLATFORM
+    {
         @Override
         public boolean collides(Unit unit) {
             return unit.getMotion().y > 0;
@@ -34,7 +36,8 @@ public enum Cell {
      * @param unit The unit to use.
      * @return Whether we need to run collision code or not.
      */
-    public boolean collides(Unit unit) {
+    public boolean collides(Unit unit)
+    {
         return false;
     }
 }

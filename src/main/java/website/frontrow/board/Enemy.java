@@ -11,6 +11,7 @@ public class Enemy extends Unit
     /**
      * Constructor of the Enemy Unit.
      * Input a byte with the amount of lives the Enemy has.
+     * @param position THe starting position of the enemy.
      */
     public Enemy(Point position)
     {

@@ -1,7 +1,5 @@
 package website.frontrow.util;
 
-import website.frontrow.level.Cell;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -143,6 +141,12 @@ public class Grid<E>
                     this.items.equals(that.items);
         }
         return false;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return items.hashCode();
     }
 
 }

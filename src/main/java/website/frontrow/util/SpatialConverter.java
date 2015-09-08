@@ -3,24 +3,28 @@ package website.frontrow.util;
 /**
  * A class that converts grid coordinates to screen coordinates.
  */
-public class SpatialConverter {
+public class SpatialConverter
+{
 
-    private int grid_width;
-    private int grid_height;
-    private double screen_height;
-    private double screen_width;
+    private int gridWidth;
+    private int gridHeight;
+    private double screenHeight;
+    private double screenWidth;
 
     /**
      * Converts numbers to screen space.
-     * @param screen_width Drawing panel width.
-     * @param screen_height Drawing panel height.
+     * @param screenWidth Drawing panel width.
+     * @param screenHeight Drawing panel height.
+     * @param gridHeight Height of the grid.
+     * @param gridWidth Width of the grid.
      */
-    public SpatialConverter(int grid_width, int grid_height, double screen_width, double screen_height)
+    public SpatialConverter(int gridWidth, int gridHeight,
+                            double screenWidth, double screenHeight)
     {
-        this.grid_height = grid_height;
-        this.grid_width = grid_width;
-        this.screen_height = screen_height;
-        this.screen_width = screen_width;
+        this.gridHeight = gridHeight;
+        this.gridWidth = gridWidth;
+        this.screenHeight = screenHeight;
+        this.screenWidth = screenWidth;
     }
 
     /**
@@ -31,8 +35,8 @@ public class SpatialConverter {
     public Point convertGridToScreen(Point point)
     {
         // Linearily interpolate the point from
-        double x = (point.x / (double) grid_width) * screen_width;
-        double y = (point.y / (double) grid_height) * screen_height;
+        double x = (point.x / (double) gridWidth) * screenWidth;
+        double y = (point.y / (double) gridHeight) * screenHeight;
 
         return new Point(x, y);
     }

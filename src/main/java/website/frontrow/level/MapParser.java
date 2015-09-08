@@ -15,7 +15,8 @@ import java.util.ArrayList;
 /**
  * Parses a text file into level.
  */
-public class MapParser {
+public class MapParser
+{
 
     /**
      * Check whether a level formed by these strings would create a validly shaped level.
@@ -27,14 +28,23 @@ public class MapParser {
      */
     private boolean validateLevelShape(String[] lines)
     {
-        if(lines.length < 1) return false;
+        if(lines.length < 1)
+        {
+            return false;
+        }
 
         int len = lines[0].length();
-        if(len < 1) return false;
+        if(len < 1)
+        {
+            return false;
+        }
 
         for (String line: lines)
         {
-            if (line.length() != len) return false;
+            if (line.length() != len)
+            {
+                return false;
+            }
         }
 
         return true;
