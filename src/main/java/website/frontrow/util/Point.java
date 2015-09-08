@@ -3,12 +3,13 @@ package website.frontrow.util;
 /**
  * A point or vector.
  */
-public class Point {
-    public double x;
-    public double y;
+public class Point
+{
+    private double x;
+    private double y;
 
     /**
-     * A simple point
+     * A simple point.
      * @param x x coordinate
      * @param y y coordinate
      */
@@ -24,8 +25,8 @@ public class Point {
         if (other instanceof Point)
         {
             Point that = (Point) other;
-            return this.x == that.x &&
-                    this.y == that.y;
+            return  this.x == that.x
+                    &&  this.y == that.y;
         }
         return false;
     }
