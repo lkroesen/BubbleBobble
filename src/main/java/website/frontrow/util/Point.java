@@ -74,6 +74,6 @@ public class Point
     @Override
     public int hashCode()
     {
-        return  prime * (prime + Double.hashCode(x)) + Double.hashCode(y);
+        return  prime * (prime + new Double(x).hashCode()) + new Double(y).hashCode();
     }
 }
