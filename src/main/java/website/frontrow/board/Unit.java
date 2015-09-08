@@ -10,7 +10,7 @@ public class Unit
     private Direction direction;
     private Direction faceLeft;
     /**
-     * Amount of lives an entity has
+     * Amount of lives an entity has.
      */
     private boolean alive;
 
@@ -87,7 +87,7 @@ public class Unit
     
     /**
      * Gets the direction the Unit is facing.
-     * @Return 
+     * @return
      * Returns a Direction: either Left or Right.
      */
     public Direction faceLeft()

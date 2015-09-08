@@ -22,6 +22,8 @@ public class PlayingFieldPanel extends JPanel
 
     private static final int BORDER_WIDTH = 20; //Pixels
 
+    private static final int FIELD_SIZE = 36;
+
     /**
      * Creates a playing field panel in which the game is drawn.
      * The panel is enclosed by a border.
@@ -36,7 +38,7 @@ public class PlayingFieldPanel extends JPanel
         );
 
         // TODO: Will be dynamically created by using the board size.
-        Dimension size = new Dimension(BLOCK_SIZE * 36, BLOCK_SIZE * 36);
+        Dimension size = new Dimension(BLOCK_SIZE * FIELD_SIZE, BLOCK_SIZE * FIELD_SIZE);
         this.setPreferredSize(size);
         this.setMinimumSize(size);
     }
