@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
 /**
- * Test the Point class
+ * Test the Point class.
  */
 public class PointTest
 {
@@ -15,7 +15,7 @@ public class PointTest
     private static final double DEFAULT_Y = 0d;
 
     /**
-     * Test the X of the constructor
+     * Test the X of the constructor.
      */
     @Test
     public void ConstructorXTest()
@@ -25,7 +25,7 @@ public class PointTest
     }
 
     /**
-     * Test the Y of the constructor
+     * Test the Y of the constructor.
      */
     @Test
     public void ConstructorYTest()
@@ -35,7 +35,7 @@ public class PointTest
     }
 
     /**
-     * Test equals with a different point
+     * Test equals with a different point.
      */
     @Test
     public void EqualsDifferentPointsTest()
@@ -47,7 +47,7 @@ public class PointTest
     }
 
     /**
-     * Test equals method with setters
+     * Test equals method with setters.
      */
     @Test
     public void EqualsWithSettersTest()
@@ -62,7 +62,7 @@ public class PointTest
     }
 
     /**
-     * Test equals with null
+     * Test equals with null.
      */
     @Test
     public void EqualsNullTest()
@@ -74,7 +74,7 @@ public class PointTest
     }
 
     /**
-     * Test hashcode
+     * Test hashcode.
      */
     @Test
     public void HashCodeTest()

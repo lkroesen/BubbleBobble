@@ -35,7 +35,7 @@ public enum Direction
 	 * @param y
 	 * Relative y coordinate on the grid, with the top left corner as origin.
 	 */
-	private Direction(int x, int y)
+	Direction(int x, int y)
 	{
 		this.deltaX = x;
 		this.deltaY = y;

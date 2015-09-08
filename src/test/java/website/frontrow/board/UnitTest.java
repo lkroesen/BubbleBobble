@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
 /**
- * Tests for testing the Unit class
+ * Tests for testing the Unit class.
  */
 public class UnitTest
 {
@@ -42,7 +42,7 @@ public class UnitTest
     }
 
     /**
-     * Test if we use getMotion that we get the inputted motion
+     * Test if we use getMotion that we get the inputted motion.
      */
     @Test
     public void getMotionTest()
@@ -72,7 +72,7 @@ public class UnitTest
     }
 
     /**
-     * Test if setlocation works
+     * Test if setlocation works.
      */
     @Test
     public void setLocationTest()
@@ -83,7 +83,7 @@ public class UnitTest
     }
 
     /**
-     * Test if setMotion works
+     * Test if setMotion works.
      */
     @Test
     public void setMotionTest()
@@ -94,7 +94,7 @@ public class UnitTest
     }
 
     /**
-     * Test if setFace works
+     * Test if setFace works.
      */
     @Test
     public void setFaceTestLeft()
@@ -105,7 +105,7 @@ public class UnitTest
     }
 
     /**
-     * Test if setDirection works
+     * Test if setDirection works.
      */
     @Test
     public void setDirectionLeft()
@@ -116,7 +116,7 @@ public class UnitTest
     }
 
     /**
-     * Test if setFace works
+     * Test if setFace works.
      */
     @Test
     public void setFaceTestRight()
@@ -127,7 +127,7 @@ public class UnitTest
     }
 
     /**
-     * Test if setDirection works
+     * Test if setDirection works.
      */
     @Test
     public void setDirectionRight()
@@ -138,7 +138,7 @@ public class UnitTest
     }
 
     /**
-     * Test setDirection
+     * Test setDirection.
      */
     @Test
     public void setDirectionDownTest()
@@ -149,7 +149,7 @@ public class UnitTest
     }
 
     /**
-     * Test if setFace errorhandling works
+     * Test if setFace errorhandling works.
      */
     @Test(expected = IllegalArgumentException.class)
     public void setFaceErrorTest()
