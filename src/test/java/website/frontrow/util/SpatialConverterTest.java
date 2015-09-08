@@ -7,8 +7,11 @@ import static org.junit.Assert.assertEquals;
 /**
  * Test the Spatial converter.
  */
-public class SpatialConverterTest {
-
+public class SpatialConverterTest
+{
+    /**
+     * Test Identity.
+     */
     @Test
     public void simpleIdentityTest()
     {
@@ -18,6 +21,9 @@ public class SpatialConverterTest {
         assertEquals(test, sC.convertGridToScreen(test));
     }
 
+    /**
+     * Test scale of 10 identity.
+     */
     @Test
     public void scale10IdentityTest()
     {

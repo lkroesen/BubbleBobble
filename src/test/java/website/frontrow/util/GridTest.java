@@ -6,15 +6,15 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 
 /**
  * Test the grid class.
  */
-public class GridTest {
+public class GridTest
+{
 
     /**
-     * Test the standard constructor
+     * Test the standard constructor.
      */
     @Test
     public void testConstructor1()
@@ -72,7 +72,7 @@ public class GridTest {
     /**
      * Test left out point.
      */
-    @Test(expected=ArrayIndexOutOfBoundsException.class)
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void horizontalOutsideSetTest1()
     {
         Grid<Object> obj = new Grid<Object>(4, 4);
@@ -92,7 +92,7 @@ public class GridTest {
     /**
      * Test right out point.
      */
-    @Test(expected=ArrayIndexOutOfBoundsException.class)
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void horizontalOutsideSetTest2()
     {
         Grid<Object> obj = new Grid<Object>(4, 4);
@@ -114,7 +114,7 @@ public class GridTest {
     /**
      * Test top out point.
      */
-    @Test(expected=ArrayIndexOutOfBoundsException.class)
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void verticalOutsideSetTest1()
     {
         Grid<Object> obj = new Grid<Object>(4, 4);
@@ -134,7 +134,7 @@ public class GridTest {
     /**
      * Test right out point.
      */
-    @Test(expected=ArrayIndexOutOfBoundsException.class)
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void verticalOutsideSetTest2()
     {
         Grid<Object> obj = new Grid<Object>(4, 4);
@@ -162,7 +162,7 @@ public class GridTest {
     /**
      * Test left out point.
      */
-    @Test(expected=ArrayIndexOutOfBoundsException.class)
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void horizontalOutsideGetTest1()
     {
         Grid<Object> obj = new Grid<Object>(4, 4);
@@ -182,7 +182,7 @@ public class GridTest {
     /**
      * Test right out point.
      */
-    @Test(expected=ArrayIndexOutOfBoundsException.class)
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void horizontalOutsideGetTest2()
     {
         Grid<Object> obj = new Grid<Object>(4, 4);
@@ -204,7 +204,7 @@ public class GridTest {
     /**
      * Test top out point.
      */
-    @Test(expected=ArrayIndexOutOfBoundsException.class)
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void verticalOutsideGetTest1()
     {
         Grid<Object> obj = new Grid<Object>(4, 4);
@@ -224,7 +224,7 @@ public class GridTest {
     /**
      * Test right out point.
      */
-    @Test(expected=ArrayIndexOutOfBoundsException.class)
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void verticalOutsideGetTest2()
     {
         Grid<Object> obj = new Grid<Object>(4, 4);
@@ -242,6 +242,9 @@ public class GridTest {
         assertFalse(obj.equals("Cat"));
     }
 
+    /**
+     * Test the hashcode.
+     */
     @Test
     public void testHashCode()
     {

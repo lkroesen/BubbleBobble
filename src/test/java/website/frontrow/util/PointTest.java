@@ -20,7 +20,7 @@ public class PointTest
      * Test the X of the constructor.
      */
     @Test
-    public void ConstructorXTest()
+    public void constructorXTest()
     {
         Point p = new Point(DEFAULT_X, DEFAULT_Y);
         assertEquals(p.getX(), DEFAULT_X, DEFAULT_X);
@@ -30,7 +30,7 @@ public class PointTest
      * Test the Y of the constructor.
      */
     @Test
-    public void ConstructorYTest()
+    public void constructorYTest()
     {
         Point p = new Point(DEFAULT_X, DEFAULT_Y);
         assertEquals(p.getY(), DEFAULT_Y, DEFAULT_Y);
@@ -40,7 +40,7 @@ public class PointTest
      * Test equals with a different point.
      */
     @Test
-    public void EqualsDifferentPointsTest()
+    public void equalsDifferentPointsTest()
     {
         Point p1 = new Point(ONE, ONE);
         Point p2 = new Point(DEFAULT_X, DEFAULT_Y);
@@ -52,7 +52,7 @@ public class PointTest
      * Test equals method with setters.
      */
     @Test
-    public void EqualsWithSettersTest()
+    public void equalsWithSettersTest()
     {
         Point p1 = new Point(ONE, ONE);
         Point p2 = new Point(DEFAULT_X, DEFAULT_Y);
@@ -67,7 +67,7 @@ public class PointTest
      * Test equals with null.
      */
     @Test
-    public void EqualsNullTest()
+    public void equalsNullTest()
     {
         Point p1 = null;
         Point p2 = new Point(DEFAULT_X, DEFAULT_Y);
@@ -79,18 +79,19 @@ public class PointTest
      * Test hashcode.
      */
     @Test
-    public void HashCodeTest()
+    public void hashCodeTest()
     {
         Point p = new Point(DEFAULT_X, DEFAULT_Y);
-        int hash = PRIME * (PRIME + new Double(DEFAULT_X).hashCode()) + new Double(DEFAULT_Y).hashCode();
+        int hash = PRIME
+                * (PRIME + new Double(DEFAULT_X).hashCode()) + new Double(DEFAULT_Y).hashCode();
         assertEquals(p.hashCode(), hash);
     }
 
     /**
-     * Test equals method with differing X
+     * Test equals method with differing X.
      */
     @Test
-    public void EqualsWithDiffXTest()
+    public void equalsWithDiffXTest()
     {
         Point p1 = new Point(ONE, DEFAULT_Y);
         Point p2 = new Point(DEFAULT_X, DEFAULT_Y);
@@ -102,10 +103,10 @@ public class PointTest
     }
 
     /**
-     * Test equals method with differing Y
+     * Test equals method with differing Y.
      */
     @Test
-    public void EqualsWithDiffYTest()
+    public void equalsWithDiffYTest()
     {
         Point p1 = new Point(DEFAULT_X, ONE);
         Point p2 = new Point(DEFAULT_X, DEFAULT_Y);
