@@ -1,6 +1,13 @@
 package website.frontrow.board;
 
+import java.awt.Graphics;
+
+import website.frontrow.sprite.EmptySprite;
+import website.frontrow.sprite.Sprite;
+import website.frontrow.sprite.SpriteStore;
 import website.frontrow.util.Point;
+import website.frontrow.board.Player;
+import website.frontrow.board.Enemy;
 
 /**
  * A Unit, or Entity is something that is part of a level, but not restricted to grid cells.
@@ -9,6 +16,8 @@ public class Unit
 {
     private Direction direction;
     private Direction faceLeft;
+    private static SpriteStore ss = new SpriteStore();
+   
     /**
      * Amount of lives an entity has.
      */
@@ -90,7 +99,7 @@ public class Unit
      * @return
      * Returns a Direction: either Left or Right.
      */
-    public Direction faceLeft()
+    public Direction getFace()
     {
     	return this.faceLeft;
     }
@@ -142,5 +151,38 @@ public class Unit
         {
     		setFace(Direction.LEFT);
     	}
+    }
+
+    /**
+     * Returns the sprite of the unit, Player/Enemy/Empty respectively.
+     * @return The sprite.
+     */
+    public Sprite getSprite()
+    {
+    	if(this.getClass() == Player.class){
+    		return ss.getPlayerSprite(this.getFace());
+    	}
+    	else if(this.getClass() == Enemy.class){
+    		return ss.getEnemySprite(this.getFace());
+    	}
+    	else{
+    		return new EmptySprite();
+    	}
+    }
+    
+    /**
+     * Draws the unit.
+     * @param g The graphics context to draw in.
+     * @param x The x coordinate to draw the unit at.
+     * @param y The y coordinate to draw the unit at.
+     * @param width The width to draw the unit with.
+     * @param height The height to draw the unit with.
+     */
+    public void draw(Graphics g, int x, int y, int width, int height){
+    	Point location = this.getLocation();
+    	int xCoordinate = (int) (location.getX()*width + x);
+    	int yCoordinate = (int) (location.getY()*height + y);
+    	getSprite().draw(g, xCoordinate, yCoordinate, width, height);
+    	
     }
 }

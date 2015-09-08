@@ -2,9 +2,9 @@ package website.frontrow.level;
 
 import website.frontrow.board.Unit;
 import website.frontrow.util.Grid;
+import website.frontrow.util.Point;
 
 import java.awt.Graphics;
-
 import java.util.ArrayList;
 
 /**
@@ -50,7 +50,7 @@ public class Level
     }
 
     /**
-     * Draw the level.
+     * Draw the level. First draw the cell content's then the units.
      * @param g The graphics context to draw in.
      * @param x The x coordinate to draw the level at.
      * @param y The y coordinate to draw the level at.
@@ -73,7 +73,14 @@ public class Level
                 cellToDraw.draw(g,
                         x + i * cellWidth, y + v * cellHeight,
                         cellWidth, cellHeight);
+                
+                
             }
+        }
+        
+        for(int i = 0; i < units.size(); i++){
+        	units.get(i).draw(g, x, y, cellWidth, cellHeight);
+        		
         }
     }
 }

@@ -101,7 +101,7 @@ public class UnitTest
     {
         Unit u = new Unit(true,null,null);
         u.setFace(Direction.LEFT);
-        assertEquals(u.faceLeft(), Direction.LEFT);
+        assertEquals(u.getFace(), Direction.LEFT);
     }
 
     /**
@@ -123,7 +123,7 @@ public class UnitTest
     {
         Unit u = new Unit(true,null,null);
         u.setFace(Direction.RIGHT);
-        assertEquals(u.faceLeft(), Direction.RIGHT);
+        assertEquals(u.getFace(), Direction.RIGHT);
     }
 
     /**

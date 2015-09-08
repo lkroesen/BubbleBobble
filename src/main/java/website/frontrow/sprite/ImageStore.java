@@ -69,6 +69,80 @@ public class ImageStore
 
             return getFileNotFoundImage();
         }
+    }  
+    
+    //TODO: Add sprites for face directions, for both Player and Enemy. Left and Right are currently the same!
+    
+    /**
+     * Returns the image for a player facing left.
+     * @return The image.
+     */
+    public Image getPlayerLeftImage()
+    {
+        try
+        {
+            return getImage("/player.png");
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+
+            return getFileNotFoundImage();
+        }
+    }
+    
+    /**
+     * Returns the image for a player facing right.
+     * @return The image.
+     */
+    public Image getPlayerRightImage()
+    {
+        try
+        {
+            return getImage("/player.png");
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+
+            return getFileNotFoundImage();
+        }
+    }
+    
+    /**
+     * Returns the image for a enemy facing left.
+     * @return The image.
+     */
+    public Image getEnemyLeftImage()
+    {
+        try
+        {
+            return getImage("/enemy.png");
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+
+            return getFileNotFoundImage();
+        }
+    }
+    
+    /**
+     * Returns the image for a player facing left.
+     * @return The image.
+     */
+    public Image getEnemyRightImage()
+    {
+        try
+        {
+            return getImage("/enemy.png");
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+
+            return getFileNotFoundImage();
+        }
     }
 
     /**
