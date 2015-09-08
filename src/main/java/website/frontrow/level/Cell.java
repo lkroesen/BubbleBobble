@@ -5,7 +5,8 @@ import website.frontrow.board.Unit;
 /**
  * Something that fits in a single grid cell.
  */
-public enum Cell {
+public enum Cell
+{
     /**
      * An empty cell.
      */
@@ -16,7 +17,8 @@ public enum Cell {
     WALL
     {
         @Override
-        public boolean collides(Unit unit) {
+        public boolean collides(Unit unit)
+        {
             return true;
         }
     },
@@ -26,8 +28,9 @@ public enum Cell {
     PLATFORM
     {
         @Override
-        public boolean collides(Unit unit) {
-            return unit.getMotion().y > 0;
+        public boolean collides(Unit unit)
+        {
+            return unit.getMotion().getY() > 0;
         }
     };
 

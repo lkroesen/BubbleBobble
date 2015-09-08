@@ -136,8 +136,10 @@ public class Grid<E>
         if(other instanceof Grid)
         {
             Grid that = (Grid) other;
-            return  this.width == that.width &&
-                    this.height == that.height &&
+            return  this.width == that.width
+                    &&
+                    this.height == that.height
+                    &&
                     this.items.equals(that.items);
         }
         return false;

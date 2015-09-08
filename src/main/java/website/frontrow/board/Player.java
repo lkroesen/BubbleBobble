@@ -16,6 +16,7 @@ public class Player extends Unit
     /**
      * The constructor of the Player Unit.
      * Input a byte with the amount of lives the Player has.
+     * @param position A players starting position.
      */
     public Player(Point position)
     {
@@ -23,10 +24,11 @@ public class Player extends Unit
     }
 
     /**
-     * Returns the player's score
+     * Returns the player's score.
      * @return score integer
      */
-    public int getScore() {
+    public int getScore()
+    {
         return score;
     }
 
@@ -34,7 +36,8 @@ public class Player extends Unit
      * Adds p (points) to the score of the player, when it gets a pickup.
      * @param p integer
      */
-    public void addScore(int p) {
+    public void addScore(int p)
+    {
         score += p;
     }
 }

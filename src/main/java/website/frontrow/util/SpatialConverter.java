@@ -35,8 +35,8 @@ public class SpatialConverter
     public Point convertGridToScreen(Point point)
     {
         // Linearily interpolate the point from
-        double x = (point.x / (double) gridWidth) * screenWidth;
-        double y = (point.y / (double) gridHeight) * screenHeight;
+        double x = (point.getX() / (double) gridWidth) * screenWidth;
+        double y = (point.getY() / (double) gridHeight) * screenHeight;
 
         return new Point(x, y);
     }

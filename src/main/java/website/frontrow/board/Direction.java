@@ -4,7 +4,8 @@ package website.frontrow.board;
  * Created by toverklift on 9/3/2015.
  */
 
-public enum Direction {
+public enum Direction
+{
 	
 	/**
 	 * Directions:

@@ -5,6 +5,7 @@ package website.frontrow.util;
  */
 public class Point
 {
+
     private double x;
     private double y;
 
@@ -19,6 +20,43 @@ public class Point
         this.y = y;
     }
 
+    /**
+     * Get the x value.
+     * @return The value of x.
+     */
+    public double getX()
+    {
+        return x;
+    }
+
+    /**
+     * Set the x value.
+     * @param x The value to set x to.
+     */
+    public void setX(double x)
+    {
+        this.x = x;
+    }
+
+    /**
+     * Get the y value.
+     * @return The value of y.
+     */
+    public double getY()
+    {
+        return y;
+    }
+
+    /**
+     * Set the y value.
+     * @param y The value to set x to.
+     */
+    public void setY(double y)
+    {
+        this.y = y;
+    }
+
+
     @Override
     public boolean equals(Object other)
     {
@@ -29,5 +67,13 @@ public class Point
                     &&  this.y == that.y;
         }
         return false;
+    }
+
+    @SuppressWarnings("checkstyle:magicnumber")
+    private static int prime = 31;
+    @Override
+    public int hashCode()
+    {
+        return  prime * (prime + Double.hashCode(x)) + Double.hashCode(y);
     }
 }
