@@ -15,14 +15,7 @@ public enum Cell
     /**
      * An empty cell.
      */
-    EMPTY
-    {
-        @Override
-        public boolean collides(Unit unit)
-        {
-            return true;
-        }
-    },
+    EMPTY,
     /**
      * A wall.
      */
