@@ -43,6 +43,12 @@ public enum Cell
         {
             return unit.getMotion().getY() <= 0;
         }
+        
+        @Override
+        public Sprite getSprite()
+        {
+            return ss.getPlatformSprite();
+        }
     };
 
     private static SpriteStore ss = new SpriteStore();

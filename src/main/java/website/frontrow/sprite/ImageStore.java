@@ -43,7 +43,25 @@ public class ImageStore
     {
         try
         {
-            return getImage("/square-32.png");
+            return getImage("/wall.png");
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+
+            return getFileNotFoundImage();
+        }
+    }
+    
+    /**
+     * Returns the image for a platform.
+     * @return The image.
+     */
+    public Image getPlatformImage()
+    {
+        try
+        {
+            return getImage("/platform.png");
         }
         catch (IOException e)
         {

@@ -15,4 +15,13 @@ public class SpriteStore
     {
         return new StaticImageSprite(is.getWallImage());
     }
+    
+    /**
+     * The platform sprite.
+     * @return The sprite.
+     */
+    public Sprite getPlatformSprite()
+    {
+        return new StaticImageSprite(is.getPlatformImage());
+    }
 }
