@@ -14,18 +14,27 @@ public class TestImageStore
 {
     private ImageStore is;
 
+    /**
+     * Setup before running tests.
+     */
     @Before
     public void setUp()
     {
         is = new ImageStore();
     }
 
+    /**
+     * Teardown after running tests.
+     */
     @After
     public void tearDown()
     {
         is = null;
     }
 
+    /**
+     * Test the border image.
+     */
     @Test
     public void testGetBorderImage()
     {

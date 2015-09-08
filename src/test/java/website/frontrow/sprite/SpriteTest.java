@@ -2,7 +2,6 @@ package website.frontrow.sprite;
 
 import java.awt.Image;
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.junit.After;
 import org.junit.Before;
@@ -10,8 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.mockito.runners.MockitoJUnitRunner;
-
-import javax.imageio.ImageIO;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -28,7 +25,8 @@ public abstract class SpriteTest
 
     /**
      * Provides the test image to be used in the tests.
-     * @return  The test image.
+     * @return The test image.
+     * @throws IOException Throws Exception when triggered.
      */
     abstract Image createTestImage() throws IOException;
 
@@ -37,12 +35,14 @@ public abstract class SpriteTest
      * Creates the Sprite object to use for the tests.
      * Use the testImage from this class to test.
      * @return  The Sprite object to be used.
+     * @throws IOException  Throws Exception when triggered.
      */
     abstract Sprite createSprite() throws IOException;
 
 
     /**
      * Sets things up for the tests.
+     * @throws IOException  Throws Exception when triggered.
      */
     @Before
     public void setUp() throws IOException

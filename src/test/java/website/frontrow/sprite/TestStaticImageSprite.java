@@ -10,7 +10,11 @@ import java.io.InputStream;
  */
 public class TestStaticImageSprite extends SpriteTest
 {
-
+    /**
+     * Creates an image and returns it.
+     * @return returns the test image
+     * @throws IOException Throws Exception when triggered.
+     */
     public Image createTestImage() throws IOException
     {
         InputStream imageStream = getClass().getResourceAsStream("/testImage100x100.png");
@@ -18,6 +22,11 @@ public class TestStaticImageSprite extends SpriteTest
         return testImage;
     }
 
+    /**
+     * Returns a static image sprite.
+     * @return Returns a StaticImageSprite out of test image.
+     * @throws IOException  Throws Exception when triggered.
+     */
     public Sprite createSprite() throws IOException
     {
         return new StaticImageSprite(createTestImage());
