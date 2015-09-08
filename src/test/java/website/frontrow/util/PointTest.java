@@ -13,6 +13,8 @@ public class PointTest
 {
     private static final double DEFAULT_X = 0d;
     private static final double DEFAULT_Y = 0d;
+    private static final double ONE = 1d;
+    private static final int    PRIME = 31;
 
     /**
      * Test the X of the constructor.
@@ -40,7 +42,7 @@ public class PointTest
     @Test
     public void EqualsDifferentPointsTest()
     {
-        Point p1 = new Point(1.0d, 1.0d);
+        Point p1 = new Point(ONE, ONE);
         Point p2 = new Point(DEFAULT_X, DEFAULT_Y);
 
         assertFalse(p1.equals(p2));
@@ -52,7 +54,7 @@ public class PointTest
     @Test
     public void EqualsWithSettersTest()
     {
-        Point p1 = new Point(1.0d, 1.0d);
+        Point p1 = new Point(ONE, ONE);
         Point p2 = new Point(DEFAULT_X, DEFAULT_Y);
 
         p1.setX(DEFAULT_X);
@@ -80,8 +82,37 @@ public class PointTest
     public void HashCodeTest()
     {
         Point p = new Point(DEFAULT_X, DEFAULT_Y);
-        int hash = 31 * (31 + new Double(DEFAULT_X).hashCode()) + new Double(DEFAULT_Y).hashCode();
+        int hash = PRIME * (PRIME + new Double(DEFAULT_X).hashCode()) + new Double(DEFAULT_Y).hashCode();
         assertEquals(p.hashCode(), hash);
     }
 
+    /**
+     * Test equals method with differing X
+     */
+    @Test
+    public void EqualsWithDiffXTest()
+    {
+        Point p1 = new Point(ONE, DEFAULT_Y);
+        Point p2 = new Point(DEFAULT_X, DEFAULT_Y);
+
+        p1.setX(DEFAULT_X);
+        p1.setY(DEFAULT_Y);
+
+        assertTrue(p1.equals(p2));
+    }
+
+    /**
+     * Test equals method with differing Y
+     */
+    @Test
+    public void EqualsWithDiffYTest()
+    {
+        Point p1 = new Point(DEFAULT_X, ONE);
+        Point p2 = new Point(DEFAULT_X, DEFAULT_Y);
+
+        p1.setX(DEFAULT_X);
+        p1.setY(DEFAULT_Y);
+
+        assertTrue(p1.equals(p2));
+    }
 }

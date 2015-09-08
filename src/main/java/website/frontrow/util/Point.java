@@ -64,7 +64,7 @@ public class Point
         {
             Point that = (Point) other;
             return  this.x == that.x
-                    &&  this.y == that.y;
+                    &  this.y == that.y;
         }
         return false;
     }
