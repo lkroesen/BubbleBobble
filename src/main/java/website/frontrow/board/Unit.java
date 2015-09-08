@@ -52,7 +52,8 @@ public class Unit
      * Get the location of a Unit.
      * @return Location of a unit.
      */
-    public Point getLocation() {
+    public Point getLocation()
+    {
         return location;
     }
 
@@ -61,7 +62,8 @@ public class Unit
      * Warning: Does not care about walls.
      * @param location New location of a unit.
      */
-    public void setLocation(Point location) {
+    public void setLocation(Point location)
+    {
         this.location = location;
     }
 
@@ -69,7 +71,8 @@ public class Unit
      * Set direction of motion.
      * @return The direction of motion of this unit.
      */
-    public Point getMotion() {
+    public Point getMotion()
+    {
         return motion;
     }
 
@@ -77,7 +80,8 @@ public class Unit
      * Set direction of motion.
      * @param motion The new direction of motion of this unit.
      */
-    public void setMotion(Point motion) {
+    public void setMotion(Point motion)
+    {
         this.motion = motion;
     }
     
@@ -86,7 +90,8 @@ public class Unit
      * @Return 
      * Returns a Direction: either Left or Right.
      */
-    public Direction faceLeft(){
+    public Direction faceLeft()
+    {
     	return this.faceLeft;
     }
     
@@ -95,11 +100,14 @@ public class Unit
      * @param dir
      * Set the Direction value for the direction the Unit faces.
      */
-    public void setFace(Direction dir){
-    	if(dir == Direction.LEFT || dir == Direction.RIGHT){
+    public void setFace(Direction dir)
+    {
+    	if(dir == Direction.LEFT || dir == Direction.RIGHT)
+        {
     		this.faceLeft = dir;
     	}
-    	else{
+    	else
+        {
     		throw new IllegalArgumentException(
     				"Direction given is invalid, it should be either LEFT or RIGHT.");
     	}
@@ -110,7 +118,8 @@ public class Unit
      * @return
      * Returns a Direction value.
      */
-    public Direction getDirection(){
+    public Direction getDirection()
+    {
     	return this.direction;
     }
     
@@ -121,13 +130,16 @@ public class Unit
      * @param dir
      * Sets the Direction value.
      */
-    public void setDirection(Direction dir){
+    public void setDirection(Direction dir)
+    {
     	this.direction = dir;
     	
-    	if(dir == Direction.RIGHT){
+    	if(dir == Direction.RIGHT)
+        {
     		setFace(Direction.RIGHT);
     	}
-    	else if(dir == Direction.LEFT){
+    	else if(dir == Direction.LEFT)
+        {
     		setFace(Direction.LEFT);
     	}
     }
