@@ -1,9 +1,13 @@
 package website.frontrow.sprite;
 
 import javax.swing.ImageIcon;
-import java.awt.Graphics;
-import java.awt.Color;
 import java.awt.Image;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
+import java.awt.Graphics;
+import java.awt.Transparency;
+
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 import java.io.IOException;
@@ -155,6 +159,20 @@ public class ImageStore
     {
         InputStream imageStream = getClass().getResourceAsStream(filename);
         return ImageIO.read(imageStream);
+    }
+
+    /**
+     * Creates an empty buffered image which can display transparent colours.
+     * @param width the width of the image.
+     * @param height the height of the image.
+     * @return A buffered image.
+     */
+    public static BufferedImage createTranslucentImage(int width, int height)
+    {
+        GraphicsConfiguration gc = GraphicsEnvironment
+                .getLocalGraphicsEnvironment().getDefaultScreenDevice()
+                .getDefaultConfiguration();
+        return gc.createCompatibleImage(width, height, Transparency.TRANSLUCENT);
     }
 
     /**

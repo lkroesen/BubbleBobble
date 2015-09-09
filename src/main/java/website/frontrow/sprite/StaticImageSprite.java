@@ -40,35 +40,23 @@ public class StaticImageSprite
 
     /**
      * Returns a slice of the image of this sprite.
-     * @param x The start x coordinate
-     * @param y The start y coordinate
-     * @param width The width of the new sprite.
-     * @param height The height of the new sprite.
-     * @return The slice.
-     */
+    * If the coordinates are outside the existing sprite, an empty sprite will be returned.
+    *
+            * @param x The start x coordinate
+    * @param y The start y coordinate
+    * @param width The width of the new sprite.
+    * @param height The height of the new sprite.
+    * @return The slice.
+        */
     public Sprite slice(int x, int y, int width, int height)
     {
         if(withinImage(x, y) && withinImage(x + width - 1, y + height - 1))
         {
-            BufferedImage bi = createTranslucentImage(width, height);
+            BufferedImage bi = ImageStore.createTranslucentImage(width, height);
             bi.createGraphics().drawImage(image, x, y, width, height, null);
             return new StaticImageSprite(bi);
         }
         return new EmptySprite();
-    }
-
-    /**
-     * Creates a buffered image which can display transparent colours.
-     * @param width the width of the image.
-     * @param height the height of the image.
-     * @return A buffered image.
-     */
-    private BufferedImage createTranslucentImage(int width, int height)
-    {
-        GraphicsConfiguration gc = GraphicsEnvironment
-                .getLocalGraphicsEnvironment().getDefaultScreenDevice()
-                .getDefaultConfiguration();
-        return gc.createCompatibleImage(width, height, Transparency.TRANSLUCENT);
     }
 
     /**

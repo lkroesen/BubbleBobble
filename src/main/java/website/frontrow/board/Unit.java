@@ -27,6 +27,7 @@ public class Unit
      * Current location of an entity.
      */
     private Point location;
+
     /**
      * Current direction of motion.
      */
