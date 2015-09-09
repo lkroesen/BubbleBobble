@@ -5,7 +5,7 @@ import website.frontrow.util.Point;
 /**
  * A Unit, or Entity is something that is part of a level, but not restricted to grid cells.
  */
-public class Unit
+public abstract class Unit
 {
     private Direction direction;
     private Direction faceLeft;
