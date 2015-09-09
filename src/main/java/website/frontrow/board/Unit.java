@@ -145,7 +145,7 @@ public abstract class Unit
     }
 
     /**
-     * Kills an enemy
+     * Kills an enemy.
      */
     public void kill()
     {
