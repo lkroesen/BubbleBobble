@@ -1,11 +1,9 @@
 package website.frontrow.sprite;
 
 import java.awt.Image;
-import java.awt.Graphics;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsEnvironment;
-import java.awt.Transparency;
 import java.awt.image.BufferedImage;
+import java.awt.Graphics;
+
 
 /**
  * Created by larsstegman on 02-09-15.
@@ -14,7 +12,7 @@ import java.awt.image.BufferedImage;
 public class StaticImageSprite
     implements Sprite
 {
-    private static Image image;
+    private Image image;
 
     /**
      * Creates an image sprite.
@@ -35,40 +33,28 @@ public class StaticImageSprite
      */
     public void draw(Graphics graphics, int x, int y, int width, int height)
     {
-        graphics.drawImage(image, x, x, width, height, null);
+        graphics.drawImage(image, x, y, width, height, null);
     }
 
     /**
      * Returns a slice of the image of this sprite.
-     * @param x The start x coordinate
-     * @param y The start y coordinate
-     * @param width The width of the new sprite.
-     * @param height The height of the new sprite.
-     * @return The slice.
-     */
+    * If the coordinates are outside the existing sprite, an empty sprite will be returned.
+    *
+            * @param x The start x coordinate
+    * @param y The start y coordinate
+    * @param width The width of the new sprite.
+    * @param height The height of the new sprite.
+    * @return The slice.
+        */
     public Sprite slice(int x, int y, int width, int height)
     {
         if(withinImage(x, y) && withinImage(x + width - 1, y + height - 1))
         {
-            BufferedImage bi = createTranslucentImage(width, height);
+            BufferedImage bi = ImageStore.createTranslucentImage(width, height);
             bi.createGraphics().drawImage(image, x, y, width, height, null);
             return new StaticImageSprite(bi);
         }
         return new EmptySprite();
-    }
-
-    /**
-     * Creates a buffered image which can display transparent colours.
-     * @param width the width of the image.
-     * @param height the height of the image.
-     * @return A buffered image.
-     */
-    private BufferedImage createTranslucentImage(int width, int height)
-    {
-        GraphicsConfiguration gc = GraphicsEnvironment
-                .getLocalGraphicsEnvironment().getDefaultScreenDevice()
-                .getDefaultConfiguration();
-        return gc.createCompatibleImage(width, height, Transparency.TRANSLUCENT);
     }
 
     /**

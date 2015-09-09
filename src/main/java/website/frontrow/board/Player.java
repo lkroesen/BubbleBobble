@@ -1,5 +1,7 @@
 package website.frontrow.board;
 
+import website.frontrow.sprite.Sprite;
+import website.frontrow.sprite.SpriteStore;
 import website.frontrow.util.Point;
 
 /**
@@ -8,6 +10,8 @@ import website.frontrow.util.Point;
 public class Player extends Unit
 {
 
+	private static SpriteStore ss = new SpriteStore();
+	
     /**
      * The points accumulated by the player.
      */
@@ -39,5 +43,15 @@ public class Player extends Unit
     public void addScore(int p)
     {
         score += p;
+    }
+    
+    /**
+     * Returns the sprite of the unit, Player/Enemy/Empty respectively.
+     * @return The sprite.
+     */
+    @Override
+    public Sprite getSprite()
+    {
+    	return ss.getPlayerSprite(this.getFace());
     }
 }

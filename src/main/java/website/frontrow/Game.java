@@ -1,30 +1,28 @@
 package website.frontrow;
 
-import website.frontrow.level.Cell;
-import website.frontrow.util.Grid;
+import website.frontrow.level.Level;
 
 /**
  * The current state of the game.
  */
 public class Game
 {
-    private static final int BOARD_WIDTH = 36;
-    private static final int BOARD_HEIGHT = 36;
-
     private int highscore;
-    private Grid<Cell> grid;
+    private Level currentLevel;
 
     /**
      * Constructor of Game.
+     * @param level The current level the player can play.
      */
-    public Game()
+    public Game(Level level)
     {
         highscore = 0;
-        grid = new Grid<Cell>(BOARD_WIDTH, BOARD_HEIGHT);
+        this.currentLevel = level;
     }
 
     /**
      * Restarts the game and sets the highscore to 0.
+     * TODO: Restart the level.
      */
     private void restart()
     {
@@ -52,22 +50,11 @@ public class Game
     }
 
     /**
-     * Get the grid used in the game.
-     * @return
-     * Returns a Grid class with the grid the game uses.
+     * The level which is currently being played.
+     * @return The level.
      */
-    public Grid getGrid()
+    public Level getLevel()
     {
-        return grid;
-    }
-
-    /**
-     * Set the grid for the game to use.
-     * @param grid
-     * Input a Grid for the game to use.
-     */
-    public void setGrid(Grid grid)
-    {
-        this.grid = grid;
+        return this.currentLevel;
     }
 }

@@ -1,5 +1,9 @@
 package website.frontrow.board;
 
+import java.awt.Graphics;
+
+import website.frontrow.sprite.EmptySprite;
+import website.frontrow.sprite.Sprite;
 import website.frontrow.util.Point;
 
 /**
@@ -9,6 +13,7 @@ public abstract class Unit
 {
     private Direction direction;
     private Direction faceLeft;
+   
     /**
      * Amount of lives an entity has.
      */
@@ -18,6 +23,7 @@ public abstract class Unit
      * Current location of an entity.
      */
     private Point location;
+
     /**
      * Current direction of motion.
      */
@@ -90,7 +96,7 @@ public abstract class Unit
      * @return
      * Returns a Direction: either Left or Right.
      */
-    public Direction faceLeft()
+    public Direction getFace()
     {
     	return this.faceLeft;
     }
@@ -150,5 +156,29 @@ public abstract class Unit
     public void kill()
     {
         alive = false;
+    }
+    /**
+     * Returns the sprite of the unit, Player/Enemy/Empty respectively.
+     * @return The sprite.
+     */
+    public Sprite getSprite()
+    {
+		return new EmptySprite();
+    }  
+    
+    /**
+     * Draws the unit.
+     * @param g The graphics context to draw in.
+     * @param x The x coordinate to draw the unit at.
+     * @param y The y coordinate to draw the unit at.
+     * @param width The width to draw the unit with.
+     * @param height The height to draw the unit with.
+     */
+    public void draw(Graphics g, int x, int y, int width, int height)
+    {
+    	Point location = this.getLocation();
+    	int xCoordinate = (int) (location.getX() * width + x);
+    	int yCoordinate = (int) (location.getY() * height + y);
+    	getSprite().draw(g, xCoordinate, yCoordinate, width, height);
     }
 }

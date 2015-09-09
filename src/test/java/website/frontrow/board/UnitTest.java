@@ -109,7 +109,7 @@ public abstract class UnitTest
     {
         Unit u = getTestUnit(true, null, null);
         u.setFace(Direction.LEFT);
-        assertEquals(u.faceLeft(), Direction.LEFT);
+        assertEquals(u.getFace(), Direction.LEFT);
     }
 
     /**
@@ -131,7 +131,7 @@ public abstract class UnitTest
     {
         Unit u = getTestUnit(true, null, null);
         u.setFace(Direction.RIGHT);
-        assertEquals(u.faceLeft(), Direction.RIGHT);
+        assertEquals(u.getFace(), Direction.RIGHT);
     }
 
     /**

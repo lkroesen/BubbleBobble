@@ -70,6 +70,8 @@
     <properties>
         <!-- http://stackoverflow.com/questions/8975096/maven-checkstyle-configlocation-ignored -->
         <checkstyle.config.location>checkstyle.xml</checkstyle.config.location>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <build>
         <plugins>
