@@ -12,7 +12,7 @@ import static org.junit.Assert.assertFalse;
 /**
  * Tests for testing the Unit class.
  */
-public class UnitTest
+public abstract class UnitTest
 {
     @SuppressWarnings("checkstyle:visibilitymodifier")
     protected Point p;
@@ -45,7 +45,7 @@ public class UnitTest
     @Test
     public void getDirectionTest()
     {
-        Unit u = new Unit(false, p, m);
+        Unit u = getTestUnit(false, p, m);
         assertEquals(u.getLocation(), p);
     }
 
@@ -55,7 +55,7 @@ public class UnitTest
     @Test
     public void getMotionTest()
     {
-        Unit u = new Unit(true, p, m);
+        Unit u = getTestUnit(true, p, m);
         assertEquals(u.getMotion(), m);
     }
 
@@ -65,7 +65,7 @@ public class UnitTest
     @Test
     public void isAlivePositiveTest()
     {
-        Unit u = new Unit(true, p, m);
+        Unit u = getTestUnit(true, p, m);
         assertTrue(u.isAlive());
     }
 
@@ -75,7 +75,7 @@ public class UnitTest
     @Test
     public void isAliveNegativeTest()
     {
-        Unit u = new Unit(false, p, m);
+        Unit u = getTestUnit(false, p, m);
         assertFalse(u.isAlive());
     }
 
@@ -85,7 +85,7 @@ public class UnitTest
     @Test
     public void setLocationTest()
     {
-        Unit u = new Unit(true, null, null);
+        Unit u = getTestUnit(true, null, null);
         u.setLocation(m);
         assertEquals(u.getLocation(), m);
     }
@@ -96,7 +96,7 @@ public class UnitTest
     @Test
     public void setMotionTest()
     {
-        Unit u = new Unit(true, null, null);
+        Unit u = getTestUnit(true, null, null);
         u.setMotion(p);
         assertEquals(u.getMotion(), p);
     }
@@ -107,7 +107,7 @@ public class UnitTest
     @Test
     public void setFaceTestLeft()
     {
-        Unit u = new Unit(true, null, null);
+        Unit u = getTestUnit(true, null, null);
         u.setFace(Direction.LEFT);
         assertEquals(u.faceLeft(), Direction.LEFT);
     }
@@ -118,7 +118,7 @@ public class UnitTest
     @Test
     public void setDirectionLeft()
     {
-        Unit u = new Unit(true, null, null);
+        Unit u = getTestUnit(true, null, null);
         u.setDirection(Direction.LEFT);
         assertEquals(u.getDirection(), Direction.LEFT);
     }
@@ -129,7 +129,7 @@ public class UnitTest
     @Test
     public void setFaceTestRight()
     {
-        Unit u = new Unit(true, null, null);
+        Unit u = getTestUnit(true, null, null);
         u.setFace(Direction.RIGHT);
         assertEquals(u.faceLeft(), Direction.RIGHT);
     }
@@ -140,7 +140,7 @@ public class UnitTest
     @Test
     public void setDirectionRight()
     {
-        Unit u = new Unit(true, null, null);
+        Unit u = getTestUnit(true, null, null);
         u.setDirection(Direction.RIGHT);
         assertEquals(u.getDirection(), Direction.RIGHT);
     }
@@ -151,7 +151,7 @@ public class UnitTest
     @Test
     public void setDirectionDownTest()
     {
-        Unit u = new Unit(true, null, null);
+        Unit u = getTestUnit(true, null, null);
         u.setDirection(Direction.DOWN);
         assertEquals(u.getDirection(), Direction.DOWN);
     }
@@ -162,7 +162,9 @@ public class UnitTest
     @Test(expected = IllegalArgumentException.class)
     public void setFaceErrorTest()
     {
-        Unit u = new Unit(true, null, null);
+        Unit u = getTestUnit(true, null, null);
         u.setFace(Direction.UP);
     }
+
+    public abstract Unit getTestUnit(boolean alive, Point start, Point end);
 }

@@ -143,4 +143,12 @@ public abstract class Unit
     		setFace(Direction.LEFT);
     	}
     }
+
+    /**
+     * Kills an enemy
+     */
+    public void kill()
+    {
+        alive = false;
+    }
 }

@@ -1,6 +1,7 @@
 package website.frontrow.board;
 
 import org.junit.Test;
+import website.frontrow.util.Point;
 
 import static org.junit.Assert.assertEquals;
 
@@ -28,5 +29,16 @@ public class PlayerTest extends UnitTest
         Player pl = new Player(super.p);
         pl.addScore(42);
         assertEquals(pl.getScore(), 42);
+    }
+
+    @Override
+    public Unit getTestUnit(boolean alive, Point start, Point motion) {
+        Player player = new Player(start);
+        player.setMotion(motion);
+        if(!alive)
+        {
+            player.kill();
+        }
+        return player;
     }
 }

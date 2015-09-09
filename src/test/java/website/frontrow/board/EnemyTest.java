@@ -1,6 +1,7 @@
 package website.frontrow.board;
 
 import org.junit.Test;
+import website.frontrow.util.Point;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,5 +18,16 @@ public class EnemyTest extends UnitTest
     {
         Enemy e = new Enemy(super.p);
         assertEquals(e.getLocation(), super.p);
+    }
+
+    @Override
+    public Unit getTestUnit(boolean alive, Point start, Point end) {
+        Enemy e = new Enemy(start);
+        e.setMotion(end);
+        if(!alive)
+        {
+            e.kill();
+        }
+        return e;
     }
 }

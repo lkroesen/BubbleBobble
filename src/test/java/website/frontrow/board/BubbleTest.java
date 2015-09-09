@@ -1,6 +1,7 @@
 package website.frontrow.board;
 
 import org.junit.Test;
+import website.frontrow.util.Point;
 
 import static org.junit.Assert.assertEquals;
 /**
@@ -38,5 +39,12 @@ public class BubbleTest extends UnitTest
         Enemy e = new Enemy(super.p);
         b.setContains(e);
         assertEquals(b.getContains(), e);
+    }
+
+    @Override
+    public Unit getTestUnit(boolean alive, Point start, Point end) {
+        Bubble bubble = new Bubble(start, end);
+        if(!alive) bubble.kill();
+        return bubble;
     }
 }
