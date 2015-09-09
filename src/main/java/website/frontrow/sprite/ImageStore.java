@@ -75,7 +75,8 @@ public class ImageStore
         }
     }  
     
-    //TODO: Add sprites for face directions, for both Player and Enemy. Left and Right are currently the same!
+    //TODO: Add sprites for face directions, for both Player and Enemy.
+    // Left and Right are currently the same!
     
     /**
      * Returns the image for a player facing left.

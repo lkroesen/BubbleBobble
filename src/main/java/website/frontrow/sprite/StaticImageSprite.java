@@ -1,11 +1,9 @@
 package website.frontrow.sprite;
 
 import java.awt.Image;
-import java.awt.Graphics;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsEnvironment;
-import java.awt.Transparency;
 import java.awt.image.BufferedImage;
+import java.awt.Graphics;
+
 
 /**
  * Created by larsstegman on 02-09-15.

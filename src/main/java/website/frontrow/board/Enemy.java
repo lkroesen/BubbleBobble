@@ -27,7 +27,8 @@ public class Enemy extends Unit
      * @return The sprite.
      */
     @Override
-    public Sprite getSprite(){
+    public Sprite getSprite()
+    {
     	return ss.getEnemySprite(this.getFace());
     }
 }

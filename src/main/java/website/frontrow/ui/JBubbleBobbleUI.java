@@ -14,7 +14,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by larsstegman on 02-09-15.
+ * The main ui for the game.
  */
 public class JBubbleBobbleUI extends JFrame
 {
@@ -24,6 +24,7 @@ public class JBubbleBobbleUI extends JFrame
     private static final int FRAME_REFRESH_RATE = 60;
 
     private PlayingFieldPanel pfp;
+    private SidePanel sp;
 
     private Game game;
 
@@ -33,6 +34,7 @@ public class JBubbleBobbleUI extends JFrame
      */
     public JBubbleBobbleUI(Game game)
     {
+        super();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
@@ -41,16 +43,10 @@ public class JBubbleBobbleUI extends JFrame
         contentPanel.setLayout(new BorderLayout());
 
         pfp = new PlayingFieldPanel(game.getLevel());
-        contentPanel.add(pfp, BorderLayout.CENTER);
-        //Add the score counter
+        sp = new SidePanel(game);
 
-
-        //Add the button on the bottom
-        String[] strButtonNames = new String[2];
-        strButtonNames[0] = "Restart";
-        strButtonNames[1] = "Insert Coin";
-
-        contentPanel.add(new ButtonPanel(strButtonNames), BorderLayout.SOUTH);
+        contentPanel.add(pfp, BorderLayout.LINE_START);
+        contentPanel.add(sp, BorderLayout.LINE_END);
 
         pack();
     }
@@ -67,7 +63,6 @@ public class JBubbleBobbleUI extends JFrame
 
         service.scheduleAtFixedRate(new Runnable()
         {
-
             public void run()
             {
                 drawNextFrame();

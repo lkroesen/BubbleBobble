@@ -167,10 +167,11 @@ public class Unit
      * @param width The width to draw the unit with.
      * @param height The height to draw the unit with.
      */
-    public void draw(Graphics g, int x, int y, int width, int height){
+    public void draw(Graphics g, int x, int y, int width, int height)
+    {
     	Point location = this.getLocation();
-    	int xCoordinate = (int) (location.getX()*width + x);
-    	int yCoordinate = (int) (location.getY()*height + y);
+    	int xCoordinate = (int) (location.getX() * width + x);
+    	int yCoordinate = (int) (location.getY() * height + y);
     	getSprite().draw(g, xCoordinate, yCoordinate, width, height);
     	
     }

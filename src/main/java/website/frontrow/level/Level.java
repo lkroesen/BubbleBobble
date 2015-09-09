@@ -2,7 +2,6 @@ package website.frontrow.level;
 
 import website.frontrow.board.Unit;
 import website.frontrow.util.Grid;
-import website.frontrow.util.Point;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -78,9 +77,9 @@ public class Level
             }
         }
         
-        for(int i = 0; i < units.size(); i++){
+        for(int i = 0; i < units.size(); i++)
+        {
         	units.get(i).draw(g, x, y, cellWidth, cellHeight);
-        		
         }
     }
 }

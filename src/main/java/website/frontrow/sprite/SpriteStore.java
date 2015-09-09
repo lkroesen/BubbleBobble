@@ -6,7 +6,6 @@ import java.util.Map;
 import website.frontrow.board.Direction;
 
 /**
- * Created by larsstegman on 08-09-15.
  * A store to get sprites.
  */
 public class SpriteStore
@@ -16,7 +15,8 @@ public class SpriteStore
     /**
      * A map to store sprite images in, so they don't need to be read every time.
      */
-    private static Map<String, StaticImageSprite> spriteMap = new HashMap<String, StaticImageSprite>();
+    private static Map<String, StaticImageSprite> spriteMap
+			= new HashMap<String, StaticImageSprite>();
 
     /**
      * The wall sprite.
@@ -26,10 +26,12 @@ public class SpriteStore
     {
     	StaticImageSprite sprite = spriteMap.get("Wall");
     	
-    	if(sprite != null){
+    	if(sprite != null)
+        {
     		return sprite;
     	}
-    	else{
+    	else
+        {
     		sprite = new StaticImageSprite(is.getWallImage());
     		spriteMap.put("Wall", sprite);
     		return sprite;
@@ -45,10 +47,12 @@ public class SpriteStore
     {
     	StaticImageSprite sprite = spriteMap.get("Platform");
     	
-    	if(sprite != null){
+    	if(sprite != null)
+        {
     		return sprite;
     	}
-    	else{
+    	else
+        {
     		sprite = new StaticImageSprite(is.getPlatformImage());
     		spriteMap.put("Platform", sprite);
     		return sprite;
@@ -70,10 +74,12 @@ public class SpriteStore
             case LEFT:
             	sprite = spriteMap.get("PlayerLeft");
             	
-            	if(sprite != null){
+            	if(sprite != null)
+                {
             		return sprite;
             	}
-            	else{
+            	else
+                {
             		sprite = new StaticImageSprite(is.getPlayerLeftImage());
             		spriteMap.put("PlayerLeft", sprite);
             		return sprite;
@@ -81,10 +87,12 @@ public class SpriteStore
             case RIGHT:
             	sprite = spriteMap.get("PlayerRight");
             	
-            	if(sprite != null){
+            	if(sprite != null)
+                {
             		return sprite;
             	}
-            	else{
+            	else
+                {
             		sprite = new StaticImageSprite(is.getPlayerRightImage());
             		spriteMap.put("PlayerRight", sprite);
             		return sprite;
@@ -110,10 +118,12 @@ public class SpriteStore
         	case LEFT:
             	sprite = spriteMap.get("EnemyLeft");
             	
-            	if(sprite != null){
+            	if(sprite != null)
+                {
             		return sprite;
             	}
-            	else{
+            	else
+                {
             		sprite = new StaticImageSprite(is.getEnemyLeftImage());
             		spriteMap.put("EnemyLeft", sprite);
             		return sprite;
@@ -121,10 +131,12 @@ public class SpriteStore
             case RIGHT:
             	sprite = spriteMap.get("EnemyRight");
             	
-            	if(sprite != null){
+            	if(sprite != null)
+                {
             		return sprite;
             	}
-            	else{
+            	else
+                {
             		sprite = new StaticImageSprite(is.getEnemyRightImage());
             		spriteMap.put("EnemyRight", sprite);
             		return sprite;

@@ -50,7 +50,8 @@ public class Player extends Unit
      * @return The sprite.
      */
     @Override
-    public Sprite getSprite(){
+    public Sprite getSprite()
+    {
     	return ss.getPlayerSprite(this.getFace());
     }
 }
