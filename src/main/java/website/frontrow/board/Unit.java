@@ -4,10 +4,7 @@ import java.awt.Graphics;
 
 import website.frontrow.sprite.EmptySprite;
 import website.frontrow.sprite.Sprite;
-import website.frontrow.sprite.SpriteStore;
 import website.frontrow.util.Point;
-import website.frontrow.board.Player;
-import website.frontrow.board.Enemy;
 
 /**
  * A Unit, or Entity is something that is part of a level, but not restricted to grid cells.
@@ -16,7 +13,6 @@ public class Unit
 {
     private Direction direction;
     private Direction faceLeft;
-    private static SpriteStore ss = new SpriteStore();
    
     /**
      * Amount of lives an entity has.
@@ -160,16 +156,8 @@ public class Unit
      */
     public Sprite getSprite()
     {
-    	if(this.getClass() == Player.class){
-    		return ss.getPlayerSprite(this.getFace());
-    	}
-    	else if(this.getClass() == Enemy.class){
-    		return ss.getEnemySprite(this.getFace());
-    	}
-    	else{
-    		return new EmptySprite();
-    	}
-    }
+		return new EmptySprite();
+    }  
     
     /**
      * Draws the unit.
