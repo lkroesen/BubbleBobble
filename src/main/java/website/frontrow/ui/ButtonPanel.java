@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 public class ButtonPanel extends JPanel
 {
     private String[] buttonName;
-    private JButton[] button;
+    private JButton[] arButton;
 
     /**
      * Constructor of ButtonPanel, with string input.
@@ -18,20 +18,22 @@ public class ButtonPanel extends JPanel
      */
     public ButtonPanel(String[] in)
     {
+        assert in != null;
+
         setButtonName(in);
-        button = new JButton[buttonName.length];
+        arButton = new JButton[buttonName.length];
 
         for (int c = 0; c < in.length; c++)
         {
-            button[c] = new JButton(in[c]);
+            arButton[c] = new JButton(in[c]);
             // TODO: Action Listener for Buttons
-            //button[c].addActionListener(new ActionListener());
-            add(button[c]);
+            //arButton[c].addActionListener(new ActionListener());
+            add(arButton[c]);
         }
     }
 
     /**
-     * Returns the Strings of the button in an array.
+     * Returns the Strings of the arButton in an array.
      * @return
      * Returns a String array
      */
@@ -42,15 +44,26 @@ public class ButtonPanel extends JPanel
 
     /**
      * Input an array of strings with the names for the buttons.
+     * This method is only intended to be used by the constructor.
      * @param in
      * Input a string array
      */
-    public void setButtonName(String[] in)
+    private void setButtonName(String[] in)
     {
         buttonName = new String[in.length];
         for (int c = 0; c < in.length; c++)
         {
             buttonName[c] = in[c];
         }
+    }
+
+    /**
+     * Get all the JButtons.
+     * @return
+     * Returns an array of JButton
+     */
+    public JButton[] getArButton()
+    {
+        return arButton;
     }
 }
