@@ -13,7 +13,7 @@ public class Game
 {
     private int score = 0;
     private Level currentLevel;
-    private boolean running = true;
+    private boolean running = false;
 
     @SuppressWarnings("visibilitymodifier")
     public static final int TICKS_PER_SEC = 60;
