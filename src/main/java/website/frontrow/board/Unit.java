@@ -12,6 +12,7 @@ import website.frontrow.util.Point;
  */
 public abstract class Unit
 {
+    private static final int MOVE_MOD = 7;
     private Direction direction;
     private Direction faceLeft;
    
@@ -176,7 +177,7 @@ public abstract class Unit
         // The horizontal orientation must immediately be changed, so the current horizontal motion
         // is set to 0.
         this.motion.setX(0);
-        this.newMotion = new Point(-7, 0);
+        this.newMotion = new Point(-MOVE_MOD, 0);
     }
 
     /**
@@ -185,7 +186,7 @@ public abstract class Unit
     public void goRight()
     {
         this.motion.setX(0);
-        this.newMotion = new Point(7, 0);
+        this.newMotion = new Point(MOVE_MOD, 0);
     }
 
     /**

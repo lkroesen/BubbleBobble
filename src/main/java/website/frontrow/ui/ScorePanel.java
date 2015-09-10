@@ -32,6 +32,7 @@ public class ScorePanel extends JPanel
      * Creates a new score panel for the player.
      * When playing multiplayer, a score panel is created for each player.
      * @param players The list of players (max. 2 players).
+     * @throws IllegalArgumentException Throws Exception when triggered.
      */
     ScorePanel(List<Player> players)
     {

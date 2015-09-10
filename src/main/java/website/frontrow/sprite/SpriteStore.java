@@ -64,6 +64,7 @@ public class SpriteStore
      *             Allowed values: LEFT, RIGHT.
      * @return The sprite.
      */
+	@SuppressWarnings("checkstyle:methodlength")
     public Sprite getPlayerSprite(Direction face)
     {
     	StaticImageSprite sprite;
@@ -107,6 +108,7 @@ public class SpriteStore
      *             Allowed values: LEFT, RIGHT.
      * @return The sprite.
      */
+	@SuppressWarnings("checkstyle:methodlength")
     public Sprite getEnemySprite(Direction face)
     {
         StaticImageSprite sprite;
