@@ -166,5 +166,16 @@ public abstract class UnitTest
         u.setFace(Direction.UP);
     }
 
+    /**
+     * Method to be implemented in other test classes.
+     * @param alive
+     * Boolean : Alive true or false.
+     * @param start
+     * Point : Starting point.
+     * @param end
+     * Point : Destination point.
+     * @return
+     * Return a Unit.
+     */
     public abstract Unit getTestUnit(boolean alive, Point start, Point end);
 }

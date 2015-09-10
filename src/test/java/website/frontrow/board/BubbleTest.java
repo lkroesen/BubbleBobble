@@ -42,9 +42,13 @@ public class BubbleTest extends UnitTest
     }
 
     @Override
-    public Unit getTestUnit(boolean alive, Point start, Point end) {
+    public Unit getTestUnit(boolean alive, Point start, Point end)
+    {
         Bubble bubble = new Bubble(start, end);
-        if(!alive) bubble.kill();
+        if(!alive)
+        {
+            bubble.kill();
+        }
         return bubble;
     }
 }

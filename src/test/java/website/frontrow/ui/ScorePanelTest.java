@@ -2,20 +2,17 @@ package website.frontrow.ui;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 import java.util.LinkedHashMap;
 import java.util.ArrayList;
 import java.util.Map;
 
-import org.mockito.Mock;
 import website.frontrow.board.Player;
 import website.frontrow.util.Point;
 
 import javax.swing.JLabel;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by Remi on 8-9-2015.
@@ -28,7 +25,7 @@ public class ScorePanelTest
      * The method should throw an IllegalArgumentException with message "No Players".
      */
     @Test
-    public void ScorePanelNoPlayerTest()
+    public void scorePanelNoPlayerTest()
     {
 
         List<Player> players = null;
@@ -49,7 +46,7 @@ public class ScorePanelTest
      * The Map labels should contain the correct keySet.
      */
    @Test
-    public void ScorePanelOnePlayerTest()
+    public void scorePanelOnePlayerTest()
     {
 
         Point po = new Point(2, 2);
@@ -74,7 +71,7 @@ public class ScorePanelTest
      * The Map labels should contain the correct keySet.
      */
     @Test
-    public void ScorePanelTwoPlayersTest()
+    public void scorePanelTwoPlayersTest()
     {
 
         Point po1 = new Point(2, 2);

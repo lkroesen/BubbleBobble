@@ -32,7 +32,8 @@ public class PlayerTest extends UnitTest
     }
 
     @Override
-    public Unit getTestUnit(boolean alive, Point start, Point motion) {
+    public Unit getTestUnit(boolean alive, Point start, Point motion)
+    {
         Player player = new Player(start);
         player.setMotion(motion);
         if(!alive)
