@@ -116,4 +116,29 @@ public class PointTest
 
         assertTrue(p1.equals(p2));
     }
+
+    /**
+     * Test adding numbers together.
+     */
+    @Test
+    public void addTest()
+    {
+        Point a = new Point(1, 0);
+        Point b = new Point(2, 4);
+        Point expected = new Point(3, 4);
+
+        assertEquals(expected, a.add(b));
+    }
+
+    /**
+     * Test dividing numbers by a divisor.
+     */
+    @Test
+    public void divideTest()
+    {
+        Point a = new Point(2, 0);
+        Point expected = new Point(1, 0);
+
+        assertEquals(expected, a.divide(2));
+    }
 }

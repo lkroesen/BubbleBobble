@@ -9,6 +9,9 @@ public class Game
 {
     private int highscore;
     private Level currentLevel;
+    boolean running = false;
+
+    public static final int TICKS_PER_SEC = 60;
 
     /**
      * Constructor of Game.
@@ -19,6 +22,43 @@ public class Game
         highscore = 0;
         this.currentLevel = level;
     }
+
+    /**
+     * Tick the current level if the game is not paused.
+     */
+    public void tick()
+    {
+        if(running)
+        {
+            currentLevel.tick();
+        }
+    }
+
+    /**
+     * Start the game.
+     */
+    public void start()
+    {
+        running = true;
+    }
+
+    /**
+     * Stop the game (pause it).
+     */
+    public void stop()
+    {
+        running = false;
+    }
+
+    /**
+     * Whether the game is currently running.
+     * @return Current running state of the game.
+     */
+    public boolean isRunning()
+    {
+        return running;
+    }
+
 
     /**
      * Restarts the game and sets the highscore to 0.

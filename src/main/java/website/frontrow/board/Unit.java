@@ -2,6 +2,8 @@ package website.frontrow.board;
 
 import java.awt.Graphics;
 
+import website.frontrow.Game;
+import website.frontrow.level.Level;
 import website.frontrow.sprite.EmptySprite;
 import website.frontrow.sprite.Sprite;
 import website.frontrow.util.Point;
@@ -156,6 +158,16 @@ public abstract class Unit
     public void kill()
     {
         alive = false;
+    }
+
+    /**
+     * Ticks a unit in a given level context.
+     * @param level Level context, for collision checking.
+     */
+    public void tick(Level level)
+    {
+        // Move the unit without checking for collisions. (For now)
+        this.location = this.location.add(motion.divide(Game.TICKS_PER_SEC));
     }
     /**
      * Returns the sprite of the unit, Player/Enemy/Empty respectively.

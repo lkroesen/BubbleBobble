@@ -3,11 +3,14 @@ package website.frontrow.board;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import website.frontrow.Game;
+import website.frontrow.level.Level;
 import website.frontrow.util.Point;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.mockito.Mockito.mock;
 
 /**
  * Tests for testing the Unit class.
@@ -164,6 +167,21 @@ public abstract class UnitTest
     {
         Unit u = getTestUnit(true, null, null);
         u.setFace(Direction.UP);
+    }
+
+    /**
+     * Test the tick method.
+     */
+    @Test
+    public void testTick()
+    {
+        Unit u = getTestUnit(true, new Point(0, 0), new Point(Game.TICKS_PER_SEC, 0));
+
+        u.tick(mock(Level.class));
+        // TODO When collisions are implemented, some calls to those checks need to be checked here.
+
+        Point expected = new Point(1, 0);
+        assertEquals(expected, u.getLocation());
     }
 
     public abstract Unit getTestUnit(boolean alive, Point start, Point end);

@@ -48,6 +48,18 @@ public class Level
         return cells;
     }
 
+
+    /**
+     * Tick all entities in this level.
+     */
+    public void tick()
+    {
+        for (Unit unit : units )
+        {
+            unit.tick(this);
+        }
+    }
+
     /**
      * Draw the level. First draw the cell content's then the units.
      * @param g The graphics context to draw in.
