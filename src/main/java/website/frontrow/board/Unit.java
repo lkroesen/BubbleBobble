@@ -203,6 +203,7 @@ public abstract class Unit
 
         // Move the unit without checking for collisions. (For now)
         this.location = this.location.add(motion.divide(Game.TICKS_PER_SEC));
+        this.motion.setX(0);
     }
 
     /**

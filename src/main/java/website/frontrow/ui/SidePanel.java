@@ -4,6 +4,8 @@ import website.frontrow.Game;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The side panel for the ui.
@@ -25,10 +27,21 @@ public class SidePanel extends JPanel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         //Add the score counter
 
-        String[] strButtonNames = new String[2];
-        strButtonNames[0] = "Restart";
-        strButtonNames[1] = "Insert Coin";
+        Map<String, Action> buttonMappings = new HashMap<>();
 
-        add(new ButtonPanel(strButtonNames));
+        buttonMappings.put("Pause/Start", () ->
+        {
+            System.out.println(game.isRunning() ? "Stop" : "Start");
+            if(game.isRunning())
+            {
+                game.stop();
+            }
+            else
+            {
+                game.start();
+            }
+        });
+
+        add(new ButtonPanel(buttonMappings));
     }
 }
