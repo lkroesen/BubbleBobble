@@ -1,26 +1,34 @@
 package website.frontrow;
 
+import website.frontrow.board.Player;
 import website.frontrow.level.Level;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The current state of the game.
  */
 public class Game
 {
-    private int highscore;
+    private int score = 0;
     private Level currentLevel;
-    boolean running = false;
+    private boolean running = false;
 
+    @SuppressWarnings("visibilitymodifier")
     public static final int TICKS_PER_SEC = 60;
+
+    private ArrayList<Player> players;
 
     /**
      * Constructor of Game.
      * @param level The current level the player can play.
+     * @param players The players in this game.
      */
-    public Game(Level level)
+    public Game(Level level, ArrayList<Player> players)
     {
-        highscore = 0;
         this.currentLevel = level;
+        this.players = players;
     }
 
     /**
@@ -61,32 +69,32 @@ public class Game
 
 
     /**
-     * Restarts the game and sets the highscore to 0.
+     * Restarts the game and sets the score to 0.
      * TODO: Restart the level.
      */
     private void restart()
     {
-        highscore = 0;
+        score = 0;
     }
 
     /**
-     * Get the current highscore.
+     * Get the current score.
      * @return
-     * Returns an int with the highscore
+     * Returns an int with the score
      */
-    public int getHighscore()
+    public int getScore()
     {
-        return highscore;
+        return score;
     }
 
     /**
-     * Set the current highscore.
-     * @param highscore
-     * Input an int with the value to set the highscore with.
+     * Set the current score.
+     * @param score
+     * Input an int with the value to set the score with.
      */
-    public void setHighscore(int highscore)
+    public void setScore(int score)
     {
-        this.highscore = highscore;
+        this.score = score;
     }
 
     /**
@@ -96,5 +104,14 @@ public class Game
     public Level getLevel()
     {
         return this.currentLevel;
+    }
+
+    /**
+     * Returns the players in the game.
+     * @return The list of players.
+     */
+    public List<Player> getPlayers()
+    {
+        return this.players;
     }
 }

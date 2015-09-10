@@ -21,7 +21,8 @@ public class EnemyTest extends UnitTest
     }
 
     @Override
-    public Unit getTestUnit(boolean alive, Point start, Point end) {
+    public Unit getTestUnit(boolean alive, Point start, Point end)
+    {
         Enemy e = new Enemy(start);
         e.setMotion(end);
         if(!alive)

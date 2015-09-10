@@ -1,5 +1,7 @@
 package website.frontrow.board;
 
+import website.frontrow.sprite.EmptySprite;
+import website.frontrow.sprite.Sprite;
 import website.frontrow.util.Point;
 
 /**
@@ -39,5 +41,11 @@ public class Bubble extends Unit
     public void setContains(Enemy contains)
     {
         this.contains = contains;
+    }
+
+    @Override
+    public Sprite getSprite()
+    {
+        return new EmptySprite();
     }
 }

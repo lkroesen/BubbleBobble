@@ -1,5 +1,6 @@
 package website.frontrow.level;
 
+import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
 import website.frontrow.util.Grid;
 
@@ -12,20 +13,24 @@ import java.util.ArrayList;
 public class Level
 {
 
+    private ArrayList<Player> players;
     private ArrayList<Unit> units;
     private Grid<Cell> cells;
 
     /**
      * Constructor of Level.
      * @param units
-     * Input an ArrayList of Unit.
+     *      Input an ArrayList of Unit.
      * @param cells
-     * Input a Grid with E of Cell.
+     *      Input a Grid with E of Cell.
+     * @param players
+     *      The players in the game.
      */
-    public Level(ArrayList<Unit> units, Grid<Cell> cells)
+    public Level(ArrayList<Player> players, ArrayList<Unit> units, Grid<Cell> cells)
     {
-        this.units = new ArrayList<Unit>(units);
-        this.cells = new Grid<Cell>(cells);
+        this.players = players;
+        this.units = new ArrayList<>(units);
+        this.cells = new Grid<>(cells);
     }
 
     /**
@@ -54,7 +59,7 @@ public class Level
      */
     public void tick()
     {
-        for (Unit unit : units )
+        for (Unit unit : units)
         {
             unit.tick(this);
         }
@@ -93,5 +98,14 @@ public class Level
         {
         	units.get(i).draw(g, x, y, cellWidth, cellHeight);
         }
+    }
+
+    /**
+     * Returns the players in the active game.
+     * @return The players.
+     */
+    public ArrayList<Player> getPlayers()
+    {
+        return players;
     }
 }

@@ -57,7 +57,7 @@ public class Point
     }
 
     /**
-     * Add two points together
+     * Add two points together.
      * @param b The point to add.
      * @return The result.
      */
@@ -73,7 +73,7 @@ public class Point
      */
     public Point divide(double divisor)
     {
-        return new Point(this.x/divisor, this.y/divisor);
+        return new Point(this.x / divisor, this.y / divisor);
     }
 
 
@@ -87,6 +87,12 @@ public class Point
                     &  this.y == that.y;
         }
         return false;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Point(" + x + ", " + y + ")";
     }
 
     @SuppressWarnings("checkstyle:magicnumber")

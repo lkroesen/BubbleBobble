@@ -33,43 +33,32 @@ public class ScorePanel extends JPanel
      * When playing multiplayer, a score panel is created for each player.
      * @param players The list of players (max. 2 players).
      */
-    ScorePanel(List<Player> players) throws IllegalArgumentException
+    ScorePanel(List<Player> players)
     {
-
         super();
-
-        if(players == null)
-        {
-            throw new IllegalArgumentException("No Players");
-        }
-
         assert players != null;
 
         setLayout(new GridLayout(2, players.size()));
 
         for(int c = 0; c < players.size(); c++)
         {
-
             int i = c + 1;
             add(new JLabel("Player" + i, JLabel.CENTER));
-
         }
 
         labels = new LinkedHashMap();
 
         for (Player pl : players)
         {
-
             JLabel sl = new JLabel("0", JLabel.CENTER);
             labels.put(pl, sl);
             add(sl);
-
         }
 
     }
 
     /**
-     * Retuns the labels.
+     * Returns the labels.
      * @return labels Map<Player, JLabel>
      */
     public Map<Player, JLabel> getLabels()

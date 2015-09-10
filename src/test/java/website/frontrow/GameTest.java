@@ -1,22 +1,27 @@
 package website.frontrow;
 
+import website.frontrow.level.Level;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import website.frontrow.level.Level;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 /**
- * Test class for Game
+ * Test class for Game.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class GameTest {
-
+public class GameTest
+{
+    @SuppressWarnings("visibilitymodifier")
     @Mock Level level;
 
     /**
@@ -25,7 +30,7 @@ public class GameTest {
     @Test
     public void testStart()
     {
-        Game game = new Game(level);
+        Game game = new Game(level, null);
         game.start();
 
         assertTrue(game.isRunning());
@@ -37,7 +42,7 @@ public class GameTest {
     @Test
     public void testStartStopped()
     {
-        Game game = new Game(level);
+        Game game = new Game(level, null);
         assertFalse(game.isRunning());
     }
 
@@ -47,7 +52,7 @@ public class GameTest {
     @Test
     public void testStop()
     {
-        Game game = new Game(level);
+        Game game = new Game(level, null);
         game.start();
         game.stop();
         assertFalse(game.isRunning());
@@ -57,23 +62,23 @@ public class GameTest {
      * Test highscore getter.
      */
     @Test
-    public void testGetHighscore()
+    public void testGetScore()
     {
-        Game game = new Game(level);
-        assertEquals(0, game.getHighscore());
+        Game game = new Game(level, null);
+        assertEquals(0, game.getScore());
     }
 
     /**
      * Test highscore setter.
      */
     @Test
-    public void testSetHighscore()
+    public void testSetScore()
     {
-        Game game = new Game(level);
-        game.setHighscore(15);
-        assertEquals(15, game.getHighscore());
-        game.setHighscore(42);
-        assertEquals(42, game.getHighscore());
+        Game game = new Game(level, null);
+        game.setScore(15);
+        assertEquals(15, game.getScore());
+        game.setScore(42);
+        assertEquals(42, game.getScore());
     }
 
     /**
@@ -82,7 +87,7 @@ public class GameTest {
     @Test
     public void testTick1()
     {
-        Game game = new Game(level);
+        Game game = new Game(level, null);
         assertFalse(game.isRunning());
         game.tick();
         verify(level, never()).tick();
@@ -94,7 +99,7 @@ public class GameTest {
     @Test
     public void testTick2()
     {
-        Game game = new Game(level);
+        Game game = new Game(level, null);
         game.start();
         assertTrue(game.isRunning());
         game.tick();

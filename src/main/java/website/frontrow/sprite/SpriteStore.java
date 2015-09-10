@@ -15,8 +15,7 @@ public class SpriteStore
     /**
      * A map to store sprite images in, so they don't need to be read every time.
      */
-    private static Map<String, StaticImageSprite> spriteMap
-			= new HashMap<String, StaticImageSprite>();
+    private static Map<String, StaticImageSprite> spriteMap = new HashMap<>();
 
     /**
      * The wall sprite.

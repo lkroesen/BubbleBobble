@@ -160,7 +160,7 @@ public abstract class UnitTest
     }
 
     /**
-     * Test if setFace errorhandling works.
+     * Test if setFace error handling works.
      */
     @Test(expected = IllegalArgumentException.class)
     public void setFaceErrorTest()
@@ -184,5 +184,69 @@ public abstract class UnitTest
         assertEquals(expected, u.getLocation());
     }
 
+    /**
+     * Test whether the unit moves left.
+     */
+    @Test
+    public void testGoLeft()
+    {
+        Unit u = getTestUnit(true, new Point(0, 0), new Point(0, 0));
+
+        u.goLeft();
+        u.tick(mock(Level.class));
+
+        assertTrue(u.getLocation().getX() < 0);
+    }
+
+    /**
+     * Test whether the unit moves right.
+     */
+    @Test
+    public void testGoRight()
+    {
+        Unit u = getTestUnit(true, new Point(0, 0), new Point(0, 0));
+
+        u.goRight();
+        u.tick(mock(Level.class));
+
+        assertTrue(u.getLocation().getX() > 0);
+    }
+
+    /**
+     * Tests whether the unit does not move when not speed is given.
+     */
+    @Test
+    public void testDontMove() // There's a wasp in your hair.
+    {
+        Point start = new Point(0, 0);
+        Unit u = getTestUnit(true, start, new Point(0, 0));
+
+        u.tick(mock(Level.class));
+
+        assertEquals(start, u.getLocation());
+    }
+
+    /**
+     * Tests whether the player really goes left after going right first.
+     */
+    @Test
+    public void testReallyGoLeft()
+    {
+        Unit u = getTestUnit(true, new Point(0, 0), new Point(0, 0));
+
+        u.goRight();
+        u.goLeft();
+        u.tick(mock(Level.class));
+
+        assertTrue(u.getLocation().getX() < 0);
+    }
+
+    /**
+     * Create the unit to u for the tests.
+     * @param alive Should the unit be alive?
+     * @param start The starting point.
+     * @param end The ending poing.
+     * @return A unit to test.
+     */
     public abstract Unit getTestUnit(boolean alive, Point start, Point end);
 }

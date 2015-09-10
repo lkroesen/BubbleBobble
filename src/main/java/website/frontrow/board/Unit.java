@@ -4,7 +4,6 @@ import java.awt.Graphics;
 
 import website.frontrow.Game;
 import website.frontrow.level.Level;
-import website.frontrow.sprite.EmptySprite;
 import website.frontrow.sprite.Sprite;
 import website.frontrow.util.Point;
 
@@ -32,6 +31,13 @@ public abstract class Unit
     private Point motion;
 
     /**
+     * The direction that is to be added on the next tick.
+     */
+    private Point newMotion;
+
+    public static final int MAX_SPEED = 60;
+
+    /**
      * Constructor of the Unit Class.
      * @param alive Whether this entity is alive
      * @param location the current location of the unit.
@@ -44,6 +50,8 @@ public abstract class Unit
         this.alive = alive;
         this.location = location;
         this.motion = motion;
+
+        this.newMotion = new Point(0, 0);
     }
 
     /**
@@ -161,22 +169,47 @@ public abstract class Unit
     }
 
     /**
+     * Makes the unit go left.
+     */
+    public void goLeft()
+    {
+        // The horizontal orientation must immediately be changed, so the current horizontal motion
+        // is set to 0.
+        this.motion.setX(0);
+        this.newMotion = new Point(-1, 0);
+    }
+
+    /**
+     * Makes the unit go right.
+     */
+    public void goRight()
+    {
+        this.motion.setX(0);
+        this.newMotion = new Point(1, 0);
+    }
+
+    /**
      * Ticks a unit in a given level context.
      * @param level Level context, for collision checking.
      */
     public void tick(Level level)
     {
+        // Add the new motion to the current motion.
+        this.motion = this.motion.add(newMotion);
+        this.newMotion = new Point(0, 0);
+
+        double x = this.motion.getX();
+        this.motion.setX(Math.max(Math.min(x, MAX_SPEED), -MAX_SPEED));
+
         // Move the unit without checking for collisions. (For now)
         this.location = this.location.add(motion.divide(Game.TICKS_PER_SEC));
     }
+
     /**
-     * Returns the sprite of the unit, Player/Enemy/Empty respectively.
+     * Returns the sprite of the unit.
      * @return The sprite.
      */
-    public Sprite getSprite()
-    {
-		return new EmptySprite();
-    }  
+    public abstract Sprite getSprite();
     
     /**
      * Draws the unit.

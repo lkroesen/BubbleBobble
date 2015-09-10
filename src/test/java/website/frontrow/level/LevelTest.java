@@ -5,31 +5,34 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
 import website.frontrow.board.Enemy;
 import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
 import website.frontrow.util.Grid;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
 
 /**
  * Test for level methods.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class LevelTest {
+public class LevelTest
+{
 
-    public ArrayList<Unit> units = new ArrayList<>();
-    public Grid<Cell> grid = new Grid<Cell>(1, 1);
+    private ArrayList<Unit> units = new ArrayList<>();
+    private Grid<Cell> grid = new Grid<>(1, 1);
+
     @Mock
-    public Player player;
+    private Player player;
     @Mock
-    public Enemy enemy;
-    public ArrayList<Unit> mockunits = new ArrayList<>();
+    private Enemy enemy;
+    private ArrayList<Unit> mockunits = new ArrayList<>();
 
     /**
      * Set up.
@@ -49,7 +52,7 @@ public class LevelTest {
     @Test
     public void testGetCells()
     {
-        Level level = new Level(units, grid);
+        Level level = new Level(null, units, grid);
         assertEquals(grid, level.getCells());
     }
 
@@ -59,7 +62,7 @@ public class LevelTest {
     @Test
     public void testGetUnits()
     {
-        Level level = new Level(units, grid);
+        Level level = new Level(null, units, grid);
         assertEquals(units, level.getUnits());
     }
 
@@ -69,7 +72,7 @@ public class LevelTest {
     @Test
     public void testTick()
     {
-        Level level = new Level(mockunits, grid);
+        Level level = new Level(null, mockunits, grid);
         level.tick();
         verify(player, times(1)).tick(level);
         verify(enemy, times(2)).tick(level);
