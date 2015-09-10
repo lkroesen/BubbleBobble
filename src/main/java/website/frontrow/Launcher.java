@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Instantiates the game so it can be played.
@@ -49,6 +52,11 @@ public class Launcher
 
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
             ui.start();
+
+            ScheduledExecutorService service = Executors
+                    .newSingleThreadScheduledExecutor();
+
+            service.scheduleAtFixedRate(game::tick, 0, Game.TICKS_PER_SEC, TimeUnit.MILLISECONDS);
         } catch (IOException e)
         {
             throw new RuntimeException();

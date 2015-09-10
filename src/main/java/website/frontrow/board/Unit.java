@@ -176,7 +176,7 @@ public abstract class Unit
         // The horizontal orientation must immediately be changed, so the current horizontal motion
         // is set to 0.
         this.motion.setX(0);
-        this.newMotion = new Point(-1, 0);
+        this.newMotion = new Point(-7, 0);
     }
 
     /**
@@ -185,7 +185,7 @@ public abstract class Unit
     public void goRight()
     {
         this.motion.setX(0);
-        this.newMotion = new Point(1, 0);
+        this.newMotion = new Point(7, 0);
     }
 
     /**
