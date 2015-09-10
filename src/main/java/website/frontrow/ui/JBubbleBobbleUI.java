@@ -41,6 +41,7 @@ public class JBubbleBobbleUI extends JFrame
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setFocusable(true);
+
         addKeyListener(new JBubbleKeyListener(klm));
 
         Container contentPanel = getContentPane();

@@ -31,7 +31,6 @@ public class SidePanel extends JPanel
 
         buttonMappings.put("Pause/Start", () ->
         {
-            System.out.println(game.isRunning() ? "Stop" : "Start");
             if(game.isRunning())
             {
                 game.stop();
