@@ -86,7 +86,7 @@ public class ImageStore
     {
         try
         {
-            return getImage("/player.png");
+            return getImage("/playerL.png");
         }
         catch (IOException e)
         {
@@ -104,7 +104,7 @@ public class ImageStore
     {
         try
         {
-            return getImage("/player.png");
+            return getImage("/playerR.png");
         }
         catch (IOException e)
         {

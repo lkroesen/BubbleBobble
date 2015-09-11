@@ -6,7 +6,6 @@ import website.frontrow.board.Bubble;
 import website.frontrow.board.Enemy;
 import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
-import website.frontrow.level.Cell;
 import website.frontrow.level.Level;
 
 /**
@@ -20,7 +19,7 @@ public class CollisionHandler
     
     /**
      * Input a grid to read from.
-     * @param grid
+     * @param level The level to handle the collisions for.
      * Input the grid to use.
      */
     public CollisionHandler(Level level)
@@ -37,7 +36,7 @@ public class CollisionHandler
      */
     public ArrayList<Point> buildBox(Point location)
     {   	
-    	ArrayList<Point> aabb = new ArrayList<Point>();
+    	ArrayList<Point> aabb = new ArrayList<>();
         aabb.add(new Point(location.getX(), location.getY()));
         aabb.add(new Point(location.getX(), location.getY() + 0.99));
         aabb.add(new Point(location.getX() + 0.99, location.getY()));
@@ -46,7 +45,7 @@ public class CollisionHandler
     }
 
     /**
-     * Check if a unit collides with another unit. Call collisionApplyer if it does.
+     * Check if a unit collides with another unit. Call collisionApplier if it does.
      * The idea is that we check the units projected location against the boxed locations of all other units in a loop.
      * If any of the box corners of the moving unit falls within the box of another unit there is a collision.
      * There is also a check to filter whether the unit is colliding with itself.
@@ -66,14 +65,13 @@ public class CollisionHandler
     	for(int k = 0; k < other.size(); k ++){   		  		
 	    	for(int i = 0; i < aabbPlayer.size(); i++)
 	    	{
-	    		
 	    		double currentX = aabbPlayer.get(i).getX();
 	    		double currentY = aabbPlayer.get(i).getY();
 	    		double otherX = other.get(k).getLocation().getX();
 	    		double otherY = other.get(k).getLocation().getY();
 	    		if( currentX >= otherX && currentY >= otherY && currentX < (otherX + 1) && currentY < (otherY + 1) && other.get(k) != unit)
 	    		{ 
-	    			collisionApplyer(other.get(k),unit);
+	    			collisionApplier(other.get(k), unit);
 	    		}
 	    	}
 		}   	
@@ -108,8 +106,8 @@ public class CollisionHandler
     		}
     	}
     	return false;
-    } 
-    
+    }
+
 
 
     /**
@@ -126,9 +124,9 @@ public class CollisionHandler
      * Input the Unit that initiated the move.
      * @param uOther
      * Input the Unit that gets moved onto.
-     *
+     * TODO: Overhaul this method to avoid instanceof.
      */
-    private void collisionApplyer(Unit uCurrent, Unit uOther)
+    private void collisionApplier(Unit uCurrent, Unit uOther)
     {
         if (uCurrent instanceof Player)
         {
@@ -141,7 +139,7 @@ public class CollisionHandler
                 // TODO Perform Jump Action
                 if (((Bubble) uOther).getContains() instanceof Enemy)
                 {
-                	
+
                 }
             }
             // TODO Player hits wall? Wall as Unit?
@@ -160,7 +158,7 @@ public class CollisionHandler
         {
             if (uOther instanceof Player)
             {
-            	
+
             }
         }
     }
