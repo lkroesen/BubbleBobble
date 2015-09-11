@@ -17,12 +17,6 @@ import website.frontrow.board.Player;
  */
 public class ScorePanel extends JPanel
 {
-
-    /**
-     * Default serialization ID.
-     */
-    private static final long SERIAL = 1L;
-
     /**
      * The map of players and their labels with their scores.
      */
@@ -34,16 +28,9 @@ public class ScorePanel extends JPanel
      * @param players The list of players (max. 2 players).
      * @throws IllegalArgumentException Throws Exception when triggered.
      */
-    ScorePanel(List<Player> players) throws IllegalArgumentException
+    ScorePanel(List<Player> players)
     {
-
         super();
-
-        if(players == null)
-        {
-            throw new IllegalArgumentException("No Players");
-        }
-
         assert players != null;
 
         setLayout(new GridLayout(2, players.size()));
@@ -66,7 +53,7 @@ public class ScorePanel extends JPanel
     }
 
     /**
-     * Retuns the labels.
+     * Returns the labels.
      * @return labels Map<Player, JLabel>
      */
     public Map<Player, JLabel> getLabels()

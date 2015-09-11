@@ -15,8 +15,7 @@ public class SpriteStore
     /**
      * A map to store sprite images in, so they don't need to be read every time.
      */
-    private static Map<String, StaticImageSprite> spriteMap
-			= new HashMap<String, StaticImageSprite>();
+    private static Map<String, StaticImageSprite> spriteMap = new HashMap<>();
 
     /**
      * The wall sprite.
@@ -38,6 +37,27 @@ public class SpriteStore
     	}
         
     }
+
+	/**
+	 * The Bubble sprite.
+	 * @return
+	 * The sprite.
+	 */
+	public Sprite getBubbleSprite()
+	{
+		StaticImageSprite sprite = spriteMap.get("Bubble");
+
+		if(sprite != null)
+		{
+			return sprite;
+		}
+		else
+		{
+			sprite = new StaticImageSprite(is.getBubbleImage());
+			spriteMap.put("Bubble", sprite);
+			return sprite;
+		}
+	}
     
     /**
      * The platform sprite.

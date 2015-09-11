@@ -9,7 +9,7 @@ import java.util.Map;
  *      the corresponding action is performed in the game.
  * Created by Remi Flinterman on 2-9-2015.
  */
-class BubbleKeyListener implements KeyListener
+class JBubbleKeyListener implements KeyListener
 {
 
     /**
@@ -18,50 +18,45 @@ class BubbleKeyListener implements KeyListener
     private final Map<Integer, Action> mapping;
 
     /**
-     * Creates new key listener based on the inputs resulting in actions.
-     * @param keyMap The mappings of keyCode to action.
+     * Creates a JBubbleKeyListener.
+     * @param mapping The mapping to use for the keylistener.
      */
-    BubbleKeyListener(Map<Integer, Action> keyMap)
+    public JBubbleKeyListener(Map<Integer, Action> mapping)
     {
-
-        assert keyMap != null;
-        this.mapping = keyMap;
-
+        this.mapping = mapping;
     }
 
     /**
-     * Checks the event that a key is pressed.
-     * Causes the program to perform the corresponding action.
+     * Performs the corresponding action when the key is pressed.
      * @param ke The event a key is pressed.
      */
     public void keyPressed(KeyEvent ke)
     {
-
-        assert ke != null;
         Action action = mapping.get(ke.getKeyCode());
         if (action != null)
         {
             action.doAction();
         }
-
     }
 
     /**
      * keyTyped won't interrupt the game in any way.
      * @param ke The event a key is typed.
      */
+    @Override
     public void keyTyped(KeyEvent ke)
     {
-        // do nothing at all
+        return;
     }
 
     /**
      * keyReleased doesn't interrupt the game in any way.
      * @param ke The event a key is released.
      */
+    @Override
     public void keyReleased(KeyEvent ke)
     {
-        // do nothing at all
+        return;
     }
 
 }

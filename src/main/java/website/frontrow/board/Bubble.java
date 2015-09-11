@@ -1,5 +1,7 @@
 package website.frontrow.board;
 
+import website.frontrow.sprite.Sprite;
+import website.frontrow.sprite.SpriteStore;
 import website.frontrow.util.Point;
 
 /**
@@ -7,6 +9,8 @@ import website.frontrow.util.Point;
  */
 public class Bubble extends Unit
 {
+    public static final SpriteStore SS = new SpriteStore();
+
     // A bubble can contain an enemy.
     private Enemy contains;
 
@@ -32,6 +36,18 @@ public class Bubble extends Unit
     }
 
     /**
+     * Capture other.
+     * @param other The enemy to capture.
+     */
+    public void capture(Enemy other)
+    {
+        this.contains = other;
+        // Kill the enemy for good measure.
+        // (Do not forget to revive and re-add to the level when he escapes.)
+        other.kill();
+    }
+
+    /**
      * Set an enemy to be contained by a bubble.
      * @param contains
      * Sets the enemy as contained by the bubble.
@@ -39,5 +55,23 @@ public class Bubble extends Unit
     public void setContains(Enemy contains)
     {
         this.contains = contains;
+    }
+
+    @Override
+    public Sprite getSprite()
+    {
+        return SS.getBubbleSprite();
+    }
+
+    @Override
+    public void onWallCollision()
+    {
+        this.kill();
+    }
+
+    @Override
+    public void applyGravity()
+    {
+        // Ignore gravity.
     }
 }

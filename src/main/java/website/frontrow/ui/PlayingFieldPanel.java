@@ -16,9 +16,6 @@ import java.awt.Dimension;
  */
 public class PlayingFieldPanel extends JPanel
 {
-
-    private static final Color BACKGROUND_COLOR = Color.BLACK;
-
     private static final int BLOCK_SIZE = 32; //Pixels
 
     private static final int BORDER_WIDTH = 20; //Pixels
@@ -40,8 +37,8 @@ public class PlayingFieldPanel extends JPanel
         );
 
         Dimension size = new Dimension(
-                BLOCK_SIZE * level.getCells().getWidth() + (2 * BORDER_WIDTH),
-                BLOCK_SIZE * level.getCells().getHeight() + (2 * BORDER_WIDTH)
+                BLOCK_SIZE * level.getCells().getWidth() + 2 * BORDER_WIDTH,
+                BLOCK_SIZE * level.getCells().getHeight() + 2 * BORDER_WIDTH
         );
         this.setPreferredSize(size);
         this.setMinimumSize(size);

@@ -7,8 +7,7 @@ public interface Action
 {
 
     /**
-     * Executes action.
+     * An action to be performed.
      */
     void doAction();
-
 }

@@ -56,6 +56,26 @@ public class Point
         this.y = y;
     }
 
+    /**
+     * Add two points together.
+     * @param b The point to add.
+     * @return The result.
+     */
+    public Point add(Point b)
+    {
+        return new Point(this.x + b.x, this.y + b.y);
+    }
+
+    /**
+     * Divide both coordinates of a point by a divisor.
+     * @param divisor The number to devide by.
+     * @return A point with both coordinates devided by the divisor.
+     */
+    public Point divide(double divisor)
+    {
+        return new Point(this.x / divisor, this.y / divisor);
+    }
+
 
     @Override
     public boolean equals(Object other)
@@ -67,6 +87,12 @@ public class Point
                     &  this.y == that.y;
         }
         return false;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Point(" + x + ", " + y + ")";
     }
 
     @SuppressWarnings("checkstyle:magicnumber")

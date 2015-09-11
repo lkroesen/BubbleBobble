@@ -1,5 +1,6 @@
 package website.frontrow.ui;
 
+import org.junit.Rule;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -9,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.junit.rules.ExpectedException;
 import website.frontrow.board.Player;
 import website.frontrow.util.Point;
 
@@ -19,6 +21,9 @@ import javax.swing.JLabel;
  */
 public class ScorePanelTest
 {
+    @SuppressWarnings("visibilitymodifier") // Is necessary for @Rule.
+    @Rule
+    public final ExpectedException ee = ExpectedException.none();
 
     /**
      * Tests the ScorePanel constructor with no players.
@@ -27,18 +32,9 @@ public class ScorePanelTest
     @Test
     public void scorePanelNoPlayerTest()
     {
-
+        ee.expect(AssertionError.class);
         List<Player> players = null;
-        try
-        {
-            ScorePanel test = new ScorePanel(players);
-        }
-        catch (IllegalArgumentException e)
-        {
-            assertEquals(e.getMessage(), "No Players");
-        }
-
-
+        new ScorePanel(players);
     }
 
     /**
@@ -73,19 +69,18 @@ public class ScorePanelTest
     @Test
     public void scorePanelTwoPlayersTest()
     {
-
         Point po1 = new Point(2, 2);
         Player pl1 = new Player(po1);
         Point po2 = new Point(17, 2);
         Player pl2 = new Player(po2);
 
-        List<Player> players = new ArrayList<Player>();
+        List<Player> players = new ArrayList<>();
         players.add(pl1);
         players.add(pl2);
 
         ScorePanel test = new ScorePanel(players);
 
-        Map<Player, JLabel> l = new LinkedHashMap();
+        Map<Player, JLabel> l = new LinkedHashMap<>();
 
         JLabel sl = new JLabel("0", JLabel.CENTER);
         l.put(pl1, sl);

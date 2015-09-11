@@ -2,8 +2,10 @@ package website.frontrow.board;
 
 import java.awt.Graphics;
 
-import website.frontrow.sprite.EmptySprite;
+import website.frontrow.Game;
+import website.frontrow.level.Level;
 import website.frontrow.sprite.Sprite;
+import website.frontrow.util.CollisionHandler;
 import website.frontrow.util.Point;
 
 /**
@@ -11,6 +13,8 @@ import website.frontrow.util.Point;
  */
 public abstract class Unit
 {
+    private static final int MOVE_MOD = 7;
+    private static final int GRAVITY_MOD = 16;
     private Direction direction;
     private Direction faceLeft;
    
@@ -30,6 +34,24 @@ public abstract class Unit
     private Point motion;
 
     /**
+     * The direction that is to be added on the next tick.
+     */
+    private Point newMotion;
+
+    /**
+     * The maximum x speed.
+     */
+    public static final int MAX_X_SPEED = 60;
+
+    /**
+     * The maximum y speed.
+     */
+    public static final int MAX_Y_SPEED = 10;
+    
+    private CollisionHandler handler;
+    
+
+    /**
      * Constructor of the Unit Class.
      * @param alive Whether this entity is alive
      * @param location the current location of the unit.
@@ -42,6 +64,8 @@ public abstract class Unit
         this.alive = alive;
         this.location = location;
         this.motion = motion;
+
+        this.newMotion = new Point(0, 0);  
     }
 
     /**
@@ -157,14 +181,59 @@ public abstract class Unit
     {
         alive = false;
     }
+
     /**
-     * Returns the sprite of the unit, Player/Enemy/Empty respectively.
+     * Makes the unit go left.
+     */
+    public void goLeft()
+    {
+        // The horizontal orientation must immediately be changed, so the current horizontal motion
+        // is set to 0.
+        this.motion.setX(0);
+        this.newMotion = new Point(-MOVE_MOD, 0);
+    }
+
+    /**
+     * Makes the unit go right.
+     */
+    public void goRight()
+    {
+        this.motion.setX(0);
+        this.newMotion = new Point(MOVE_MOD, 0);
+    }
+
+    /**
+     * Update the direction variable according to the current motion variable.
+     */
+    private void updateDirection()
+    {
+        if (motion.getX() > 0)
+        {
+            this.setDirection(Direction.RIGHT);
+        }
+        else if (motion.getX() < 0)
+        {
+            this.setDirection(Direction.LEFT);
+        }
+        // Keep current direction if motion is zero.
+    }
+    /**
+     * Makes the unit jump.
+     */
+    public void jump()
+    {
+        if(this.motion.getY() == 0)
+        {
+            this.motion.setY(0);
+            this.newMotion = new Point(this.newMotion.getX(), -GRAVITY_MOD * MAX_Y_SPEED);
+        }
+    }
+
+    /**
+     * Returns the sprite of the unit.
      * @return The sprite.
      */
-    public Sprite getSprite()
-    {
-		return new EmptySprite();
-    }  
+    public abstract Sprite getSprite();
     
     /**
      * Draws the unit.
@@ -180,5 +249,61 @@ public abstract class Unit
     	int xCoordinate = (int) (location.getX() * width + x);
     	int yCoordinate = (int) (location.getY() * height + y);
     	getSprite().draw(g, xCoordinate, yCoordinate, width, height);
+    }
+
+    /**
+     * Called when this unit collides with a wall.
+     */
+    public void onWallCollision()
+    {
+    }
+
+    /**
+     * Ticks a unit in a given level context.
+     * @param level Level context, for collision checking.
+     */
+    public void tick(Level level)
+    {
+        this.motion = this.motion.add(newMotion);
+        updateDirection();
+        this.newMotion = new Point(0, 0);
+
+        double x = this.motion.getX();
+        this.motion.setX(Math.max(Math.min(x, MAX_X_SPEED), -MAX_X_SPEED));
+
+        Point movement = motion.divide(Game.TICKS_PER_SEC);
+
+        this.handler = new CollisionHandler(level);
+        this.handler.checkUnitCollision(location, movement, this);
+        //TODO: Improve the way cell collisions are handled.
+        if(!this.handler.checkCellCollision(location, movement, this))
+        {
+            this.location = this.location.add(movement);
+        }
+        else
+        {
+            this.onWallCollision();
+        }
+
+        applyGravity();
+
+    }
+
+    /**
+     * Applies the gravity to the unit.
+     */
+    protected void applyGravity()
+    {
+        this.motion.setY(Math.max(MAX_Y_SPEED, this.motion.getY() - Game.GRAVITY));
+        Point movement = motion.divide(Game.TICKS_PER_SEC);
+
+        if(!this.handler.checkCellCollision(location, movement, this))
+        {
+            this.location = this.location.add(movement);
+        }
+        else
+        {
+            this.motion.setY(0);
+        }
     }
 }

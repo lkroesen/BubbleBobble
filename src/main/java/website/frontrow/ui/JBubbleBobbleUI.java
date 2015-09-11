@@ -2,6 +2,8 @@ package website.frontrow.ui;
 
 import website.frontrow.Game;
 
+import java.util.Map;
+
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
@@ -26,17 +28,19 @@ public class JBubbleBobbleUI extends JFrame
     private PlayingFieldPanel pfp;
     private SidePanel sp;
 
-    private Game game;
-
     /**
      * Creates a JBubble Bobble UI.
      * @param game The game to display in the ui.
+     * @param klm The key listener mapping.
      */
-    public JBubbleBobbleUI(Game game)
+    public JBubbleBobbleUI(Game game, Map<Integer, Action> klm)
     {
-        super();
+        super("Bubble Bobble");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        setFocusable(true);
+
+        addKeyListener(new JBubbleKeyListener(klm));
 
         Container contentPanel = getContentPane();
         contentPanel.setBackground(Color.white);
@@ -54,6 +58,7 @@ public class JBubbleBobbleUI extends JFrame
     /**
      * Starts the game UI.
      */
+    @SuppressWarnings("checkstyle:magicnumber")
     public final void start()
     {
         setVisible(true);
@@ -61,13 +66,10 @@ public class JBubbleBobbleUI extends JFrame
         ScheduledExecutorService service = Executors
                 .newSingleThreadScheduledExecutor();
 
-        service.scheduleAtFixedRate(new Runnable()
+        service.scheduleAtFixedRate(() ->
         {
-            public void run()
-            {
-                drawNextFrame();
-            }
-        }, 0, FRAME_REFRESH_RATE, TimeUnit.MILLISECONDS);
+            drawNextFrame();
+        }, 0, 1000 / FRAME_REFRESH_RATE, TimeUnit.MILLISECONDS);
     }
 
     /**

@@ -1,5 +1,6 @@
 package website.frontrow.board;
 
+import website.frontrow.level.Level;
 import website.frontrow.sprite.Sprite;
 import website.frontrow.sprite.SpriteStore;
 import website.frontrow.util.Point;
@@ -53,5 +54,16 @@ public class Player extends Unit
     public Sprite getSprite()
     {
     	return ss.getPlayerSprite(this.getFace());
+    }
+
+    @Override
+    public void tick(Level level)
+    {
+        super.tick(level);
+
+        if(getMotion().getY() == 0)
+        {
+            getMotion().setX(0);
+        }
     }
 }

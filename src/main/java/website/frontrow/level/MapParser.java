@@ -63,9 +63,8 @@ public class MapParser
     public Level parseMap(InputStream stream) throws IOException
     {
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        int len = -1;
         String line;
-        ArrayList<String> lines = new ArrayList<String>();
+        ArrayList<String> lines = new ArrayList<>();
 
         while ((line = reader.readLine()) != null)
         {
@@ -89,8 +88,9 @@ public class MapParser
         {
             throw new RuntimeException("The given lines are invalidly shaped or zero size.");
         }
-        Grid<Cell> grid = new Grid<Cell>(lines[0].length(), lines.length);
-        ArrayList<Unit> units = new ArrayList<Unit>();
+        Grid<Cell> grid = new Grid<>(lines[0].length(), lines.length);
+        ArrayList<Unit> units = new ArrayList<>();
+        ArrayList<Player> players = new ArrayList<>();
 
         int y = 0;
         for (String line: lines)
@@ -98,13 +98,13 @@ public class MapParser
             int x = 0;
             for(char character: line.toCharArray())
             {
-                handleCharacter(character, x, y, units, grid);
+                handleCharacter(character, x, y, units, players, grid);
                 x++;
             }
             ++y;
         }
 
-        return new Level(units, grid);
+        return new Level(players, units, grid);
     }
 
     /**
@@ -116,7 +116,7 @@ public class MapParser
      * @param grid Grid to place the map in.
      */
     private void handleCharacter(char character, int x, int y,
-                                 ArrayList<Unit> units, Grid<Cell> grid)
+                                 ArrayList<Unit> units, ArrayList<Player> players, Grid<Cell> grid)
     {
         grid.set(x, y, Cell.EMPTY);
         switch (character)
@@ -131,7 +131,9 @@ public class MapParser
                 break;
             case 'p':
                 // The player
-                units.add(new Player(new Point(x, y)));
+                Player player = new Player(new Point(x, y));
+                units.add(player);
+                players.add(player);
                 break;
             case 'e':
                 // The enemy.

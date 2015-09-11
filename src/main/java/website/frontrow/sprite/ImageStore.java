@@ -86,7 +86,7 @@ public class ImageStore
     {
         try
         {
-            return getImage("/player.png");
+            return getImage("/playerL.png");
         }
         catch (IOException e)
         {
@@ -104,7 +104,7 @@ public class ImageStore
     {
         try
         {
-            return getImage("/player.png");
+            return getImage("/playerR.png");
         }
         catch (IOException e)
         {
@@ -141,6 +141,24 @@ public class ImageStore
         try
         {
             return getImage("/enemy.png");
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+
+            return getFileNotFoundImage();
+        }
+    }
+
+    /**
+     * Returns the image for the bubble.
+     * @return The image.
+     */
+    public Image getBubbleImage()
+    {
+        try
+        {
+            return getImage("/bubbleProjectile.png");
         }
         catch (IOException e)
         {

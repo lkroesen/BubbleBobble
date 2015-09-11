@@ -3,11 +3,14 @@ package website.frontrow.board;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import website.frontrow.Game;
+import website.frontrow.level.Level;
 import website.frontrow.util.Point;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.mockito.Mockito.mock;
 
 /**
  * Tests for testing the Unit class.
@@ -157,7 +160,7 @@ public abstract class UnitTest
     }
 
     /**
-     * Test if setFace errorhandling works.
+     * Test if setFace error handling works.
      */
     @Test(expected = IllegalArgumentException.class)
     public void setFaceErrorTest()
@@ -167,15 +170,83 @@ public abstract class UnitTest
     }
 
     /**
-     * Method to be implemented in other test classes.
-     * @param alive
-     * Boolean : Alive true or false.
-     * @param start
-     * Point : Starting point.
-     * @param end
-     * Point : Destination point.
-     * @return
-     * Return a Unit.
+     * Test the tick method.
+     */
+    @Test
+    public void testTick()
+    {
+        Unit u = getTestUnit(true, new Point(0, 0), new Point(Game.TICKS_PER_SEC, 0));
+
+        u.tick(mock(Level.class));
+        // TODO When collisions are implemented, some calls to those checks need to be checked here.
+
+        Point expected = new Point(0, 0);
+        assertEquals(expected, u.getLocation());
+    }
+
+    /**
+     * Test whether the unit moves left.
+     */
+    @Test
+    public void testGoLeft()
+    {
+        Unit u = getTestUnit(true, new Point(0, 0), new Point(0, 0));
+
+        u.goLeft();
+        u.tick(mock(Level.class));
+
+        assertFalse(u.getLocation().getX() < 0);
+    }
+
+    /**
+     * Test whether the unit moves right.
+     */
+    @Test
+    public void testGoRight()
+    {
+        Unit u = getTestUnit(true, new Point(0, 0), new Point(0, 0));
+
+        u.goRight();
+        u.tick(mock(Level.class));
+
+        assertFalse(u.getLocation().getX() > 0);
+    }
+
+    /**
+     * Tests whether the unit does not move when not speed is given.
+     */
+    @Test
+    public void testDontMove() // There's a wasp in your hair.
+    {
+        Point start = new Point(0, 0);
+        Unit u = getTestUnit(true, start, new Point(0, 0));
+
+        u.tick(mock(Level.class));
+
+        assertEquals(start, u.getLocation());
+    }
+
+    /**
+     * Tests whether the player really goes left after going right first.
+     */
+    @Test
+    public void testReallyGoLeft()
+    {
+        Unit u = getTestUnit(true, new Point(0, 0), new Point(0, 0));
+
+        u.goRight();
+        u.goLeft();
+        u.tick(mock(Level.class));
+
+        assertFalse(u.getLocation().getX() < 0);
+    }
+
+    /**
+     * Create the unit to u for the tests.
+     * @param alive Should the unit be alive?
+     * @param start The starting point.
+     * @param end The ending poing.
+     * @return A unit to test.
      */
     public abstract Unit getTestUnit(boolean alive, Point start, Point end);
 }
