@@ -9,6 +9,9 @@
     Description: none
 -->
 <module name="Checker">
+  <module name="SuppressionFilter">
+     <property name="file" value="suppressions.xml"/>
+  </module>
   <property name="severity" value="warning"/>
   <module name="TreeWalker">
     <module name="SuppressWarningsHolder" />
