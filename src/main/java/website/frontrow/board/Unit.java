@@ -195,6 +195,22 @@ public abstract class Unit
     }
 
     /**
+     * Update the direction variable according to the current motion variable.
+     */
+    private void updateDirection()
+    {
+        if (motion.getX() > 0)
+        {
+            this.setDirection(Direction.RIGHT);
+        }
+        else if (motion.getX() < 0)
+        {
+            this.setDirection(Direction.LEFT);
+        }
+        // Keep current direction if motion is zero.
+    }
+
+    /**
      * Ticks a unit in a given level context.
      * @param level Level context, for collision checking.
      */
@@ -202,6 +218,7 @@ public abstract class Unit
     {
         // Add the new motion to the current motion.
         this.motion = this.motion.add(newMotion);
+        updateDirection();
         this.newMotion = new Point(0, 0);
 
         double x = this.motion.getX();
