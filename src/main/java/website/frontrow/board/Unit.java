@@ -276,10 +276,6 @@ public abstract class Unit
 
         applyGravity();
 
-        if(this.motion.getY() == 0)
-        {
-            this.motion.setX(0);
-        }
     }
 
     /**
