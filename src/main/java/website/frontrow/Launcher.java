@@ -84,6 +84,11 @@ public class Launcher
             {
                 game.getPlayers().get(0).goRight();
             });
+
+            map.put(KeyEvent.VK_SPACE, () ->
+            {
+                game.getPlayers().get(0).jump();
+            });
         }
 
         return map;

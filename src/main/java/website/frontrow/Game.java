@@ -19,7 +19,7 @@ public class Game
     public static final int TICKS_PER_SEC = 60;
 
     @SuppressWarnings("visibilitymodifier")
-    public static final double GRAVITY = -7;
+    public static final double GRAVITY = -3;
 
     private ArrayList<Player> players;
 
