@@ -43,6 +43,7 @@ class JBubbleKeyListener implements KeyListener
      * keyTyped won't interrupt the game in any way.
      * @param ke The event a key is typed.
      */
+    @Override
     public void keyTyped(KeyEvent ke)
     {
         return;
@@ -52,6 +53,7 @@ class JBubbleKeyListener implements KeyListener
      * keyReleased doesn't interrupt the game in any way.
      * @param ke The event a key is released.
      */
+    @Override
     public void keyReleased(KeyEvent ke)
     {
         return;

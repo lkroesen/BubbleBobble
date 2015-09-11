@@ -12,9 +12,6 @@ import java.util.Map;
  */
 public class SidePanel extends JPanel
 {
-
-    private Game game;
-
     /**
      * Creates a sidepanel to contain the score, buttons and other statistics.
      * @param game The game to display the statistics of.
@@ -22,7 +19,6 @@ public class SidePanel extends JPanel
     public SidePanel(Game game)
     {
         super();
-        this.game = game;
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         //Add the score counter

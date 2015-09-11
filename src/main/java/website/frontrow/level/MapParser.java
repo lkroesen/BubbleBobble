@@ -63,7 +63,6 @@ public class MapParser
     public Level parseMap(InputStream stream) throws IOException
     {
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        int len = -1;
         String line;
         ArrayList<String> lines = new ArrayList<>();
 

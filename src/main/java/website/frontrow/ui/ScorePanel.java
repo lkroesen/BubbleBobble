@@ -17,12 +17,6 @@ import website.frontrow.board.Player;
  */
 public class ScorePanel extends JPanel
 {
-
-    /**
-     * Default serialization ID.
-     */
-    private static final long SERIAL = 1L;
-
     /**
      * The map of players and their labels with their scores.
      */

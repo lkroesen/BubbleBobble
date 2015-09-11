@@ -28,8 +28,6 @@ public class JBubbleBobbleUI extends JFrame
     private PlayingFieldPanel pfp;
     private SidePanel sp;
 
-    private Game game;
-
     /**
      * Creates a JBubble Bobble UI.
      * @param game The game to display in the ui.
