@@ -6,7 +6,6 @@ import website.frontrow.level.Level;
 import website.frontrow.level.MapParser;
 import website.frontrow.ui.Action;
 import website.frontrow.ui.JBubbleBobbleUI;
-import website.frontrow.util.MusicPlayer;
 import website.frontrow.util.Point;
 
 import java.awt.event.KeyEvent;
@@ -57,9 +56,6 @@ public class Launcher
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
 
             ui.start();
-
-            MusicPlayer musicPlayer = new MusicPlayer();
-            musicPlayer.playBGM();
 
             ScheduledExecutorService service = Executors
                     .newSingleThreadScheduledExecutor();
