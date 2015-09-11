@@ -1,6 +1,5 @@
 package website.frontrow.board;
 
-import website.frontrow.sprite.EmptySprite;
 import website.frontrow.sprite.Sprite;
 import website.frontrow.sprite.SpriteStore;
 import website.frontrow.util.Point;
@@ -10,7 +9,7 @@ import website.frontrow.util.Point;
  */
 public class Bubble extends Unit
 {
-    public static final SpriteStore ss = new SpriteStore();
+    public static final SpriteStore SS = new SpriteStore();
 
     // A bubble can contain an enemy.
     private Enemy contains;
@@ -43,7 +42,8 @@ public class Bubble extends Unit
     public void capture(Enemy other)
     {
         this.contains = other;
-        // Kill the enemy for good measure. (Do not forget to revive and readd to the level when he escapes.)
+        // Kill the enemy for good measure.
+        // (Do not forget to revive and re-add to the level when he escapes.)
         other.kill();
     }
 
@@ -60,7 +60,7 @@ public class Bubble extends Unit
     @Override
     public Sprite getSprite()
     {
-        return ss.getBubbleSprite();
+        return SS.getBubbleSprite();
     }
 
     @Override

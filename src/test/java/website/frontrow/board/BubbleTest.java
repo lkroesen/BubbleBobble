@@ -1,12 +1,7 @@
 package website.frontrow.board;
 
-import javafx.geometry.Pos;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import website.frontrow.sprite.Sprite;
-import website.frontrow.sprite.SpriteStore;
 import website.frontrow.util.Point;
 
 import static org.junit.Assert.assertEquals;
@@ -74,7 +69,7 @@ public class BubbleTest extends UnitTest
     @Test
     public void getSpriteTest1()
     {
-        Sprite expected = Bubble.ss.getBubbleSprite();
+        Sprite expected = Bubble.SS.getBubbleSprite();
         Bubble bubble = new Bubble(new Point(0, 0), new Point(0, 0));
 
         assertNull(bubble.getContains());

@@ -86,17 +86,19 @@ public class CollisionHandler
 
 	/**
 	 * Call the method that handles collisions.
+	 * @param collider The unit that initiates the collision.
+	 * @param colidee The unit that is being collided with.
 	 */
 	// TODO: Swap this out for something fancy that uses reflection. But this works fine for now.
 	public void applyCollision(Unit collider, Unit colidee)
 	{
 		if(collider instanceof Player)
 		{
-			playerCollision((Player)collider, colidee);
+			playerCollision((Player) collider, colidee);
 		}
 		else if (colidee instanceof Player)
 		{
-			playerCollision((Player)colidee, collider);
+			playerCollision((Player) colidee, collider);
 		}
 
 		if(collider instanceof Bubble)
@@ -111,6 +113,7 @@ public class CollisionHandler
 
 	/**
 	 * Called when a player collides with another unit.
+	 * @param player Player which is currently colliding.
 	 * @param other The unit that was collided with.
 	 */
 	public void playerCollision(Player player, Unit other)
@@ -120,6 +123,7 @@ public class CollisionHandler
 
 	/**
 	 * Called when a bubble collides with another unit.
+	 * @param bubble Bubble which is currently colliding.
 	 * @param other The unit that was collided with.
 	 */
 	public void bubbleCollision(Bubble bubble, Unit other)

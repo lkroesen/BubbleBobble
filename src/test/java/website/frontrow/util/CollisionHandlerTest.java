@@ -13,7 +13,6 @@ import website.frontrow.level.Level;
 
 import java.util.ArrayList;
 
-import static org.junit.Assume.assumeTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -22,18 +21,19 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  * Test whether the collisionhandler handles preexisting collisions correctly.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class CollisionHandlerTest {
-    @Mock public Player player;
-    @Mock public Enemy enemy;
-    @Mock public Bubble bubble;
+public class CollisionHandlerTest
+{
+    @Mock Player player;
+    @Mock Enemy enemy;
+    @Mock Bubble bubble;
     /**
      * Prepare all the things.
      */
-    public ArrayList<Player> emptyPlayer = new ArrayList<>();
-    public ArrayList<Unit> emptyUnit = new ArrayList<>();
-    public Grid<Cell> emptyGrid = new Grid<>(0, 0);
-    public Level simpleLevel = new Level(emptyPlayer, emptyUnit, emptyGrid);
-    public CollisionHandler simpleCollisionHandler = new CollisionHandler(simpleLevel);
+    ArrayList<Player> emptyPlayer = new ArrayList<>();
+    ArrayList<Unit> emptyUnit = new ArrayList<>();
+    Grid<Cell> emptyGrid = new Grid<>(0, 0);
+    Level simpleLevel = new Level(emptyPlayer, emptyUnit, emptyGrid);
+    CollisionHandler simpleCollisionHandler = new CollisionHandler(simpleLevel);
 
     /**
      * Player with anything test.
