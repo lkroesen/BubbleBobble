@@ -180,7 +180,7 @@ public abstract class UnitTest
         u.tick(mock(Level.class));
         // TODO When collisions are implemented, some calls to those checks need to be checked here.
 
-        Point expected = new Point(1, 0);
+        Point expected = new Point(0, 0);
         assertEquals(expected, u.getLocation());
     }
 
@@ -195,7 +195,7 @@ public abstract class UnitTest
         u.goLeft();
         u.tick(mock(Level.class));
 
-        assertTrue(u.getLocation().getX() < 0);
+        assertFalse(u.getLocation().getX() < 0);
     }
 
     /**
@@ -209,7 +209,7 @@ public abstract class UnitTest
         u.goRight();
         u.tick(mock(Level.class));
 
-        assertTrue(u.getLocation().getX() > 0);
+        assertFalse(u.getLocation().getX() > 0);
     }
 
     /**
@@ -238,7 +238,7 @@ public abstract class UnitTest
         u.goLeft();
         u.tick(mock(Level.class));
 
-        assertTrue(u.getLocation().getX() < 0);
+        assertFalse(u.getLocation().getX() < 0);
     }
 
     /**
