@@ -23,6 +23,8 @@ public class Game
 
     private ArrayList<Player> players;
 
+    private ArrayList<GameObserver> observers;
+
     /**
      * Constructor of Game.
      * @param level The current level the player can play.
@@ -32,6 +34,7 @@ public class Game
     {
         this.currentLevel = level;
         this.players = players;
+        this.observers = new ArrayList<>();
     }
 
     /**
@@ -51,6 +54,10 @@ public class Game
     public void start()
     {
         running = true;
+        for(GameObserver o : observers)
+        {
+            o.gameStart();
+        }
     }
 
     /**
@@ -59,6 +66,10 @@ public class Game
     public void stop()
     {
         running = false;
+        for(GameObserver o : observers)
+        {
+            o.gameStop();
+        }
     }
 
     /**
@@ -116,5 +127,23 @@ public class Game
     public List<Player> getPlayers()
     {
         return this.players;
+    }
+
+    /**
+     * Registers an observer to this game.
+     * @param o The observer.
+     */
+    public void registerObserver(GameObserver o)
+    {
+        observers.add(o);
+    }
+
+    /**
+     * Removes an observer from this game.
+     * @param o The observer to remove.
+     */
+    public void removeObserver(GameObserver o)
+    {
+        observers.remove(o);
     }
 }

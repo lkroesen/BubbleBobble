@@ -38,5 +38,6 @@ public class SidePanel extends JPanel
         });
 
         add(new ButtonPanel(buttonMappings));
+        add(new StatusLabelPanel(game));
     }
 }
