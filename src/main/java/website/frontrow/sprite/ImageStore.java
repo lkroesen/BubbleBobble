@@ -150,6 +150,21 @@ public class ImageStore
         }
     }
 
+
+    public Image getBubbleImage()
+    {
+        try
+        {
+            return getImage("/bubbleProjectile.png");
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+
+            return getFileNotFoundImage();
+        }
+    }
+
     /**
      * Loads the image.
      * @param filename The filename

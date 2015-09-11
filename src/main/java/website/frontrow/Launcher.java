@@ -1,9 +1,12 @@
 package website.frontrow;
 
+import website.frontrow.board.Bubble;
+import website.frontrow.board.Player;
 import website.frontrow.level.Level;
 import website.frontrow.level.MapParser;
 import website.frontrow.ui.Action;
 import website.frontrow.ui.JBubbleBobbleUI;
+import website.frontrow.util.Point;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -56,7 +59,7 @@ public class Launcher
             ScheduledExecutorService service = Executors
                     .newSingleThreadScheduledExecutor();
 
-            service.scheduleAtFixedRate(game::tick, 0, Game.TICKS_PER_SEC, TimeUnit.MILLISECONDS);
+            service.scheduleAtFixedRate(game::tick, 0, 1000/Game.TICKS_PER_SEC, TimeUnit.MILLISECONDS);
         } catch (IOException e)
         {
             throw new RuntimeException();
@@ -88,6 +91,13 @@ public class Launcher
             map.put(KeyEvent.VK_SPACE, () ->
             {
                 game.getPlayers().get(0).jump();
+            });
+
+            map.put(KeyEvent.VK_Z, () ->
+            {
+                Player p = game.getPlayers().get(0);
+                System.out.println("Hai");
+                game.getLevel().getUnits().add(new Bubble(p.getLocation(), new Point(p.getDirection().getDeltaX()*4, 0)));
             });
         }
 

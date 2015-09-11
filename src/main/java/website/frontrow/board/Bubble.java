@@ -2,6 +2,7 @@ package website.frontrow.board;
 
 import website.frontrow.sprite.EmptySprite;
 import website.frontrow.sprite.Sprite;
+import website.frontrow.sprite.SpriteStore;
 import website.frontrow.util.Point;
 
 /**
@@ -9,6 +10,8 @@ import website.frontrow.util.Point;
  */
 public class Bubble extends Unit
 {
+    private static final SpriteStore ss = new SpriteStore();
+
     // A bubble can contain an enemy.
     private Enemy contains;
 
@@ -46,6 +49,6 @@ public class Bubble extends Unit
     @Override
     public Sprite getSprite()
     {
-        return new EmptySprite();
+        return ss.getBubbleSprite();
     }
 }

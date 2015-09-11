@@ -37,6 +37,23 @@ public class SpriteStore
     	}
         
     }
+
+
+	public Sprite getBubbleSprite()
+	{
+		StaticImageSprite sprite = spriteMap.get("Bubble");
+
+		if(sprite != null)
+		{
+			return sprite;
+		}
+		else
+		{
+			sprite = new StaticImageSprite(is.getBubbleImage());
+			spriteMap.put("Bubble", sprite);
+			return sprite;
+		}
+	}
     
     /**
      * The platform sprite.
