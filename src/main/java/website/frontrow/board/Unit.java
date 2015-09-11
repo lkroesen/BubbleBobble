@@ -45,7 +45,7 @@ public abstract class Unit
     /**
      * The maximum y speed.
      */
-    public static final int MAX_Y_SPEED = 20;
+    public static final int MAX_Y_SPEED = 10;
     
     private CollisionHandler handler;
     
@@ -202,6 +202,30 @@ public abstract class Unit
     }
 
     /**
+     * Update the direction variable according to the current motion variable.
+     */
+    private void updateDirection()
+    {
+        if (motion.getX() > 0) {
+            this.setDirection(Direction.RIGHT);
+        } else if (motion.getX() < 0) {
+            this.setDirection(Direction.LEFT);
+        }
+        // Keep current direction if motion is zero.
+    }
+    /**
+     * Makes the unit jump.
+     */
+    public void jump()
+    {
+        if(this.motion.getY() == 0)
+        {
+            this.motion.setY(0);
+            this.newMotion = new Point(this.newMotion.getX(), -16*MAX_Y_SPEED);
+        }
+    }
+
+    /**
      * Returns the sprite of the unit.
      * @return The sprite.
      */
@@ -229,8 +253,8 @@ public abstract class Unit
      */
     public void tick(Level level)
     {
-        // Add the new motion to the current motion.
         this.motion = this.motion.add(newMotion);
+        updateDirection();
         this.newMotion = new Point(0, 0);
 
         double x = this.motion.getX();
@@ -259,7 +283,7 @@ public abstract class Unit
      */
     private void applyGravity()
     {
-        this.motion.setY(Math.max(-MAX_Y_SPEED, this.motion.getY() - Game.GRAVITY));
+        this.motion.setY(Math.max(MAX_Y_SPEED, this.motion.getY() - Game.GRAVITY));
         Point movement = motion.divide(Game.TICKS_PER_SEC);
 
         if(!this.handler.checkCellCollision(location, movement, this))
