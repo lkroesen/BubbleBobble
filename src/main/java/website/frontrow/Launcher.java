@@ -96,7 +96,6 @@ public class Launcher
             map.put(KeyEvent.VK_Z, () ->
             {
                 Player p = game.getPlayers().get(0);
-                System.out.println("Hai");
                 game.getLevel().getUnits().add(new Bubble(p.getLocation(), new Point(p.getDirection().getDeltaX()*4, 0)));
             });
         }

@@ -6,6 +6,7 @@ import website.frontrow.util.Grid;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Class containing a level and positions of entities therein.
@@ -59,9 +60,17 @@ public class Level
      */
     public void tick()
     {
-        for (Unit unit : units)
+        Unit unit;
+        Iterator<Unit> it = units.iterator();
+        while (it.hasNext())
         {
+            unit = it.next();
             unit.tick(this);
+            if(!unit.isAlive())
+            {
+                // The unit died during the tick, and must be removed.
+                it.remove();
+            }
         }
     }
 

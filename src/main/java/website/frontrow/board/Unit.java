@@ -252,6 +252,13 @@ public abstract class Unit
     }
 
     /**
+     * Called when this unit collides with a wall.
+     */
+    public void onWallCollision()
+    {
+    }
+
+    /**
      * Ticks a unit in a given level context.
      * @param level Level context, for collision checking.
      */
@@ -272,6 +279,10 @@ public abstract class Unit
         if(!this.handler.checkCellCollision(location, movement, this))
         {
             this.location = this.location.add(movement);
+        }
+        else
+        {
+            this.onWallCollision();
         }
 
         applyGravity();

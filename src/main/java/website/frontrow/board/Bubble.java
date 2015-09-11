@@ -51,4 +51,10 @@ public class Bubble extends Unit
     {
         return ss.getBubbleSprite();
     }
+
+    @Override
+    public void onWallCollision()
+    {
+        this.kill();
+    }
 }
