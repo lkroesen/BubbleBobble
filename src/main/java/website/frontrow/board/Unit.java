@@ -1,10 +1,12 @@
 package website.frontrow.board;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import website.frontrow.Game;
 import website.frontrow.level.Level;
 import website.frontrow.sprite.Sprite;
+import website.frontrow.util.CollisionHandler;
 import website.frontrow.util.Point;
 
 /**
@@ -37,6 +39,9 @@ public abstract class Unit
     private Point newMotion;
 
     public static final int MAX_SPEED = 60;
+    
+    private CollisionHandler handler;
+    
 
     /**
      * Constructor of the Unit Class.
@@ -52,7 +57,7 @@ public abstract class Unit
         this.location = location;
         this.motion = motion;
 
-        this.newMotion = new Point(0, 0);
+        this.newMotion = new Point(0, 0);  
     }
 
     /**
@@ -202,9 +207,18 @@ public abstract class Unit
         double x = this.motion.getX();
         this.motion.setX(Math.max(Math.min(x, MAX_SPEED), -MAX_SPEED));
 
-        // Move the unit without checking for collisions. (For now)
-        this.location = this.location.add(motion.divide(Game.TICKS_PER_SEC));
+        Point movement = motion.divide(Game.TICKS_PER_SEC);
+        
+        this.handler = new CollisionHandler(level);
+ 
+        this.handler.checkUnitCollision(location, movement, this);
+        //TODO: Improve the way cell collisions are handled.
+        if(!this.handler.checkCellCollision(location, movement, this)){
+        	this.location = this.location.add(movement);
+        } 
+
         this.motion.setX(0);
+        
     }
 
     /**
