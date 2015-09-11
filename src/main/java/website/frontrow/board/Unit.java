@@ -1,7 +1,6 @@
 package website.frontrow.board;
 
 import java.awt.Graphics;
-import java.util.ArrayList;
 
 import website.frontrow.Game;
 import website.frontrow.level.Level;
@@ -38,7 +37,15 @@ public abstract class Unit
      */
     private Point newMotion;
 
-    public static final int MAX_SPEED = 60;
+    /**
+     * The maximum x speed.
+     */
+    public static final int MAX_X_SPEED = 60;
+
+    /**
+     * The maximum y speed.
+     */
+    public static final int MAX_Y_SPEED = 20;
     
     private CollisionHandler handler;
     
@@ -195,33 +202,6 @@ public abstract class Unit
     }
 
     /**
-     * Ticks a unit in a given level context.
-     * @param level Level context, for collision checking.
-     */
-    public void tick(Level level)
-    {
-        // Add the new motion to the current motion.
-        this.motion = this.motion.add(newMotion);
-        this.newMotion = new Point(0, 0);
-
-        double x = this.motion.getX();
-        this.motion.setX(Math.max(Math.min(x, MAX_SPEED), -MAX_SPEED));
-
-        Point movement = motion.divide(Game.TICKS_PER_SEC);
-        
-        this.handler = new CollisionHandler(level);
- 
-        this.handler.checkUnitCollision(location, movement, this);
-        //TODO: Improve the way cell collisions are handled.
-        if(!this.handler.checkCellCollision(location, movement, this)){
-        	this.location = this.location.add(movement);
-        } 
-
-        this.motion.setX(0);
-        
-    }
-
-    /**
      * Returns the sprite of the unit.
      * @return The sprite.
      */
@@ -241,5 +221,54 @@ public abstract class Unit
     	int xCoordinate = (int) (location.getX() * width + x);
     	int yCoordinate = (int) (location.getY() * height + y);
     	getSprite().draw(g, xCoordinate, yCoordinate, width, height);
+    }
+
+    /**
+     * Ticks a unit in a given level context.
+     * @param level Level context, for collision checking.
+     */
+    public void tick(Level level)
+    {
+        // Add the new motion to the current motion.
+        this.motion = this.motion.add(newMotion);
+        this.newMotion = new Point(0, 0);
+
+        double x = this.motion.getX();
+        this.motion.setX(Math.max(Math.min(x, MAX_X_SPEED), -MAX_X_SPEED));
+
+        Point movement = motion.divide(Game.TICKS_PER_SEC);
+
+        this.handler = new CollisionHandler(level);
+        this.handler.checkUnitCollision(location, movement, this);
+        //TODO: Improve the way cell collisions are handled.
+        if(!this.handler.checkCellCollision(location, movement, this))
+        {
+            this.location = this.location.add(movement);
+        }
+
+        applyGravity();
+
+        if(this.motion.getY() == 0)
+        {
+            this.motion.setX(0);
+        }
+    }
+
+    /**
+     * Applies the gravity to the unit.
+     */
+    private void applyGravity()
+    {
+        this.motion.setY(Math.max(-MAX_Y_SPEED, this.motion.getY() - Game.GRAVITY));
+        Point movement = motion.divide(Game.TICKS_PER_SEC);
+
+        if(!this.handler.checkCellCollision(location, movement, this))
+        {
+            this.location = this.location.add(movement);
+        }
+        else
+        {
+            this.motion.setY(0);
+        }
     }
 }

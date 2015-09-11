@@ -32,7 +32,7 @@ public class CellTest
     public void testPlatformCollision1()
     {
         Unit unit = new Bubble(new Point(0, 0), new Point(0, 5));
-        assertFalse(Cell.PLATFORM.collides(unit));
+        assertTrue(Cell.PLATFORM.collides(unit));
     }
 
     /**
@@ -42,7 +42,7 @@ public class CellTest
     public void testPlatformCollision2()
     {
         Unit unit = new Bubble(new Point(0, 0), new Point(0, 0));
-        assertTrue(Cell.PLATFORM.collides(unit));
+        assertFalse(Cell.PLATFORM.collides(unit));
     }
 
     /**
