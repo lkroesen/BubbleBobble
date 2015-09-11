@@ -2,9 +2,6 @@ package website.frontrow.util;
 
 import java.util.ArrayList;
 
-import website.frontrow.board.Bubble;
-import website.frontrow.board.Enemy;
-import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
 import website.frontrow.level.Level;
 
@@ -13,7 +10,7 @@ import website.frontrow.level.Level;
  */
 public class CollisionHandler
 {
-
+    private static final double LOC_OFFSET = 0.99d;
     private Level level;
 
     
@@ -28,7 +25,7 @@ public class CollisionHandler
     }
     
     /**
-     * Create an ArrayList with box values for a unit
+     * Create an ArrayList with box values for a unit.
      * @param location
      * Input the location point of a Unit
      * @return
@@ -38,16 +35,18 @@ public class CollisionHandler
     {   	
     	ArrayList<Point> aabb = new ArrayList<>();
         aabb.add(new Point(location.getX(), location.getY()));
-        aabb.add(new Point(location.getX(), location.getY() + 0.99));
-        aabb.add(new Point(location.getX() + 0.99, location.getY()));
-        aabb.add(new Point(location.getX() + 0.99, location.getY() + 0.99));
+        aabb.add(new Point(location.getX(), location.getY() + LOC_OFFSET));
+        aabb.add(new Point(location.getX() + LOC_OFFSET, location.getY()));
+        aabb.add(new Point(location.getX() + LOC_OFFSET, location.getY() + LOC_OFFSET));
         return aabb;
     }
 
     /**
      * Check if a unit collides with another unit. Call collisionApplier if it does.
-     * The idea is that we check the units projected location against the boxed locations of all other units in a loop.
-     * If any of the box corners of the moving unit falls within the box of another unit there is a collision.
+     * The idea is that we check the units projected location against the boxed
+     * locations of all other units in a loop.
+     * If any of the box corners of the moving unit falls within
+     * the box of another unit there is a collision.
      * There is also a check to filter whether the unit is colliding with itself.
      * @param loc
      * The location of the current unit
@@ -62,16 +61,20 @@ public class CollisionHandler
     	ArrayList<Point> aabbPlayer = buildBox(loc);
     	ArrayList<Unit> other = this.level.getUnits();
     	
-    	for(int k = 0; k < other.size(); k ++){   		  		
+    	for(int k = 0; k < other.size(); k++)
+        {
 	    	for(int i = 0; i < aabbPlayer.size(); i++)
 	    	{
 	    		double currentX = aabbPlayer.get(i).getX();
 	    		double currentY = aabbPlayer.get(i).getY();
 	    		double otherX = other.get(k).getLocation().getX();
 	    		double otherY = other.get(k).getLocation().getY();
-	    		if( currentX >= otherX && currentY >= otherY && currentX < (otherX + 1) && currentY < (otherY + 1) && other.get(k) != unit)
+	    		if      (currentX >= otherX
+                        && currentY >= otherY
+                        && currentX < (otherX + 1) && currentY < (otherY + 1)
+                        && other.get(k) != unit)
 	    		{ 
-	    			collisionApplier(other.get(k), unit);
+	    			// TODO: Apply Collision ( OLD: collisionApplier(other.get(k), unit); )
 	    		}
 	    	}
 		}   	
@@ -97,69 +100,15 @@ public class CollisionHandler
     		aabb.set(i, aabb.get(i).add(mov));
     		int x = (int) aabb.get(i).getX();
     		int y = (int) aabb.get(i).getY();
-    		if(level.getCells() == null || level.getCells().get(x,y) == null){
+    		if(level.getCells() == null || level.getCells().get(x, y) == null)
+            {
     			return true;
     		}			
-    		if(level.getCells().get(x,y).collides(unit))
+    		if(level.getCells().get(x, y).collides(unit))
     		{ 			
     			return true;
     		}
     	}
     	return false;
-    }
-
-
-
-    /**
-     * This method applies the effect that is caused by the collision of 2 Units.
-     * <ul>
-     *     <li>Player moves onto an Enemy : Lose 1 life</li>
-     *     <li>Enemy moves onto a Player : Lose 1 life</li>
-     *     <li>Player hits a bubble : Player Jumps</li>
-     *     <li>Bubble hits a wall : Bubble loses 1 "life"</li>
-     *     <li>Bubble contains an enemy and gets hit by the player from the top
-     *          : Enemy lose 1 life</li>
-     * </ul>
-     * @param uCurrent
-     * Input the Unit that initiated the move.
-     * @param uOther
-     * Input the Unit that gets moved onto.
-     * TODO: Overhaul this method to avoid instanceof.
-     */
-    private void collisionApplier(Unit uCurrent, Unit uOther)
-    {
-        if (uCurrent instanceof Player)
-        {
-            if (uOther instanceof Enemy)
-            {
-                // Meep
-            }
-            else if (uOther instanceof Bubble)
-            {
-                // TODO Perform Jump Action
-                if (((Bubble) uOther).getContains() instanceof Enemy)
-                {
-
-                }
-            }
-            // TODO Player hits wall? Wall as Unit?
-        }
-        else if (uCurrent instanceof Enemy)
-        {
-            if (uOther instanceof Player)
-            {
-                // Watch out with this, because if the enemy and player moved to the same spot
-                // at the same time, that would cause an instakill
-                // TODO: Add Invincibility frames.
-                // BOOP
-            }
-        }
-        else if (uCurrent instanceof Bubble)
-        {
-            if (uOther instanceof Player)
-            {
-
-            }
-        }
     }
 }
