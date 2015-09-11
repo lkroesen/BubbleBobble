@@ -14,6 +14,7 @@ import website.frontrow.util.Point;
 public abstract class Unit
 {
     private static final int MOVE_MOD = 7;
+    private static final int GRAVITY_MOD = 16;
     private Direction direction;
     private Direction faceLeft;
    
@@ -206,9 +207,12 @@ public abstract class Unit
      */
     private void updateDirection()
     {
-        if (motion.getX() > 0) {
+        if (motion.getX() > 0)
+        {
             this.setDirection(Direction.RIGHT);
-        } else if (motion.getX() < 0) {
+        }
+        else if (motion.getX() < 0)
+        {
             this.setDirection(Direction.LEFT);
         }
         // Keep current direction if motion is zero.
@@ -221,7 +225,7 @@ public abstract class Unit
         if(this.motion.getY() == 0)
         {
             this.motion.setY(0);
-            this.newMotion = new Point(this.newMotion.getX(), -16*MAX_Y_SPEED);
+            this.newMotion = new Point(this.newMotion.getX(), -GRAVITY_MOD * MAX_Y_SPEED);
         }
     }
 

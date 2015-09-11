@@ -58,6 +58,7 @@ public class JBubbleBobbleUI extends JFrame
     /**
      * Starts the game UI.
      */
+    @SuppressWarnings("checkstyle:magicnumber")
     public final void start()
     {
         setVisible(true);
@@ -68,7 +69,7 @@ public class JBubbleBobbleUI extends JFrame
         service.scheduleAtFixedRate(() ->
         {
             drawNextFrame();
-        }, 0, 1000/FRAME_REFRESH_RATE, TimeUnit.MILLISECONDS);
+        }, 0, 1000 / FRAME_REFRESH_RATE, TimeUnit.MILLISECONDS);
     }
 
     /**
