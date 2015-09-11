@@ -4,7 +4,7 @@
     <groupId>website.frontrow</groupId>
     <artifactId>jbubble-bobble</artifactId>
     <packaging>jar</packaging>
-    <version>0.0-SNAPSHOT</version>
+    <version>0.1</version>
     <name>jbubble-bobble</name>
     <url>https://github.com/lkroesen/BubbleBobble</url>
     <dependencies>
