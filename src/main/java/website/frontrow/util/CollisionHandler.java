@@ -2,6 +2,9 @@ package website.frontrow.util;
 
 import java.util.ArrayList;
 
+import website.frontrow.board.Bubble;
+import website.frontrow.board.Enemy;
+import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
 import website.frontrow.level.Level;
 
@@ -73,13 +76,63 @@ public class CollisionHandler
                         && currentY >= otherY
                         && currentX < (otherX + 1) && currentY < (otherY + 1)
                         && other.get(k) != unit)
-	    		{ 
-	    			// TODO: Apply Collision ( OLD: collisionApplier(other.get(k), unit); )
+	    		{
+
+					applyCollision(unit, other.get(k));
 	    		}
 	    	}
 		}   	
-    } 
-    
+    }
+
+	/**
+	 * Call the method that handles collisions.
+	 */
+	// TODO: Swap this out for something fancy that uses reflection. But this works fine for now.
+	public void applyCollision(Unit collider, Unit colidee)
+	{
+		if(collider instanceof Player)
+		{
+			playerCollision((Player)collider, colidee);
+		}
+		else if (colidee instanceof Player)
+		{
+			playerCollision((Player)colidee, collider);
+		}
+
+		if(collider instanceof Bubble)
+		{
+			bubbleCollision((Bubble) collider, colidee);
+		}
+		else if(colidee instanceof Bubble)
+		{
+			bubbleCollision((Bubble) colidee, collider);
+		}
+	}
+
+	/**
+	 * Called when a player collides with another unit.
+	 * @param other The unit that was collided with.
+	 */
+	public void playerCollision(Player player, Unit other)
+	{
+		// TODO: Make the player lose a life or something else.
+	}
+
+	/**
+	 * Called when a bubble collides with another unit.
+	 * @param other The unit that was collided with.
+	 */
+	public void bubbleCollision(Bubble bubble, Unit other)
+	{
+		if(other instanceof Enemy)
+		{
+			bubble.capture((Enemy) other);
+			// Kill the bubble for now.
+			bubble.kill();
+		}
+
+	}
+
     /**
      * Checks if a units projected movement makes it collide with a cell that is non-empty.
      * @param loc

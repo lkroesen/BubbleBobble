@@ -292,7 +292,7 @@ public abstract class Unit
     /**
      * Applies the gravity to the unit.
      */
-    private void applyGravity()
+    protected void applyGravity()
     {
         this.motion.setY(Math.max(MAX_Y_SPEED, this.motion.getY() - Game.GRAVITY));
         Point movement = motion.divide(Game.TICKS_PER_SEC);

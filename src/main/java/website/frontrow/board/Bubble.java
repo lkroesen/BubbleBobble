@@ -37,6 +37,17 @@ public class Bubble extends Unit
     }
 
     /**
+     * Capture other.
+     * @param other The enemy to capture.
+     */
+    public void capture(Enemy other)
+    {
+        this.contains = other;
+        // Kill the enemy for good measure. (Do not forget to revive and readd to the level when he escapes.)
+        other.kill();
+    }
+
+    /**
      * Set an enemy to be contained by a bubble.
      * @param contains
      * Sets the enemy as contained by the bubble.
@@ -56,5 +67,11 @@ public class Bubble extends Unit
     public void onWallCollision()
     {
         this.kill();
+    }
+
+    @Override
+    public void applyGravity()
+    {
+        // Ignore gravity.
     }
 }
