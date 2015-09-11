@@ -10,7 +10,7 @@ import website.frontrow.util.Point;
  */
 public class Bubble extends Unit
 {
-    private static final SpriteStore ss = new SpriteStore();
+    public static final SpriteStore ss = new SpriteStore();
 
     // A bubble can contain an enemy.
     private Enemy contains;
