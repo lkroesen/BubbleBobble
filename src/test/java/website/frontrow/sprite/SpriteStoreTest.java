@@ -7,12 +7,15 @@ import website.frontrow.board.Direction;
 import static org.junit.Assert.assertNotNull;
 
 /**
- * Test Sprite Store
+ * Test Sprite Store.
  */
 public class SpriteStoreTest
 {
     private Sprite s;
 
+    /**
+     * Teardown, run after every test.
+     */
     @After
     public void teardown()
     {
