@@ -21,6 +21,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  * Test whether the collisionhandler handles preexisting collisions correctly.
  */
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("checkstyle:visibilitymodifier")
 public class CollisionHandlerTest
 {
     @Mock Player player;

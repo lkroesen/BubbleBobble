@@ -38,7 +38,11 @@ public class SpriteStore
         
     }
 
-
+	/**
+	 * The Bubble sprite.
+	 * @return
+	 * The sprite.
+	 */
 	public Sprite getBubbleSprite()
 	{
 		StaticImageSprite sprite = spriteMap.get("Bubble");

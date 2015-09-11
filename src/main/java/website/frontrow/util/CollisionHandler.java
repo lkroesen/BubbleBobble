@@ -9,7 +9,7 @@ import website.frontrow.board.Unit;
 import website.frontrow.level.Level;
 
 /**
- * Created by lkroesen on 02/09/2015.
+ * This Class is for handling collisions during the game.
  */
 public class CollisionHandler
 {

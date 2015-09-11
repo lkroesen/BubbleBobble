@@ -150,7 +150,10 @@ public class ImageStore
         }
     }
 
-
+    /**
+     * Returns the image for the bubble.
+     * @return The image.
+     */
     public Image getBubbleImage()
     {
         try

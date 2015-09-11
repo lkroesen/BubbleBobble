@@ -6,6 +6,7 @@ import website.frontrow.level.Level;
 import website.frontrow.level.MapParser;
 import website.frontrow.ui.Action;
 import website.frontrow.ui.JBubbleBobbleUI;
+import website.frontrow.util.MusicPlayer;
 import website.frontrow.util.Point;
 
 import java.awt.event.KeyEvent;
@@ -20,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Instantiates the game so it can be played.
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class Launcher
 {
     /**
@@ -52,19 +54,22 @@ public class Launcher
             Level level = mp.parseMap(map);
             Game game = new Game(level, level.getPlayers());
             Map<Integer, Action> keyMappings = createSinglePlayerKeyMappings(game);
-
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
+
             ui.start();
+
+            MusicPlayer musicPlayer = new MusicPlayer();
+            musicPlayer.playBGM();
 
             ScheduledExecutorService service = Executors
                     .newSingleThreadScheduledExecutor();
 
-            service.scheduleAtFixedRate(game::tick, 0, 1000/Game.TICKS_PER_SEC, TimeUnit.MILLISECONDS);
+            service.scheduleAtFixedRate(game::tick, 0, 1000 / Game.TICKS_PER_SEC,
+                    TimeUnit.MILLISECONDS);
         } catch (IOException e)
         {
             throw new RuntimeException();
         }
-
     }
 
     /**
@@ -72,6 +77,7 @@ public class Launcher
      * @param game The game to control with the keys.
      * @return The mapping.
      */
+    @SuppressWarnings("checkstyle:methodlength")
     private Map<Integer, Action> createSinglePlayerKeyMappings(Game game)
     {
         Map<Integer, Action> map = new HashMap<>();
@@ -98,7 +104,9 @@ public class Launcher
                 if(game.isRunning())
                 {
                     Player p = game.getPlayers().get(0);
-                    game.getLevel().getUnits().add(new Bubble(p.getLocation(), new Point(p.getDirection().getDeltaX() * 4, 0)));
+                    game.getLevel().getUnits().add(
+                            new Bubble(p.getLocation(),
+                                    new Point(p.getDirection().getDeltaX() * 4, 0)));
                 }
             });
         }
