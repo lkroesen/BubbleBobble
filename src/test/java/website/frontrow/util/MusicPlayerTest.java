@@ -1,6 +1,11 @@
 package website.frontrow.util;
 
+import org.junit.Before;
 import org.junit.Test;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Line;
+import javax.sound.sampled.Port;
 
 import static org.junit.Assert.assertEquals;
 
@@ -23,6 +28,31 @@ public class MusicPlayerTest
     private static final String TEN     = "Title Screen.mp3";
     private static final String ELVN    = "Victory!.mp3";
 
+    private boolean noAudio;
+
+    /**
+     * Run before a test to identify no Audio devices.
+     */
+    @Before
+    public void setup()
+    {
+        Line.Info[] audioDevicesList = new Line.Info[4];
+        audioDevicesList[0] = Port.Info.SPEAKER;
+        audioDevicesList[1] = Port.Info.HEADPHONE;
+        audioDevicesList[2] = Port.Info.COMPACT_DISC;
+        audioDevicesList[3] = Port.Info.LINE_OUT;
+
+        for (int c = 0; c < audioDevicesList.length; c++)
+        {
+            if (AudioSystem.isLineSupported(audioDevicesList[c]))
+            {
+                noAudio = false;
+                return;
+            }
+        }
+        noAudio = true;
+    }
+
 
     /**
      * Test if the BGM will be played.
@@ -32,7 +62,15 @@ public class MusicPlayerTest
     {
         MusicPlayer mp = new MusicPlayer();
         mp.playBGM();
-        assertEquals(mp.getCurrSound(), DIR + ZERO);
+
+        if (noAudio)
+        {
+            assertEquals(mp.getCurrSound(), null);
+        }
+        else
+        {
+            assertEquals(mp.getCurrSound(), DIR + ZERO);
+        }
     }
 
     /**
@@ -53,7 +91,15 @@ public class MusicPlayerTest
     {
         MusicPlayer mp = new MusicPlayer();
         mp.playSelection(0);
-        assertEquals(mp.getCurrSound(), DIR + ZERO);
+
+        if (noAudio)
+        {
+            assertEquals(mp.getCurrSound(), null);
+        }
+        else
+        {
+            assertEquals(mp.getCurrSound(), DIR + ZERO);
+        }
     }
 
     /**
@@ -64,7 +110,15 @@ public class MusicPlayerTest
     {
         MusicPlayer mp = new MusicPlayer();
         mp.playSelection(1);
-        assertEquals(mp.getCurrSound(), DIR + ONE);
+
+        if (noAudio)
+        {
+            assertEquals(mp.getCurrSound(), null);
+        }
+        else
+        {
+            assertEquals(mp.getCurrSound(), DIR + ONE);
+        }
     }
 
     /**
@@ -75,7 +129,15 @@ public class MusicPlayerTest
     {
         MusicPlayer mp = new MusicPlayer();
         mp.playSelection(2);
-        assertEquals(mp.getCurrSound(), DIR + TWO);
+
+        if (noAudio)
+        {
+            assertEquals(mp.getCurrSound(), null);
+        }
+        else
+        {
+            assertEquals(mp.getCurrSound(), DIR + TWO);
+        }
     }
 
     /**
@@ -86,7 +148,15 @@ public class MusicPlayerTest
     {
         MusicPlayer mp = new MusicPlayer();
         mp.playSelection(3);
-        assertEquals(mp.getCurrSound(), DIR + THREE);
+
+        if (noAudio)
+        {
+            assertEquals(mp.getCurrSound(), null);
+        }
+        else
+        {
+            assertEquals(mp.getCurrSound(), DIR + THREE);
+        }
     }
 
     /**
@@ -97,7 +167,15 @@ public class MusicPlayerTest
     {
         MusicPlayer mp = new MusicPlayer();
         mp.playSelection(4);
-        assertEquals(mp.getCurrSound(), DIR + FOUR);
+
+        if (noAudio)
+        {
+            assertEquals(mp.getCurrSound(), null);
+        }
+        else
+        {
+            assertEquals(mp.getCurrSound(), DIR + FOUR);
+        }
     }
 
     /**
@@ -108,7 +186,15 @@ public class MusicPlayerTest
     {
         MusicPlayer mp = new MusicPlayer();
         mp.playSelection(5);
-        assertEquals(mp.getCurrSound(), DIR + FIVE);
+
+        if (noAudio)
+        {
+            assertEquals(mp.getCurrSound(), null);
+        }
+        else
+        {
+            assertEquals(mp.getCurrSound(), DIR + FIVE);
+        }
     }
 
     /**
@@ -119,7 +205,15 @@ public class MusicPlayerTest
     {
         MusicPlayer mp = new MusicPlayer();
         mp.playSelection(6);
-        assertEquals(mp.getCurrSound(), DIR + SIX);
+
+        if (noAudio)
+        {
+            assertEquals(mp.getCurrSound(), null);
+        }
+        else
+        {
+            assertEquals(mp.getCurrSound(), DIR + SIX);
+        }
     }
 
     /**
@@ -130,7 +224,15 @@ public class MusicPlayerTest
     {
         MusicPlayer mp = new MusicPlayer();
         mp.playSelection(7);
-        assertEquals(mp.getCurrSound(), DIR + SEVEN);
+
+        if (noAudio)
+        {
+            assertEquals(mp.getCurrSound(), null);
+        }
+        else
+        {
+            assertEquals(mp.getCurrSound(), DIR + SEVEN);
+        }
     }
 
     /**
@@ -141,7 +243,15 @@ public class MusicPlayerTest
     {
         MusicPlayer mp = new MusicPlayer();
         mp.playSelection(8);
-        assertEquals(mp.getCurrSound(), DIR + EIGHT);
+
+        if (noAudio)
+        {
+            assertEquals(mp.getCurrSound(), null);
+        }
+        else
+        {
+            assertEquals(mp.getCurrSound(), DIR + EIGHT);
+        }
     }
 
     /**
@@ -152,7 +262,15 @@ public class MusicPlayerTest
     {
         MusicPlayer mp = new MusicPlayer();
         mp.playSelection(9);
-        assertEquals(mp.getCurrSound(), DIR + NINE);
+
+        if (noAudio)
+        {
+            assertEquals(mp.getCurrSound(), null);
+        }
+        else
+        {
+            assertEquals(mp.getCurrSound(), DIR + NINE);
+        }
     }
 
     /**
@@ -163,7 +281,15 @@ public class MusicPlayerTest
     {
         MusicPlayer mp = new MusicPlayer();
         mp.playSelection(10);
-        assertEquals(mp.getCurrSound(), DIR + TEN);
+
+        if (noAudio)
+        {
+            assertEquals(mp.getCurrSound(), null);
+        }
+        else
+        {
+            assertEquals(mp.getCurrSound(), DIR + TEN);
+        }
     }
 
     /**
@@ -174,7 +300,15 @@ public class MusicPlayerTest
     {
         MusicPlayer mp = new MusicPlayer();
         mp.playSelection(11);
-        assertEquals(mp.getCurrSound(), DIR + ELVN);
+
+        if (noAudio)
+        {
+            assertEquals(mp.getCurrSound(), null);
+        }
+        else
+        {
+            assertEquals(mp.getCurrSound(), DIR + ELVN);
+        }
     }
 
 }

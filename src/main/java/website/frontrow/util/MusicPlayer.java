@@ -19,12 +19,15 @@ public class MusicPlayer
     private String currSound;
     private FloatControl volume;
     private boolean volumeInitialized;
+    private boolean noAudio;
 
     /**
      * Constructor is empty.
      */
     public MusicPlayer()
     {
+        // Check for audio devices
+        getAudioDevice();
         volumeInitialized = false;
         threadActive = false;
     }
@@ -35,6 +38,10 @@ public class MusicPlayer
     @Deprecated
     public void playBGM()
     {
+        if (noAudio)
+        {
+            return;
+        }
         play("/sound/Quest Begins.mp3");
     }
 
@@ -60,6 +67,17 @@ public class MusicPlayer
     @SuppressWarnings("checkstyle:magicnumber")
     public void playSelection(int selection)
     {
+        if (selection < 0 || selection > 11)
+        {
+            throw new RuntimeException("Wrong Selection");
+        }
+
+        if (noAudio)
+        {
+
+            return;
+        }
+
         switch(selection)
         {
             case 0  : play("/sound/Quest Begins.mp3");  break;
@@ -74,7 +92,7 @@ public class MusicPlayer
             case 9  : play("/sound/Thank You!.mp3");    break;
             case 10 : play("/sound/Title Screen.mp3");  break;
             case 11 : play("/sound/Victory!.mp3");      break;
-            default : throw new RuntimeException("Unknown Selection");
+            default : throw new RuntimeException("Wrong Selection");
         }
     }
 
@@ -86,6 +104,11 @@ public class MusicPlayer
     @SuppressWarnings("checkstyle:methodlength")
     private void play(String filename)
     {
+        if (noAudio)
+        {
+            return;
+        }
+
         if (threadActive)
         {
             stopSound();
@@ -125,6 +148,11 @@ public class MusicPlayer
      */
     public void stopSound()
     {
+        if (noAudio)
+        {
+            return;
+        }
+
         mt.kill();
     }
 
@@ -133,6 +161,11 @@ public class MusicPlayer
      */
     private void makeFloatControl()
     {
+        if (noAudio)
+        {
+            return;
+        }
+
         Info device = getAudioDevice();
         assert device != null;
 
@@ -158,6 +191,11 @@ public class MusicPlayer
      */
     public void volumeAdjust(float deltaVolume)
     {
+        if (noAudio)
+        {
+            return;
+        }
+
         if (!volumeInitialized)
         {
             makeFloatControl();
@@ -184,9 +222,11 @@ public class MusicPlayer
         {
             if (AudioSystem.isLineSupported(audioDevicesList[c]))
             {
+                noAudio = false;
                 return audioDevicesList[c];
             }
         }
+        noAudio = true;
         return null;
     }
 
