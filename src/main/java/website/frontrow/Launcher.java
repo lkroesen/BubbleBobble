@@ -24,12 +24,14 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings("checkstyle:magicnumber")
 public class Launcher
 {
+    private MusicPlayer musicPlayer;
+
     /**
      * Construct a launcher, currently not doing anything.
      */
     public Launcher()
     {
-
+        musicPlayer = new MusicPlayer();
     }
 
     /**
@@ -58,9 +60,7 @@ public class Launcher
 
             ui.start();
 
-            // Find better spot for this
-            MusicPlayer musicPlayer = new MusicPlayer();
-            musicPlayer.playBGM();
+
 
             ScheduledExecutorService service = Executors
                     .newSingleThreadScheduledExecutor();
@@ -108,6 +108,129 @@ public class Launcher
                     game.getLevel().getUnits().add(
                             new Bubble(p.getLocation(),
                                     new Point(p.getDirection().getDeltaX() * 4, 0)));
+                }
+            });
+
+            // Keys 1-0 & -, =, SOUND CONTROL
+            map.put(KeyEvent.VK_1, () ->
+            {
+                if (game.isRunning())
+                {
+                    musicPlayer.playSelection(0);
+                }
+            });
+
+            map.put(KeyEvent.VK_2, () ->
+            {
+                if (game.isRunning())
+                {
+                    musicPlayer.playSelection(1);
+                }
+            });
+
+            map.put(KeyEvent.VK_3, () ->
+            {
+                if (game.isRunning())
+                {
+                    musicPlayer.playSelection(2);
+                }
+            });
+
+            map.put(KeyEvent.VK_4, () ->
+            {
+                if (game.isRunning())
+                {
+                    musicPlayer.playSelection(3);
+                }
+            });
+
+            map.put(KeyEvent.VK_5, () ->
+            {
+                if (game.isRunning())
+                {
+                    musicPlayer.playSelection(4);
+                }
+            });
+
+            map.put(KeyEvent.VK_6, () ->
+            {
+                if (game.isRunning())
+                {
+                    musicPlayer.playSelection(5);
+                }
+            });
+
+            map.put(KeyEvent.VK_7, () ->
+            {
+                if (game.isRunning())
+                {
+                    musicPlayer.playSelection(6);
+                }
+            });
+
+            map.put(KeyEvent.VK_8, () ->
+            {
+                if (game.isRunning())
+                {
+                    musicPlayer.playSelection(7);
+                }
+            });
+
+            map.put(KeyEvent.VK_9, () ->
+            {
+                if (game.isRunning())
+                {
+                    musicPlayer.playSelection(8);
+                }
+            });
+
+            map.put(KeyEvent.VK_0, () ->
+            {
+                if (game.isRunning())
+                {
+                    musicPlayer.playSelection(9);
+                }
+            });
+
+            map.put(KeyEvent.VK_OPEN_BRACKET, () ->
+            {
+                if (game.isRunning())
+                {
+                    musicPlayer.playSelection(10);
+                }
+            });
+
+            map.put(KeyEvent.VK_CLOSE_BRACKET, () ->
+            {
+                if (game.isRunning())
+                {
+                    musicPlayer.playSelection(11);
+                }
+            });
+
+            // Volume Control
+            map.put(KeyEvent.VK_MINUS, () ->
+            {
+                if (game.isRunning())
+                {
+                    musicPlayer.volumeAdjust(-0.1f);
+                }
+            });
+
+            map.put(KeyEvent.VK_EQUALS, () ->
+            {
+                if (game.isRunning())
+                {
+                    musicPlayer.volumeAdjust(0.1f);
+                }
+            });
+
+            // Restart Sound
+            map.put(KeyEvent.VK_BACK_SPACE, () ->
+            {
+                if (game.isRunning())
+                {
+                    musicPlayer.stopSound();
                 }
             });
         }
