@@ -153,7 +153,11 @@ public class MusicPlayer
             return;
         }
 
-        mt.kill();
+        if (threadActive)
+        {
+            mt.kill();
+            threadActive = false;
+        }
     }
 
     /**
