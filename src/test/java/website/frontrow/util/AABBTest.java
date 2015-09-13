@@ -57,4 +57,15 @@ public class AABBTest {
         assertFalse(aabb1.overlaps(aabb2));
         assertFalse(aabb2.overlaps(aabb1));
     }
+
+    @Test
+    public void testSingleAxisOverlaps()
+    {
+        AABB aabb1 = new AABB(new Point(0, 0), new Point(3, 1));
+        AABB aabb2 = new AABB(new Point(2, 2), new Point(3, 3));
+
+        assertFalse(aabb1.overlaps(aabb2));
+        assertFalse(aabb2.overlaps(aabb1));
+    }
+
 }
