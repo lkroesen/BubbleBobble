@@ -16,7 +16,7 @@ public class StatusLabelPanel extends JPanel
     private JLabel runningLabel;
 
     /**
-     * Creates an status label panel.
+     * Creates a status label panel.
      * @param game The game to report on.
      */
     public StatusLabelPanel(Game game)
@@ -25,6 +25,17 @@ public class StatusLabelPanel extends JPanel
         this.runningLabel = new JLabel("Paused");
 
         add(this.runningLabel);
+    }
+
+    /**
+     * Getter for runningLabel.
+     * @return runningLabel JLabel
+     */
+    public JLabel getRunningLabel()
+    {
+
+        return runningLabel;
+
     }
 
     @Override
