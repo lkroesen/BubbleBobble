@@ -3,7 +3,8 @@ package website.frontrow.util;
 /**
  * Denotes an axis aligned bounding box.
  */
-public class AABB {
+public class AABB
+{
     /**
      * Starting point.
      */
@@ -66,6 +67,8 @@ public class AABB {
 
     /**
      * Whether two AABB's overlap.
+     * @param other The other AABB
+     * @return Whether the two AABBs overlap
      */
     public boolean overlaps(AABB other)
     {
