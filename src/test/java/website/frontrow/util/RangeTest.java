@@ -9,7 +9,8 @@ import static org.junit.Assert.assertTrue;
 /**
  * Tests the Range class.
  */
-public class RangeTest {
+public class RangeTest
+{
 
     /**
      * Test whether a simple range is stored correctly.

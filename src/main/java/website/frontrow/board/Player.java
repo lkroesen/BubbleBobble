@@ -53,7 +53,7 @@ public class Player extends Unit
     @Override
     public Sprite getSprite()
     {
-    	return ss.getPlayerSprite(this.getFace());
+    	return ss.getPlayerSprite(this.getDirection());
     }
 
     @Override

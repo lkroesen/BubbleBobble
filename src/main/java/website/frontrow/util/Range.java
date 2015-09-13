@@ -3,7 +3,8 @@ package website.frontrow.util;
 /**
  * Detones a continuous range.
  */
-public class Range {
+public class Range
+{
     /**
      * The starting value.
      */

@@ -9,7 +9,8 @@ import static org.junit.Assert.assertTrue;
 /**
  * Tests the AABB class.
  */
-public class AABBTest {
+public class AABBTest
+{
 
     /**
      * Test the contructor and the getters.
@@ -48,6 +49,9 @@ public class AABBTest {
         assertTrue(aabb2.overlaps(aabb1));
     }
 
+    /**
+     * Test whether the overlap returns false when they do not overlap.
+     */
     @Test
     public void testNoOverlaps()
     {

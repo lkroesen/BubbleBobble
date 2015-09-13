@@ -85,14 +85,16 @@ public class SpriteStore
      *             Allowed values: LEFT, RIGHT.
      * @return The sprite.
      */
-	@SuppressWarnings("checkstyle:methodlength")
+	// Don't suppress the method length warning, this method should really be refactored.
     public Sprite getPlayerSprite(Direction face)
     {
     	StaticImageSprite sprite;
     	
     	switch(face)
         {
-            case LEFT:
+			case UP:
+			case DOWN:
+			case LEFT:
             	sprite = spriteMap.get("PlayerLeft");
             	
             	if(sprite != null)
@@ -118,8 +120,8 @@ public class SpriteStore
             		spriteMap.put("PlayerRight", sprite);
             		return sprite;
             	}
-            default:
-                throw new IllegalArgumentException("Sprite direction can only be left or right");
+			default:
+				return new EmptySprite();
         }
     }
     
@@ -129,14 +131,15 @@ public class SpriteStore
      *             Allowed values: LEFT, RIGHT.
      * @return The sprite.
      */
-	@SuppressWarnings("checkstyle:methodlength")
+	// Don't suppress the method length warning, this method should really be refactored.
     public Sprite getEnemySprite(Direction face)
     {
         StaticImageSprite sprite;
         
     	switch(face)
         {
-
+			case UP:
+			case DOWN:
         	case LEFT:
             	sprite = spriteMap.get("EnemyLeft");
             	
@@ -158,13 +161,12 @@ public class SpriteStore
             		return sprite;
             	}
             	else
-                {
-            		sprite = new StaticImageSprite(is.getEnemyRightImage());
-            		spriteMap.put("EnemyRight", sprite);
-            		return sprite;
-            	}
-            default:
-                throw new IllegalArgumentException("Sprite direction can only be left or right");
+				{
+					sprite = new StaticImageSprite(is.getEnemyRightImage());
+					spriteMap.put("EnemyRight", sprite);
+					return sprite;
+				}
+			default: return new EmptySprite();
         }
     }
 }
