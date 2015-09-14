@@ -1,6 +1,7 @@
 package website.frontrow.ui;
 
 import website.frontrow.Game;
+import website.frontrow.util.GameConstants;
 
 import java.util.Map;
 
@@ -20,10 +21,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class JBubbleBobbleUI extends JFrame
 {
-    /**
-     * The number of frames per second at which the game refreshes.
-     */
-    private static final int FRAME_REFRESH_RATE = 60;
 
     private PlayingFieldPanel pfp;
     private SidePanel sp;
@@ -69,7 +66,7 @@ public class JBubbleBobbleUI extends JFrame
         service.scheduleAtFixedRate(() ->
         {
             drawNextFrame();
-        }, 0, 1000 / FRAME_REFRESH_RATE, TimeUnit.MILLISECONDS);
+        }, 0, 1000 / GameConstants.FRAME_REFRESH_RATE, TimeUnit.MILLISECONDS);
     }
 
     /**

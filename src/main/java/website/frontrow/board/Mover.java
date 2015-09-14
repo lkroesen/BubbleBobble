@@ -1,8 +1,8 @@
 package website.frontrow.board;
 
-import website.frontrow.Game;
 import website.frontrow.level.Level;
 import website.frontrow.util.CollisionHandler;
+import website.frontrow.util.GameConstants;
 import website.frontrow.util.Point;
 
 /**
@@ -13,21 +13,7 @@ import website.frontrow.util.Point;
 public abstract class Mover
     extends Unit
 {
-    /**
-     * The maximum x speed.
-     */
-    public static final int MAX_X_SPEED = 60;
 
-    /**
-     * The maximum y speed.
-     */
-    public static final int MAX_Y_SPEED = 10;
-
-
-    private static final int MOVE_MOD = 7;
-
-
-    private static final int GRAVITY_MOD = 16;
 
     @SuppressWarnings("visibilitymodifier") // subclasses have to have access to this variable
     protected Direction direction;
@@ -111,7 +97,7 @@ public abstract class Mover
         // The horizontal orientation must immediately be changed, so the current horizontal motion
         // is set to 0.
         this.motion.setX(0);
-        this.newMotion = new Point(-MOVE_MOD, 0);
+        this.newMotion = new Point(-GameConstants.MOVE_STEP, 0);
     }
 
     /**
@@ -120,7 +106,7 @@ public abstract class Mover
     public void goRight()
     {
         this.motion.setX(0);
-        this.newMotion = new Point(MOVE_MOD, 0);
+        this.newMotion = new Point(GameConstants.MOVE_STEP, 0);
     }
 
     /**
@@ -147,7 +133,8 @@ public abstract class Mover
         if(this.motion.getY() == 0)
         {
             this.motion.setY(0);
-            this.newMotion = new Point(this.newMotion.getX(), -GRAVITY_MOD * MAX_Y_SPEED);
+            this.newMotion = new Point(this.newMotion.getX(),
+                    -GameConstants.GRAVITY_MOD * GameConstants.MAX_Y_SPEED);
         }
     }
 
@@ -169,9 +156,11 @@ public abstract class Mover
         this.newMotion = new Point(0, 0);
 
         double x = this.motion.getX();
-        this.motion.setX(Math.max(Math.min(x, MAX_X_SPEED), -MAX_X_SPEED));
+        this.motion.setX(
+                Math.max(Math.min(x, GameConstants.MAX_X_SPEED),
+                        -GameConstants.MAX_X_SPEED));
 
-        Point movement = motion.divide(Game.TICKS_PER_SEC);
+        Point movement = motion.divide(GameConstants.TICKS_PER_SEC);
 
         this.handler = new CollisionHandler(level);
         this.handler.checkMoverCollision(location, movement, this);
@@ -194,8 +183,9 @@ public abstract class Mover
      */
     protected void applyGravity()
     {
-        this.motion.setY(Math.max(MAX_Y_SPEED, this.motion.getY() - Game.GRAVITY));
-        Point movement = motion.divide(Game.TICKS_PER_SEC);
+        this.motion.setY(Math.max(GameConstants.MAX_Y_SPEED, this.motion.getY()
+                - GameConstants.GRAVITY));
+        Point movement = motion.divide(GameConstants.TICKS_PER_SEC);
 
         if(!this.handler.checkCellCollision(location, movement, this))
         {

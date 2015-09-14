@@ -3,8 +3,8 @@ package website.frontrow.board;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import website.frontrow.Game;
 import website.frontrow.level.Level;
+import website.frontrow.util.GameConstants;
 import website.frontrow.util.Point;
 
 import static org.junit.Assert.assertEquals;
@@ -140,7 +140,7 @@ public abstract class MoverTest
     @Test
     public void testTick()
     {
-        Mover u = getTestMover(true, new Point(0, 0), new Point(Game.TICKS_PER_SEC, 0));
+        Mover u = getTestMover(true, new Point(0, 0), new Point(GameConstants.TICKS_PER_SEC, 0));
 
         u.tick(mock(Level.class));
         // TODO When collisions are implemented, some calls to those checks need to be checked here.
