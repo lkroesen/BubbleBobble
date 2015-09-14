@@ -1,7 +1,7 @@
 package website.frontrow.ui;
 
-import website.frontrow.Game;
-import website.frontrow.util.GameConstants;
+import website.frontrow.game.Game;
+import website.frontrow.game.GameConstants;
 
 import java.util.Map;
 

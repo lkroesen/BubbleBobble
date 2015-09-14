@@ -2,7 +2,7 @@ package website.frontrow.board;
 
 import website.frontrow.level.Level;
 import website.frontrow.util.CollisionHandler;
-import website.frontrow.util.GameConstants;
+import website.frontrow.game.GameConstants;
 import website.frontrow.util.Point;
 
 /**
@@ -13,8 +13,6 @@ import website.frontrow.util.Point;
 public abstract class Mover
     extends Unit
 {
-
-
     @SuppressWarnings("visibilitymodifier") // subclasses have to have access to this variable
     protected Direction direction;
 
@@ -175,7 +173,6 @@ public abstract class Mover
         }
 
         applyGravity();
-
     }
 
     /**

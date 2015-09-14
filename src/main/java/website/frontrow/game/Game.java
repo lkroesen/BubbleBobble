@@ -1,4 +1,4 @@
-package website.frontrow;
+package website.frontrow.game;
 
 import website.frontrow.board.Player;
 import website.frontrow.level.Level;
@@ -40,6 +40,7 @@ public class Game
         {
             currentLevel.tick();
         }
+        updateObservers();
     }
 
     /**
@@ -48,10 +49,6 @@ public class Game
     public void start()
     {
         running = true;
-        for(GameObserver o : observers)
-        {
-            o.gameStart();
-        }
     }
 
     /**
@@ -60,10 +57,6 @@ public class Game
     public void stop()
     {
         running = false;
-        for(GameObserver o : observers)
-        {
-            o.gameStop();
-        }
     }
 
     /**
@@ -139,5 +132,21 @@ public class Game
     public void removeObserver(GameObserver o)
     {
         observers.remove(o);
+    }
+
+    /**
+     * Update the observers.
+     */
+    public void updateObservers()
+    {
+        if(running)
+        {
+           observers.forEach(o -> o.gameStart());
+        }
+
+        if(!running)
+        {
+            observers.forEach(o -> o.gameStop());
+        }
     }
 }

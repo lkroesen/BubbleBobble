@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import website.frontrow.level.Level;
-import website.frontrow.util.GameConstants;
+import website.frontrow.game.GameConstants;
 import website.frontrow.util.Point;
 
 import static org.junit.Assert.assertEquals;

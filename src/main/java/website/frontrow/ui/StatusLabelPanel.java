@@ -1,7 +1,7 @@
 package website.frontrow.ui;
 
-import website.frontrow.Game;
-import website.frontrow.GameObserver;
+import website.frontrow.game.Game;
+import website.frontrow.game.GameObserver;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;

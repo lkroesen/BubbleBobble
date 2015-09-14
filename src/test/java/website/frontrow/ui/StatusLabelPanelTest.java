@@ -2,7 +2,7 @@ package website.frontrow.ui;
 
 import org.junit.Test;
 import org.mockito.Mock;
-import website.frontrow.Game;
+import website.frontrow.game.Game;
 import website.frontrow.board.Player;
 import website.frontrow.level.Level;
 

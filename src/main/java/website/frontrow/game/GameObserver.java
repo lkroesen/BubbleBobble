@@ -1,4 +1,4 @@
-package website.frontrow;
+package website.frontrow.game;
 
 /**
  * An interface which defines an observer for the game.

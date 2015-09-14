@@ -2,11 +2,12 @@ package website.frontrow;
 
 import website.frontrow.board.Bubble;
 import website.frontrow.board.Player;
+import website.frontrow.game.Game;
 import website.frontrow.level.Level;
 import website.frontrow.level.MapParser;
 import website.frontrow.ui.Action;
 import website.frontrow.ui.JBubbleBobbleUI;
-import website.frontrow.util.GameConstants;
+import website.frontrow.game.GameConstants;
 import website.frontrow.util.MusicPlayer;
 import website.frontrow.util.Point;
 

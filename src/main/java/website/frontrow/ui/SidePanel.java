@@ -1,6 +1,6 @@
 package website.frontrow.ui;
 
-import website.frontrow.Game;
+import website.frontrow.game.Game;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;

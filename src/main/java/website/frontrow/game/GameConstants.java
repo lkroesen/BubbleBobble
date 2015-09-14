@@ -1,4 +1,4 @@
-package website.frontrow.util;
+package website.frontrow.game;
 
 /**
  * Contains all the constants which we use in the game.
