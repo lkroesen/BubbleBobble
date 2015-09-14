@@ -90,7 +90,7 @@ public class CollisionHandler
 	 * @param colidee The mover that is being collided with.
 	 */
 	// TODO: Swap this out for something fancy that uses reflection. But this works fine for now.
-	public void applyCollision(Mover collider, Mover colidee)
+	public void applyCollision(Unit collider, Unit colidee)
 	{
 		if(collider instanceof Player)
 		{
@@ -116,7 +116,7 @@ public class CollisionHandler
 	 * @param player Player which is currently colliding.
 	 * @param other The mover that was collided with.
 	 */
-	public void playerCollision(Player player, Mover other)
+	public void playerCollision(Player player, Unit other)
 	{
 		// TODO: Make the player lose a life or something else.
 	}
@@ -126,7 +126,7 @@ public class CollisionHandler
 	 * @param bubble Bubble which is currently colliding.
 	 * @param other The mover that was collided with.
 	 */
-	public void bubbleCollision(Bubble bubble, Mover other)
+	public void bubbleCollision(Bubble bubble, Unit other)
 	{
 		if(other instanceof Enemy)
 		{

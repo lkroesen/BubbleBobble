@@ -10,26 +10,27 @@ import website.frontrow.util.Point;
  * A Unit, or Entity is something that is part of a level, but not restricted to grid cells.
  */
 public abstract class Unit
-    extends Mover
 {
-
     /**
      * Amount of lives an entity has.
      */
     private boolean alive;
 
+    /**
+     * Current location of an entity.
+     */
+    @SuppressWarnings("visibilitymodifier") // subclasses have to have access to this variable
+    protected Point location;
 
     /**
      * Constructor of the Unit Class.
      * @param alive Whether this entity is alive
      * @param location the current location of the unit.
-     * @param motion The starting motion.
      */
-    public Unit(boolean alive, Point location, Point motion)
+    public Unit(boolean alive, Point location)
     {
-        super(motion, location);
         this.alive = alive;
-
+        this.location = location;
     }
 
     /**
@@ -51,11 +52,41 @@ public abstract class Unit
     }
 
     /**
+     * Set alive.
+     * @param alive the value.
+     */
+    public void setAlive(boolean alive)
+    {
+        this.alive = alive;
+    }
+
+    /**
      * Returns the sprite of the unit.
      * @return The sprite.
      */
     public abstract Sprite getSprite();
-    
+
+
+    /**
+     * Get the location of a Unit.
+     * @return Location of a unit.
+     */
+    public Point getLocation()
+    {
+        return location;
+    }
+
+    /**
+     * Set the location of a unit.
+     * Warning: Does not care about walls.
+     * @param location New location of a unit.
+     */
+    public void setLocation(Point location)
+    {
+        this.location = location;
+    }
+
+
     /**
      * Draws the unit.
      * @param g The graphics context to draw in.
@@ -72,10 +103,13 @@ public abstract class Unit
     	getSprite().draw(g, xCoordinate, yCoordinate, width, height);
     }
 
-    @Override
+    /**
+     * Do the logic for this tick.
+     * @param level The level in which the unit has to perform its logic.
+     */
     public void tick(Level level)
     {
-        super.tick(level);
+
     }
 
 }

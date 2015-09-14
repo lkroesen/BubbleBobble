@@ -11,6 +11,7 @@ import website.frontrow.util.Point;
  * subclasses can make use of all logic and override some parts of it.
  */
 public abstract class Mover
+    extends Unit
 {
     /**
      * The maximum x speed.
@@ -32,12 +33,6 @@ public abstract class Mover
     protected Direction direction;
 
     /**
-     * Current location of an entity.
-     */
-    @SuppressWarnings("visibilitymodifier") // subclasses have to have access to this variable
-    protected Point location;
-
-    /**
      * Current direction of motion.
      */
     @SuppressWarnings("visibilitymodifier") // subclasses have to have access to this variable
@@ -56,34 +51,16 @@ public abstract class Mover
 
     /**
      * Creates a mover.
-     * @param motion The current motion of the mover.
+     * @param alive Whether the mover is alive.
      * @param location The current location of the mover.
+     * @param motion The current motion of the mover.
      */
-    public Mover(Point motion, Point location)
+    public Mover(boolean alive, Point location, Point motion)
     {
+        super(alive, location);
         this.motion = motion;
         this.direction = Direction.RIGHT;
         this.newMotion = new Point(0, 0);
-        this.location = location;
-    }
-
-    /**
-     * Get the location of a Unit.
-     * @return Location of a unit.
-     */
-    public Point getLocation()
-    {
-        return location;
-    }
-
-    /**
-     * Set the location of a unit.
-     * Warning: Does not care about walls.
-     * @param location New location of a unit.
-     */
-    public void setLocation(Point location)
-    {
-        this.location = location;
     }
 
     /**

@@ -7,7 +7,8 @@ import website.frontrow.util.Point;
 /**
  * A bubble!
  */
-public class Bubble extends Unit
+public class Bubble
+        extends Mover
 {
     public static final SpriteStore SS = new SpriteStore();
 

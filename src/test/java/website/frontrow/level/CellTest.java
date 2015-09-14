@@ -2,8 +2,8 @@ package website.frontrow.level;
 
 import org.junit.Test;
 import website.frontrow.board.Bubble;
+import website.frontrow.board.Mover;
 import website.frontrow.board.Player;
-import website.frontrow.board.Unit;
 import website.frontrow.util.Point;
 
 import static org.junit.Assert.assertFalse;
@@ -21,8 +21,8 @@ public class CellTest
     @Test
     public void testEmptyCollision()
     {
-        Unit unit = new Player(new Point(0, 0));
-        assertFalse(Cell.EMPTY.collides(unit));
+        Mover mover = new Player(new Point(0, 0));
+        assertFalse(Cell.EMPTY.collides(mover));
     }
 
     /**
@@ -31,8 +31,8 @@ public class CellTest
     @Test
     public void testPlatformCollision1()
     {
-        Unit unit = new Bubble(new Point(0, 0), new Point(0, 5));
-        assertTrue(Cell.PLATFORM.collides(unit));
+        Mover mover = new Bubble(new Point(0, 0), new Point(0, 5));
+        assertTrue(Cell.PLATFORM.collides(mover));
     }
 
     /**
@@ -41,8 +41,8 @@ public class CellTest
     @Test
     public void testPlatformCollision2()
     {
-        Unit unit = new Bubble(new Point(0, 0), new Point(0, 0));
-        assertFalse(Cell.PLATFORM.collides(unit));
+        Mover mover = new Bubble(new Point(0, 0), new Point(0, 0));
+        assertFalse(Cell.PLATFORM.collides(mover));
     }
 
     /**
@@ -51,7 +51,7 @@ public class CellTest
     @Test
     public void testWallCollision()
     {
-        Unit unit = new Player(new Point(0, 0));
-        assertTrue(Cell.WALL.collides(unit));
+        Mover mover = new Player(new Point(0, 0));
+        assertTrue(Cell.WALL.collides(mover));
     }
 }

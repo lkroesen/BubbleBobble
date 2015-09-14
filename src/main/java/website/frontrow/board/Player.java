@@ -8,7 +8,8 @@ import website.frontrow.util.Point;
 /**
  * The player as part of a game.
  */
-public class Player extends Unit
+public class Player
+        extends Mover
 {
 
 	private static SpriteStore ss = new SpriteStore();
