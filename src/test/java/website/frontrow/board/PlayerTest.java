@@ -8,7 +8,8 @@ import static org.junit.Assert.assertEquals;
 /**
  * Player test.
  */
-public class PlayerTest extends UnitTest
+public class PlayerTest
+        extends MoverTest
 {
     /**
      * Test the constructor of Player.
@@ -32,14 +33,11 @@ public class PlayerTest extends UnitTest
     }
 
     @Override
-    public Unit getTestUnit(boolean alive, Point start, Point motion)
+    public Mover getTestMover(boolean alive, Point start, Point motion)
     {
         Player player = new Player(start);
         player.setMotion(motion);
-        if(!alive)
-        {
-            player.kill();
-        }
+
         return player;
     }
 }

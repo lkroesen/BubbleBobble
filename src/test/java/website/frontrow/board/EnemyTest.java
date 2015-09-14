@@ -8,7 +8,8 @@ import static org.junit.Assert.assertEquals;
 /**
  * Test the enemy class.
  */
-public class EnemyTest extends UnitTest
+public class EnemyTest
+        extends MoverTest
 {
     /**
      * Test the constructor of the Enemy class.
@@ -21,7 +22,7 @@ public class EnemyTest extends UnitTest
     }
 
     @Override
-    public Unit getTestUnit(boolean alive, Point start, Point end)
+    public Mover getTestMover(boolean alive, Point start, Point end)
     {
         Enemy e = new Enemy(start);
         e.setMotion(end);

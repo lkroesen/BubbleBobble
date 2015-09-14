@@ -2,10 +2,8 @@ package website.frontrow.board;
 
 import java.awt.Graphics;
 
-import website.frontrow.Game;
 import website.frontrow.level.Level;
 import website.frontrow.sprite.Sprite;
-import website.frontrow.util.CollisionHandler;
 import website.frontrow.util.Point;
 
 /**
@@ -13,11 +11,6 @@ import website.frontrow.util.Point;
  */
 public abstract class Unit
 {
-    private static final int MOVE_MOD = 7;
-    private static final int GRAVITY_MOD = 16;
-    private Direction direction;
-    private Direction faceLeft;
-   
     /**
      * Amount of lives an entity has.
      */
@@ -26,46 +19,18 @@ public abstract class Unit
     /**
      * Current location of an entity.
      */
-    private Point location;
-
-    /**
-     * Current direction of motion.
-     */
-    private Point motion;
-
-    /**
-     * The direction that is to be added on the next tick.
-     */
-    private Point newMotion;
-
-    /**
-     * The maximum x speed.
-     */
-    public static final int MAX_X_SPEED = 60;
-
-    /**
-     * The maximum y speed.
-     */
-    public static final int MAX_Y_SPEED = 10;
-    
-    private CollisionHandler handler;
-    
+    @SuppressWarnings("visibilitymodifier") // subclasses have to have access to this variable
+    protected Point location;
 
     /**
      * Constructor of the Unit Class.
      * @param alive Whether this entity is alive
      * @param location the current location of the unit.
-     * @param motion The starting motion.
      */
-    public Unit(boolean alive, Point location, Point motion)
+    public Unit(boolean alive, Point location)
     {
-        this.direction = Direction.RIGHT;
-        this.faceLeft  = Direction.RIGHT;
         this.alive = alive;
         this.location = location;
-        this.motion = motion;
-
-        this.newMotion = new Point(0, 0);  
     }
 
     /**
@@ -77,6 +42,30 @@ public abstract class Unit
     {
         return alive;
     }
+
+    /**
+     * Kills an enemy.
+     */
+    public void kill()
+    {
+        alive = false;
+    }
+
+    /**
+     * Set alive.
+     * @param alive the value.
+     */
+    public void setAlive(boolean alive)
+    {
+        this.alive = alive;
+    }
+
+    /**
+     * Returns the sprite of the unit.
+     * @return The sprite.
+     */
+    public abstract Sprite getSprite();
+
 
     /**
      * Get the location of a Unit.
@@ -97,144 +86,7 @@ public abstract class Unit
         this.location = location;
     }
 
-    /**
-     * Set direction of motion.
-     * @return The direction of motion of this unit.
-     */
-    public Point getMotion()
-    {
-        return motion;
-    }
 
-    /**
-     * Set direction of motion.
-     * @param motion The new direction of motion of this unit.
-     */
-    public void setMotion(Point motion)
-    {
-        this.motion = motion;
-    }
-    
-    /**
-     * Gets the direction the Unit is facing.
-     * @return
-     * Returns a Direction: either Left or Right.
-     */
-    public Direction getFace()
-    {
-    	return this.faceLeft;
-    }
-    
-    /**
-     * Set the direction the Unit is facing. Either left or right.
-     * @param dir
-     * Set the Direction value for the direction the Unit faces.
-     */
-    public void setFace(Direction dir)
-    {
-    	if(dir == Direction.LEFT || dir == Direction.RIGHT)
-        {
-    		this.faceLeft = dir;
-    	}
-    	else
-        {
-    		throw new IllegalArgumentException(
-    				"Direction given is invalid, it should be either LEFT or RIGHT.");
-    	}
-    }
-    
-    /**
-     * Get the direction the Unit is facing.
-     * @return
-     * Returns a Direction value.
-     */
-    public Direction getDirection()
-    {
-    	return this.direction;
-    }
-    
-    /**
-     * Set the direction the Unit is facing.
-     * Checks whether the direction is a movement along the x-axis 
-     * and adjusts the 'faceLeft' value accordingly
-     * @param dir
-     * Sets the Direction value.
-     */
-    public void setDirection(Direction dir)
-    {
-    	this.direction = dir;
-    	
-    	if(dir == Direction.RIGHT)
-        {
-    		setFace(Direction.RIGHT);
-    	}
-    	else if(dir == Direction.LEFT)
-        {
-    		setFace(Direction.LEFT);
-    	}
-    }
-
-    /**
-     * Kills an enemy.
-     */
-    public void kill()
-    {
-        alive = false;
-    }
-
-    /**
-     * Makes the unit go left.
-     */
-    public void goLeft()
-    {
-        // The horizontal orientation must immediately be changed, so the current horizontal motion
-        // is set to 0.
-        this.motion.setX(0);
-        this.newMotion = new Point(-MOVE_MOD, 0);
-    }
-
-    /**
-     * Makes the unit go right.
-     */
-    public void goRight()
-    {
-        this.motion.setX(0);
-        this.newMotion = new Point(MOVE_MOD, 0);
-    }
-
-    /**
-     * Update the direction variable according to the current motion variable.
-     */
-    private void updateDirection()
-    {
-        if (motion.getX() > 0)
-        {
-            this.setDirection(Direction.RIGHT);
-        }
-        else if (motion.getX() < 0)
-        {
-            this.setDirection(Direction.LEFT);
-        }
-        // Keep current direction if motion is zero.
-    }
-    /**
-     * Makes the unit jump.
-     */
-    public void jump()
-    {
-        if(this.motion.getY() == 0)
-        {
-            this.motion.setY(0);
-            this.newMotion = new Point(this.newMotion.getX(), -GRAVITY_MOD * MAX_Y_SPEED);
-        }
-    }
-
-    /**
-     * Returns the sprite of the unit.
-     * @return The sprite.
-     */
-    public abstract Sprite getSprite();
-    
     /**
      * Draws the unit.
      * @param g The graphics context to draw in.
@@ -252,58 +104,12 @@ public abstract class Unit
     }
 
     /**
-     * Called when this unit collides with a wall.
-     */
-    public void onWallCollision()
-    {
-    }
-
-    /**
-     * Ticks a unit in a given level context.
-     * @param level Level context, for collision checking.
+     * Do the logic for this tick.
+     * @param level The level in which the unit has to perform its logic.
      */
     public void tick(Level level)
     {
-        this.motion = this.motion.add(newMotion);
-        updateDirection();
-        this.newMotion = new Point(0, 0);
-
-        double x = this.motion.getX();
-        this.motion.setX(Math.max(Math.min(x, MAX_X_SPEED), -MAX_X_SPEED));
-
-        Point movement = motion.divide(Game.TICKS_PER_SEC);
-
-        this.handler = new CollisionHandler(level);
-        this.handler.checkUnitCollision(location, movement, this);
-        //TODO: Improve the way cell collisions are handled.
-        if(!this.handler.checkCellCollision(location, movement, this))
-        {
-            this.location = this.location.add(movement);
-        }
-        else
-        {
-            this.onWallCollision();
-        }
-
-        applyGravity();
 
     }
 
-    /**
-     * Applies the gravity to the unit.
-     */
-    protected void applyGravity()
-    {
-        this.motion.setY(Math.max(MAX_Y_SPEED, this.motion.getY() - Game.GRAVITY));
-        Point movement = motion.divide(Game.TICKS_PER_SEC);
-
-        if(!this.handler.checkCellCollision(location, movement, this))
-        {
-            this.location = this.location.add(movement);
-        }
-        else
-        {
-            this.motion.setY(0);
-        }
-    }
 }

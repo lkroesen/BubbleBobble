@@ -8,7 +8,8 @@ import website.frontrow.util.Point;
 /**
  * The player as part of a game.
  */
-public class Player extends Unit
+public class Player
+        extends Mover
 {
 
 	private static SpriteStore ss = new SpriteStore();
@@ -53,7 +54,7 @@ public class Player extends Unit
     @Override
     public Sprite getSprite()
     {
-    	return ss.getPlayerSprite(this.getFace());
+    	return ss.getPlayerSprite(this.getDirection());
     }
 
     @Override

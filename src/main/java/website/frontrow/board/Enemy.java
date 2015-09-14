@@ -7,7 +7,7 @@ import website.frontrow.util.Point;
 /**
  * Created by lkroesen on 9/2/2015.
  */
-public class Enemy extends Unit
+public class Enemy extends Mover
 {
 
 	private static SpriteStore ss = new SpriteStore();
@@ -29,6 +29,6 @@ public class Enemy extends Unit
     @Override
     public Sprite getSprite()
     {
-    	return ss.getEnemySprite(this.getFace());
+    	return ss.getEnemySprite(this.getDirection());
     }
 }
