@@ -21,11 +21,7 @@ public class ButtonPanel extends JPanel
             JButton button = new JButton();
             button.setText(entry.getKey());
             button.setFocusable(false);
-            button.addActionListener((e) ->
-            {
-                entry.getValue().doAction();
-            });
-
+            button.addActionListener(e -> entry.getValue().doAction());
             add(button);
         }
     }
