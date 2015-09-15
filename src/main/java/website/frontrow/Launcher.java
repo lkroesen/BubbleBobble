@@ -5,6 +5,7 @@ import website.frontrow.board.Player;
 import website.frontrow.game.Game;
 import website.frontrow.level.Level;
 import website.frontrow.level.MapParser;
+import website.frontrow.logger.Log;
 import website.frontrow.ui.Action;
 import website.frontrow.ui.JBubbleBobbleUI;
 import website.frontrow.game.GameConstants;
@@ -51,6 +52,8 @@ public class Launcher
      */
     public void start(String filename)
     {
+        // Initialize the Logger Class, so that it can Log actions taken.
+        new Log();
         try
         {
             InputStream map = getClass().getResourceAsStream(filename);
