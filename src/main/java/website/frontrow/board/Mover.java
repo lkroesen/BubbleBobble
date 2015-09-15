@@ -94,8 +94,7 @@ public abstract class Mover
     {
         // The horizontal orientation must immediately be changed, so the current horizontal motion
         // is set to 0.
-        this.motion.setX(0);
-        this.newMotion = new Point(-GameConstants.MOVE_STEP, 0);
+        this.newMotion.setX(-GameConstants.MOVE_STEP);
     }
 
     /**
@@ -103,8 +102,7 @@ public abstract class Mover
      */
     public void goRight()
     {
-        this.motion.setX(0);
-        this.newMotion = new Point(GameConstants.MOVE_STEP, 0);
+        this.newMotion.setX(GameConstants.MOVE_STEP);
     }
 
     /**
@@ -130,9 +128,7 @@ public abstract class Mover
     {
         if(this.motion.getY() == 0)
         {
-            this.motion.setY(0);
-            this.newMotion = new Point(this.newMotion.getX(),
-                    -GameConstants.GRAVITY_MOD * GameConstants.MAX_Y_SPEED);
+            this.newMotion.setY(-GameConstants.JUMP_IMPULSE * GameConstants.MAX_Y_SPEED);
         }
     }
 
@@ -141,6 +137,7 @@ public abstract class Mover
      */
     public void onWallCollision()
     {
+
     }
 
     /**
@@ -181,7 +178,7 @@ public abstract class Mover
     protected void applyGravity()
     {
         this.motion.setY(Math.max(GameConstants.MAX_Y_SPEED, this.motion.getY()
-                - GameConstants.GRAVITY));
+                - (GameConstants.GRAVITY / GameConstants.TICKS_PER_SEC)));
         Point movement = motion.divide(GameConstants.TICKS_PER_SEC);
 
         if(!this.handler.checkCellCollision(location, movement, this))

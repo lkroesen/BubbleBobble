@@ -2,20 +2,24 @@ package website.frontrow.ui;
 
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * The key listener makes sure that when certain keys are pressed,
  *      the corresponding action is performed in the game.
  * Created by Remi Flinterman on 2-9-2015.
  */
-class JBubbleKeyListener implements KeyListener
+public class JBubbleKeyListener implements KeyListener
 {
 
     /**
      * The mappings of keyCode to action.
      */
     private final Map<Integer, Action> mapping;
+
+    private Set<Integer> pressedKeys = new HashSet<>();
 
     /**
      * Creates a JBubbleKeyListener.
@@ -32,10 +36,9 @@ class JBubbleKeyListener implements KeyListener
      */
     public void keyPressed(KeyEvent ke)
     {
-        Action action = mapping.get(ke.getKeyCode());
-        if (action != null)
+        if (mapping.get(ke.getKeyCode()) != null)
         {
-            action.doAction();
+            pressedKeys.add(ke.getKeyCode());
         }
     }
 
@@ -56,7 +59,15 @@ class JBubbleKeyListener implements KeyListener
     @Override
     public void keyReleased(KeyEvent ke)
     {
-        return;
+        pressedKeys.remove(ke.getKeyCode());
+    }
+
+    /**
+     * Perform the actions of all the keys which are being pressed.
+     */
+    public void update()
+    {
+        pressedKeys.forEach(keyCode -> mapping.get(keyCode).doAction());
     }
 
 }

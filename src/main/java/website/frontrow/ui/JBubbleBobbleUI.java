@@ -25,6 +25,8 @@ public class JBubbleBobbleUI extends JFrame
     private PlayingFieldPanel pfp;
     private SidePanel sp;
 
+    private JBubbleKeyListener keyListener;
+
     /**
      * Creates a JBubble Bobble UI.
      * @param game The game to display in the ui.
@@ -37,7 +39,8 @@ public class JBubbleBobbleUI extends JFrame
         setResizable(false);
         setFocusable(true);
 
-        addKeyListener(new JBubbleKeyListener(klm));
+        this.keyListener = new JBubbleKeyListener(klm);
+        addKeyListener(this.keyListener);
 
         Container contentPanel = getContentPane();
         contentPanel.setBackground(Color.white);
@@ -76,5 +79,14 @@ public class JBubbleBobbleUI extends JFrame
     {
         pfp.repaint();
         // Do logic and graphics stuff.
+    }
+
+    /**
+     * Returns the JBubbleKeyListener.
+     * @return The keylistener.
+     */
+    public JBubbleKeyListener getKeyListener()
+    {
+        return this.keyListener;
     }
 }

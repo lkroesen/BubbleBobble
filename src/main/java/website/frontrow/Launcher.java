@@ -59,9 +59,12 @@ public class Launcher
             Level level = mp.parseMap(map);
             ArrayList<Level> levelList = new ArrayList<Level>();
             levelList.add(level);
+
             Game game = new Game(levelList, level.getPlayers());
             Map<Integer, Action> keyMappings = createSinglePlayerKeyMappings(game);
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
+
+            game.setKeyListener(ui.getKeyListener());
 
             ui.start();
 

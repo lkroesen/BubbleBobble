@@ -4,6 +4,7 @@ import website.frontrow.board.Player;
 import website.frontrow.level.Level;
 import website.frontrow.level.Level.LevelObserver;
 
+import website.frontrow.ui.JBubbleKeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,8 @@ public class Game implements LevelObserver
     private ArrayList<Player> players;
 
     private ArrayList<GameObserver> observers;
+
+    private JBubbleKeyListener keyListener;
 
     /**
      * Constructor of Game.
@@ -44,6 +47,10 @@ public class Game implements LevelObserver
     {
         if(running)
         {
+            if(keyListener != null)
+            {
+                keyListener.update();
+            }
             currentLevel.tick();
         }
         updateObservers();
@@ -56,6 +63,7 @@ public class Game implements LevelObserver
     {
         running = true;
         currentLevel.addObserver(this);
+        System.out.println("Started");
     }
 
     /**
@@ -64,6 +72,7 @@ public class Game implements LevelObserver
     public void stop()
     {
         running = false;
+        System.out.println("Paused");
     }
 
     /**
@@ -130,6 +139,15 @@ public class Game implements LevelObserver
     public void registerObserver(GameObserver o)
     {
         observers.add(o);
+    }
+
+    /**
+     * Sets the keyListener for this game.
+     * @param keyListener The key listener to use.
+     */
+    public void setKeyListener(JBubbleKeyListener keyListener)
+    {
+        this.keyListener = keyListener;
     }
 
     /**

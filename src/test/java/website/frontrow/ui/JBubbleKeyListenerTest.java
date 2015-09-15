@@ -59,7 +59,8 @@ public class JBubbleKeyListenerTest
         when(event.getKeyCode()).thenReturn(KeyEvent.VK_ENTER);
 
         listener.keyPressed(event);
-
+        listener.update();
+        
         verify(action).doAction();
     }
 
