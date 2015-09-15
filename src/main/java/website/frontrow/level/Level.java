@@ -75,7 +75,7 @@ public class Level
     {
         while(!toAdd.isEmpty())
         {
-            units.add(toAdd.pop());
+            units.add(toAdd.poll());
         }
         Unit unit;
         Iterator<Unit> it = units.iterator();
