@@ -2,6 +2,7 @@ package website.frontrow.game;
 
 import website.frontrow.board.Player;
 import website.frontrow.level.Level;
+import website.frontrow.level.Level.LevelObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +10,13 @@ import java.util.List;
 /**
  * The current state of the game.
  */
-public class Game
+public class Game implements LevelObserver
 {
     private int score = 0;
+    private int currentIndex;
     private Level currentLevel;
+    private ArrayList<Level> levelPack;
+
     private boolean running = false;
 
     private ArrayList<Player> players;
@@ -21,12 +25,14 @@ public class Game
 
     /**
      * Constructor of Game.
-     * @param level The current level the player can play.
+     * @param levels All the levels of the game.
      * @param players The players in this game.
      */
-    public Game(Level level, ArrayList<Player> players)
+    public Game(ArrayList<Level> levels, ArrayList<Player> players)
     {
-        this.currentLevel = level;
+        this.levelPack = levels;
+        this.currentIndex = 0;
+        this.currentLevel = levelPack.get(currentIndex);
         this.players = players;
         this.observers = new ArrayList<>();
     }
@@ -49,6 +55,7 @@ public class Game
     public void start()
     {
         running = true;
+        currentLevel.addObserver(this);
     }
 
     /**
@@ -148,5 +155,24 @@ public class Game
         {
             observers.forEach(o -> o.gameStop());
         }
+    }
+
+    @Override
+    public void levelWon()
+    {
+        stop();
+        currentIndex++;
+
+        if(currentIndex != levelPack.size())
+        {
+            currentLevel = levelPack.get(currentIndex);
+
+        }
+    }
+
+    @Override
+    public void levelLost()
+    {
+        stop();
     }
 }
