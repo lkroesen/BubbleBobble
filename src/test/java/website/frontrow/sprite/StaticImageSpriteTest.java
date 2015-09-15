@@ -8,7 +8,7 @@ import java.io.InputStream;
 /**
  * Created by larsstegman on 06-09-15.
  */
-public class TestStaticImageSprite extends SpriteTest
+public class StaticImageSpriteTest extends SpriteTest
 {
     /**
      * Creates an image and returns it.

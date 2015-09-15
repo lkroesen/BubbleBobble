@@ -10,7 +10,7 @@ import static org.junit.Assert.assertNotNull;
  * Test the image store.
  * Created by larsstegman on 06-09-15.
  */
-public class TestImageStore
+public class ImageStoreTest
 {
     private ImageStore is;
 
