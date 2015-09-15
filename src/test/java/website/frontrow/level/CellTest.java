@@ -22,7 +22,7 @@ public class CellTest
     public void testEmptyCollision()
     {
         Mover mover = new Player(new Point(0, 0));
-        assertFalse(Cell.EMPTY.collides(mover));
+        assertFalse(Cell.EMPTY.collides(mover.getMotion()));
     }
 
     /**
@@ -32,7 +32,7 @@ public class CellTest
     public void testPlatformCollision1()
     {
         Mover mover = new Bubble(new Point(0, 0), new Point(0, 5));
-        assertTrue(Cell.PLATFORM.collides(mover));
+        assertTrue(Cell.PLATFORM.collides(mover.getMotion()));
     }
 
     /**
@@ -42,7 +42,7 @@ public class CellTest
     public void testPlatformCollision2()
     {
         Mover mover = new Bubble(new Point(0, 0), new Point(0, 0));
-        assertFalse(Cell.PLATFORM.collides(mover));
+        assertFalse(Cell.PLATFORM.collides(mover.getMotion()));
     }
 
     /**
@@ -52,6 +52,6 @@ public class CellTest
     public void testWallCollision()
     {
         Mover mover = new Player(new Point(0, 0));
-        assertTrue(Cell.WALL.collides(mover));
+        assertTrue(Cell.WALL.collides(mover.getMotion()));
     }
 }

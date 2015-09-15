@@ -7,6 +7,7 @@ import website.frontrow.board.Enemy;
 import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
 import website.frontrow.board.Mover;
+import website.frontrow.level.Cell;
 import website.frontrow.level.Level;
 
 /**
@@ -161,11 +162,37 @@ public class CollisionHandler
             {
     			return true;
     		}			
-    		if(level.getCells().get(x, y).collides(mover))
+    		if(level.getCells().get(x, y).collides(mover.getMotion()))
     		{ 			
     			return true;
     		}
     	}
     	return false;
     }
+
+	/**
+	 * Check an AABB versus the level, to see if there are any collisions.
+	 * @param aabb The aabb to check
+	 * @param motion The motion to keep in mind
+	 * @return True when there is a collision, false when not.
+	 */
+	public boolean checkAABB(AABB aabb, Point motion)
+	{
+		// Find the cells we need to check.
+		int minx = (int) Math.floor(aabb.getStart().getX());
+		int miny = (int) Math.floor(aabb.getStart().getY());
+		int maxx = (int) Math.ceil(aabb.getEnd().getX());
+		int maxy = (int) Math.ceil(aabb.getEnd().getY());
+		Grid<Cell> cells = level.getCells();
+		// Check the cells.
+		for(int y = miny; y < maxy; y++)
+		{
+			for(int x = minx; x < maxx; x++)
+			{
+				if(cells.get(x, y).collides(motion)) return true;
+			}
+		}
+
+		return false;
+	}
 }
