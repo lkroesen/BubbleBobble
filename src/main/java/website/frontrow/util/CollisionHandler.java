@@ -7,7 +7,6 @@ import website.frontrow.board.Enemy;
 import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
 import website.frontrow.board.Mover;
-import website.frontrow.game.Game;
 import website.frontrow.game.GameConstants;
 import website.frontrow.level.Cell;
 import website.frontrow.level.Level;
@@ -17,7 +16,7 @@ import website.frontrow.level.Level;
  */
 public class CollisionHandler
 {
-	private static final double PRECISION = 1/0.001d;
+	private static final double PRECISION = 1/0.0001d;
     private static final double LOC_OFFSET = 0.99d;
     private Level level;
 
@@ -192,7 +191,8 @@ public class CollisionHandler
 		{
 			for(int x = minx; x < maxx; x++)
 			{
-				if(cells.get(x, y).collides(motion))
+				Point c = new Point(x, y);
+				if(cells.get(x, y).collides(motion) && new AABB(c, c.add(cells.get(x, y).getAABB())).overlaps(aabb))
 				{
 					return true;
 				}
@@ -207,10 +207,9 @@ public class CollisionHandler
 	 * @param mover Mover to get next position for.
 	 * @return The next position of a given mover.
 	 */
-	public Point findNextPosition(Mover mover)
+	public Collision findNextPosition(Mover mover)
 	{
-		// TODO: Change this to an unit specific width and height.
-		Point wh = new Point(1, 1);
+		Point wh = mover.getAABB();
 		double stepsX = Math.abs(mover.getMotion().getX()) / wh.getX();
 		double stepsY = Math.abs(mover.getMotion().getY()) / wh.getY();
 		// Do a certain amount of checks. This should be relatively accurate in any case.
@@ -219,8 +218,9 @@ public class CollisionHandler
 
 		Point found = mover.getLocation();
 
-		if(steps == 0) return found;
+		if(steps == 0) return new Collision(found, false);
 		Point delta = mover.getMotion().divide(steps).divide(GameConstants.TICKS_PER_SEC);
+		boolean collision = false;
 
 		for(int i = 0; i <= steps; i++)
 		{
@@ -229,13 +229,14 @@ public class CollisionHandler
 			if(checkLevelAABB(new AABB(current, current.add(wh)), mover.getMotion()))
 			{
 				mover.onWallCollision();
+				collision = true;
 				break;
 			}
 
 			found = current;
 		}
 
-		return new Point(Math.round(found.getX()*PRECISION)/PRECISION,
-						 Math.round(found.getY()*PRECISION)/PRECISION);
+		return new Collision(new Point(Math.round(found.getX()*PRECISION)/PRECISION,
+						 Math.round(found.getY()*PRECISION)/PRECISION), collision);
 	}
 }

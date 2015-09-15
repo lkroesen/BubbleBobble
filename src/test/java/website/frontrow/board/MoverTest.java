@@ -5,10 +5,12 @@ import org.junit.Before;
 import org.junit.Test;
 import website.frontrow.level.Level;
 import website.frontrow.game.GameConstants;
+import website.frontrow.util.Grid;
 import website.frontrow.util.Point;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import java.util.ArrayList;
+
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -20,6 +22,7 @@ public abstract class MoverTest
 {
     @SuppressWarnings("checkstyle:visibilitymodifier")
     protected Point m;
+    public Level emptyLevel = new Level(new ArrayList<>(), new ArrayList<>(), new Grid<>(0, 0));
 
     /**
      * Create the mover for the tests.
@@ -142,11 +145,10 @@ public abstract class MoverTest
     {
         Mover u = getTestMover(true, new Point(0, 0), new Point(GameConstants.TICKS_PER_SEC, 0));
 
-        u.tick(mock(Level.class));
+        u.tick(emptyLevel);
         // TODO When collisions are implemented, some calls to those checks need to be checked here.
 
-        Point expected = new Point(0, 0);
-        assertEquals(expected, u.getLocation());
+        assertEquals(1, u.getLocation().getX(), 0.0003);
     }
 
     /**
@@ -158,9 +160,9 @@ public abstract class MoverTest
         Mover u = getTestMover(true, new Point(0, 0), new Point(0, 0));
 
         u.goLeft();
-        u.tick(mock(Level.class));
+        u.tick(emptyLevel);
 
-        assertFalse(u.getLocation().getX() < 0);
+        assertTrue(u.getLocation().getX() < 0);
     }
 
     /**
@@ -172,13 +174,14 @@ public abstract class MoverTest
         Mover u = getTestMover(true, new Point(0, 0), new Point(0, 0));
 
         u.goRight();
-        u.tick(mock(Level.class));
+        u.tick(emptyLevel);
 
-        assertFalse(u.getLocation().getX() > 0);
+        assertTrue(u.getLocation().getX() > 0);
     }
 
     /**
      * Tests whether the unit does not move when not speed is given.
+     * Except there is gravity. So we need to keep that in mind.
      */
     @Test
     public void testDontMove() // There's a wasp in your hair.
@@ -186,9 +189,9 @@ public abstract class MoverTest
         Point start = new Point(0, 0);
         Mover u = getTestMover(true, start, new Point(0, 0));
 
-        u.tick(mock(Level.class));
+        u.tick(emptyLevel);
 
-        assertEquals(start, u.getLocation());
+        assertEquals(0, u.getLocation().getX(), 0.00001);
     }
 
     /**
@@ -201,9 +204,9 @@ public abstract class MoverTest
 
         u.goRight();
         u.goLeft();
-        u.tick(mock(Level.class));
+        u.tick(emptyLevel);
 
-        assertFalse(u.getLocation().getX() < 0);
+        assertTrue(u.getLocation().getX() < 0);
     }
 
 }

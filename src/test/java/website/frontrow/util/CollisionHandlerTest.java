@@ -101,7 +101,7 @@ public class CollisionHandlerTest
      * Test AABB level check.
      */
     @Test
-    public void dlightlyOccupiedAABBTest()
+    public void slightlyOccupiedAABBTest()
     {
         Level check = new Level(emptyPlayer, emptyUnit, new Grid<>(Arrays.asList(
                 Cell.WALL, Cell.WALL, Cell.WALL,
@@ -152,7 +152,9 @@ public class CollisionHandlerTest
         CollisionHandler handler = new CollisionHandler(check);
         Player player = new Player(new Point(1, 1));
         player.setMotion(new Point(1, GameConstants.TICKS_PER_SEC));
-        assertEquals(new Point(1, 1), handler.findNextPosition(player));
+        Collision c = handler.findNextPosition(player);
+        assertEquals(new Point(1, 1), c.getPoint());
+        assertTrue(c.isCollided());
     }
 
     @Test
@@ -166,6 +168,8 @@ public class CollisionHandlerTest
         CollisionHandler handler = new CollisionHandler(check);
         Player player = new Player(new Point(1, 1));
         player.setMotion(new Point(0, 3 * GameConstants.TICKS_PER_SEC));
-        assertEquals(new Point(1, 2), handler.findNextPosition(player));
+        Collision c = handler.findNextPosition(player);
+        assertEquals(new Point(1, 2), c.getPoint());
+        assertTrue(c.isCollided());
     }
 }

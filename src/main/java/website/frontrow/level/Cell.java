@@ -44,6 +44,12 @@ public enum Cell
         {
             return movement.getY() > 0;
         }
+
+        @Override
+        public Point getAABB()
+        {
+            return new Point(1, 0);
+        }
         
         @Override
         public Sprite getSprite()
@@ -71,6 +77,15 @@ public enum Cell
     public boolean collides(Point movement)
     {
         return false;
+    }
+
+    /**
+     * The width and height of this tile.
+     * @return The width and height of the AABB.
+     */
+    public Point getAABB()
+    {
+        return new Point(1, 1);
     }
 
     /**
