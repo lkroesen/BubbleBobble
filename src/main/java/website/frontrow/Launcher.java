@@ -14,6 +14,7 @@ import website.frontrow.util.Point;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -56,7 +57,9 @@ public class Launcher
             InputStream map = getClass().getResourceAsStream(filename);
             MapParser mp = new MapParser();
             Level level = mp.parseMap(map);
-            Game game = new Game(level, level.getPlayers());
+            ArrayList<Level> levelList = new ArrayList<Level>();
+            levelList.add(level);
+            Game game = new Game(levelList, level.getPlayers());
             Map<Integer, Action> keyMappings = createSinglePlayerKeyMappings(game);
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
 

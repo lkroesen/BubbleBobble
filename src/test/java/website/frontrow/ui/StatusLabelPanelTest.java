@@ -18,8 +18,9 @@ public class StatusLabelPanelTest
 {
 
     @Mock private ArrayList<Player> p;
-    @Mock private Level l;
-    private Game g = new Game(l, p);
+    @Mock private Level level;
+    private ArrayList<Level> l = new ArrayList<Level>();
+    private Game g;
 
     /**
      * Tests whether or not runningLabel turns out correctly when calling
@@ -28,6 +29,9 @@ public class StatusLabelPanelTest
     @Test
     public void runningLabelTest()
     {
+
+        l.add(level);
+        g = new Game(l, p);
 
         StatusLabelPanel slp = new StatusLabelPanel(g);
 
@@ -45,6 +49,9 @@ public class StatusLabelPanelTest
     public void setRunningLabelTest()
     {
 
+        l.add(level);
+        g = new Game(l, p);
+
         StatusLabelPanel slp = new StatusLabelPanel(g);
 
         JLabel label = new JLabel("Test");
@@ -60,6 +67,9 @@ public class StatusLabelPanelTest
     @Test
     public void getRunningLabelTest()
     {
+
+        l.add(level);
+        g = new Game(l, p);
 
         StatusLabelPanel slp = new StatusLabelPanel(g);
 
