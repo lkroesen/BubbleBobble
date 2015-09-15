@@ -8,6 +8,7 @@ import website.frontrow.board.Bubble;
 import website.frontrow.board.Enemy;
 import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
+import website.frontrow.game.GameConstants;
 import website.frontrow.level.Cell;
 import website.frontrow.level.Level;
 
@@ -150,7 +151,7 @@ public class CollisionHandlerTest
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 3));
         CollisionHandler handler = new CollisionHandler(check);
         Player player = new Player(new Point(1, 1));
-        player.setMotion(new Point(1, 1));
+        player.setMotion(new Point(1, GameConstants.TICKS_PER_SEC));
         assertEquals(new Point(1, 1), handler.findNextPosition(player));
     }
 
@@ -164,7 +165,7 @@ public class CollisionHandlerTest
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 4));
         CollisionHandler handler = new CollisionHandler(check);
         Player player = new Player(new Point(1, 1));
-        player.setMotion(new Point(0, 3));
+        player.setMotion(new Point(0, 3 * GameConstants.TICKS_PER_SEC));
         assertEquals(new Point(1, 2), handler.findNextPosition(player));
     }
 }
