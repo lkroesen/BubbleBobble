@@ -11,6 +11,7 @@ import website.frontrow.ui.JBubbleBobbleUI;
 import website.frontrow.game.GameConstants;
 import website.frontrow.util.MusicPlayer;
 import website.frontrow.util.Point;
+import website.frontrow.logger.Logable;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -25,7 +26,7 @@ import java.util.concurrent.TimeUnit;
  * Instantiates the game so it can be played.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class Launcher
+public class Launcher implements Logable
 {
     private MusicPlayer musicPlayer;
 
@@ -54,9 +55,15 @@ public class Launcher
     {
         // Initialize the Logger Class, so that it can Log actions taken.
         new Log();
+
+        addToLog("[SYSTEM] Loading file: " + filename + ".");
+
         try
         {
             InputStream map = getClass().getResourceAsStream(filename);
+
+            addToLog("[SYSTEM] Loading file: " + filename + " succeeded.");
+
             MapParser mp = new MapParser();
             Level level = mp.parseMap(map);
             Game game = new Game(level, level.getPlayers());
@@ -70,11 +77,13 @@ public class Launcher
 
             service.scheduleAtFixedRate(() ->
                     {
+                        addToLog("[TICK] Tick happened.");
                         game.tick();
                     }, 0, 1000 / GameConstants.TICKS_PER_SEC,
                     TimeUnit.MILLISECONDS);
         } catch (IOException e)
         {
+            addToLog("[SYSTEM] Loading file: " + filename + " failed.");
             throw new RuntimeException();
         }
     }
@@ -93,21 +102,25 @@ public class Launcher
         {
             map.put(KeyEvent.VK_LEFT, () ->
             {
+                addToLog("[USER] < \'<-\' > Pressed.");
                 game.getPlayers().get(0).goLeft();
             });
 
             map.put(KeyEvent.VK_RIGHT, () ->
             {
+                addToLog("[USER] < \'->\' > Pressed.");
                 game.getPlayers().get(0).goRight();
             });
 
             map.put(KeyEvent.VK_SPACE, () ->
             {
+                addToLog("[USER] < \' \' > Pressed.");
                 game.getPlayers().get(0).jump();
             });
 
             map.put(KeyEvent.VK_Z, () ->
             {
+                addToLog("[USER] < \'Z\' > Pressed.");
                 if(game.isRunning())
                 {
                     Player p = game.getPlayers().get(0);
@@ -121,6 +134,7 @@ public class Launcher
         // Keys 1-0 & -, =, SOUND CONTROL
         map.put(KeyEvent.VK_1, () ->
         {
+            addToLog("[USER] < \'1\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(0);
@@ -129,6 +143,7 @@ public class Launcher
 
         map.put(KeyEvent.VK_2, () ->
         {
+            addToLog("[USER] < \'2\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(1);
@@ -137,6 +152,7 @@ public class Launcher
 
         map.put(KeyEvent.VK_3, () ->
         {
+            addToLog("[USER] < \'3\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(2);
@@ -145,6 +161,7 @@ public class Launcher
 
         map.put(KeyEvent.VK_4, () ->
         {
+            addToLog("[USER] < \'4\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(3);
@@ -153,6 +170,7 @@ public class Launcher
 
         map.put(KeyEvent.VK_5, () ->
         {
+            addToLog("[USER] < \'5\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(4);
@@ -161,6 +179,7 @@ public class Launcher
 
         map.put(KeyEvent.VK_6, () ->
         {
+            addToLog("[USER] < \'6\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(5);
@@ -169,6 +188,7 @@ public class Launcher
 
         map.put(KeyEvent.VK_7, () ->
         {
+            addToLog("[USER] < \'7\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(6);
@@ -177,6 +197,7 @@ public class Launcher
 
         map.put(KeyEvent.VK_8, () ->
         {
+            addToLog("[USER] < \'8\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(7);
@@ -185,6 +206,7 @@ public class Launcher
 
         map.put(KeyEvent.VK_9, () ->
         {
+            addToLog("[USER] < \'9\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(8);
@@ -193,6 +215,7 @@ public class Launcher
 
         map.put(KeyEvent.VK_0, () ->
         {
+            addToLog("[USER] < \'0\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(9);
@@ -201,6 +224,7 @@ public class Launcher
 
         map.put(KeyEvent.VK_OPEN_BRACKET, () ->
         {
+            addToLog("[USER] < \'[\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(10);
@@ -209,6 +233,7 @@ public class Launcher
 
         map.put(KeyEvent.VK_CLOSE_BRACKET, () ->
         {
+            addToLog("[USER] < \']\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(11);
@@ -218,6 +243,8 @@ public class Launcher
         // Volume Control
         map.put(KeyEvent.VK_MINUS, () ->
         {
+            addToLog("[USER] < \'-\' > Pressed.");
+
             if (game.isRunning())
             {
                 musicPlayer.volumeAdjust(-0.1f);
@@ -226,6 +253,7 @@ public class Launcher
 
         map.put(KeyEvent.VK_EQUALS, () ->
         {
+            addToLog("[USER] < \'=\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.volumeAdjust(0.1f);
@@ -235,6 +263,7 @@ public class Launcher
         // Restart Sound
         map.put(KeyEvent.VK_BACK_SPACE, () ->
         {
+            addToLog("[USER] < \'BACK_SPACE\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.stopSound();
@@ -242,5 +271,15 @@ public class Launcher
         });
 
         return map;
+    }
+
+    /**
+     * Add an action to the log.
+     * @param action Input a String that is the action performed.
+     */
+    @Override
+    public void addToLog(String action)
+    {
+        Log.add(action);
     }
 }
