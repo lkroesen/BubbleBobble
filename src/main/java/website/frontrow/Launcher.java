@@ -67,7 +67,15 @@ public class Launcher
 
             service.scheduleAtFixedRate(() ->
                     {
-                        game.tick();
+                        try
+                        {
+                            game.tick();
+                        }
+                        catch(Exception e)
+                        {
+                            e.printStackTrace();
+                            throw e;
+                        }
                     }, 0, 1000 / GameConstants.TICKS_PER_SEC,
                     TimeUnit.MILLISECONDS);
         } catch (IOException e)
@@ -108,7 +116,7 @@ public class Launcher
                 if(game.isRunning())
                 {
                     Player p = game.getPlayers().get(0);
-                    game.getLevel().getUnits().add(
+                    game.getLevel().addUnit(
                             new Bubble(p.getLocation(),
                                     new Point(p.getDirection().getDeltaX() * 4, 0)));
                 }

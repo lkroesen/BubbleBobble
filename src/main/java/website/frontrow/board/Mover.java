@@ -163,7 +163,6 @@ public abstract class Mover
 
         this.handler = new CollisionHandler(level);
         this.handler.checkUnitsAABB(this);
-        //TODO: Improve the way cell collisions are handled.
         this.location = handler.findNextPosition(this).getPoint();
 
         applyGravity();
