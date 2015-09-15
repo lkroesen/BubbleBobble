@@ -25,7 +25,7 @@ public class Log
      */
     public static void add(String action)
     {
-        String timestamp = "[" + (System.currentTimeMillis() - startOfLoggingMillis) + " ms] ";
+        String timestamp = "[" + (System.currentTimeMillis() - startOfLoggingMillis) + " ms]\t";
         logMap.put(counter++, timestamp + action);
 
         if (enablePrinting)

@@ -1,6 +1,8 @@
 package website.frontrow.board;
 
 import website.frontrow.level.Level;
+import website.frontrow.logger.Log;
+import website.frontrow.logger.Logable;
 import website.frontrow.sprite.Sprite;
 import website.frontrow.sprite.SpriteStore;
 import website.frontrow.util.Point;
@@ -10,6 +12,7 @@ import website.frontrow.util.Point;
  */
 public class Player
         extends Mover
+            implements Logable
 {
 
 	private static SpriteStore ss = new SpriteStore();
@@ -27,6 +30,7 @@ public class Player
     public Player(Point position)
     {
         super(true, position, new Point(0, 0));
+        addToLog("[SPAWN]\tPlayer created at " + position.toString());
     }
 
     /**
@@ -44,6 +48,7 @@ public class Player
      */
     public void addScore(int p)
     {
+        addToLog("[SCORE]\tScore increased by " + p);
         score += p;
     }
     
@@ -66,5 +71,15 @@ public class Player
         {
             getMotion().setX(0);
         }
+    }
+
+    /**
+     * Input an action that is perfored by the player class.
+     * @param action Input a String that is the action performed.
+     */
+    @Override
+    public void addToLog(String action)
+    {
+        Log.add(action);
     }
 }

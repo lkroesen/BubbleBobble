@@ -55,14 +55,15 @@ public class Launcher implements Logable
     {
         // Initialize the Logger Class, so that it can Log actions taken.
         new Log();
+        Log.enablePrinting();
 
-        addToLog("[SYSTEM] Loading file: " + filename + ".");
+        addToLog("[SYSTEM]\tLoading file: " + filename + ".");
 
         try
         {
             InputStream map = getClass().getResourceAsStream(filename);
 
-            addToLog("[SYSTEM] Loading file: " + filename + " succeeded.");
+            addToLog("[SYSTEM]\tLoading file: " + filename + " succeeded.");
 
             MapParser mp = new MapParser();
             Level level = mp.parseMap(map);
@@ -77,13 +78,13 @@ public class Launcher implements Logable
 
             service.scheduleAtFixedRate(() ->
                     {
-                        addToLog("[TICK] Tick happened.");
+                        //addToLog("[TICK]\tTick happened.");
                         game.tick();
                     }, 0, 1000 / GameConstants.TICKS_PER_SEC,
                     TimeUnit.MILLISECONDS);
         } catch (IOException e)
         {
-            addToLog("[SYSTEM] Loading file: " + filename + " failed.");
+            addToLog("[ERROR]\tLoading file: " + filename + " failed.");
             throw new RuntimeException();
         }
     }
@@ -102,25 +103,25 @@ public class Launcher implements Logable
         {
             map.put(KeyEvent.VK_LEFT, () ->
             {
-                addToLog("[USER] < \'<-\' > Pressed.");
+                addToLog("[KEY]\t< \'<-\' > Pressed.");
                 game.getPlayers().get(0).goLeft();
             });
 
             map.put(KeyEvent.VK_RIGHT, () ->
             {
-                addToLog("[USER] < \'->\' > Pressed.");
+                addToLog("[KEY]\t< \'->\' > Pressed.");
                 game.getPlayers().get(0).goRight();
             });
 
             map.put(KeyEvent.VK_SPACE, () ->
             {
-                addToLog("[USER] < \' \' > Pressed.");
+                addToLog("[KEY]\t< \' \' > Pressed.");
                 game.getPlayers().get(0).jump();
             });
 
             map.put(KeyEvent.VK_Z, () ->
             {
-                addToLog("[USER] < \'Z\' > Pressed.");
+                addToLog("[KEY]\t< \'Z\' > Pressed.");
                 if(game.isRunning())
                 {
                     Player p = game.getPlayers().get(0);
@@ -134,7 +135,7 @@ public class Launcher implements Logable
         // Keys 1-0 & -, =, SOUND CONTROL
         map.put(KeyEvent.VK_1, () ->
         {
-            addToLog("[USER] < \'1\' > Pressed.");
+            addToLog("[KEY]\t< \'1\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(0);
@@ -143,7 +144,7 @@ public class Launcher implements Logable
 
         map.put(KeyEvent.VK_2, () ->
         {
-            addToLog("[USER] < \'2\' > Pressed.");
+            addToLog("[KEY]\t< \'2\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(1);
@@ -152,7 +153,7 @@ public class Launcher implements Logable
 
         map.put(KeyEvent.VK_3, () ->
         {
-            addToLog("[USER] < \'3\' > Pressed.");
+            addToLog("[KEY]\t< \'3\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(2);
@@ -161,7 +162,7 @@ public class Launcher implements Logable
 
         map.put(KeyEvent.VK_4, () ->
         {
-            addToLog("[USER] < \'4\' > Pressed.");
+            addToLog("[KEY]\t< \'4\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(3);
@@ -170,7 +171,7 @@ public class Launcher implements Logable
 
         map.put(KeyEvent.VK_5, () ->
         {
-            addToLog("[USER] < \'5\' > Pressed.");
+            addToLog("[KEY]\t< \'5\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(4);
@@ -179,7 +180,7 @@ public class Launcher implements Logable
 
         map.put(KeyEvent.VK_6, () ->
         {
-            addToLog("[USER] < \'6\' > Pressed.");
+            addToLog("[KEY]\t< \'6\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(5);
@@ -188,7 +189,7 @@ public class Launcher implements Logable
 
         map.put(KeyEvent.VK_7, () ->
         {
-            addToLog("[USER] < \'7\' > Pressed.");
+            addToLog("[KEY]\t< \'7\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(6);
@@ -197,7 +198,7 @@ public class Launcher implements Logable
 
         map.put(KeyEvent.VK_8, () ->
         {
-            addToLog("[USER] < \'8\' > Pressed.");
+            addToLog("[KEY]\t< \'8\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(7);
@@ -206,7 +207,7 @@ public class Launcher implements Logable
 
         map.put(KeyEvent.VK_9, () ->
         {
-            addToLog("[USER] < \'9\' > Pressed.");
+            addToLog("[KEY]\t< \'9\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(8);
@@ -215,7 +216,7 @@ public class Launcher implements Logable
 
         map.put(KeyEvent.VK_0, () ->
         {
-            addToLog("[USER] < \'0\' > Pressed.");
+            addToLog("[KEY]\t< \'0\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(9);
@@ -224,7 +225,7 @@ public class Launcher implements Logable
 
         map.put(KeyEvent.VK_OPEN_BRACKET, () ->
         {
-            addToLog("[USER] < \'[\' > Pressed.");
+            addToLog("[KEY]\t< \'[\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(10);
@@ -233,7 +234,7 @@ public class Launcher implements Logable
 
         map.put(KeyEvent.VK_CLOSE_BRACKET, () ->
         {
-            addToLog("[USER] < \']\' > Pressed.");
+            addToLog("[KEY]\t< \']\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.playSelection(11);
@@ -243,7 +244,7 @@ public class Launcher implements Logable
         // Volume Control
         map.put(KeyEvent.VK_MINUS, () ->
         {
-            addToLog("[USER] < \'-\' > Pressed.");
+            addToLog("[KEY]\t< \'-\' > Pressed.");
 
             if (game.isRunning())
             {
@@ -253,7 +254,7 @@ public class Launcher implements Logable
 
         map.put(KeyEvent.VK_EQUALS, () ->
         {
-            addToLog("[USER] < \'=\' > Pressed.");
+            addToLog("[KEY]\t< \'=\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.volumeAdjust(0.1f);
@@ -263,7 +264,7 @@ public class Launcher implements Logable
         // Restart Sound
         map.put(KeyEvent.VK_BACK_SPACE, () ->
         {
-            addToLog("[USER] < \'BACK_SPACE\' > Pressed.");
+            addToLog("[KEY]\t< \'BACK_SPACE\' > Pressed.");
             if (game.isRunning())
             {
                 musicPlayer.stopSound();
