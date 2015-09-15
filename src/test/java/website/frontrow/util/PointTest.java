@@ -143,10 +143,22 @@ public class PointTest
     }
 
     /**
-     * Test length
+     * Test length.
      */
-    public void lengthTest()
+    @Test
+    public void lengthTest1()
     {
+        Point a = new Point(2, 0);
+        assertEquals(2, a.length(), 0);
+    }
 
+    /**
+     * Test length.
+     */
+    @Test
+    public void lengthTest2()
+    {
+        Point a = new Point(0, 2);
+        assertEquals(2, a.length(), 0);
     }
 }

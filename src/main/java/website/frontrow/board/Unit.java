@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import website.frontrow.level.Level;
 import website.frontrow.sprite.Sprite;
+import website.frontrow.util.AABB;
 import website.frontrow.util.Point;
 
 /**
@@ -110,6 +111,24 @@ public abstract class Unit
     public void tick(Level level)
     {
 
+    }
+
+    /**
+     * Get the width and height for the bounding box.
+     * @return Width and height of AABB
+     */
+    public Point getAABBDimensions()
+    {
+        return new Point(1, 1);
+    }
+
+    /**
+     * Get the current AABB
+     * @return The current AABB.
+     */
+    public AABB getAABB()
+    {
+        return new AABB(getLocation(), getLocation().add(getAABBDimensions()));
     }
 
 }

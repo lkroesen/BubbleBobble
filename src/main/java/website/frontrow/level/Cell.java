@@ -1,6 +1,5 @@
 package website.frontrow.level;
 
-import website.frontrow.board.Mover;
 import website.frontrow.sprite.EmptySprite;
 import website.frontrow.sprite.Sprite;
 import website.frontrow.sprite.SpriteStore;

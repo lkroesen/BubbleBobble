@@ -10,8 +10,8 @@ import website.frontrow.util.Point;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Tests the mover class.
@@ -22,7 +22,7 @@ public abstract class MoverTest
 {
     @SuppressWarnings("checkstyle:visibilitymodifier")
     protected Point m;
-    public Level emptyLevel = new Level(new ArrayList<>(), new ArrayList<>(), new Grid<>(0, 0));
+    private Level emptyLevel = new Level(new ArrayList<>(), new ArrayList<>(), new Grid<>(0, 0));
 
     /**
      * Create the mover for the tests.

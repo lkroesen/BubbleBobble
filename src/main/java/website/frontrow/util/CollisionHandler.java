@@ -16,7 +16,10 @@ import website.frontrow.level.Level;
  */
 public class CollisionHandler
 {
-	private static final double PRECISION = 1/0.0001d;
+	@SuppressWarnings("checkstyle:magicnumber")
+	private static final double PRECISION = 0.0001d;
+	private static final double ONE_DEV_PRECISION = 1 / 0.0001d;
+	private static final int SAMPLING = 64;
     private static final double LOC_OFFSET = 0.99d;
     private Level level;
 
@@ -55,37 +58,20 @@ public class CollisionHandler
      * If any of the box corners of the moving mover falls within
      * the box of another mover there is a collision.
      * There is also a check to filter whether the mover is colliding with itself.
-	 * @param loc
-     * The location of the current mover
-     * @param mov
-     * The move the current mover wants to make
-	 * @param mover The mover to check with.
+	 * @param user The unit to check for.
 	 */
-    public void checkMoverCollision(Point loc, Point mov, Mover mover)
-    {
-    	loc.add(mov);
-    	ArrayList<Point> aabbPlayer = buildBox(loc);
-    	ArrayList<Unit> other = this.level.getUnits();
-    	
-    	for(int k = 0; k < other.size(); k++)
-        {
-	    	for(int i = 0; i < aabbPlayer.size(); i++)
-	    	{
-	    		double currentX = aabbPlayer.get(i).getX();
-	    		double currentY = aabbPlayer.get(i).getY();
-	    		double otherX = other.get(k).getLocation().getX();
-	    		double otherY = other.get(k).getLocation().getY();
-	    		if      (currentX >= otherX
-                        && currentY >= otherY
-                        && currentX < (otherX + 1) && currentY < (otherY + 1)
-                        && other.get(k) != mover)
-	    		{
-
-					applyCollision(mover, other.get(k));
-	    		}
-	    	}
-		}   	
-    }
+    public void checkUnitsAABB(Unit user)
+	{
+		ArrayList<Unit> units = this.level.getUnits();
+		AABB me = user.getAABB();
+		for(Unit other: units)
+		{
+			if(other != user && other.getAABB().overlaps(me))
+			{
+				applyCollision(user, other);
+			}
+		}
+	}
 
 	/**
 	 * Call the method that handles collisions.
@@ -140,38 +126,6 @@ public class CollisionHandler
 
 	}
 
-    /**
-     * Checks if a movers projected movement makes it collide with a cell that is non-empty.
-     * @param loc
-     * The location of the current mover
-     * @param mov
-     * The move the current mover wants to make
-     * @param mover
-     * The mover that is moving
-     * @return
-     * Whether there has been a collision or not
-     */
-    public boolean checkCellCollision(Point loc, Point mov, Mover mover)
-    {
-    	ArrayList<Point> aabb = buildBox(loc);
-    
-    	for(int i = 0; i < aabb.size(); i++)
-    	{
-    		aabb.set(i, aabb.get(i).add(mov));
-    		int x = (int) aabb.get(i).getX();
-    		int y = (int) aabb.get(i).getY();
-    		if(level.getCells() == null || level.getCells().get(x, y) == null)
-            {
-    			return true;
-    		}			
-    		if(level.getCells().get(x, y).collides(mover.getMotion()))
-    		{ 			
-    			return true;
-    		}
-    	}
-    	return false;
-    }
-
 	/**
 	 * Check an AABB versus the level, to see if there are any collisions.
 	 * @param aabb The aabb to check
@@ -192,7 +146,8 @@ public class CollisionHandler
 			for(int x = minx; x < maxx; x++)
 			{
 				Point c = new Point(x, y);
-				if(cells.get(x, y).collides(motion) && new AABB(c, c.add(cells.get(x, y).getAABB())).overlaps(aabb))
+				AABB tile = new AABB(c, c.add(cells.get(x, y).getAABB()));
+				if(cells.get(x, y).collides(motion) && aabb.overlaps(tile))
 				{
 					return true;
 				}
@@ -203,22 +158,34 @@ public class CollisionHandler
 	}
 
 	/**
+	 * Get the amount of steps for a mover.
+	 * @param mover Mover to compute for.
+	 * @param wh Width and height of movers AABB.
+	 * @return amount of steps.
+	 */
+	private int getSteps(Mover mover, Point wh)
+	{
+		double stepsX = Math.abs(mover.getMotion().getX()) / wh.getX();
+		double stepsY = Math.abs(mover.getMotion().getY()) / wh.getY();
+
+		return (int) Math.ceil(Math.max(stepsX, stepsY) * SAMPLING);
+	}
+
+	/**
 	 * Find the next position for the given mover.
 	 * @param mover Mover to get next position for.
 	 * @return The next position of a given mover.
 	 */
 	public Collision findNextPosition(Mover mover)
 	{
-		Point wh = mover.getAABB();
-		double stepsX = Math.abs(mover.getMotion().getX()) / wh.getX();
-		double stepsY = Math.abs(mover.getMotion().getY()) / wh.getY();
-		// Do a certain amount of checks. This should be relatively accurate in any case.
-		// If not, make the two a higher number.
-		int steps = (int) Math.ceil(Math.max(stepsX, stepsY) * 64);
-
+		Point wh = mover.getAABBDimensions();
+		int steps = getSteps(mover, wh);
 		Point found = mover.getLocation();
 
-		if(steps == 0) return new Collision(found, false);
+		if(steps == 0)
+		{
+			return new Collision(found, false);
+		}
 		Point delta = mover.getMotion().divide(steps).divide(GameConstants.TICKS_PER_SEC);
 		boolean collision = false;
 
@@ -236,7 +203,9 @@ public class CollisionHandler
 			found = current;
 		}
 
-		return new Collision(new Point(Math.round(found.getX()*PRECISION)/PRECISION,
-						 Math.round(found.getY()*PRECISION)/PRECISION), collision);
+		return new Collision(new Point(
+					Math.round(found.getX() * ONE_DEV_PRECISION) * PRECISION,
+					Math.round(found.getY() * ONE_DEV_PRECISION) * PRECISION
+			), collision);
 	}
 }

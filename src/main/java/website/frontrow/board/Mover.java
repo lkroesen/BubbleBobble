@@ -1,7 +1,6 @@
 package website.frontrow.board;
 
 import website.frontrow.level.Level;
-import website.frontrow.util.AABB;
 import website.frontrow.util.Collision;
 import website.frontrow.util.CollisionHandler;
 import website.frontrow.game.GameConstants;
@@ -163,7 +162,7 @@ public abstract class Mover
         Point movement = motion.divide(GameConstants.TICKS_PER_SEC);
 
         this.handler = new CollisionHandler(level);
-        this.handler.checkMoverCollision(location, movement, this);
+        this.handler.checkUnitsAABB(this);
         //TODO: Improve the way cell collisions are handled.
         this.location = handler.findNextPosition(this).getPoint();
 
@@ -179,7 +178,6 @@ public abstract class Mover
                 - GameConstants.GRAVITY));
 
         Collision c = this.handler.findNextPosition(this);
-        Point newLoc = c.getPoint();
         if(c.isCollided())
         {
             this.motion.setY(0);
@@ -187,11 +185,4 @@ public abstract class Mover
 
     }
 
-    /**
-     * Get the width and height for the bounding box.
-     */
-    public Point getAABB()
-    {
-        return new Point(1, 1);
-    }
 }
