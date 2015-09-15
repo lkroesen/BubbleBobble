@@ -163,14 +163,7 @@ public abstract class Mover
         this.handler = new CollisionHandler(level);
         this.handler.checkMoverCollision(location, movement, this);
         //TODO: Improve the way cell collisions are handled.
-        if(!this.handler.checkCellCollision(location, movement, this))
-        {
-            this.location = this.location.add(movement);
-        }
-        else
-        {
-            this.onWallCollision();
-        }
+        this.location = handler.findNextPosition(this);
 
         applyGravity();
     }

@@ -7,6 +7,8 @@ import website.frontrow.board.Enemy;
 import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
 import website.frontrow.board.Mover;
+import website.frontrow.game.Game;
+import website.frontrow.game.GameConstants;
 import website.frontrow.level.Cell;
 import website.frontrow.level.Level;
 
@@ -15,6 +17,7 @@ import website.frontrow.level.Level;
  */
 public class CollisionHandler
 {
+	private static final double PRECISION = 1/0.001d;
     private static final double LOC_OFFSET = 0.99d;
     private Level level;
 
@@ -176,23 +179,63 @@ public class CollisionHandler
 	 * @param motion The motion to keep in mind
 	 * @return True when there is a collision, false when not.
 	 */
-	public boolean checkAABB(AABB aabb, Point motion)
+	public boolean checkLevelAABB(AABB aabb, Point motion)
 	{
 		// Find the cells we need to check.
-		int minx = (int) Math.floor(aabb.getStart().getX());
-		int miny = (int) Math.floor(aabb.getStart().getY());
-		int maxx = (int) Math.ceil(aabb.getEnd().getX());
-		int maxy = (int) Math.ceil(aabb.getEnd().getY());
 		Grid<Cell> cells = level.getCells();
+		int minx = (int) Math.max(Math.floor(aabb.getStart().getX()), 0);
+		int miny = (int) Math.max(Math.floor(aabb.getStart().getY()), 0);
+		int maxx = (int) Math.min(Math.ceil(aabb.getEnd().getX()), cells.getWidth());
+		int maxy = (int) Math.min(Math.ceil(aabb.getEnd().getY()), cells.getHeight());
 		// Check the cells.
 		for(int y = miny; y < maxy; y++)
 		{
 			for(int x = minx; x < maxx; x++)
 			{
-				if(cells.get(x, y).collides(motion)) return true;
+				if(cells.get(x, y).collides(motion))
+				{
+					return true;
+				}
 			}
 		}
 
 		return false;
+	}
+
+	/**
+	 * Find the next position for the given mover.
+	 * @param mover Mover to get next position for.
+	 * @return The next position of a given mover.
+	 */
+	public Point findNextPosition(Mover mover)
+	{
+		// TODO: Change this to an unit specific width and height.
+		Point wh = new Point(1, 1);
+		double stepsX = Math.abs(mover.getMotion().getX()) / wh.getX();
+		double stepsY = Math.abs(mover.getMotion().getY()) / wh.getY();
+		// Do a certain amount of checks. This should be relatively accurate in any case.
+		// If not, make the two a higher number.
+		int steps = (int) Math.ceil(Math.max(stepsX, stepsY) * 64);
+
+		Point found = mover.getLocation();
+
+		if(steps == 0) return found;
+		Point delta = mover.getMotion().divide(steps).divide(GameConstants.TICKS_PER_SEC);
+
+		for(int i = 0; i <= steps; i++)
+		{
+			Point current = found.add(delta);
+
+			if(checkLevelAABB(new AABB(current, current.add(wh)), mover.getMotion()))
+			{
+				mover.onWallCollision();
+				break;
+			}
+
+			found = current;
+		}
+
+		return new Point(Math.round(found.getX()*PRECISION)/PRECISION,
+						 Math.round(found.getY()*PRECISION)/PRECISION);
 	}
 }

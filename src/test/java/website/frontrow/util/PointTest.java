@@ -141,4 +141,12 @@ public class PointTest
 
         assertEquals(expected, a.divide(2));
     }
+
+    /**
+     * Test length
+     */
+    public void lengthTest()
+    {
+
+    }
 }

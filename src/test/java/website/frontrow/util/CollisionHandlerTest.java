@@ -14,6 +14,7 @@ import website.frontrow.level.Level;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
@@ -85,55 +86,85 @@ public class CollisionHandlerTest
      * Test AABB level check without collision.
      */
     @Test
-    public void testFreeAABB()
+    public void freeAABBTest()
     {
         Level check = new Level(emptyPlayer, emptyUnit, new Grid<>(Arrays.asList(
                 Cell.WALL, Cell.WALL, Cell.WALL,
                 Cell.WALL, Cell.EMPTY, Cell.WALL,
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 3));
         CollisionHandler handler = new CollisionHandler(check);
-        assertFalse(handler.checkAABB(new AABB(new Point(1, 1), new Point(2, 2)), new Point(0, 0)));
+        assertFalse(handler.checkLevelAABB(new AABB(new Point(1, 1), new Point(2, 2)), new Point(0, 0)));
     }
 
     /**
      * Test AABB level check.
      */
     @Test
-    public void testSlightlyOccupiedAABB()
+    public void dlightlyOccupiedAABBTest()
     {
         Level check = new Level(emptyPlayer, emptyUnit, new Grid<>(Arrays.asList(
                 Cell.WALL, Cell.WALL, Cell.WALL,
                 Cell.WALL, Cell.EMPTY, Cell.WALL,
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 3));
         CollisionHandler handler = new CollisionHandler(check);
-        assertTrue(handler.checkAABB(new AABB(new Point(1.5, 1.5), new Point(2.5, 2.5)), new Point(0, 0)));
+        assertTrue(handler.checkLevelAABB(new AABB(new Point(1.5, 1.5), new Point(2.5, 2.5)), new Point(0, 0)));
     }
 
     /**
      * Test AABB level check without collision.
      */
     @Test
-    public void testPlatformMotionUpAABB()
+    public void platformMotionUpAABBTest()
     {
         Level check = new Level(emptyPlayer, emptyUnit, new Grid<>(Arrays.asList(
                 Cell.WALL, Cell.WALL, Cell.WALL,
                 Cell.WALL, Cell.PLATFORM, Cell.WALL,
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 3));
         CollisionHandler handler = new CollisionHandler(check);
-        assertFalse(handler.checkAABB(new AABB(new Point(1, 1), new Point(2, 2)), new Point(0, -1)));
+        assertFalse(handler.checkLevelAABB(new AABB(new Point(1, 1), new Point(2, 2)), new Point(0, -1)));
     }
 
     /**
      * Test AABB level check without collision.
      */
     @Test
-    public void testPlatformMotionDownAABB()
+    public void platformMotionDownAABBTest()
     {
         Level check = new Level(emptyPlayer, emptyUnit, new Grid<>(Arrays.asList(
                 Cell.WALL, Cell.WALL, Cell.WALL,
                 Cell.WALL, Cell.PLATFORM, Cell.WALL,
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 3));
         CollisionHandler handler = new CollisionHandler(check);
-        assertTrue(handler.checkAABB(new AABB(new Point(1, 1), new Point(2, 2)), new Point(0, 1)));
+        assertTrue(handler.checkLevelAABB(new AABB(new Point(1, 1), new Point(2, 2)), new Point(0, 1)));
+    }
+
+    /**
+     * Test getNextPosition in a terrible box of terribleness.
+     */
+    @Test
+    public void getNextPositionTestRetricted()
+    {
+        Level check = new Level(emptyPlayer, emptyUnit, new Grid<>(Arrays.asList(
+                Cell.WALL, Cell.WALL, Cell.WALL,
+                Cell.WALL, Cell.EMPTY, Cell.WALL,
+                Cell.WALL, Cell.WALL, Cell.WALL), 3, 3));
+        CollisionHandler handler = new CollisionHandler(check);
+        Player player = new Player(new Point(1, 1));
+        player.setMotion(new Point(1, 1));
+        assertEquals(new Point(1, 1), handler.findNextPosition(player));
+    }
+
+    @Test
+    public void getNextPositionTestSlightlyRetricted()
+    {
+        Level check = new Level(emptyPlayer, emptyUnit, new Grid<>(Arrays.asList(
+                Cell.WALL, Cell.WALL, Cell.WALL,
+                Cell.WALL, Cell.EMPTY, Cell.WALL,
+                Cell.WALL, Cell.EMPTY, Cell.WALL,
+                Cell.WALL, Cell.WALL, Cell.WALL), 3, 4));
+        CollisionHandler handler = new CollisionHandler(check);
+        Player player = new Player(new Point(1, 1));
+        player.setMotion(new Point(0, 3));
+        assertEquals(new Point(1, 2), handler.findNextPosition(player));
     }
 }
