@@ -38,6 +38,17 @@ public class StatusLabelPanel extends JPanel
 
     }
 
+    /**
+     * Setter for runningLabel.
+     * @param rl JLabel
+     */
+    public void setRunningLabel(JLabel rl)
+    {
+
+        runningLabel = rl;
+
+    }
+
     @Override
     public void gameStop()
     {

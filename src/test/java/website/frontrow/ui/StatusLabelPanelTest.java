@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by Remi on 13-9-2015.
+ * Created by Remi Flinterman on 13-9-2015.
  */
 public class StatusLabelPanelTest
 {
@@ -35,6 +35,38 @@ public class StatusLabelPanelTest
         JLabel label = new JLabel("Paused");
 
         assertEquals(rl.toString(), label.toString());
+
+    }
+
+    /**
+     * Tests the setter of runningLabel.
+     */
+    @Test
+    public void setRunningLabelTest()
+    {
+
+        StatusLabelPanel slp = new StatusLabelPanel(g);
+
+        JLabel label = new JLabel("Test");
+        slp.setRunningLabel(label);
+
+        assertEquals(slp.getRunningLabel().toString(), label.toString());
+
+    }
+
+    /**
+     * Tests the getter of runningLabel.
+     */
+    @Test
+    public void getRunningLabelTest()
+    {
+
+        StatusLabelPanel slp = new StatusLabelPanel(g);
+
+        JLabel label = new JLabel("Paused");
+        JLabel l = slp.getRunningLabel();
+
+        assertEquals(l.toString(), label.toString());
 
     }
 
