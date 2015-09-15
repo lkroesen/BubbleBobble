@@ -24,7 +24,8 @@ public class Enemy
     public Enemy(Point position)
     {
         super(true, position, new Point(0, 0));
-        addToLog("[SPAWN]\tEnemy created at " + position.toString());
+        new Log();
+        addToLog("[SPAWN]\tEnemy created.");
     }
     
     /**

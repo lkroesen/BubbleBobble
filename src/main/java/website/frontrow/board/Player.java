@@ -30,7 +30,8 @@ public class Player
     public Player(Point position)
     {
         super(true, position, new Point(0, 0));
-        addToLog("[SPAWN]\tPlayer created at " + position.toString());
+        new Log();
+        addToLog("[SPAWN]\tPlayer created.");
     }
 
     /**
