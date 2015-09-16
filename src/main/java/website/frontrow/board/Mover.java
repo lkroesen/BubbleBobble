@@ -1,6 +1,7 @@
 package website.frontrow.board;
 
 import website.frontrow.level.Level;
+import website.frontrow.util.Collision;
 import website.frontrow.util.CollisionHandler;
 import website.frontrow.game.GameConstants;
 import website.frontrow.util.Point;
@@ -158,16 +159,8 @@ public abstract class Mover
         Point movement = motion.divide(GameConstants.TICKS_PER_SEC);
 
         this.handler = new CollisionHandler(level);
-        this.handler.checkMoverCollision(location, movement, this);
-        //TODO: Improve the way cell collisions are handled.
-        if(!this.handler.checkCellCollision(location, movement, this))
-        {
-            this.location = this.location.add(movement);
-        }
-        else
-        {
-            this.onWallCollision();
-        }
+        this.handler.checkUnitsAABB(this);
+        this.location = handler.findNextPosition(this).getPoint();
 
         applyGravity();
     }
@@ -177,17 +170,15 @@ public abstract class Mover
      */
     protected void applyGravity()
     {
-        this.motion.setY(Math.max(GameConstants.MAX_Y_SPEED, this.motion.getY()
-                - GameConstants.GRAVITY / GameConstants.TICKS_PER_SEC));
-        Point movement = motion.divide(GameConstants.TICKS_PER_SEC);
+        this.motion.setY(Math.max(GameConstants.MAX_Y_SPEED,
+                this.motion.getY() - GameConstants.GRAVITY));
 
-        if(!this.handler.checkCellCollision(location, movement, this))
-        {
-            this.location = this.location.add(movement);
-        }
-        else
+        Collision c = this.handler.findNextPosition(this);
+        if(c.isCollided())
         {
             this.motion.setY(0);
         }
+
     }
+
 }

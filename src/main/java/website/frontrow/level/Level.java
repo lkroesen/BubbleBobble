@@ -9,12 +9,15 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Class containing a level and positions of entities therein.
  */
 public class Level
 {
+
+    private ConcurrentLinkedQueue<Unit> toAdd = new ConcurrentLinkedQueue<>();
 
     private ArrayList<Player> players;
     private ArrayList<Unit> units;
@@ -55,13 +58,23 @@ public class Level
     }
 
     /**
-     * Returns the ArrayList<Unit>.
+     * Returns a copy of ArrayList<Unit>.
+     * (Be warned, it IS a copy, you cannot add anything through this!)
      * @return
-     * Returns an ArrayList of Unit.
+     * Returns a copy of the list of units.
      */
     public ArrayList<Unit> getUnits()
     {
-        return units;
+        return new ArrayList<>(units);
+    }
+
+    /**
+     * Add a unit to the queue.
+     * @param unit Unit to add to the level.
+     */
+    public void addUnit(Unit unit)
+    {
+        toAdd.add(unit);
     }
 
     /**
@@ -80,6 +93,10 @@ public class Level
      */
     public void tick()
     {
+        while(!toAdd.isEmpty())
+        {
+            units.add(toAdd.poll());
+        }
         Unit unit;
         Iterator<Unit> it = units.iterator();
         while (it.hasNext())

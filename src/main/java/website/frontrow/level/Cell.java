@@ -1,9 +1,9 @@
 package website.frontrow.level;
 
-import website.frontrow.board.Mover;
 import website.frontrow.sprite.EmptySprite;
 import website.frontrow.sprite.Sprite;
 import website.frontrow.sprite.SpriteStore;
+import website.frontrow.util.Point;
 
 import java.awt.Graphics;
 
@@ -22,7 +22,7 @@ public enum Cell
     WALL
     {
         @Override
-        public boolean collides(Mover mover)
+        public boolean collides(Point movement)
         {
             return true;
         }
@@ -39,9 +39,15 @@ public enum Cell
     PLATFORM
     {
         @Override
-        public boolean collides(Mover mover)
+        public boolean collides(Point movement)
         {
-            return mover.getMotion().getY() > 0;
+            return movement.getY() > 0;
+        }
+
+        @Override
+        public Point getAABB()
+        {
+            return new Point(1, 0);
         }
         
         @Override
@@ -64,12 +70,21 @@ public enum Cell
 
     /**
      * Would this type of cell collide with the unit in its current state.
-     * @param mover The unit to use.
+     * @param movement The movement to keep in mind
      * @return Whether we need to run collision code or not.
      */
-    public boolean collides(Mover mover)
+    public boolean collides(Point movement)
     {
         return false;
+    }
+
+    /**
+     * The width and height of this tile.
+     * @return The width and height of the AABB.
+     */
+    public Point getAABB()
+    {
+        return new Point(1, 1);
     }
 
     /**
