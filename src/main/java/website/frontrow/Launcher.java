@@ -57,13 +57,13 @@ public class Launcher implements Logable
         new Log();
         Log.enablePrinting();
 
-        addToLog("[SYSTEM]\tLoading file: " + filename + ".");
+        addToLog("[LAUNCHER]\tLoading file: " + filename + ".");
 
         try
         {
             InputStream map = getClass().getResourceAsStream(filename);
 
-            addToLog("[SYSTEM]\tLoading file: " + filename + " succeeded.");
+            addToLog("[LAUNCHER]\tLoading file: " + filename + " succeeded.");
 
             MapParser mp = new MapParser();
             Level level = mp.parseMap(map);

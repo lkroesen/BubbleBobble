@@ -32,7 +32,7 @@ public class Game
         this.currentLevel = level;
         this.players = players;
         this.observers = new ArrayList<>();
-        addToLog("[SYSTEM]\tGame Object Created");
+        addToLog("[GAME]\tGame Object Created");
     }
 
     /**

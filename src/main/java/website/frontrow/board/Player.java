@@ -31,7 +31,7 @@ public class Player
     {
         super(true, position, new Point(0, 0));
         new Log();
-        addToLog("[SPAWN]\tPlayer created.");
+        addToLog("[PLAYER]\t[SPAWN]\tPlayer created.");
     }
 
     /**
@@ -49,7 +49,7 @@ public class Player
      */
     public void addScore(int p)
     {
-        addToLog("[SCORE]\tScore increased by " + p);
+        addToLog("[PLAYER]\t[SCORE]\tScore increased by " + p);
         score += p;
     }
     

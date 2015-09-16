@@ -27,7 +27,7 @@ public class Bubble
     public Bubble(Point position, Point motion)
     {
         super(true, position, motion);
-        addToLog("[SPAWN]\tBubble created.");
+        addToLog("[BUBBLE]\t[SPAWN]\tBubble created.");
     }
 
     /**

@@ -25,7 +25,7 @@ public class Enemy
     {
         super(true, position, new Point(0, 0));
         new Log();
-        addToLog("[SPAWN]\tEnemy created.");
+        addToLog("[BUBBLE]\t[SPAWN]\tEnemy created.");
     }
     
     /**
