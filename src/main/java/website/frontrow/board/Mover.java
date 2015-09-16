@@ -178,7 +178,7 @@ public abstract class Mover
     protected void applyGravity()
     {
         this.motion.setY(Math.max(GameConstants.MAX_Y_SPEED, this.motion.getY()
-                - (GameConstants.GRAVITY / GameConstants.TICKS_PER_SEC)));
+                - GameConstants.GRAVITY / GameConstants.TICKS_PER_SEC));
         Point movement = motion.divide(GameConstants.TICKS_PER_SEC);
 
         if(!this.handler.checkCellCollision(location, movement, this))

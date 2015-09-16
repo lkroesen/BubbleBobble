@@ -149,7 +149,7 @@ public class Level
      */
     public boolean isEnemy(Unit u)
     {
-        return (u instanceof Enemy);
+        return u instanceof Enemy;
     }
 
     /**
