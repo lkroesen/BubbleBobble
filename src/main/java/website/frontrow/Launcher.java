@@ -62,26 +62,36 @@ public class Launcher
 
             ui.start();
 
-            ScheduledExecutorService service = Executors
-                    .newSingleThreadScheduledExecutor();
-
-            service.scheduleAtFixedRate(() ->
-                    {
-                        try
-                        {
-                            game.tick();
-                        }
-                        catch(Exception e)
-                        {
-                            e.printStackTrace();
-                            throw e;
-                        }
-                    }, 0, 1000 / GameConstants.TICKS_PER_SEC,
-                    TimeUnit.MILLISECONDS);
+            startScheduler(game);
+            
         } catch (IOException e)
         {
             throw new RuntimeException();
         }
+    }
+
+    /**
+     * Starts the schedular for a game object.
+     * @param game Game to start a scheduler for.
+     */
+    private void startScheduler(Game game)
+    {
+        ScheduledExecutorService service = Executors
+                .newSingleThreadScheduledExecutor();
+
+        service.scheduleAtFixedRate(() ->
+                {
+                    try
+                    {
+                        game.tick();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                        throw e;
+                    }
+                }, 0, 1000 / GameConstants.TICKS_PER_SEC,
+                TimeUnit.MILLISECONDS);
     }
 
     /**

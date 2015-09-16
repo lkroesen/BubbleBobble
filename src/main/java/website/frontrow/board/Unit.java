@@ -123,7 +123,7 @@ public abstract class Unit
     }
 
     /**
-     * Get the current AABB
+     * Get the current AABB.
      * @return The current AABB.
      */
     public AABB getAABB()
