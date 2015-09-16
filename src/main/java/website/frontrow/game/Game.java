@@ -2,6 +2,8 @@ package website.frontrow.game;
 
 import website.frontrow.board.Player;
 import website.frontrow.level.Level;
+import website.frontrow.logger.Log;
+import website.frontrow.logger.Logable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.List;
  * The current state of the game.
  */
 public class Game
+        implements Logable
 {
     private int score = 0;
     private Level currentLevel;
@@ -29,6 +32,7 @@ public class Game
         this.currentLevel = level;
         this.players = players;
         this.observers = new ArrayList<>();
+        addToLog("[SYSTEM]\tGame Object Created");
     }
 
     /**
@@ -148,5 +152,15 @@ public class Game
         {
             observers.forEach(o -> o.gameStop());
         }
+    }
+
+    /**
+     * Input log actions made by game.
+     * @param action Input a String that is the action performed.
+     */
+    @Override
+    public void addToLog(String action)
+    {
+        Log.add(action);
     }
 }
