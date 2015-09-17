@@ -3,6 +3,8 @@ package website.frontrow.level;
 import website.frontrow.board.Enemy;
 import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
+import website.frontrow.logger.Log;
+import website.frontrow.logger.Logable;
 import website.frontrow.util.Grid;
 import website.frontrow.util.Point;
 
@@ -16,6 +18,7 @@ import java.util.ArrayList;
  * Parses a text file into level.
  */
 public class MapParser
+    implements Logable
 {
 
     /**
@@ -30,12 +33,14 @@ public class MapParser
     {
         if(lines.length < 1)
         {
+            addToLog("[ERROR]\t[MAP PARSER]\t1 - Input length is too small.");
             return false;
         }
 
         int len = lines[0].length();
         if(len < 1)
         {
+            addToLog("[ERROR]\t[MAP PARSER]\t2 - Line length too small.");
             return false;
         }
 
@@ -43,10 +48,12 @@ public class MapParser
         {
             if (line.length() != len)
             {
+                addToLog("[ERROR]\t[MAP PARSER]\t3 - One of the lines in the file is not as long as the other.");
                 return false;
             }
         }
 
+        addToLog("[MAP PARSER]\tLevel was parsed successfully.");
         return true;
     }
 
@@ -62,6 +69,7 @@ public class MapParser
      */
     public Level parseMap(InputStream stream) throws IOException
     {
+        addToLog("[MAP PARSER]\tparseMap() called.");
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         String line;
         ArrayList<String> lines = new ArrayList<>();
@@ -71,6 +79,7 @@ public class MapParser
             lines.add(line);
         }
 
+        addToLog("[MAP PARSER]\tparseMap() succeeded.");
         return parseMap(lines.toArray(new String[lines.size()]));
     }
 
@@ -84,8 +93,10 @@ public class MapParser
      */
     public Level parseMap(String[] lines)
     {
+        addToLog("[MAP PARSER]\tparseMap() called.");
         if (!validateLevelShape(lines))
         {
+            addToLog("[ERROR]\t[MAP PARSER]\t4 - RuntimeException.");
             throw new RuntimeException("The given lines are invalidly shaped or zero size.");
         }
         Grid<Cell> grid = new Grid<>(lines[0].length(), lines.length);
@@ -104,6 +115,7 @@ public class MapParser
             ++y;
         }
 
+        addToLog("[MAP PARSER]\tparseMap() completed successfully.");
         return new Level(players, units, grid);
     }
 
@@ -145,5 +157,15 @@ public class MapParser
             default:
                 throw new RuntimeException("Invalid character, \"" + character + "'\".");
         }
+    }
+
+    /**
+     * Log actions taken by MapParser.
+     * @param action Input a String that is the action performed.
+     */
+    @Override
+    public void addToLog(String action)
+    {
+        Log.add(action);
     }
 }

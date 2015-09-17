@@ -1,6 +1,6 @@
 package website.frontrow.level;
 
-import website.frontrow.board.Unit;
+import website.frontrow.board.Mover;
 import website.frontrow.sprite.EmptySprite;
 import website.frontrow.sprite.Sprite;
 import website.frontrow.sprite.SpriteStore;
@@ -22,7 +22,7 @@ public enum Cell
     WALL
     {
         @Override
-        public boolean collides(Unit unit)
+        public boolean collides(Mover mover)
         {
             return true;
         }
@@ -39,9 +39,9 @@ public enum Cell
     PLATFORM
     {
         @Override
-        public boolean collides(Unit unit)
+        public boolean collides(Mover mover)
         {
-            return unit.getMotion().getY() > 0;
+            return mover.getMotion().getY() > 0;
         }
         
         @Override
@@ -64,10 +64,10 @@ public enum Cell
 
     /**
      * Would this type of cell collide with the unit in its current state.
-     * @param unit The unit to use.
+     * @param mover The unit to use.
      * @return Whether we need to run collision code or not.
      */
-    public boolean collides(Unit unit)
+    public boolean collides(Mover mover)
     {
         return false;
     }

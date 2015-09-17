@@ -1,5 +1,6 @@
 package website.frontrow;
 
+import website.frontrow.game.Game;
 import website.frontrow.level.Level;
 
 import org.junit.Test;

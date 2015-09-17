@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import website.frontrow.board.Direction;
+import website.frontrow.logger.Log;
+import website.frontrow.logger.Logable;
 
 /**
  * A store to get sprites.
  */
 public class SpriteStore
+		implements Logable
 {
     private static ImageStore is = new ImageStore();
     
@@ -31,6 +34,7 @@ public class SpriteStore
     	}
     	else
         {
+			addToLog("[WARNING]\t[SPRITESTORE]\tWall Sprite was null.");
     		sprite = new StaticImageSprite(is.getWallImage());
     		spriteMap.put("Wall", sprite);
     		return sprite;
@@ -53,6 +57,7 @@ public class SpriteStore
 		}
 		else
 		{
+			addToLog("[WARNING]\t[SPRITESTORE]\tBubble Sprite was null.");
 			sprite = new StaticImageSprite(is.getBubbleImage());
 			spriteMap.put("Bubble", sprite);
 			return sprite;
@@ -73,6 +78,7 @@ public class SpriteStore
     	}
     	else
         {
+			addToLog("[WARNING]\t[SPRITESTORE]\tPlatform Sprite was null.");
     		sprite = new StaticImageSprite(is.getPlatformImage());
     		spriteMap.put("Platform", sprite);
     		return sprite;
@@ -85,14 +91,16 @@ public class SpriteStore
      *             Allowed values: LEFT, RIGHT.
      * @return The sprite.
      */
-	@SuppressWarnings("checkstyle:methodlength")
+	// Don't suppress the method length warning, this method should really be refactored.
     public Sprite getPlayerSprite(Direction face)
     {
     	StaticImageSprite sprite;
     	
     	switch(face)
         {
-            case LEFT:
+			case UP:
+			case DOWN:
+			case LEFT:
             	sprite = spriteMap.get("PlayerLeft");
             	
             	if(sprite != null)
@@ -101,6 +109,7 @@ public class SpriteStore
             	}
             	else
                 {
+					addToLog("[WARNING]\t[SPRITESTORE]\tPlayer Sprite LEFT was null.");
             		sprite = new StaticImageSprite(is.getPlayerLeftImage());
             		spriteMap.put("PlayerLeft", sprite);
             		return sprite;
@@ -114,12 +123,13 @@ public class SpriteStore
             	}
             	else
                 {
+					addToLog("[WARNING]\t[SPRITESTORE]\tPlayer Sprite RIGHT was null.");
             		sprite = new StaticImageSprite(is.getPlayerRightImage());
             		spriteMap.put("PlayerRight", sprite);
             		return sprite;
             	}
-            default:
-                throw new IllegalArgumentException("Sprite direction can only be left or right");
+			default:
+				return new EmptySprite();
         }
     }
     
@@ -129,14 +139,15 @@ public class SpriteStore
      *             Allowed values: LEFT, RIGHT.
      * @return The sprite.
      */
-	@SuppressWarnings("checkstyle:methodlength")
+	// Don't suppress the method length warning, this method should really be refactored.
     public Sprite getEnemySprite(Direction face)
     {
         StaticImageSprite sprite;
         
     	switch(face)
         {
-
+			case UP:
+			case DOWN:
         	case LEFT:
             	sprite = spriteMap.get("EnemyLeft");
             	
@@ -146,6 +157,7 @@ public class SpriteStore
             	}
             	else
                 {
+					addToLog("[WARNING]\t[SPRITESTORE]\tEnemy Sprite LEFT was null.");
             		sprite = new StaticImageSprite(is.getEnemyLeftImage());
             		spriteMap.put("EnemyLeft", sprite);
             		return sprite;
@@ -158,13 +170,23 @@ public class SpriteStore
             		return sprite;
             	}
             	else
-                {
-            		sprite = new StaticImageSprite(is.getEnemyRightImage());
-            		spriteMap.put("EnemyRight", sprite);
-            		return sprite;
-            	}
-            default:
-                throw new IllegalArgumentException("Sprite direction can only be left or right");
+				{
+					addToLog("[WARNING]\t[SPRITESTORE]\tWall Sprite RIGHT was null.");
+					sprite = new StaticImageSprite(is.getEnemyRightImage());
+					spriteMap.put("EnemyRight", sprite);
+					return sprite;
+				}
+			default: return new EmptySprite();
         }
     }
+
+	/**
+	 * Input a String to be logged.
+	 * @param action Input a String that is the action performed.
+	 */
+	@Override
+	public void addToLog(String action)
+	{
+		Log.add(action);
+	}
 }

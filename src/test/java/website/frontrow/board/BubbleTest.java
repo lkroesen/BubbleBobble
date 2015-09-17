@@ -14,7 +14,8 @@ import static org.mockito.Mockito.verify;
 /**
  * Tests for testing bubble test.
  */
-public class BubbleTest extends UnitTest
+public class BubbleTest
+        extends MoverTest
 {
     /**
      * Test the constructor of Bubble.
@@ -77,7 +78,7 @@ public class BubbleTest extends UnitTest
     }
 
     @Override
-    public Unit getTestUnit(boolean alive, Point start, Point end)
+    public Mover getTestMover(boolean alive, Point start, Point end)
     {
         Bubble bubble = new Bubble(start, end);
         if(!alive)

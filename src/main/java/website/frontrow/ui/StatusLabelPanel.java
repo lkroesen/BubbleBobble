@@ -1,7 +1,7 @@
 package website.frontrow.ui;
 
-import website.frontrow.Game;
-import website.frontrow.GameObserver;
+import website.frontrow.game.Game;
+import website.frontrow.game.GameObserver;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,7 +16,7 @@ public class StatusLabelPanel extends JPanel
     private JLabel runningLabel;
 
     /**
-     * Creates an status label panel.
+     * Creates a status label panel.
      * @param game The game to report on.
      */
     public StatusLabelPanel(Game game)
@@ -25,6 +25,28 @@ public class StatusLabelPanel extends JPanel
         this.runningLabel = new JLabel("Paused");
 
         add(this.runningLabel);
+    }
+
+    /**
+     * Getter for runningLabel.
+     * @return runningLabel JLabel
+     */
+    public JLabel getRunningLabel()
+    {
+
+        return runningLabel;
+
+    }
+
+    /**
+     * Setter for runningLabel.
+     * @param rl JLabel
+     */
+    public void setRunningLabel(JLabel rl)
+    {
+
+        runningLabel = rl;
+
     }
 
     @Override

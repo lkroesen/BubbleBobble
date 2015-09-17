@@ -6,12 +6,16 @@ import website.frontrow.board.Bubble;
 import website.frontrow.board.Enemy;
 import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
+import website.frontrow.board.Mover;
 import website.frontrow.level.Level;
+import website.frontrow.logger.Log;
+import website.frontrow.logger.Logable;
 
 /**
  * This Class is for handling collisions during the game.
  */
 public class CollisionHandler
+	implements Logable
 {
     private static final double LOC_OFFSET = 0.99d;
     private Level level;
@@ -28,9 +32,9 @@ public class CollisionHandler
     }
     
     /**
-     * Create an ArrayList with box values for a unit.
+     * Create an ArrayList with box values for a mover.
      * @param location
-     * Input the location point of a Unit
+     * Input the location point of a mover
      * @return
      * Return an ArrayList of all box values.
      */
@@ -45,20 +49,19 @@ public class CollisionHandler
     }
 
     /**
-     * Check if a unit collides with another unit. Call collisionApplier if it does.
-     * The idea is that we check the units projected location against the boxed
-     * locations of all other units in a loop.
-     * If any of the box corners of the moving unit falls within
-     * the box of another unit there is a collision.
-     * There is also a check to filter whether the unit is colliding with itself.
-     * @param loc
-     * The location of the current unit
+     * Check if a mover collides with another mover. Call collisionApplier if it does.
+     * The idea is that we check the movers projected location against the boxed
+     * locations of all other movers in a loop.
+     * If any of the box corners of the moving mover falls within
+     * the box of another mover there is a collision.
+     * There is also a check to filter whether the mover is colliding with itself.
+	 * @param loc
+     * The location of the current mover
      * @param mov
-     * The move the current unit wants to make
-     * @param unit
-     * The unit that is moving
-     */
-    public void checkUnitCollision(Point loc, Point mov, Unit unit)
+     * The move the current mover wants to make
+	 * @param mover The mover to check with.
+	 */
+    public void checkMoverCollision(Point loc, Point mov, Mover mover)
     {
     	loc.add(mov);
     	ArrayList<Point> aabbPlayer = buildBox(loc);
@@ -75,10 +78,10 @@ public class CollisionHandler
 	    		if      (currentX >= otherX
                         && currentY >= otherY
                         && currentX < (otherX + 1) && currentY < (otherY + 1)
-                        && other.get(k) != unit)
+                        && other.get(k) != mover)
 	    		{
 
-					applyCollision(unit, other.get(k));
+					applyCollision(mover, other.get(k));
 	    		}
 	    	}
 		}   	
@@ -86,35 +89,39 @@ public class CollisionHandler
 
 	/**
 	 * Call the method that handles collisions.
-	 * @param collider The unit that initiates the collision.
-	 * @param colidee The unit that is being collided with.
+	 * @param collider The mover that initiates the collision.
+	 * @param colidee The mover that is being collided with.
 	 */
 	// TODO: Swap this out for something fancy that uses reflection. But this works fine for now.
 	public void applyCollision(Unit collider, Unit colidee)
 	{
 		if(collider instanceof Player)
 		{
+			addToLog("[CH]\tPlayer collided with something.");
 			playerCollision((Player) collider, colidee);
 		}
 		else if (colidee instanceof Player)
 		{
+			addToLog("[CH]\tSomething collided with a Player.");
 			playerCollision((Player) colidee, collider);
 		}
 
 		if(collider instanceof Bubble)
 		{
+			addToLog("[CH]\tBubble collided with something.");
 			bubbleCollision((Bubble) collider, colidee);
 		}
 		else if(colidee instanceof Bubble)
 		{
+			addToLog("[CH]\tSomething collided with a Bubble.");
 			bubbleCollision((Bubble) colidee, collider);
 		}
 	}
 
 	/**
-	 * Called when a player collides with another unit.
+	 * Called when a player collides with another mover.
 	 * @param player Player which is currently colliding.
-	 * @param other The unit that was collided with.
+	 * @param other The mover that was collided with.
 	 */
 	public void playerCollision(Player player, Unit other)
 	{
@@ -122,9 +129,9 @@ public class CollisionHandler
 	}
 
 	/**
-	 * Called when a bubble collides with another unit.
+	 * Called when a bubble collides with another mover.
 	 * @param bubble Bubble which is currently colliding.
-	 * @param other The unit that was collided with.
+	 * @param other The mover that was collided with.
 	 */
 	public void bubbleCollision(Bubble bubble, Unit other)
 	{
@@ -138,17 +145,17 @@ public class CollisionHandler
 	}
 
     /**
-     * Checks if a units projected movement makes it collide with a cell that is non-empty.
+     * Checks if a movers projected movement makes it collide with a cell that is non-empty.
      * @param loc
-     * The location of the current unit
+     * The location of the current mover
      * @param mov
-     * The move the current unit wants to make
-     * @param unit
-     * The unit that is moving
+     * The move the current mover wants to make
+     * @param mover
+     * The mover that is moving
      * @return
      * Whether there has been a collision or not
      */
-    public boolean checkCellCollision(Point loc, Point mov, Unit unit)
+    public boolean checkCellCollision(Point loc, Point mov, Mover mover)
     {
     	ArrayList<Point> aabb = buildBox(loc);
     
@@ -161,11 +168,21 @@ public class CollisionHandler
             {
     			return true;
     		}			
-    		if(level.getCells().get(x, y).collides(unit))
+    		if(level.getCells().get(x, y).collides(mover))
     		{ 			
     			return true;
     		}
     	}
     	return false;
     }
+
+	/**
+	 * Log actions from CollisionHandler.
+	 * @param action Input a String that is the action performed.
+	 */
+	@Override
+	public void addToLog(String action)
+	{
+		Log.add(action);
+	}
 }
