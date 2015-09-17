@@ -1,11 +1,15 @@
 package website.frontrow.util;
 
 import javazoom.jl.player.Player;
+import website.frontrow.logger.Log;
+import website.frontrow.logger.Logable;
 
 /**
  * A thread to play music in.
  */
-public class MusicThread extends Thread
+public class MusicThread
+        extends Thread
+            implements Logable
 {
     private Player music;
 
@@ -23,6 +27,7 @@ public class MusicThread extends Thread
         }
         catch (Exception e)
         {
+            addToLog("[MT]\t[ERROR]\tMusic Thread encountered an exception: " + e.toString() + ".");
             throw new RuntimeException("Error Occured in Thread " + e);
         }
     }
@@ -32,7 +37,18 @@ public class MusicThread extends Thread
      */
     public void kill()
     {
+        addToLog("[MT]\tMusic Thread got killed.");
         music.close();
     }
 
+    /**
+     * Log actions taken by Music Thread.
+     * @param action Input a String that is the action performed.
+     */
+    @Override
+    public void addToLog(String action)
+    {
+        Log.add(action);
+
+    }
 }

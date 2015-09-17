@@ -7,11 +7,14 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Port;
 
 import javazoom.jl.player.Player;
+import website.frontrow.logger.Log;
+import website.frontrow.logger.Logable;
 
 /**
  * Play Music during the game.
  */
 public class MusicPlayer
+    implements Logable
 {
     private Player music;
     private MusicThread mt;
@@ -40,6 +43,7 @@ public class MusicPlayer
     {
         if (noAudio)
         {
+            addToLog("[MP]\t[WARNING]\tNo audio devices detected!");
             return;
         }
         play("/sound/Quest Begins.mp3");
@@ -69,12 +73,13 @@ public class MusicPlayer
     {
         if (selection < 0 || selection > 11)
         {
+            addToLog("[MP]\t[ERROR]\tMusic Selection Out Of Bounds");
             throw new RuntimeException("Wrong Selection");
         }
 
         if (noAudio)
         {
-
+            addToLog("[MP]\t[WARNING]\tNo audio devices detected!");
             return;
         }
 
@@ -106,6 +111,7 @@ public class MusicPlayer
     {
         if (noAudio)
         {
+            addToLog("[MP]\t[WARNING]\tNo audio devices detected!");
             return;
         }
 
@@ -121,7 +127,7 @@ public class MusicPlayer
         }
         catch (Exception e)
         {
-            System.out.println("Problem playing file");
+            addToLog("[MP]\t[ERROR]\tAudio File couldn't be played.");
             System.out.println(e);
         }
 
@@ -131,11 +137,13 @@ public class MusicPlayer
             {
                 try
                 {
+                    addToLog("[MP]\tMusic: " + currSound + " playing.");
                     mt = new MusicThread();
                     mt.run(music);
                 }
                 catch (Exception e)
                 {
+                    addToLog("[MP]\t[ERROR]\tAudio File couldn't be played.");
                     System.out.println(e);
                 }
             }
@@ -150,11 +158,13 @@ public class MusicPlayer
     {
         if (noAudio)
         {
+            addToLog("[MP]\t[WARNING]\tNo audio devices detected!");
             return;
         }
 
         if (threadActive)
         {
+            addToLog("[MP]\tStopping audio.");
             mt.kill();
             threadActive = false;
         }
@@ -167,6 +177,7 @@ public class MusicPlayer
     {
         if (noAudio)
         {
+            addToLog("[MP]\t[WARNING]\tNo audio devices detected!");
             return;
         }
 
@@ -182,6 +193,7 @@ public class MusicPlayer
         }
         catch (LineUnavailableException ex)
         {
+            addToLog("[MP]\t[ERROR]\tLineUnavailableException.");
             ex.printStackTrace();
         }
     }
@@ -197,6 +209,7 @@ public class MusicPlayer
     {
         if (noAudio)
         {
+            addToLog("[MP]\t[WARNING]\tNo audio devices detected!");
             return;
         }
 
@@ -205,6 +218,7 @@ public class MusicPlayer
             makeFloatControl();
             volumeInitialized = true;
         }
+        addToLog("[MP]\tVolume Adjusted by: " + deltaVolume + ".");
         volume.setValue(volume.getValue() + deltaVolume);
     }
 
@@ -230,6 +244,7 @@ public class MusicPlayer
                 return audioDevicesList[c];
             }
         }
+        addToLog("[MP]\t[WARNING]\tNo audio devices detected!");
         noAudio = true;
         return null;
     }
@@ -252,5 +267,15 @@ public class MusicPlayer
     public FloatControl getVolume()
     {
         return volume;
+    }
+
+    /**
+     * Log actions taken by MusicPlayer.
+     * @param action Input a String that is the action performed.
+     */
+    @Override
+    public void addToLog(String action)
+    {
+        Log.add(action);
     }
 }
