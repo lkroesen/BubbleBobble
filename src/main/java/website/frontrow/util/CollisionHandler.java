@@ -146,8 +146,10 @@ public class CollisionHandler
 			for(int x = minx; x < maxx; x++)
 			{
 				Point c = new Point(x, y);
-				AABB tile = new AABB(c, c.add(cells.get(x, y).getAABB()));
-				if(cells.get(x, y).collides(motion) && aabb.overlaps(tile))
+				Cell cell = cells.get(x, y);
+				Point aabbo = cell.getAABBOffset();
+				AABB tile = new AABB(c.add(aabbo), c.add(aabbo).add(cell.getAABBDimensions()));
+				if (cell.collides(motion) && aabb.overlaps(tile))
 				{
 					return true;
 				}

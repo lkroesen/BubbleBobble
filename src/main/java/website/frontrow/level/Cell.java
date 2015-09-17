@@ -45,9 +45,15 @@ public enum Cell
         }
 
         @Override
-        public Point getAABB()
+        public Point getAABBDimensions()
         {
-            return new Point(1, 0);
+            return new Point(1, 0.2);
+        }
+
+        @Override
+        public Point getAABBOffset()
+        {
+            return new Point(0, -1);
         }
         
         @Override
@@ -82,9 +88,14 @@ public enum Cell
      * The width and height of this tile.
      * @return The width and height of the AABB.
      */
-    public Point getAABB()
+    public Point getAABBDimensions()
     {
         return new Point(1, 1);
+    }
+
+    public Point getAABBOffset()
+    {
+        return new Point(0, 0);
     }
 
     /**
