@@ -172,6 +172,36 @@ public class CollisionHandler
 	}
 
 	/**
+	 * Sweep from start until steps until you get a collision,
+	 * @param start Starting position of the sweep.
+	 * @param delta Delta between each step.
+	 * @param wh Width and height of the unit to sweep.
+	 * @param steps Amount of steps to do.
+	 * @param level Recursion loop cap.
+	 * @return Collision after sweep
+	 */
+	private Collision sweep(Point start, Point delta, Point wh, Point motion, int steps, int level)
+	{
+		if(level >= 8)
+		{
+			return new Collision(start, true);
+		}
+		Point found = start;
+		for(int i = 0; i <= steps; i++)
+		{
+			Point current = found.add(delta);
+
+			if(checkLevelAABB(new AABB(current, current.add(wh)), motion))
+			{
+				return sweep(found, delta.divide(steps), wh, motion, steps, level + 1);
+			}
+
+			found = current;
+		}
+		return new Collision(found, level != 0);
+	}
+
+	/**
 	 * Find the next position for the given mover.
 	 * @param mover Mover to get next position for.
 	 * @return The next position of a given mover.
@@ -180,32 +210,18 @@ public class CollisionHandler
 	{
 		Point wh = mover.getAABBDimensions();
 		int steps = getSteps(mover, wh);
-		Point found = mover.getLocation();
 
 		if(steps == 0)
 		{
-			return new Collision(found, false);
+			return new Collision(mover.getLocation(), false);
 		}
 		Point delta = mover.getMotion().divide(steps).divide(GameConstants.TICKS_PER_SEC);
-		boolean collision = false;
 
-		for(int i = 0; i <= steps; i++)
-		{
-			Point current = found.add(delta);
-
-			if(checkLevelAABB(new AABB(current, current.add(wh)), mover.getMotion()))
-			{
-				mover.onWallCollision();
-				collision = true;
-				break;
-			}
-
-			found = current;
-		}
+		Collision collision = sweep(mover.getLocation(), delta, mover.getAABBDimensions(), mover.getMotion(), steps, 0);
 
 		return new Collision(new Point(
-					Math.round(found.getX() * ONE_DEV_PRECISION) * PRECISION,
-					Math.round(found.getY() * ONE_DEV_PRECISION) * PRECISION
-			), collision);
+					Math.round(collision.getPoint().getX() * ONE_DEV_PRECISION) * PRECISION,
+					Math.round(collision.getPoint().getY() * ONE_DEV_PRECISION) * PRECISION
+			), collision.isCollided());
 	}
 }
