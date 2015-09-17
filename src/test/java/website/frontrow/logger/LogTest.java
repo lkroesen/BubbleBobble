@@ -3,8 +3,12 @@ package website.frontrow.logger;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Map;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Test the Log function.
@@ -48,28 +52,68 @@ public class LogTest
     }
 
     /**
-     * Test if enablePrinting makes the flag true.
+     * Test if togglePrinting makes the flag true.
      */
     @Test
     public void testEnablePrinting()
     {
         Log.clearLog();
 
-        Log.enablePrinting();
-        assertTrue(Log.isEnablePrinting());
+        Log.setTogglePrinting(true);
+        assertTrue(Log.isTogglePrinting());
     }
 
     /**
-     * Test with enablePrinting enabled.
+     * Test with togglePrinting enabled.
      */
     @Test
     public void testAddEnabledPrinting()
     {
         Log.clearLog();
 
-        Log.enablePrinting();
+        Log.togglePrinting();
         Log.add("Hi");
     }
 
-    // TODO getter, setter tests.
+    /**
+     * Test setlogmap.
+     */
+    @Test
+    public void testSetLogMap()
+    {
+        Map<Long, String> oldLog = Log.getLogMap();
+        Log.setLogMap(null);
+        assertNull(Log.getLogMap());
+
+        Log.setLogMap(oldLog);
+        assertEquals(oldLog, Log.getLogMap());
+    }
+
+    /**
+     * Test counter getter/setter.
+     */
+    @Test
+    public void testSetGetCounter()
+    {
+        Long oldCounter = Log.getCounter();
+        Log.setCounter(-1L);
+        assertNotEquals(Log.getCounter(), (long) oldCounter);
+
+        Log.setCounter(oldCounter);
+        assertEquals(Log.getCounter(), (long) oldCounter);
+    }
+
+    /**
+     * Test millis time setter.
+     */
+    @Test
+    public void testSetMillis()
+    {
+        long old = Log.getStartOfLoggingMillis();
+        Log.setStartOfLoggingMillis(0L);
+        assertNotEquals(Log.getStartOfLoggingMillis(), old);
+
+        Log.setStartOfLoggingMillis(old);
+        assertEquals(Log.getStartOfLoggingMillis(), old);
+    }
 }

@@ -5,6 +5,7 @@ import website.frontrow.board.Player;
 import website.frontrow.game.Game;
 import website.frontrow.level.Level;
 import website.frontrow.level.MapParser;
+import website.frontrow.logger.DumpLog;
 import website.frontrow.logger.Log;
 import website.frontrow.ui.Action;
 import website.frontrow.ui.JBubbleBobbleUI;
@@ -44,6 +45,8 @@ public class Launcher implements Logable
      */
     public static void main(String[] args)
     {
+        // Initialize the Logger Class, so that it can Log actions taken.
+        new Log();
         new Launcher().start("/1.txt");
     }
 
@@ -53,9 +56,7 @@ public class Launcher implements Logable
      */
     public void start(String filename)
     {
-        // Initialize the Logger Class, so that it can Log actions taken.
-        new Log();
-        Log.enablePrinting();
+        Log.togglePrinting();
 
         addToLog("[LAUNCHER]\tLoading file: " + filename + ".");
 
@@ -85,6 +86,7 @@ public class Launcher implements Logable
         } catch (IOException e)
         {
             addToLog("[ERROR]\tLoading file: " + filename + " failed.");
+            new DumpLog();
             throw new RuntimeException();
         }
     }
@@ -271,6 +273,12 @@ public class Launcher implements Logable
             }
         });
 
+        // Create a DumpLog
+        map.put(KeyEvent.VK_F1, () ->
+        {
+            addToLog("[KEY]\t< F1 > Pressed.");
+            new DumpLog();
+        });
         return map;
     }
 

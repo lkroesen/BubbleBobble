@@ -1,5 +1,6 @@
 package website.frontrow.sprite;
 
+import website.frontrow.logger.DumpLog;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 
@@ -39,6 +40,7 @@ public class ImageStore
         {
             e.printStackTrace();
             addToLog("[ERROR]\t[IMAGESTORE]\t1 - IOException in getBorderImage().");
+            new DumpLog();
             return new ImageIcon(getFileNotFoundImage());
         }
     }
@@ -57,6 +59,7 @@ public class ImageStore
         {
             e.printStackTrace();
             addToLog("[ERROR]\t[IMAGESTORE]\t2 - IOException in getWallImage().");
+            new DumpLog();
             return getFileNotFoundImage();
         }
     }
@@ -75,6 +78,7 @@ public class ImageStore
         {
             e.printStackTrace();
             addToLog("[ERROR]\t[IMAGESTORE]\t3 - IOException in getPlatformImage().");
+            new DumpLog();
             return getFileNotFoundImage();
         }
     }  
@@ -96,6 +100,7 @@ public class ImageStore
         {
             e.printStackTrace();
             addToLog("[ERROR]\t[IMAGESTORE]\t4 - IOException in getPlayerLeftImage().");
+            new DumpLog();
             return getFileNotFoundImage();
         }
     }
@@ -114,6 +119,7 @@ public class ImageStore
         {
             e.printStackTrace();
             addToLog("[ERROR]\t[IMAGESTORE]\t5 - IOException in getPlayerLeftImage.");
+            new DumpLog();
             return getFileNotFoundImage();
         }
     }
@@ -132,6 +138,7 @@ public class ImageStore
         {
             e.printStackTrace();
             addToLog("[ERROR]\t[IMAGESTORE]\t6 - IOException in getEnemyLeftImage().");
+            new DumpLog();
             return getFileNotFoundImage();
         }
     }
@@ -150,6 +157,7 @@ public class ImageStore
         {
             e.printStackTrace();
             addToLog("[ERROR]\t[IMAGESTORE]\t7 - IOException in getEnemyRightImage().");
+            new DumpLog();
             return getFileNotFoundImage();
         }
     }
@@ -168,6 +176,7 @@ public class ImageStore
         {
             e.printStackTrace();
             addToLog("[ERROR]\t[IMAGESTORE]\t8 - IOException in getBubbleImage().");
+            new DumpLog();
             return getFileNotFoundImage();
         }
     }

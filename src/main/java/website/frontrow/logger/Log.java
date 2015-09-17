@@ -16,7 +16,7 @@ public class Log
     private static Map<Long, String> logMap = new HashMap<>();
     private static long counter = 0;
     private static long startOfLoggingMillis = System.currentTimeMillis();
-    private static boolean enablePrinting = false;
+    private static boolean togglePrinting = false;
 
     /**
      * Add an action that occured to the current Map.
@@ -28,7 +28,7 @@ public class Log
         String timestamp = "[" + (System.currentTimeMillis() - startOfLoggingMillis) + " ms]\t";
         logMap.put(counter++, timestamp + action);
 
-        if (enablePrinting)
+        if (togglePrinting)
         {
             System.out.println(timestamp + action);
         }
@@ -42,15 +42,15 @@ public class Log
         logMap.clear();
         counter = 0;
         startOfLoggingMillis = System.currentTimeMillis();
-        enablePrinting = false;
+        togglePrinting = false;
     }
 
     /**
      * Set a flag to enable system printing.
      */
-    public static void enablePrinting()
+    public static void togglePrinting()
     {
-        enablePrinting = !enablePrinting;
+        togglePrinting = !togglePrinting;
     }
 
     /**
@@ -118,18 +118,18 @@ public class Log
      * @return
      * Return the value of EnablePrinting.
      */
-    public static boolean isEnablePrinting()
+    public static boolean isTogglePrinting()
     {
-        return enablePrinting;
+        return togglePrinting;
     }
 
     /**
      * Set the value of EnablePrinting.
-     * @param enablePrinting
+     * @param togglePrinting
      * Returns the value of EnablePrinting.
      */
-    public static void setEnablePrinting(boolean enablePrinting)
+    public static void setTogglePrinting(boolean togglePrinting)
     {
-        Log.enablePrinting = enablePrinting;
+        Log.togglePrinting = togglePrinting;
     }
 }

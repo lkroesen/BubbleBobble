@@ -7,6 +7,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Port;
 
 import javazoom.jl.player.Player;
+import website.frontrow.logger.DumpLog;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 
@@ -69,20 +70,20 @@ public class MusicPlayer
      * Input a number to select a song.
      */
     @SuppressWarnings("checkstyle:magicnumber")
+    // Magicnumbers ignored due to the numbers being used for song selection.
     public void playSelection(int selection)
     {
         if (selection < 0 || selection > 11)
         {
             addToLog("[MP]\t[ERROR]\tMusic Selection Out Of Bounds");
+            new DumpLog();
             throw new RuntimeException("Wrong Selection");
         }
-
         if (noAudio)
         {
             addToLog("[MP]\t[WARNING]\tNo audio devices detected!");
             return;
         }
-
         switch(selection)
         {
             case 0  : play("/sound/Quest Begins.mp3");  break;
@@ -128,6 +129,7 @@ public class MusicPlayer
         catch (Exception e)
         {
             addToLog("[MP]\t[ERROR]\tAudio File couldn't be played.");
+            new DumpLog();
             System.out.println(e);
         }
 
@@ -144,6 +146,7 @@ public class MusicPlayer
                 catch (Exception e)
                 {
                     addToLog("[MP]\t[ERROR]\tAudio File couldn't be played.");
+                    new DumpLog();
                     System.out.println(e);
                 }
             }
@@ -194,6 +197,7 @@ public class MusicPlayer
         catch (LineUnavailableException ex)
         {
             addToLog("[MP]\t[ERROR]\tLineUnavailableException.");
+            new DumpLog();
             ex.printStackTrace();
         }
     }

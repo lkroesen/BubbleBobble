@@ -1,6 +1,7 @@
 package website.frontrow.util;
 
 import javazoom.jl.player.Player;
+import website.frontrow.logger.DumpLog;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 
@@ -28,6 +29,7 @@ public class MusicThread
         catch (Exception e)
         {
             addToLog("[MT]\t[ERROR]\tMusic Thread encountered an exception: " + e.toString() + ".");
+            new DumpLog();
             throw new RuntimeException("Error Occured in Thread " + e);
         }
     }
