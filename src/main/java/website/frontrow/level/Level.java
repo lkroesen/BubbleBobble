@@ -35,7 +35,7 @@ public class Level
         this.players = players;
         this.units = new ArrayList<>(units);
         this.cells = new Grid<>(cells);
-        addToLog("[SYSTEM]\tLevel Object created");
+        addToLog("[LEVEL]\tLevel Object created");
     }
 
     /**
