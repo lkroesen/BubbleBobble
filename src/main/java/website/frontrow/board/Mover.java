@@ -178,8 +178,7 @@ public abstract class Mover
      */
     protected void applyGravity()
     {
-        this.motion.setY(Math.max(GameConstants.MAX_Y_SPEED,
-                this.motion.getY() - GameConstants.GRAVITY));
+        this.motion.setY(this.motion.getY() - GameConstants.GRAVITY);
 
         Collision c = this.handler.findNextPosition(this);
         if(c.isCollided())

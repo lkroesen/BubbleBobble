@@ -2,6 +2,7 @@ package website.frontrow.ui;
 
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -20,6 +21,8 @@ public class JBubbleKeyListener implements KeyListener
     private final Map<Integer, Action> mapping;
 
     private Set<Integer> pressedKeys = new HashSet<>();
+    
+    private Map<Integer, Boolean> pressed = new HashMap<>();
 
     /**
      * Creates a JBubbleKeyListener.
@@ -36,9 +39,18 @@ public class JBubbleKeyListener implements KeyListener
      */
     public void keyPressed(KeyEvent ke)
     {
-        if (mapping.get(ke.getKeyCode()) != null)
-        {
-            pressedKeys.add(ke.getKeyCode());
+    	if (mapping.get(ke.getKeyCode()) != null && pressed.get(ke.getKeyCode()) == null)
+    	{            
+    		pressed.put(ke.getKeyCode(), true);
+    		pressedKeys.add(ke.getKeyCode());
+        	
+        }
+    	
+    	else if (mapping.get(ke.getKeyCode()) != null && pressed.get(ke.getKeyCode()) == false)
+        {            
+    		pressed.put(ke.getKeyCode(), true);
+    		pressedKeys.add(ke.getKeyCode());
+        	
         }
     }
 
@@ -59,7 +71,8 @@ public class JBubbleKeyListener implements KeyListener
     @Override
     public void keyReleased(KeyEvent ke)
     {
-        pressedKeys.remove(ke.getKeyCode());
+        pressed.put(ke.getKeyCode(), false);
+    	pressedKeys.remove(ke.getKeyCode());
     }
 
     /**
@@ -68,6 +81,16 @@ public class JBubbleKeyListener implements KeyListener
     public void update()
     {
         pressedKeys.forEach(keyCode -> mapping.get(keyCode).doAction());
+        cleanList();
+    }
+    
+    /**
+     * Clean jumps and bubbles out of the list so we don't spam them.
+     */
+    public void cleanList()
+    {
+    		pressedKeys.remove(KeyEvent.VK_SPACE);
+    		pressedKeys.remove(KeyEvent.VK_Z); 	
     }
 
 }

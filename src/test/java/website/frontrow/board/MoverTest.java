@@ -148,7 +148,7 @@ public abstract class MoverTest
         u.tick(emptyLevel);
         // TODO When collisions are implemented, some calls to those checks need to be checked here.
 
-        assertEquals(0.5, u.getLocation().getX(), 0.0004);
+        assertEquals(0.25, u.getLocation().getX(), 0.0004);
     }
 
     /**

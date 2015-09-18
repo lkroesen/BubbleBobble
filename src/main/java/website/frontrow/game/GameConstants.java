@@ -16,7 +16,7 @@ public abstract class GameConstants
     /**
      * The maximum x speed.
      */
-    public static final int MAX_X_SPEED = 30;
+    public static final int MAX_X_SPEED = 15;
 
     /**
      * The maximum y speed.
@@ -31,7 +31,7 @@ public abstract class GameConstants
     /**
      * The impulse of jumping.
      */
-    public static final int JUMP_IMPULSE = 4;
+    public static final double JUMP_IMPULSE = 1.2;
 
     /**
      * The number of frames per second at which the game refreshes.
