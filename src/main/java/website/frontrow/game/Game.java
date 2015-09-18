@@ -56,6 +56,11 @@ public class Game
                 keyListener.update();
             }
             currentLevel.tick();
+
+            if(currentLevel.getEnemies() == 0)
+            {
+                levelWon();
+            }
         }
         updateObservers();
     }
@@ -137,6 +142,16 @@ public class Game
     }
 
     /**
+     * Loads the next level if there are next levels available.
+     */
+    public void nextLevel()
+    {
+        currentIndex = Math.min(currentIndex + 1, levelPack.size() - 1);
+        currentLevel = levelPack.get(currentIndex);
+        this.players = currentLevel.getPlayers();
+    }
+
+    /**
      * Registers an observer to this game.
      * @param o The observer.
      */
@@ -193,13 +208,7 @@ public class Game
     public void levelWon()
     {
         stop();
-        currentIndex++;
-
-        if(currentIndex != levelPack.size())
-        {
-            currentLevel = levelPack.get(currentIndex);
-
-        }
+        nextLevel();
     }
 
     @Override

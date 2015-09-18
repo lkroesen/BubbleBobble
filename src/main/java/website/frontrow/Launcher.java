@@ -48,14 +48,16 @@ public class Launcher implements Logable
     {
         // Initialize the Logger Class, so that it can Log actions taken.
         new Log();
-        new Launcher().start("/1.txt");
+
+        String[] levels = {"/level/1.txt", "/level/2.txt"};
+        new Launcher().start(levels);
     }
 
     /**
      * Starts the game.
      * @param filename The file name of the level to load.
      */
-    public void start(String filename)
+    public void start(String[] filename)
     {
         Log.togglePrinting();
 
@@ -63,16 +65,18 @@ public class Launcher implements Logable
 
         try
         {
-            InputStream map = getClass().getResourceAsStream(filename);
-
             addToLog("[LAUNCHER]\tLoading file: " + filename + " succeeded.");
 
             MapParser mp = new MapParser();
-            Level level = mp.parseMap(map);
-            ArrayList<Level> levelList = new ArrayList<Level>();
-            levelList.add(level);
+            ArrayList<Level> levelList = new ArrayList<>();
+            for(String levelFileName : filename)
+            {
+                InputStream map = getClass().getResourceAsStream(levelFileName);
+                Level level = mp.parseMap(map);
+                levelList.add(level);
+            }
 
-            Game game = new Game(levelList, level.getPlayers());
+            Game game = new Game(levelList, levelList.get(0).getPlayers());
             Map<Integer, Action> keyMappings = createSinglePlayerKeyMappings(game);
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
 
