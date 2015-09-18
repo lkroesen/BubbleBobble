@@ -46,7 +46,7 @@ public class JBubbleBobbleUI extends JFrame
         contentPanel.setBackground(Color.white);
         contentPanel.setLayout(new BorderLayout());
 
-        pfp = new PlayingFieldPanel(game.getLevel());
+        pfp = new PlayingFieldPanel(game);
         sp = new SidePanel(game);
 
         contentPanel.add(pfp, BorderLayout.LINE_START);

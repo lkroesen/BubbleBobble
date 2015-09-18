@@ -1,6 +1,6 @@
 package website.frontrow.ui;
 
-import website.frontrow.level.Level;
+import website.frontrow.game.Game;
 import website.frontrow.sprite.ImageStore;
 
 import javax.swing.JPanel;
@@ -20,14 +20,14 @@ public class PlayingFieldPanel extends JPanel
 
     private static final int BORDER_WIDTH = 20; //Pixels
 
-    private Level level;
+    private Game game;
 
     /**
      * Creates a playing field panel in which the game is drawn.
      * The panel is enclosed by a border.
-     * @param level The level to display in the playing field.
+     * @param game The game to display in the playing field.
      */
-    public PlayingFieldPanel(Level level)
+    public PlayingFieldPanel(Game game)
     {
         super();
         this.setBackground(Color.BLACK);
@@ -37,12 +37,12 @@ public class PlayingFieldPanel extends JPanel
         );
 
         Dimension size = new Dimension(
-                BLOCK_SIZE * level.getCells().getWidth() + 2 * BORDER_WIDTH,
-                BLOCK_SIZE * level.getCells().getHeight() + 2 * BORDER_WIDTH
+                BLOCK_SIZE * game.getLevel().getCells().getWidth() + 2 * BORDER_WIDTH,
+                BLOCK_SIZE * game.getLevel().getCells().getHeight() + 2 * BORDER_WIDTH
         );
         this.setPreferredSize(size);
         this.setMinimumSize(size);
-        this.level = level;
+        this.game = game;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class PlayingFieldPanel extends JPanel
     {
         super.paint(graphics);
 
-        level.draw(graphics, BORDER_WIDTH, BORDER_WIDTH,
+        game.getLevel().draw(graphics, BORDER_WIDTH, BORDER_WIDTH,
                 getSize().width - 2 * BORDER_WIDTH, getSize().height - 2 * BORDER_WIDTH);
     }
 }

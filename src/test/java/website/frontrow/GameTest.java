@@ -123,24 +123,4 @@ public class GameTest
         game.tick();
         verify(levels.get(0), times(1)).tick();
     }
-
-    /**
-     * Tests that the second level is loaded after the first one is won.
-     * When the second level is won, the game ends.
-     */
-    @Test
-    public void testTwoLevels()
-    {
-        levels.add(l);
-        levels.add(l);
-
-        Game game = new Game(levels, null);
-        game.start();
-        assertTrue(game.isRunning());
-        game.levelWon();
-        assertTrue(game.isRunning());
-        game.levelWon();
-        assertFalse(game.isRunning());
-    }
-
 }

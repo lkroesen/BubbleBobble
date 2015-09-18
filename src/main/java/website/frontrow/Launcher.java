@@ -43,24 +43,28 @@ public class Launcher
      */
     public static void main(String[] args)
     {
-        new Launcher().start("/1.txt");
+        String[] levels = {"/level/1.txt", "/level/2.txt"};
+        new Launcher().start(levels);
     }
 
     /**
      * Starts the game.
      * @param filename The file name of the level to load.
      */
-    public void start(String filename)
+    public void start(String[] filename)
     {
         try
         {
-            InputStream map = getClass().getResourceAsStream(filename);
             MapParser mp = new MapParser();
-            Level level = mp.parseMap(map);
-            ArrayList<Level> levelList = new ArrayList<Level>();
-            levelList.add(level);
+            ArrayList<Level> levelList = new ArrayList<>();
+            for(String levelFileName : filename)
+            {
+                InputStream map = getClass().getResourceAsStream(levelFileName);
+                Level level = mp.parseMap(map);
+                levelList.add(level);
+            }
 
-            Game game = new Game(levelList, level.getPlayers());
+            Game game = new Game(levelList, levelList.get(0).getPlayers());
             Map<Integer, Action> keyMappings = createSinglePlayerKeyMappings(game);
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
 
