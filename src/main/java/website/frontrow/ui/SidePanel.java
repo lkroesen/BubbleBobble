@@ -1,6 +1,8 @@
 package website.frontrow.ui;
 
 import website.frontrow.game.Game;
+import website.frontrow.logger.Log;
+import website.frontrow.logger.Logable;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -10,7 +12,9 @@ import java.util.Map;
 /**
  * The side panel for the ui.
  */
-public class SidePanel extends JPanel
+public class SidePanel
+        extends JPanel
+            implements Logable
 {
     /**
      * Creates a sidepanel to contain the score, buttons and other statistics.
@@ -39,5 +43,16 @@ public class SidePanel extends JPanel
 
         add(new ButtonPanel(buttonMappings));
         add(new StatusLabelPanel(game));
+        addToLog("[SiP]\tSide Panel Created Successfully.");
+    }
+
+    /**
+     * Log actions taken by SidePanel.
+     * @param action Input a String that is the action performed.
+     */
+    @Override
+    public void addToLog(String action)
+    {
+        Log.add(action);
     }
 }
