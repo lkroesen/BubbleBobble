@@ -1,5 +1,9 @@
 package website.frontrow.sprite;
 
+import website.frontrow.logger.DumpLog;
+import website.frontrow.logger.Log;
+import website.frontrow.logger.Logable;
+
 import javax.swing.ImageIcon;
 import java.awt.Image;
 import java.awt.GraphicsConfiguration;
@@ -18,6 +22,7 @@ import javax.imageio.ImageIO;
  * A store to get all the images.
  */
 public class ImageStore
+    implements Logable
 {
 
     private static final int STANDARD_IMAGE_FORMAT = 32;
@@ -34,7 +39,8 @@ public class ImageStore
         catch (IOException e)
         {
             e.printStackTrace();
-
+            addToLog("[ERROR]\t[IMAGESTORE]\t1 - IOException in getBorderImage().");
+            new DumpLog();
             return new ImageIcon(getFileNotFoundImage());
         }
     }
@@ -52,7 +58,8 @@ public class ImageStore
         catch (IOException e)
         {
             e.printStackTrace();
-
+            addToLog("[ERROR]\t[IMAGESTORE]\t2 - IOException in getWallImage().");
+            new DumpLog();
             return getFileNotFoundImage();
         }
     }
@@ -70,7 +77,8 @@ public class ImageStore
         catch (IOException e)
         {
             e.printStackTrace();
-
+            addToLog("[ERROR]\t[IMAGESTORE]\t3 - IOException in getPlatformImage().");
+            new DumpLog();
             return getFileNotFoundImage();
         }
     }  
@@ -91,7 +99,8 @@ public class ImageStore
         catch (IOException e)
         {
             e.printStackTrace();
-
+            addToLog("[ERROR]\t[IMAGESTORE]\t4 - IOException in getPlayerLeftImage().");
+            new DumpLog();
             return getFileNotFoundImage();
         }
     }
@@ -109,7 +118,8 @@ public class ImageStore
         catch (IOException e)
         {
             e.printStackTrace();
-
+            addToLog("[ERROR]\t[IMAGESTORE]\t5 - IOException in getPlayerLeftImage.");
+            new DumpLog();
             return getFileNotFoundImage();
         }
     }
@@ -127,7 +137,8 @@ public class ImageStore
         catch (IOException e)
         {
             e.printStackTrace();
-
+            addToLog("[ERROR]\t[IMAGESTORE]\t6 - IOException in getEnemyLeftImage().");
+            new DumpLog();
             return getFileNotFoundImage();
         }
     }
@@ -145,7 +156,8 @@ public class ImageStore
         catch (IOException e)
         {
             e.printStackTrace();
-
+            addToLog("[ERROR]\t[IMAGESTORE]\t7 - IOException in getEnemyRightImage().");
+            new DumpLog();
             return getFileNotFoundImage();
         }
     }
@@ -163,7 +175,8 @@ public class ImageStore
         catch (IOException e)
         {
             e.printStackTrace();
-
+            addToLog("[ERROR]\t[IMAGESTORE]\t8 - IOException in getBubbleImage().");
+            new DumpLog();
             return getFileNotFoundImage();
         }
     }
@@ -209,4 +222,13 @@ public class ImageStore
         return bi;
     }
 
+    /**
+     * Input a String to keep track of what's happening in the program.
+     * @param action Input a String that is the action performed.
+     */
+    @Override
+    public void addToLog(String action)
+    {
+        Log.add(action);
+    }
 }

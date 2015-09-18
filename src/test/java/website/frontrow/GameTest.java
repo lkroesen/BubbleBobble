@@ -1,11 +1,14 @@
 package website.frontrow;
 
+import website.frontrow.game.Game;
 import website.frontrow.level.Level;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -22,7 +25,8 @@ import static org.mockito.Mockito.verify;
 public class GameTest
 {
     @SuppressWarnings("visibilitymodifier")
-    @Mock Level level;
+    private ArrayList<Level> levels = new ArrayList<>();
+    @Mock private Level l;
 
     /**
      * Test whether starting the game changes the running state.
@@ -30,7 +34,9 @@ public class GameTest
     @Test
     public void testStart()
     {
-        Game game = new Game(level, null);
+        levels.add(l);
+
+        Game game = new Game(levels, null);
         game.start();
 
         assertTrue(game.isRunning());
@@ -42,7 +48,9 @@ public class GameTest
     @Test
     public void testStartStopped()
     {
-        Game game = new Game(level, null);
+        levels.add(l);
+
+        Game game = new Game(levels, null);
         assertFalse(game.isRunning());
     }
 
@@ -52,7 +60,9 @@ public class GameTest
     @Test
     public void testStop()
     {
-        Game game = new Game(level, null);
+        levels.add(l);
+
+        Game game = new Game(levels, null);
         game.start();
         game.stop();
         assertFalse(game.isRunning());
@@ -64,7 +74,9 @@ public class GameTest
     @Test
     public void testGetScore()
     {
-        Game game = new Game(level, null);
+        levels.add(l);
+
+        Game game = new Game(levels, null);
         assertEquals(0, game.getScore());
     }
 
@@ -74,7 +86,9 @@ public class GameTest
     @Test
     public void testSetScore()
     {
-        Game game = new Game(level, null);
+        levels.add(l);
+
+        Game game = new Game(levels, null);
         game.setScore(15);
         assertEquals(15, game.getScore());
         game.setScore(42);
@@ -87,10 +101,12 @@ public class GameTest
     @Test
     public void testTick1()
     {
-        Game game = new Game(level, null);
+        levels.add(l);
+
+        Game game = new Game(levels, null);
         assertFalse(game.isRunning());
         game.tick();
-        verify(level, never()).tick();
+        verify(levels.get(0), never()).tick();
     }
 
     /**
@@ -99,10 +115,12 @@ public class GameTest
     @Test
     public void testTick2()
     {
-        Game game = new Game(level, null);
+        levels.add(l);
+
+        Game game = new Game(levels, null);
         game.start();
         assertTrue(game.isRunning());
         game.tick();
-        verify(level, times(1)).tick();
+        verify(levels.get(0), times(1)).tick();
     }
 }

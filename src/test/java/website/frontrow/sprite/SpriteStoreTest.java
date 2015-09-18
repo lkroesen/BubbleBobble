@@ -36,11 +36,12 @@ public class SpriteStoreTest
     /**
      * Test spritestore to see if an exception is thrown when Direction.UP is used.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGetPlayerSpriteDirectionUP()
     {
         SpriteStore sp = new SpriteStore();
-        sp.getPlayerSprite(Direction.UP);
+        s = sp.getPlayerSprite(Direction.UP);
+        assertNotNull(s);
     }
 
     /**
@@ -68,21 +69,23 @@ public class SpriteStoreTest
     /**
      * Test spritestore to see if an exception is thrown when Direction.DOWN is used.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGetPlayerSpriteDirectionDOWN()
     {
         SpriteStore sp = new SpriteStore();
-        sp.getPlayerSprite(Direction.DOWN);
+        s = sp.getPlayerSprite(Direction.DOWN);
+        assertNotNull(s);
     }
 
     /**
      * Test spritestore to see if an exception is thrown when Direction.UP is used.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGetEnemySpriteDirectionUP()
     {
         SpriteStore sp = new SpriteStore();
-        sp.getEnemySprite(Direction.UP);
+        s = sp.getEnemySprite(Direction.UP);
+        assertNotNull(s);
     }
 
     /**
@@ -110,11 +113,12 @@ public class SpriteStoreTest
     /**
      * Test spritestore to see if an exception is thrown when Direction.DOWN is used.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGetEnemySpriteDirectionDOWN()
     {
         SpriteStore sp = new SpriteStore();
-        sp.getEnemySprite(Direction.DOWN);
+        s = sp.getEnemySprite(Direction.DOWN);
+        assertNotNull(s);
     }
 
     /**

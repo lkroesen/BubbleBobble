@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import website.frontrow.Game;
+import website.frontrow.game.Game;
 import website.frontrow.board.Enemy;
 import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
@@ -37,14 +37,16 @@ public class JBubbleBobbleUITest
     {
         ArrayList<Player> pl = new ArrayList<>();
         ArrayList<Unit> ul = new ArrayList<>();
+        ArrayList<Level> le = new ArrayList<>();
         Grid<Cell> grid = new Grid<>(2, 2);
 
         pl.add(new Player(new Point(0, 0)));
         ul.add(new Enemy(new Point(1, 1)));
 
         level = new Level(pl, ul, grid);
+        le.add(level);
 
-        g = new Game(level, pl);
+        g = new Game(le, pl);
     }
 
     /**

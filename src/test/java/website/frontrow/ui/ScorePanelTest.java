@@ -40,6 +40,7 @@ public class ScorePanelTest
     /**
      * Tests the ScorePanel constructor with one player.
      * The Map labels should contain the correct keySet.
+     * It tests the function getLabels() as well.
      */
    @Test
     public void scorePanelOnePlayerTest()
@@ -58,7 +59,7 @@ public class ScorePanelTest
         l.put(pl1, sl);
 
         Map<Player, JLabel> labels = test.getLabels();
-        assertEquals(labels.keySet(), l.keySet());
+        assertEquals(labels.toString(), l.toString());
 
     }
 
@@ -87,7 +88,7 @@ public class ScorePanelTest
         l.put(pl2, sl);
 
         Map<Player, JLabel> labels = test.getLabels();
-        assertEquals(labels.keySet(), l.keySet());
+        assertEquals(labels.toString(), l.toString());
 
     }
 

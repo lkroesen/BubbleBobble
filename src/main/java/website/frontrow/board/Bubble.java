@@ -1,5 +1,7 @@
 package website.frontrow.board;
 
+import website.frontrow.logger.Log;
+import website.frontrow.logger.Logable;
 import website.frontrow.sprite.Sprite;
 import website.frontrow.sprite.SpriteStore;
 import website.frontrow.util.Point;
@@ -7,7 +9,9 @@ import website.frontrow.util.Point;
 /**
  * A bubble!
  */
-public class Bubble extends Unit
+public class Bubble
+        extends Mover
+            implements Logable
 {
     public static final SpriteStore SS = new SpriteStore();
 
@@ -23,6 +27,7 @@ public class Bubble extends Unit
     public Bubble(Point position, Point motion)
     {
         super(true, position, motion);
+        addToLog("[BUBBLE]\t[SPAWN]\tBubble created.");
     }
 
     /**
@@ -41,6 +46,8 @@ public class Bubble extends Unit
      */
     public void capture(Enemy other)
     {
+        addToLog("[BUBBLE]\t" + other.toString() + " captured by bubble.");
+
         this.contains = other;
         // Kill the enemy for good measure.
         // (Do not forget to revive and re-add to the level when he escapes.)
@@ -66,6 +73,7 @@ public class Bubble extends Unit
     @Override
     public void onWallCollision()
     {
+        addToLog("[BUBBLE]\tHit wall.");
         this.kill();
     }
 
@@ -73,5 +81,15 @@ public class Bubble extends Unit
     public void applyGravity()
     {
         // Ignore gravity.
+    }
+
+    /**
+     * Add log to action that happened to the bubble.
+     * @param action Input a String that is the action performed.
+     */
+    @Override
+    public void addToLog(String action)
+    {
+        Log.add(action);
     }
 }
