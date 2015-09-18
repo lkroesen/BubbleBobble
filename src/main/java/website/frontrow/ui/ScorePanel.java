@@ -9,13 +9,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import website.frontrow.board.Player;
+import website.frontrow.logger.Log;
+import website.frontrow.logger.Logable;
 
 /**
  * A Panel containing the score for the player.
  * In case of multiplayer, scores of both players are shown seperately.
  * Created by Remi Flinterman on 8-9-2015.
  */
-public class ScorePanel extends JPanel
+public class ScorePanel
+        extends JPanel
+            implements Logable
 {
     /**
      * The map of players and their labels with their scores.
@@ -49,7 +53,7 @@ public class ScorePanel extends JPanel
             labels.put(pl, sl);
             add(sl);
         }
-
+        addToLog("[ScP]\tScore Panel Created Successfully.");
     }
 
     /**
@@ -59,6 +63,16 @@ public class ScorePanel extends JPanel
     public Map<Player, JLabel> getLabels()
     {
         return labels;
+    }
+
+    /**
+     * Log actions in ScorePanel.
+     * @param action Input a String that is the action performed.
+     */
+    @Override
+    public void addToLog(String action)
+    {
+        Log.add(action);
     }
 
     // Scores can't be reset yet, because we don't have a state for

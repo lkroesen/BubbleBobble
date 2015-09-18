@@ -2,20 +2,27 @@ package website.frontrow.ui;
 
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The key listener makes sure that when certain keys are pressed,
  *      the corresponding action is performed in the game.
  * Created by Remi Flinterman on 2-9-2015.
  */
-class JBubbleKeyListener implements KeyListener
+public class JBubbleKeyListener implements KeyListener
 {
 
     /**
      * The mappings of keyCode to action.
      */
     private final Map<Integer, Action> mapping;
+
+    private Map<Integer, Boolean> pressed = new HashMap<>();
+    private Set<Integer> pressedKeys = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
     /**
      * Creates a JBubbleKeyListener.
@@ -32,11 +39,14 @@ class JBubbleKeyListener implements KeyListener
      */
     public void keyPressed(KeyEvent ke)
     {
-        Action action = mapping.get(ke.getKeyCode());
-        if (action != null)
-        {
-            action.doAction();
-        }
+    	if (mapping.get(ke.getKeyCode()) != null)
+    	{
+    		if (pressed.get(ke.getKeyCode()) == null || !pressed.get(ke.getKeyCode()))    		
+	    	{            
+	    		pressed.put(ke.getKeyCode(), true);
+	    		pressedKeys.add(ke.getKeyCode());       	
+	        }
+    	}
     }
 
     /**
@@ -46,7 +56,7 @@ class JBubbleKeyListener implements KeyListener
     @Override
     public void keyTyped(KeyEvent ke)
     {
-        return;
+
     }
 
     /**
@@ -56,7 +66,26 @@ class JBubbleKeyListener implements KeyListener
     @Override
     public void keyReleased(KeyEvent ke)
     {
-        return;
+        pressed.put(ke.getKeyCode(), false);
+    	pressedKeys.remove(ke.getKeyCode());
+    }
+
+    /**
+     * Perform the actions of all the keys which are being pressed.
+     */
+    public void update()
+    {
+        pressedKeys.forEach(keyCode -> mapping.get(keyCode).doAction());
+        cleanList();
+    }
+    
+    /**
+     * Clean jumps and bubbles out of the list so we don't spam them.
+     */
+    public void cleanList()
+    {
+        pressedKeys.remove(KeyEvent.VK_SPACE);
+        pressedKeys.remove(KeyEvent.VK_Z);
     }
 
 }

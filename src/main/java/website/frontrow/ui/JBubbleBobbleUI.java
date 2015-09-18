@@ -1,6 +1,9 @@
 package website.frontrow.ui;
 
-import website.frontrow.Game;
+import website.frontrow.game.Game;
+import website.frontrow.game.GameConstants;
+import website.frontrow.logger.Log;
+import website.frontrow.logger.Logable;
 
 import java.util.Map;
 
@@ -18,15 +21,15 @@ import java.util.concurrent.TimeUnit;
 /**
  * The main ui for the game.
  */
-public class JBubbleBobbleUI extends JFrame
+public class JBubbleBobbleUI
+        extends JFrame
+            implements Logable
 {
-    /**
-     * The number of frames per second at which the game refreshes.
-     */
-    private static final int FRAME_REFRESH_RATE = 60;
 
     private PlayingFieldPanel pfp;
     private SidePanel sp;
+
+    private JBubbleKeyListener keyListener;
 
     /**
      * Creates a JBubble Bobble UI.
@@ -40,19 +43,21 @@ public class JBubbleBobbleUI extends JFrame
         setResizable(false);
         setFocusable(true);
 
-        addKeyListener(new JBubbleKeyListener(klm));
+        this.keyListener = new JBubbleKeyListener(klm);
+        addKeyListener(this.keyListener);
 
         Container contentPanel = getContentPane();
         contentPanel.setBackground(Color.white);
         contentPanel.setLayout(new BorderLayout());
 
-        pfp = new PlayingFieldPanel(game.getLevel());
+        pfp = new PlayingFieldPanel(game);
         sp = new SidePanel(game);
 
         contentPanel.add(pfp, BorderLayout.LINE_START);
         contentPanel.add(sp, BorderLayout.LINE_END);
 
         pack();
+        addToLog("[JBBUI]\tBubble Bobble UI created successfully.");
     }
 
     /**
@@ -69,7 +74,8 @@ public class JBubbleBobbleUI extends JFrame
         service.scheduleAtFixedRate(() ->
         {
             drawNextFrame();
-        }, 0, 1000 / FRAME_REFRESH_RATE, TimeUnit.MILLISECONDS);
+        }, 0, 1000 / GameConstants.FRAME_REFRESH_RATE, TimeUnit.MILLISECONDS);
+        addToLog("[JBBUI]\tBubble Bobble UI started successfully.");
     }
 
     /**
@@ -79,5 +85,24 @@ public class JBubbleBobbleUI extends JFrame
     {
         pfp.repaint();
         // Do logic and graphics stuff.
+    }
+
+    /**
+     * Log actions from JBubbleBobbleUI.
+     * @param action Input a String that is the action performed.
+     */
+    @Override
+    public void addToLog(String action)
+    {
+        Log.add(action);
+    }
+
+    /**
+     * Returns the JBubbleKeyListener.
+     * @return The keylistener.
+     */
+    public JBubbleKeyListener getKeyListener()
+    {
+        return this.keyListener;
     }
 }

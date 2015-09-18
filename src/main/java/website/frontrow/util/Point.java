@@ -76,6 +76,24 @@ public class Point
         return new Point(this.x / divisor, this.y / divisor);
     }
 
+    /**
+     * Calculates the distance to the origin squared.
+     * @return The distance to the origin squared
+     */
+    public double lengthsq()
+    {
+        return Math.pow(this.x, 2) + Math.pow(this.y, 2);
+    }
+
+    /**
+     * Calculates the distance to the origin squared.
+     * @return The distance to the origin squared
+     */
+    public double length()
+    {
+        return Math.sqrt(this.lengthsq());
+    }
+
 
     @Override
     public boolean equals(Object other)

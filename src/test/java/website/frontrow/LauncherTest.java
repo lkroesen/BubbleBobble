@@ -16,7 +16,8 @@ public class LauncherTest
     public void testLaunch()
     {
         Launcher l = new Launcher();
-        l.start("/1.txt");
+        String[] files = {"/1.txt"};
+        l.start(files);
         assertNotNull(l);
     }
 
@@ -27,6 +28,7 @@ public class LauncherTest
     public void testStartEmptyFileName()
     {
         Launcher l = new Launcher();
-        l.start("");
+        String[] files = {""};
+        l.start(files);
     }
 }
