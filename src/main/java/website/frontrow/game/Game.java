@@ -52,6 +52,11 @@ public class Game implements LevelObserver
                 keyListener.update();
             }
             currentLevel.tick();
+
+            if(currentLevel.getEnemies() == 0)
+            {
+                levelWon();
+            }
         }
         updateObservers();
     }

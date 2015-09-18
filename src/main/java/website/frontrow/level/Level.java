@@ -244,7 +244,7 @@ public class Level
     }
 
     /**
-     * Returns true if there are still enemies alive in the level
+     * Returns true if there are still enemies alive in the level.
      * @return boolean
      */
     public boolean enemiesAlive()
