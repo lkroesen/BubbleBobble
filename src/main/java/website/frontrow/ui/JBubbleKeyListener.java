@@ -67,7 +67,8 @@ public class JBubbleKeyListener implements KeyListener
      */
     public void update()
     {
-        pressedKeys.forEach(keyCode -> mapping.get(keyCode).doAction());
+        for(Integer keyCode: pressedKeys)
+            mapping.get(keyCode).doAction();
     }
 
 }
