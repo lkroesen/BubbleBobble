@@ -97,7 +97,6 @@ public class CollisionHandler
 
 		if(collider instanceof Bubble)
 		{
-			addToLog("[CH]\tBubble collided with something.");
 			bubbleCollision((Bubble) collider, colidee);
 		}
 		else if(colidee instanceof Bubble)
