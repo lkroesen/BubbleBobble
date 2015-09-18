@@ -224,7 +224,7 @@ public class Level
                 o.levelLost();
             }
         }
-        if (enemies != 0)
+        if (!enemiesAlive())
         {
             for(LevelObserver o : observers)
             {
@@ -241,6 +241,15 @@ public class Level
     public boolean playersAlive()
     {
         return true;
+    }
+
+    /**
+     * Returns true if there are still enemies alive in the level
+     * @return boolean
+     */
+    public boolean enemiesAlive()
+    {
+        return (enemies != 0);
     }
 
     /**

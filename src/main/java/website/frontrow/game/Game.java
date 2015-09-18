@@ -184,6 +184,7 @@ public class Game implements LevelObserver
         if(currentIndex != levelPack.size())
         {
             currentLevel = levelPack.get(currentIndex);
+            start();
 
         }
     }
