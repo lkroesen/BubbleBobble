@@ -1,6 +1,8 @@
 package website.frontrow.board;
 
 import website.frontrow.level.Level;
+import website.frontrow.logger.Log;
+import website.frontrow.logger.Logable;
 import website.frontrow.util.Collision;
 import website.frontrow.util.CollisionHandler;
 import website.frontrow.game.GameConstants;
@@ -13,6 +15,7 @@ import website.frontrow.util.Point;
  */
 public abstract class Mover
     extends Unit
+        implements Logable
 {
     @SuppressWarnings("visibilitymodifier") // subclasses have to have access to this variable
     protected Direction direction;
@@ -158,6 +161,11 @@ public abstract class Mover
 
         Point movement = motion.divide(GameConstants.TICKS_PER_SEC);
 
+        if (!movement.toString().equals("Point(0.0, 0.0)"))
+        {
+            addToLog("[MOVER]\tMoved to " + movement.toString());
+        }
+
         this.handler = new CollisionHandler(level);
         this.handler.checkUnitsAABB(this);
         this.location = handler.findNextPosition(this).getPoint();
@@ -170,8 +178,7 @@ public abstract class Mover
      */
     protected void applyGravity()
     {
-        this.motion.setY(Math.max(GameConstants.MAX_Y_SPEED,
-                this.motion.getY() - GameConstants.GRAVITY));
+        this.motion.setY(this.motion.getY() - GameConstants.GRAVITY);
 
         Collision c = this.handler.findNextPosition(this);
         if(c.isCollided())
@@ -181,4 +188,9 @@ public abstract class Mover
 
     }
 
+    @Override
+    public void addToLog(String action)
+    {
+        Log.add(action);
+    }
 }

@@ -10,11 +10,14 @@ import website.frontrow.board.Mover;
 import website.frontrow.game.GameConstants;
 import website.frontrow.level.Cell;
 import website.frontrow.level.Level;
+import website.frontrow.logger.Log;
+import website.frontrow.logger.Logable;
 
 /**
  * This Class is for handling collisions during the game.
  */
 public class CollisionHandler
+	implements Logable
 {
 	@SuppressWarnings("checkstyle:magicnumber")
 	private static final double PRECISION = 0.0001d;
@@ -83,10 +86,12 @@ public class CollisionHandler
 	{
 		if(collider instanceof Player)
 		{
+			addToLog("[CH]\tPlayer collided with something.");
 			playerCollision((Player) collider, colidee);
 		}
 		else if (colidee instanceof Player)
 		{
+			addToLog("[CH]\tSomething collided with a Player.");
 			playerCollision((Player) colidee, collider);
 		}
 
@@ -96,6 +101,7 @@ public class CollisionHandler
 		}
 		else if(colidee instanceof Bubble)
 		{
+			addToLog("[CH]\tSomething collided with a Bubble.");
 			bubbleCollision((Bubble) colidee, collider);
 		}
 	}
@@ -124,6 +130,16 @@ public class CollisionHandler
 			bubble.kill();
 		}
 
+	}
+
+	/**
+	 * Log actions from CollisionHandler.
+	 * @param action Input a String that is the action performed.
+	 */
+	@Override
+	public void addToLog(String action)
+	{
+		Log.add(action);
 	}
 
 	/**

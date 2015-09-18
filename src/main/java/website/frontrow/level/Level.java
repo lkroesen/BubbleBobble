@@ -3,6 +3,8 @@ package website.frontrow.level;
 import website.frontrow.board.Enemy;
 import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
+import website.frontrow.logger.Log;
+import website.frontrow.logger.Logable;
 import website.frontrow.util.Grid;
 
 import java.awt.Graphics;
@@ -15,6 +17,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Class containing a level and positions of entities therein.
  */
 public class Level
+    implements Logable
 {
 
     private ConcurrentLinkedQueue<Unit> toAdd = new ConcurrentLinkedQueue<>();
@@ -40,6 +43,7 @@ public class Level
         this.players = players;
         this.units = new ArrayList<>(units);
         this.cells = new Grid<>(cells);
+        addToLog("[LEVEL]\tLevel Object created");
 
         int e = 0;
         ArrayList<Unit> list = units;
@@ -157,6 +161,16 @@ public class Level
     public ArrayList<Player> getPlayers()
     {
         return players;
+    }
+
+    /**
+     * Input an action as a String.
+     * @param action Input a String that is the action performed.
+     */
+    @Override
+    public void addToLog(String action)
+    {
+        Log.add(action);
     }
 
     /**

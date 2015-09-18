@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import website.frontrow.board.Direction;
+import website.frontrow.logger.Log;
+import website.frontrow.logger.Logable;
 
 /**
  * A store to get sprites.
  */
 public class SpriteStore
+		implements Logable
 {
     private static ImageStore is = new ImageStore();
     
@@ -31,6 +34,7 @@ public class SpriteStore
     	}
     	else
         {
+			addToLog("[WARNING]\t[SPRITESTORE]\tWall Sprite was null.");
     		sprite = new StaticImageSprite(is.getWallImage());
     		spriteMap.put("Wall", sprite);
     		return sprite;
@@ -53,6 +57,7 @@ public class SpriteStore
 		}
 		else
 		{
+			addToLog("[WARNING]\t[SPRITESTORE]\tBubble Sprite was null.");
 			sprite = new StaticImageSprite(is.getBubbleImage());
 			spriteMap.put("Bubble", sprite);
 			return sprite;
@@ -73,6 +78,7 @@ public class SpriteStore
     	}
     	else
         {
+			addToLog("[WARNING]\t[SPRITESTORE]\tPlatform Sprite was null.");
     		sprite = new StaticImageSprite(is.getPlatformImage());
     		spriteMap.put("Platform", sprite);
     		return sprite;
@@ -103,6 +109,7 @@ public class SpriteStore
             	}
             	else
                 {
+					addToLog("[WARNING]\t[SPRITESTORE]\tPlayer Sprite LEFT was null.");
             		sprite = new StaticImageSprite(is.getPlayerLeftImage());
             		spriteMap.put("PlayerLeft", sprite);
             		return sprite;
@@ -116,6 +123,7 @@ public class SpriteStore
             	}
             	else
                 {
+					addToLog("[WARNING]\t[SPRITESTORE]\tPlayer Sprite RIGHT was null.");
             		sprite = new StaticImageSprite(is.getPlayerRightImage());
             		spriteMap.put("PlayerRight", sprite);
             		return sprite;
@@ -149,6 +157,7 @@ public class SpriteStore
             	}
             	else
                 {
+					addToLog("[WARNING]\t[SPRITESTORE]\tEnemy Sprite LEFT was null.");
             		sprite = new StaticImageSprite(is.getEnemyLeftImage());
             		spriteMap.put("EnemyLeft", sprite);
             		return sprite;
@@ -162,6 +171,7 @@ public class SpriteStore
             	}
             	else
 				{
+					addToLog("[WARNING]\t[SPRITESTORE]\tWall Sprite RIGHT was null.");
 					sprite = new StaticImageSprite(is.getEnemyRightImage());
 					spriteMap.put("EnemyRight", sprite);
 					return sprite;
@@ -169,4 +179,14 @@ public class SpriteStore
 			default: return new EmptySprite();
         }
     }
+
+	/**
+	 * Input a String to be logged.
+	 * @param action Input a String that is the action performed.
+	 */
+	@Override
+	public void addToLog(String action)
+	{
+		Log.add(action);
+	}
 }
