@@ -17,6 +17,7 @@ import website.frontrow.logger.Logable;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -68,27 +69,48 @@ public class Launcher implements Logable
 
             MapParser mp = new MapParser();
             Level level = mp.parseMap(map);
-            Game game = new Game(level, level.getPlayers());
+            ArrayList<Level> levelList = new ArrayList<Level>();
+            levelList.add(level);
+
+            Game game = new Game(levelList, level.getPlayers());
             Map<Integer, Action> keyMappings = createSinglePlayerKeyMappings(game);
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
 
+            game.setKeyListener(ui.getKeyListener());
+
             ui.start();
+            startScheduler(game);
 
-            ScheduledExecutorService service = Executors
-                    .newSingleThreadScheduledExecutor();
-
-            service.scheduleAtFixedRate(() ->
-                    {
-                        //addToLog("[TICK]\tTick happened.");
-                        game.tick();
-                    }, 0, 1000 / GameConstants.TICKS_PER_SEC,
-                    TimeUnit.MILLISECONDS);
         } catch (IOException e)
         {
             addToLog("[ERROR]\tLoading file: " + filename + " failed.");
             new DumpLog();
             throw new RuntimeException();
         }
+    }
+
+    /**
+     * Starts the schedular for a game object.
+     * @param game Game to start a scheduler for.
+     */
+    private void startScheduler(Game game)
+    {
+        ScheduledExecutorService service = Executors
+                .newSingleThreadScheduledExecutor();
+
+        service.scheduleAtFixedRate(() ->
+                {
+                    try
+                    {
+                        game.tick();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                        throw e;
+                    }
+                }, 0, 1000 / GameConstants.TICKS_PER_SEC,
+                TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -127,7 +149,7 @@ public class Launcher implements Logable
                 if(game.isRunning())
                 {
                     Player p = game.getPlayers().get(0);
-                    game.getLevel().getUnits().add(
+                    game.getLevel().addUnit(
                             new Bubble(p.getLocation(),
                                     new Point(p.getDirection().getDeltaX() * 4, 0)));
                 }

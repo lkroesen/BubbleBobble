@@ -4,7 +4,9 @@ import website.frontrow.board.Player;
 import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
+import website.frontrow.level.Level.LevelObserver;
 
+import website.frontrow.ui.JBubbleKeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,24 +14,31 @@ import java.util.List;
  * The current state of the game.
  */
 public class Game
-        implements Logable
+        implements Logable, LevelObserver
 {
     private int score = 0;
+    private int currentIndex;
     private Level currentLevel;
+    private ArrayList<Level> levelPack;
+
     private boolean running = false;
 
     private ArrayList<Player> players;
 
     private ArrayList<GameObserver> observers;
 
+    private JBubbleKeyListener keyListener;
+
     /**
      * Constructor of Game.
-     * @param level The current level the player can play.
+     * @param levels All the levels of the game.
      * @param players The players in this game.
      */
-    public Game(Level level, ArrayList<Player> players)
+    public Game(ArrayList<Level> levels, ArrayList<Player> players)
     {
-        this.currentLevel = level;
+        this.levelPack = levels;
+        this.currentIndex = 0;
+        this.currentLevel = levelPack.get(currentIndex);
         this.players = players;
         this.observers = new ArrayList<>();
         addToLog("[GAME]\tGame Object Created");
@@ -42,6 +51,10 @@ public class Game
     {
         if(running)
         {
+            if(keyListener != null)
+            {
+                keyListener.update();
+            }
             currentLevel.tick();
         }
         updateObservers();
@@ -53,6 +66,8 @@ public class Game
     public void start()
     {
         running = true;
+        currentLevel.addObserver(this);
+        System.out.println("Started");
     }
 
     /**
@@ -61,6 +76,7 @@ public class Game
     public void stop()
     {
         running = false;
+        System.out.println("Paused");
     }
 
     /**
@@ -130,6 +146,15 @@ public class Game
     }
 
     /**
+     * Sets the keyListener for this game.
+     * @param keyListener The key listener to use.
+     */
+    public void setKeyListener(JBubbleKeyListener keyListener)
+    {
+        this.keyListener = keyListener;
+    }
+
+    /**
      * Removes an observer from this game.
      * @param o The observer to remove.
      */
@@ -162,5 +187,24 @@ public class Game
     public void addToLog(String action)
     {
         Log.add(action);
+    }
+
+    @Override
+    public void levelWon()
+    {
+        stop();
+        currentIndex++;
+
+        if(currentIndex != levelPack.size())
+        {
+            currentLevel = levelPack.get(currentIndex);
+
+        }
+    }
+
+    @Override
+    public void levelLost()
+    {
+        stop();
     }
 }

@@ -11,27 +11,27 @@ public abstract class GameConstants
     /**
      * The constant for the gravity in the game.
      */
-    public static final double GRAVITY = -3;
+    public static final double GRAVITY = -1.5;
 
     /**
      * The maximum x speed.
      */
-    public static final int MAX_X_SPEED = 60;
+    public static final int MAX_X_SPEED = 30;
 
     /**
      * The maximum y speed.
      */
-    public static final int MAX_Y_SPEED = 10;
+    public static final int MAX_Y_SPEED = 20;
 
     /**
      * The step to take when moving to the left or right.
      */
-    public static final int MOVE_STEP = 7;
+    public static final int MOVE_STEP = 14;
 
     /**
      * The impulse of jumping.
      */
-    public static final int GRAVITY_MOD = 16;
+    public static final int JUMP_IMPULSE = 4;
 
     /**
      * The number of frames per second at which the game refreshes.
