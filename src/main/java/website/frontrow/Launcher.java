@@ -49,7 +49,7 @@ public class Launcher implements Logable
         // Initialize the Logger Class, so that it can Log actions taken.
         new Log();
 
-        String[] levels = {"/level/1.txt", "/level/2.txt"};
+        String[] levels = {"/level/1.txt", "/level/2.txt", "/level/3.txt"};
         new Launcher().start(levels);
     }
 
