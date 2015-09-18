@@ -18,7 +18,7 @@ public class CollisionHandler
 {
 	@SuppressWarnings("checkstyle:magicnumber")
 	private static final double PRECISION = 0.0001d;
-	private static final double ONE_DEV_PRECISION = 1 / 0.0001d;
+	private static final double ONE_DEV_PRECISION = 1 / PRECISION;
 	private static final int SAMPLING = 64;
     private static final double LOC_OFFSET = 0.99d;
     private Level level;
@@ -173,8 +173,11 @@ public class CollisionHandler
 		return (int) Math.ceil(Math.max(stepsX, stepsY) * SAMPLING);
 	}
 
+	// 8 is the max recusion depth.
+	@SuppressWarnings("checkstyle:magicnumber")
+	private static final int MAX_DEPTH = 8;
 	/**
-	 * Sweep from start until steps until you get a collision,
+	 * Sweep from start until steps until you get a collision.
 	 * @param start Starting position of the sweep.
 	 * @param delta Delta between each step.
 	 * @param wh Width and height of the unit to sweep.
@@ -184,7 +187,7 @@ public class CollisionHandler
 	 */
 	private Collision sweep(Point start, Point delta, Point wh, Point motion, int steps, int level)
 	{
-		if(level >= 8)
+		if(level >= MAX_DEPTH)
 		{
 			return new Collision(start, true);
 		}
@@ -219,7 +222,8 @@ public class CollisionHandler
 		}
 		Point delta = mover.getMotion().divide(steps).divide(GameConstants.TICKS_PER_SEC);
 
-		Collision collision = sweep(mover.getLocation(), delta, mover.getAABBDimensions(), mover.getMotion(), steps, 0);
+		Collision collision = sweep(mover.getLocation(), delta, mover.getAABBDimensions(),
+				mover.getMotion(), steps, 0);
 
 		return new Collision(new Point(
 					Math.round(collision.getPoint().getX() * ONE_DEV_PRECISION) * PRECISION,
