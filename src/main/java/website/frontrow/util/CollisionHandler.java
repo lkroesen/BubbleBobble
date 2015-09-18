@@ -21,7 +21,7 @@ public class CollisionHandler
 {
 	@SuppressWarnings("checkstyle:magicnumber")
 	private static final double PRECISION = 0.0001d;
-	private static final double ONE_DEV_PRECISION = 1 / 0.0001d;
+	private static final double ONE_DEV_PRECISION = 1 / PRECISION;
 	private static final int SAMPLING = 64;
     private static final double LOC_OFFSET = 0.99d;
     private Level level;
@@ -162,8 +162,10 @@ public class CollisionHandler
 			for(int x = minx; x < maxx; x++)
 			{
 				Point c = new Point(x, y);
-				AABB tile = new AABB(c, c.add(cells.get(x, y).getAABB()));
-				if(cells.get(x, y).collides(motion) && aabb.overlaps(tile))
+				Cell cell = cells.get(x, y);
+				Point aabbo = cell.getAABBOffset();
+				AABB tile = new AABB(c.add(aabbo), c.add(aabbo).add(cell.getAABBDimensions()));
+				if (cell.collides(motion) && aabb.overlaps(tile))
 				{
 					return true;
 				}
@@ -187,6 +189,39 @@ public class CollisionHandler
 		return (int) Math.ceil(Math.max(stepsX, stepsY) * SAMPLING);
 	}
 
+	// 8 is the max recusion depth.
+	@SuppressWarnings("checkstyle:magicnumber")
+	private static final int MAX_DEPTH = 8;
+	/**
+	 * Sweep from start until steps until you get a collision.
+	 * @param start Starting position of the sweep.
+	 * @param delta Delta between each step.
+	 * @param wh Width and height of the unit to sweep.
+	 * @param steps Amount of steps to do.
+	 * @param level Recursion loop cap.
+	 * @return Collision after sweep
+	 */
+	private Collision sweep(Point start, Point delta, Point wh, Point motion, int steps, int level)
+	{
+		if(level >= MAX_DEPTH)
+		{
+			return new Collision(start, true);
+		}
+		Point found = start;
+		for(int i = 0; i <= steps; i++)
+		{
+			Point current = found.add(delta);
+
+			if(checkLevelAABB(new AABB(current, current.add(wh)), motion))
+			{
+				return sweep(found, delta.divide(steps), wh, motion, steps, level + 1);
+			}
+
+			found = current;
+		}
+		return new Collision(found, level != 0);
+	}
+
 	/**
 	 * Find the next position for the given mover.
 	 * @param mover Mover to get next position for.
@@ -196,32 +231,19 @@ public class CollisionHandler
 	{
 		Point wh = mover.getAABBDimensions();
 		int steps = getSteps(mover, wh);
-		Point found = mover.getLocation();
 
 		if(steps == 0)
 		{
-			return new Collision(found, false);
+			return new Collision(mover.getLocation(), false);
 		}
 		Point delta = mover.getMotion().divide(steps).divide(GameConstants.TICKS_PER_SEC);
-		boolean collision = false;
 
-		for(int i = 0; i <= steps; i++)
-		{
-			Point current = found.add(delta);
-
-			if(checkLevelAABB(new AABB(current, current.add(wh)), mover.getMotion()))
-			{
-				mover.onWallCollision();
-				collision = true;
-				break;
-			}
-
-			found = current;
-		}
+		Collision collision = sweep(mover.getLocation(), delta, mover.getAABBDimensions(),
+				mover.getMotion(), steps, 0);
 
 		return new Collision(new Point(
-					Math.round(found.getX() * ONE_DEV_PRECISION) * PRECISION,
-					Math.round(found.getY() * ONE_DEV_PRECISION) * PRECISION
-			), collision);
+					Math.round(collision.getPoint().getX() * ONE_DEV_PRECISION) * PRECISION,
+					Math.round(collision.getPoint().getY() * ONE_DEV_PRECISION) * PRECISION
+			), collision.isCollided());
 	}
 }

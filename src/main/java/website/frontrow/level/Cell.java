@@ -38,16 +38,25 @@ public enum Cell
      */
     PLATFORM
     {
+
         @Override
         public boolean collides(Point movement)
         {
             return movement.getY() > 0;
         }
 
+        // Magic number is AABB height.
+        @SuppressWarnings("checkstyle:magicnumber")
         @Override
-        public Point getAABB()
+        public Point getAABBDimensions()
         {
-            return new Point(1, 0);
+            return new Point(1, 0.2);
+        }
+
+        @Override
+        public Point getAABBOffset()
+        {
+            return new Point(0, -1);
         }
         
         @Override
@@ -82,9 +91,18 @@ public enum Cell
      * The width and height of this tile.
      * @return The width and height of the AABB.
      */
-    public Point getAABB()
+    public Point getAABBDimensions()
     {
         return new Point(1, 1);
+    }
+
+    /**
+     * Get the x and y offset of the AABB for this tile.
+     * @return AABB offset.
+     */
+    public Point getAABBOffset()
+    {
+        return new Point(0, 0);
     }
 
     /**

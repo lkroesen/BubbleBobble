@@ -139,11 +139,12 @@ public class CollisionHandlerTest
     {
         Level check = new Level(emptyPlayer, emptyUnit, new Grid<>(Arrays.asList(
                 Cell.WALL, Cell.WALL, Cell.WALL,
+                Cell.WALL, Cell.EMPTY, Cell.WALL,
                 Cell.WALL, Cell.PLATFORM, Cell.WALL,
-                Cell.WALL, Cell.WALL, Cell.WALL), 3, 3));
+                Cell.WALL, Cell.WALL, Cell.WALL), 3, 4));
         CollisionHandler handler = new CollisionHandler(check);
         assertTrue(handler.checkLevelAABB(
-                new AABB(new Point(1, 1), new Point(2, 2)), new Point(0, 1)
+                new AABB(new Point(1, 1.1), new Point(2, 2.1)), new Point(0, 1)
         ));
     }
 
