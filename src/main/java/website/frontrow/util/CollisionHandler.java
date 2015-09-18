@@ -241,6 +241,8 @@ public class CollisionHandler
 		Collision collision = sweep(mover.getLocation(), delta, mover.getAABBDimensions(),
 				mover.getMotion(), steps, 0);
 
+		if(collision.isCollided()) mover.onWallCollision();
+
 		return new Collision(new Point(
 					Math.round(collision.getPoint().getX() * ONE_DEV_PRECISION) * PRECISION,
 					Math.round(collision.getPoint().getY() * ONE_DEV_PRECISION) * PRECISION
