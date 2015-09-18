@@ -2,9 +2,10 @@ package website.frontrow.ui;
 
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The key listener makes sure that when certain keys are pressed,
@@ -19,7 +20,7 @@ public class JBubbleKeyListener implements KeyListener
      */
     private final Map<Integer, Action> mapping;
 
-    private Set<Integer> pressedKeys = new HashSet<>();
+    private Set<Integer> pressedKeys = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
     /**
      * Creates a JBubbleKeyListener.
@@ -67,8 +68,7 @@ public class JBubbleKeyListener implements KeyListener
      */
     public void update()
     {
-        for(Integer keyCode: pressedKeys)
-            mapping.get(keyCode).doAction();
+        pressedKeys.forEach(keyCode -> mapping.get(keyCode).doAction());
     }
 
 }
