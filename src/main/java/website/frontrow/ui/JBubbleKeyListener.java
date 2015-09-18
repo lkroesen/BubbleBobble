@@ -39,19 +39,14 @@ public class JBubbleKeyListener implements KeyListener
      */
     public void keyPressed(KeyEvent ke)
     {
-    	if (mapping.get(ke.getKeyCode()) != null && pressed.get(ke.getKeyCode()) == null)
-    	{            
-    		pressed.put(ke.getKeyCode(), true);
-    		pressedKeys.add(ke.getKeyCode());
-        	
-        }
-    	
-    	else if (mapping.get(ke.getKeyCode()) != null && pressed.get(ke.getKeyCode()) == false)
-        {            
-    		pressed.put(ke.getKeyCode(), true);
-    		pressedKeys.add(ke.getKeyCode());
-        	
-        }
+    	if (mapping.get(ke.getKeyCode()) != null)
+    	{
+    		if (pressed.get(ke.getKeyCode()) == null || !pressed.get(ke.getKeyCode()))    		
+	    	{            
+	    		pressed.put(ke.getKeyCode(), true);
+	    		pressedKeys.add(ke.getKeyCode());       	
+	        }
+    	}
     }
 
     /**
