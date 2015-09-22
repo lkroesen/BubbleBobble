@@ -69,6 +69,13 @@ public class Game
         updateObservers();
     }
     
+    /**
+     * This is used by just a few tests that didn't work the way they
+     * should've worked, because they used a mocked level.
+     * Because the level has no enemies, the game would stop.
+     * In order for the tests to be accurate, I made a new tick
+     * function that only checks whether or not the players are dead.
+     */
     public void tickGO()
     {
     	if(running)
