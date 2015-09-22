@@ -53,6 +53,14 @@ public abstract class Unit
     }
 
     /**
+     * Revives an enemy after being captured.
+     */
+    public void revive()
+    {
+        alive = true;
+    }
+
+    /**
      * Set alive.
      * @param alive the value.
      */

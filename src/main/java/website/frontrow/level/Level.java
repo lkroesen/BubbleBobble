@@ -1,5 +1,6 @@
 package website.frontrow.level;
 
+import website.frontrow.board.Bubble;
 import website.frontrow.board.Enemy;
 import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
@@ -25,6 +26,8 @@ public class Level
     private ConcurrentLinkedQueue<Unit> toAdd = new ConcurrentLinkedQueue<>();
 
     private ArrayList<Player> players;
+    boolean playersAlive = true;
+
     private ArrayList<Unit> units;
     private Grid<Cell> cells;
     private int enemies;
@@ -114,14 +117,43 @@ public class Level
             unit.tick(this);
             if(!unit.isAlive())
             {
-                if(isEnemy(unit))
-                {
-                    setEnemies(enemies - 1);
-                }
+                onUnitDeath(unit);
                 // The unit died during the tick, and must be removed.
                 it.remove();
             }
         }
+    }
+
+    private void onUnitDeath(Unit unit)
+    {
+        if(unit instanceof Bubble)
+        {
+            Bubble bubble = (Bubble) unit;
+            if(bubble.getContains() != null && !bubble.getContains().isAlive())
+            {
+                this.setEnemies(this.getEnemies() - 1);
+                updateObservers();
+            }
+        }
+        else if(unit instanceof Player)
+        {
+            updatePlayerAliveState();
+            updateObservers();
+        }
+    }
+
+    /**
+     * Check if all players are still alive.
+     */
+    private void updatePlayerAliveState()
+    {
+        playersAlive = false;
+
+        for(Player player: players)
+        {
+            playersAlive = playersAlive | player.isAlive();
+        }
+
     }
 
     /**
@@ -275,7 +307,7 @@ public class Level
      */
     public boolean playersAlive()
     {
-        return true;
+        return playersAlive;
     }
 
     /**

@@ -1,5 +1,7 @@
 package website.frontrow.board;
 
+import website.frontrow.game.GameConstants;
+import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.sprite.Sprite;
@@ -17,8 +19,15 @@ public class Bubble
 
     private final static Point HIT_MOTION = new Point(0, -2);
 
+    /**
+     * The amount of ticks needed to escape.
+     */
+    private final static long TIME_TO_ESCPAPE = 2 * GameConstants.TICKS_PER_SEC;
+
     // A bubble can contain an enemy.
     private Enemy contains;
+
+    private long timeLeft = TIME_TO_ESCPAPE;
 
     /**
      * Did this bubble hit something?
@@ -63,14 +72,23 @@ public class Bubble
         other.kill();
     }
 
-    /**
-     * Set an enemy to be contained by a bubble.
-     * @param contains
-     * Sets the enemy as contained by the bubble.
-     */
-    public void setContains(Enemy contains)
+    @Override
+    public void tick(Level level)
     {
-        this.contains = contains;
+        super.tick(level);
+
+        if(this.contains != null)
+        {
+            timeLeft--;
+
+            if(timeLeft <= 0)
+            {
+                this.contains.revive();
+                this.contains.setLocation(this.location);
+                level.addUnit(this.contains);
+                this.kill();
+            }
+        }
     }
 
     @Override
@@ -106,6 +124,9 @@ public class Bubble
         return hit;
     }
 
+    /**
+     * Change the bubble to a hit bubble.
+     */
     private void hit()
     {
         this.hit = true;
