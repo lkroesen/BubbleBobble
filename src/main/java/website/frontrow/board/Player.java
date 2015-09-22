@@ -29,7 +29,6 @@ public class Player
 
     /**
      * The constructor of the Player Unit.
-     * Input a byte with the amount of lives the Player has.
      * @param position A players starting position.
      */
     public Player(Point position)
@@ -121,5 +120,10 @@ public class Player
     public void addLife()
     {
     	lives++;
+    }
+    
+    public boolean playerAlive()
+    {
+    	return lives > 0;
     }
 }
