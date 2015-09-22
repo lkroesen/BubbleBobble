@@ -5,7 +5,9 @@ import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
+import website.frontrow.util.CollisionHandler;
 import website.frontrow.util.Grid;
+import website.frontrow.util.RealCollisionHandler;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -28,6 +30,9 @@ public class Level
     private int enemies;
 
     private List<LevelObserver> observers;
+
+    private final CollisionHandler collisionHandler = new CollisionHandler(this);
+    private final RealCollisionHandler realCollisionHandler = new RealCollisionHandler();
 
     /**
      * Constructor of Level.
@@ -246,6 +251,22 @@ public class Level
             }
         }
 
+    }
+
+    /**
+     * @return collisionComputer for this level.
+     */
+    public CollisionHandler getCollisionHandler()
+    {
+        return this.collisionHandler;
+    }
+
+    /**
+     * @return collisionHandler for this level.
+     */
+    public RealCollisionHandler getRealCollisionHandler()
+    {
+        return this.realCollisionHandler;
     }
 
     /**
