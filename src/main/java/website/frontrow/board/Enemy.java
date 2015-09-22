@@ -15,6 +15,8 @@ public class Enemy
 {
 
 	private static SpriteStore ss = new SpriteStore();
+	private int tickCounter;
+	private Boolean random;
 	
     /**
      * Constructor of the Enemy Unit.
@@ -24,6 +26,8 @@ public class Enemy
     public Enemy(Point position)
     {
         super(true, position, new Point(0, 0));
+        this.tickCounter = 0;
+        this.random = false;
         new Log();
         addToLog("[BUBBLE]\t[SPAWN]\tEnemy created.");
     }
@@ -46,5 +50,41 @@ public class Enemy
     public void addToLog(String action)
     {
         Log.add(action);
+    }
+    
+    /**
+     * Return the tick counter.
+     * @return the tick counter.
+     */
+    public int getTickCounter()
+    {
+    	return this.tickCounter;
+    }
+    
+    /**
+     * Set the ticks counter.
+     * @param ticks the amount of ticks to be set.
+     */
+    public void setTickCounter(int ticks)
+    {
+    	this.tickCounter = ticks;
+    }
+    
+    /**
+     * Return the random boolean.
+     * @return the random boolean.
+     */
+    public Boolean getRandom()
+    {
+    	return this.random;
+    }
+    
+    /**
+     * Set the random boolean.
+     * @param rand the value to set the boolean to.
+     */
+    public void setRandom(Boolean rand)
+    {
+    	this.random = rand;
     }
 }

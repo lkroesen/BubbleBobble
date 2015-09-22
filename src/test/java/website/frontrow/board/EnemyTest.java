@@ -1,8 +1,9 @@
 package website.frontrow.board;
 
 import org.junit.Test;
-import website.frontrow.util.Point;
 
+import website.frontrow.game.GameConstants;
+import website.frontrow.util.Point;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -31,5 +32,19 @@ public class EnemyTest
             e.kill();
         }
         return e;
+    }
+    
+    /**
+     * Test the tick method.
+     */
+    @Override
+    public void testTick()
+    {
+        Mover u = getTestMover(true, new Point(0, 0), new Point(GameConstants.TICKS_PER_SEC, 0));
+
+        u.tick(emptyLevel);
+        
+        //An enemy might move
+        assertEquals(0.25, u.getLocation().getX(), 1);
     }
 }

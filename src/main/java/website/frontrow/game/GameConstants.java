@@ -42,4 +42,20 @@ public abstract class GameConstants
      * The number of ticks per second that the game processes.
      */
     public static final int TICKS_PER_SEC = 60;
+    
+    
+    /**
+     * The multiplier for the enemy speed.
+     */
+    public static final double ENEMY_SPEED = 0.25;
+    
+    /**
+     * Percentage of enemy movements that is randomized.
+     */
+    public static final float AI_RANDOMIZER = 0.25f;
+    
+    /**
+     * Amount of ticks per enemy move update.
+     */
+    public static final int TICKS_PER_MOVE = 150;
 }

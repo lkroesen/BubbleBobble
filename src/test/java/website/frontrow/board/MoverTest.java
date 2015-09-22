@@ -22,7 +22,8 @@ public abstract class MoverTest
 {
     @SuppressWarnings("checkstyle:visibilitymodifier")
     protected Point m;
-    private Level emptyLevel = new Level(new ArrayList<>(), new ArrayList<>(), new Grid<>(0, 0));
+    @SuppressWarnings("checkstyle:visibilitymodifier")
+    protected Level emptyLevel = new Level(new ArrayList<>(), new ArrayList<>(), new Grid<>(0, 0));
 
     /**
      * Create the mover for the tests.

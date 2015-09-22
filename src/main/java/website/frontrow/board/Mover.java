@@ -5,6 +5,7 @@ import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.util.Collision;
 import website.frontrow.util.CollisionHandler;
+import website.frontrow.artificial.intelligence.ArtificialIntelligence;
 import website.frontrow.game.GameConstants;
 import website.frontrow.util.Point;
 
@@ -155,10 +156,21 @@ public abstract class Mover
         this.newMotion = new Point(0, 0);
 
         double x = this.motion.getX();
-        this.motion.setX(
-                Math.max(Math.min(x, GameConstants.MAX_X_SPEED),
-                        -GameConstants.MAX_X_SPEED));
-
+        
+        if(this instanceof Enemy)
+        {
+        	this.motion.setX(
+        			Math.max(Math.min(x, GameConstants.MAX_X_SPEED),
+        					-GameConstants.MAX_X_SPEED) * GameConstants.ENEMY_SPEED);
+        }
+        
+        else
+        {
+        	this.motion.setX(
+        			Math.max(Math.min(x, GameConstants.MAX_X_SPEED),
+        					-GameConstants.MAX_X_SPEED));
+        }
+        
         Point movement = motion.divide(GameConstants.TICKS_PER_SEC);
 
         if (!movement.toString().equals("Point(0.0, 0.0)"))
@@ -171,6 +183,9 @@ public abstract class Mover
         this.location = handler.findNextPosition(this).getPoint();
 
         applyGravity();
+        
+        ArtificialIntelligence artificialintelligence = new ArtificialIntelligence(level);
+        artificialintelligence.aiMover();
     }
 
     /**
