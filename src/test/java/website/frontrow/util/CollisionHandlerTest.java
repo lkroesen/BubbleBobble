@@ -1,11 +1,6 @@
 package website.frontrow.util;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import website.frontrow.board.Bubble;
-import website.frontrow.board.Enemy;
 import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
 import website.frontrow.game.GameConstants;
@@ -18,20 +13,13 @@ import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 /**
  * Test whether the collisionhandler handles preexisting collisions correctly.
  */
-@RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("checkstyle:visibilitymodifier")
 public class CollisionHandlerTest
 {
-    @Mock Player player;
-    @Mock Enemy enemy;
-    @Mock Bubble bubble;
     /**
      * Prepare all the things.
      */

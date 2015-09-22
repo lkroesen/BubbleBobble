@@ -8,8 +8,9 @@ import website.frontrow.board.Bubble;
 import website.frontrow.board.Enemy;
 import website.frontrow.board.Player;
 
-import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -18,10 +19,10 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class RealCollisionHandlerTest
 {
-        @Mock Player player;
-        @Mock Enemy enemy;
-        @Mock Bubble bubble;
-        RealCollisionHandler realCollisionHandler = new RealCollisionHandler();
+        @Mock private Player player;
+        @Mock private Enemy enemy;
+        @Mock private Bubble bubble;
+        @Mock private RealCollisionHandler realCollisionHandler = new RealCollisionHandler();
     
         /**
          * Test the collision between a player and a normal bubble.

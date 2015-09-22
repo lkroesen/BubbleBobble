@@ -26,7 +26,7 @@ public class Level
     private ConcurrentLinkedQueue<Unit> toAdd = new ConcurrentLinkedQueue<>();
 
     private ArrayList<Player> players;
-    boolean playersAlive = true;
+    private boolean playersAlive = true;
 
     private ArrayList<Unit> units;
     private Grid<Cell> cells;
@@ -77,8 +77,10 @@ public class Level
         addToLog("[LEVEL]\tLevel Object created");
 
         int e = 0;
-        for (Unit unit : units) {
-            if (isEnemy(unit)) {
+        for (Unit unit : units)
+        {
+            if (isEnemy(unit))
+            {
                 e++;
             }
         }

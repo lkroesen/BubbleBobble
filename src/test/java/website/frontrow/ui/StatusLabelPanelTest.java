@@ -25,6 +25,9 @@ public class StatusLabelPanelTest
     private ArrayList<Level> levels = new ArrayList<Level>();
     private Game game;
 
+    /**
+     * Set up for testing.
+     */
     @Before
     public void setUp()
     {

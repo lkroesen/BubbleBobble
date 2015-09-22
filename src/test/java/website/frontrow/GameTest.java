@@ -14,7 +14,11 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 
 /**
  * Test class for Game.
@@ -27,6 +31,9 @@ public class GameTest
     @Mock private Level level;
     private Game game;
 
+    /**
+     * Set up for testing.
+     */
     @Before
     public void setUp()
     {

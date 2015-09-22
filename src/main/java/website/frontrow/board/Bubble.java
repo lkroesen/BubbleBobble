@@ -17,12 +17,12 @@ public class Bubble
 {
     public static final SpriteStore SS = new SpriteStore();
 
-    private final static Point HIT_MOTION = new Point(0, -2);
+    private static final Point HIT_MOTION = new Point(0, -2);
 
     /**
      * The amount of ticks needed to escape.
      */
-    private final static long TIME_TO_ESCPAPE = 2 * GameConstants.TICKS_PER_SEC;
+    private static final long TIME_TO_ESCPAPE = 2 * GameConstants.TICKS_PER_SEC;
 
     // A bubble can contain an enemy.
     private Enemy contains;
@@ -92,7 +92,8 @@ public class Bubble
     }
 
     @Override
-    public Unit clone() {
+    public Unit clone()
+    {
         return new Bubble(location, motion);
     }
 

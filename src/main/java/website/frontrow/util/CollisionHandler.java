@@ -2,9 +2,6 @@ package website.frontrow.util;
 
 import java.util.ArrayList;
 
-import website.frontrow.board.Bubble;
-import website.frontrow.board.Enemy;
-import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
 import website.frontrow.board.Mover;
 import website.frontrow.game.GameConstants;
@@ -63,6 +60,7 @@ public class CollisionHandler
      * the box of another mover there is a collision.
      * There is also a check to filter whether the mover is colliding with itself.
 	 * @param user The unit to check for.
+	 * @param handler The handler to call handle collisions in.
 	 */
     public void checkUnitsAABB(Unit user, RealCollisionHandler handler)
 	{
