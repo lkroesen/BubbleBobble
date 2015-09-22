@@ -245,13 +245,8 @@ public class Game
     	System.out.println("GAME OVER");
     }
     
-    public void setLives(Player p, int l)
+    public Player getPlayer(int i)
     {
-    	p.setLives(l);
-    }
-    
-    public void loseLife(Player p)
-    {
-    	p.loseLife();
+    	return players.get(i);
     }
 }
