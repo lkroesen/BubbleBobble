@@ -76,7 +76,12 @@ public class Bubble
     @Override
     public Sprite getSprite()
     {
-        return SS.getBubbleSprite();
+        if(this.contains == null)
+        {
+            return SS.getBubbleSprite();
+        }
+
+        return SS.getBubbleWithEnemySprite();
     }
 
     @Override

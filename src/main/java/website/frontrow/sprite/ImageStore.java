@@ -182,6 +182,27 @@ public class ImageStore
     }
 
     /**
+     * Returns the image for the bubble.
+     * @return The image.
+     */
+    public Image getBubbleWithEnemyImage()
+    {
+        try
+        {
+            return getImage("/enemyInBubble.png");
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            addToLog("[ERROR]\t[IMAGESTORE]\t8 - IOException in getBubbleWithEnemyImage().");
+            new DumpLog();
+            return getFileNotFoundImage();
+        }
+    }
+
+
+
+    /**
      * Loads the image.
      * @param filename The filename
      * @return The wanted picture.
