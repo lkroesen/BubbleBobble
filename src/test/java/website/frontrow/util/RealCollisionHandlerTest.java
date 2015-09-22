@@ -22,7 +22,7 @@ public class RealCollisionHandlerTest
         @Mock private Player player;
         @Mock private Enemy enemy;
         @Mock private Bubble bubble;
-        @Mock private RealCollisionHandler realCollisionHandler = new RealCollisionHandler();
+        private RealCollisionHandler realCollisionHandler = new RealCollisionHandler();
     
         /**
          * Test the collision between a player and a normal bubble.
