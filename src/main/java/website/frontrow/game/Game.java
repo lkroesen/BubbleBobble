@@ -69,6 +69,17 @@ public class Game
         }
         updateObservers();
     }
+    
+    public void tickGO()
+    {
+    	if(running)
+        {
+            if(playersDead())
+            {
+            	levelLost();
+            }
+        }
+    }
 
     /**
      * Start the game.
@@ -219,8 +230,8 @@ public class Game
     @Override
     public void levelLost()
     {
-        stop();
         gameOver();
+        stop();
     }
     
     /**
@@ -229,6 +240,10 @@ public class Game
      */
     public boolean playersDead()
     {
+    	if(!this.isRunning())
+    	{
+    		return false;
+    	}
     	boolean b = true;
     	for(Player p : this.players)
     	{

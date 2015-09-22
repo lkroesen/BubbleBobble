@@ -128,55 +128,53 @@ public class GameTest
     }
     
     /**
-     * Test not yet functional, because the game is over before adding a player.
+     * Tests that a game over occurs when the player has no lives left.
      */
     @Test
     public void testGameOverSetLives()
     {
+
     	levels.add(l);
-    	Game game = new Game(levels, null);
+    	Player p = new Player(po);
+    	ArrayList<Player> list = new ArrayList<Player>();
+    	list.add(p);
+    	Game game = new Game(levels, list);
     	game.start();
     	assertTrue(game.isRunning());
     	
-    	Player p = new Player(po);
     	p.setLives(0);
-    	ArrayList<Player> list = game.getPlayers();
-    	if(list != null)
-    	{
-    		game.setPlayer(p, 0);
-    	}
-    	else
-    	{
-    		game.setPlayers(list);
-    	}
-    	game.tick();
+    	game.tickGO();
     	assertFalse(game.isRunning());
     	
     }
     
+    /**
+     * Tests that a game over occurs after the player has lost all three lives.
+     */
     @Test
     public void testGameOverLoseLife()
     {
     	levels.add(l);
-    	Game game = new Game(levels, null);
+    	Player p = new Player(po);
+    	ArrayList<Player> list = new ArrayList<Player>();
+    	list.add(p);
+    	Game game = new Game(levels, list);
     	game.start();
     	assertTrue(game.isRunning());
     	
-    	Player p = new Player(po);
-    	for(int i = 0; i < 3; i++)
-    	{
-    		p.loseLife();
-    	}
-    	ArrayList<Player> list = game.getPlayers();
-    	if(list != null)
-    	{
-    		game.setPlayer(p, 0);
-    	}
-    	else
-    	{
-    		game.setPlayers(list);
-    	}
-    	game.tick();
+    	// Lost a life, but not dead yet
+    	p.loseLife();
+    	game.tickGO();
+    	assertTrue(game.isRunning());
+    	
+    	// Lost a life, but not dead yet
+    	p.loseLife();
+    	game.tickGO();
+    	assertTrue(game.isRunning());
+    	
+    	// Lost the last life
+    	p.loseLife();
+    	game.tickGO();
     	assertFalse(game.isRunning());
     }
 }
