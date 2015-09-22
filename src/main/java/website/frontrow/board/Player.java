@@ -106,4 +106,20 @@ public class Player
     {
     	lives = l;
     }
+    
+    /**
+     * Decreases the lives by one.
+     */
+    public void loseLife()
+    {
+    	lives--;
+    }
+    
+    /**
+     * Increases the lives by one.
+     */
+    public void addLife()
+    {
+    	lives++;
+    }
 }
