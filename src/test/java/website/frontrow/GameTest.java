@@ -127,6 +127,9 @@ public class GameTest
         verify(levels.get(0), times(1)).tick();
     }
     
+    /**
+     * Test not yet functional, because the game is over before adding a player.
+     */
     @Test
     public void testGameOverSetLives()
     {
@@ -149,5 +152,31 @@ public class GameTest
     	game.tick();
     	assertFalse(game.isRunning());
     	
+    }
+    
+    @Test
+    public void testGameOverLoseLife()
+    {
+    	levels.add(l);
+    	Game game = new Game(levels, null);
+    	game.start();
+    	assertTrue(game.isRunning());
+    	
+    	Player p = new Player(po);
+    	for(int i = 0; i < 3; i++)
+    	{
+    		p.loseLife();
+    	}
+    	ArrayList<Player> list = game.getPlayers();
+    	if(list != null)
+    	{
+    		game.setPlayer(p, 0);
+    	}
+    	else
+    	{
+    		game.setPlayers(list);
+    	}
+    	game.tick();
+    	assertFalse(game.isRunning());
     }
 }
