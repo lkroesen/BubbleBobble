@@ -52,7 +52,17 @@ public class RealCollisionHandler
      */
     public void playerCollision(Player player, Unit other)
     {
+        // Pop the bubble.
+        if(other instanceof Bubble && ((Bubble) other).isHit())
+        {
+            other.kill();
+        }
 
+        // Kill the player.
+        if(other instanceof Enemy)
+        {
+            player.kill();
+        }
     }
 
     /**
@@ -66,8 +76,6 @@ public class RealCollisionHandler
         {
             bubble.setLocation(other.getLocation());
             bubble.capture((Enemy) other);
-
-            bubble.kill();
         }
 
     }
