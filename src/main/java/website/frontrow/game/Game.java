@@ -8,7 +8,6 @@ import website.frontrow.level.Level.LevelObserver;
 
 import website.frontrow.ui.JBubbleKeyListener;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The current state of the game.
