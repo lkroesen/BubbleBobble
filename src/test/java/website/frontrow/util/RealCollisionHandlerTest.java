@@ -1,7 +1,9 @@
 package website.frontrow.util;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import website.frontrow.board.Bubble;
 import website.frontrow.board.Enemy;
 import website.frontrow.board.Player;
@@ -13,6 +15,7 @@ import static org.mockito.Mockito.verify;
 /**
  * Test the RealCollisionHandler.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class RealCollisionHandlerTest
 {
         @Mock Player player;

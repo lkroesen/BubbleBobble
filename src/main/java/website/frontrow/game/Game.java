@@ -30,9 +30,8 @@ public class Game
     /**
      * Constructor of Game.
      * @param levels All the levels of the game.
-     * @param players The players in this game.
      */
-    public Game(ArrayList<Level> levels, ArrayList<Player> players)
+    public Game(ArrayList<Level> levels)
     {
         this.levelPack = levels;
         this.currentIndex = 0;
@@ -63,7 +62,10 @@ public class Game
     private void loadCurrentLevel()
     {
         this.currentLevel = levelPack.get(currentIndex).clone();
-        currentLevel.addObserver(this);
+        if(currentLevel != null)
+        {
+            currentLevel.addObserver(this);
+        }
     }
 
     /**
