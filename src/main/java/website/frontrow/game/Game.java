@@ -249,4 +249,9 @@ public class Game
     {
     	return players.get(i);
     }
+    
+    public void setPlayer(Player p, int i)
+    {
+    	players.set(i, p);
+    }
 }
