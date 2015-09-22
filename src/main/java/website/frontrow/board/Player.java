@@ -21,6 +21,11 @@ public class Player
      * The points accumulated by the player.
      */
     private int score;
+    
+    /**
+     * The amount of lives the player has.
+     */
+    private int lives;
 
     /**
      * The constructor of the Player Unit.
@@ -82,5 +87,23 @@ public class Player
     public void addToLog(String action)
     {
         Log.add(action);
+    }
+    
+    /**
+     * A getter for lives.
+     * @return lives integer
+     */
+    public int getLives() 
+    {
+    	return lives;
+    }
+    
+    /**
+     * A setter for lives.
+     * @param l integer
+     */
+    public void setLives(int l)
+    {
+    	lives = l;
     }
 }
