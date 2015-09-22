@@ -141,7 +141,7 @@ public class Game
      * Returns the players in the game.
      * @return The list of players.
      */
-    public List<Player> getPlayers()
+    public ArrayList<Player> getPlayers()
     {
         return this.players;
     }
@@ -253,5 +253,10 @@ public class Game
     public void setPlayer(Player p, int i)
     {
     	players.set(i, p);
+    }
+    
+    public void setPlayers(ArrayList<Player> lp)
+    {
+    	players = lp;
     }
 }

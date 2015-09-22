@@ -1,7 +1,9 @@
 package website.frontrow;
 
+import website.frontrow.board.Player;
 import website.frontrow.game.Game;
 import website.frontrow.level.Level;
+import website.frontrow.util.Point;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,11 +11,11 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
-
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -27,6 +29,7 @@ public class GameTest
     @SuppressWarnings("visibilitymodifier")
     private ArrayList<Level> levels = new ArrayList<>();
     @Mock private Level l;
+    @Mock private Point po;
 
     /**
      * Test whether starting the game changes the running state.
@@ -122,5 +125,29 @@ public class GameTest
         assertTrue(game.isRunning());
         game.tick();
         verify(levels.get(0), times(1)).tick();
+    }
+    
+    @Test
+    public void testGameOverSetLives()
+    {
+    	levels.add(l);
+    	Game game = new Game(levels, null);
+    	game.start();
+    	assertTrue(game.isRunning());
+    	
+    	Player p = new Player(po);
+    	p.setLives(0);
+    	ArrayList<Player> list = game.getPlayers();
+    	if(list != null)
+    	{
+    		game.setPlayer(p, 0);
+    	}
+    	else
+    	{
+    		game.setPlayers(list);
+    	}
+    	game.tick();
+    	assertFalse(game.isRunning());
+    	
     }
 }
