@@ -14,8 +14,9 @@ import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 
 /**
- * This Class is for handling collisions during the game.
+ * Computes collisions during the game.
  */
+// TODO: Refactor name to CollisionComputer
 public class CollisionHandler
 	implements Logable
 {
@@ -63,7 +64,7 @@ public class CollisionHandler
      * There is also a check to filter whether the mover is colliding with itself.
 	 * @param user The unit to check for.
 	 */
-    public void checkUnitsAABB(Unit user)
+    public void checkUnitsAABB(Unit user, RealCollisionHandler handler)
 	{
 		ArrayList<Unit> units = this.level.getUnits();
 		AABB me = user.getAABB();
@@ -71,65 +72,9 @@ public class CollisionHandler
 		{
 			if(other != user && other.getAABB().overlaps(me))
 			{
-				applyCollision(user, other);
+				handler.applyCollision(user, other);
 			}
 		}
-	}
-
-	/**
-	 * Call the method that handles collisions.
-	 * @param collider The mover that initiates the collision.
-	 * @param colidee The mover that is being collided with.
-	 */
-	// TODO: Swap this out for something fancy that uses reflection. But this works fine for now.
-	public void applyCollision(Unit collider, Unit colidee)
-	{
-		if(collider instanceof Player)
-		{
-			addToLog("[CH]\tPlayer collided with something.");
-			playerCollision((Player) collider, colidee);
-		}
-		else if (colidee instanceof Player)
-		{
-			addToLog("[CH]\tSomething collided with a Player.");
-			playerCollision((Player) colidee, collider);
-		}
-
-		if(collider instanceof Bubble)
-		{
-			bubbleCollision((Bubble) collider, colidee);
-		}
-		else if(colidee instanceof Bubble)
-		{
-			addToLog("[CH]\tSomething collided with a Bubble.");
-			bubbleCollision((Bubble) colidee, collider);
-		}
-	}
-
-	/**
-	 * Called when a player collides with another mover.
-	 * @param player Player which is currently colliding.
-	 * @param other The mover that was collided with.
-	 */
-	public void playerCollision(Player player, Unit other)
-	{
-		// TODO: Make the player lose a life or something else.
-	}
-
-	/**
-	 * Called when a bubble collides with another mover.
-	 * @param bubble Bubble which is currently colliding.
-	 * @param other The mover that was collided with.
-	 */
-	public void bubbleCollision(Bubble bubble, Unit other)
-	{
-		if(other instanceof Enemy)
-		{
-			bubble.capture((Enemy) other);
-			// Kill the bubble for now.
-			bubble.kill();
-		}
-
 	}
 
 	/**
