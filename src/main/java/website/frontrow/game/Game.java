@@ -61,6 +61,11 @@ public class Game
             {
                 levelWon();
             }
+            
+            if(playersDead())
+            {
+            	levelLost();
+            }
         }
         updateObservers();
     }
@@ -215,6 +220,7 @@ public class Game
     public void levelLost()
     {
         stop();
+        gameOver();
     }
     
     /**
@@ -232,5 +238,10 @@ public class Game
     		}
     	}
     	return b;
+    }
+    
+    public void gameOver()
+    {
+    	System.out.println("GAME OVER");
     }
 }

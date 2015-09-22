@@ -25,7 +25,7 @@ public class Player
     /**
      * The amount of lives the player has.
      */
-    private int lives;
+    private int lives = 3;
 
     /**
      * The constructor of the Player Unit.
