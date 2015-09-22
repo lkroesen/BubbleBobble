@@ -92,6 +92,11 @@ public class Bubble
     }
 
     @Override
+    public Unit clone() {
+        return new Bubble(location, motion);
+    }
+
+    @Override
     public Sprite getSprite()
     {
         if(this.contains == null)

@@ -38,6 +38,29 @@ public class Level
     private final RealCollisionHandler realCollisionHandler = new RealCollisionHandler();
 
     /**
+     * Clones the current level.
+     * @return A clone of the current level.
+     */
+    public Level clone()
+    {
+        ArrayList<Unit> units = new ArrayList<>(this.getUnits().size());
+        ArrayList<Player> players = new ArrayList<>(this.getPlayers().size());
+        for (Unit unit: this.units)
+        {
+            Unit clone = unit.clone();
+            units.add(clone);
+            if(clone instanceof Player)
+            {
+                players.add((Player) clone);
+            }
+        }
+
+        addToLog("[LEVEL]\tCloning succeeded.");
+
+        return new Level(players, units, this.getCells());
+    }
+
+    /**
      * Constructor of Level.
      * @param units
      *      Input an ArrayList of Unit.
@@ -48,17 +71,14 @@ public class Level
      */
     public Level(ArrayList<Player> players, ArrayList<Unit> units, Grid<Cell> cells)
     {
-        this.players = players;
+        this.players = new ArrayList<>(players);
         this.units = new ArrayList<>(units);
         this.cells = new Grid<>(cells);
         addToLog("[LEVEL]\tLevel Object created");
 
         int e = 0;
-        ArrayList<Unit> list = units;
-        for(int i = 0; i < list.size(); i++)
-        {
-            if (isEnemy(list.get(i)))
-            {
+        for (Unit unit : units) {
+            if (isEnemy(unit)) {
                 e++;
             }
         }

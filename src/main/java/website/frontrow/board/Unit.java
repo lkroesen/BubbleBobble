@@ -122,6 +122,12 @@ public abstract class Unit
     }
 
     /**
+     * Create a clone of the current unit.
+     * @return Clone the current unit.
+     */
+    public abstract Unit clone();
+
+    /**
      * Get the width and height for the bounding box.
      * @return Width and height of AABB
      */

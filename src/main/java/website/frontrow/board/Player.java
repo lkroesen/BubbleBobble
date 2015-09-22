@@ -74,6 +74,11 @@ public class Player
         }
     }
 
+    @Override
+    public Unit clone() {
+        return new Player(location);
+    }
+
     /**
      * Input an action that is perfored by the player class.
      * @param action Input a String that is the action performed.
