@@ -216,4 +216,21 @@ public class Game
     {
         stop();
     }
+    
+    /**
+     * Returns whether or not all players are dead.
+     * @return b boolean
+     */
+    public boolean playersDead()
+    {
+    	boolean b = true;
+    	for(Player p : this.players)
+    	{
+    		if (p.playerAlive())
+    		{
+    			b = false;
+    		}
+    	}
+    	return b;
+    }
 }
