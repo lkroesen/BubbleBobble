@@ -244,4 +244,14 @@ public class Game
     {
     	System.out.println("GAME OVER");
     }
+    
+    public void setLives(Player p, int l)
+    {
+    	p.setLives(l);
+    }
+    
+    public void loseLife(Player p)
+    {
+    	p.loseLife();
+    }
 }
