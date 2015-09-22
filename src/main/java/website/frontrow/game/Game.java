@@ -254,23 +254,11 @@ public class Game
     	return b;
     }
     
+    /**
+     * Prints GAME OVER in the console when a game over occurs.
+     */
     public void gameOver()
     {
     	System.out.println("GAME OVER");
-    }
-    
-    public Player getPlayer(int i)
-    {
-    	return players.get(i);
-    }
-    
-    public void setPlayer(Player p, int i)
-    {
-    	players.set(i, p);
-    }
-    
-    public void setPlayers(ArrayList<Player> lp)
-    {
-    	players = lp;
     }
 }

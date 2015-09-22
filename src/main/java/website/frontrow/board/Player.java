@@ -122,6 +122,10 @@ public class Player
     	lives++;
     }
     
+    /**
+     * Returns whether or not the player is alive.
+     * @return boolean
+     */
     public boolean playerAlive()
     {
     	return lives > 0;
