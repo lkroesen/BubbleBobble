@@ -17,9 +17,6 @@ import website.frontrow.util.Point;
 
 public class PathCalculation 
 {
-	
-	private static int width;
-	private static int height;
 	private static ArrayList<Integer> goal;
 	private static Point location;
 	
@@ -34,12 +31,10 @@ public class PathCalculation
 	public static ArrayList<Integer> calculateXPath(
 			Mover player, ArrayList<Enemy> enemies, Level level)
 	{
-		width = level.getCells().getWidth();
-		height = level.getCells().getHeight();	
 		location = player.getLocation();
 		goal = new ArrayList<Integer>();
 		
-		for(Enemy e:enemies)
+		for(int i = 0; i < enemies.size(); i++)
 		{
 			goal.add(0);
 		}
@@ -69,13 +64,11 @@ public class PathCalculation
 	public static ArrayList<Integer> calculateYPath(
 			Mover player, ArrayList<Enemy> enemies, Level level)
 	{
-		width = level.getCells().getWidth();
-		height = level.getCells().getHeight();
 		location = player.getLocation();
 		
 		goal = new ArrayList<Integer>();
 		
-		for(Enemy e:enemies)
+		for(int i = 0; i < enemies.size(); i++)
 		{
 			goal.add(0);
 		}
@@ -114,9 +107,12 @@ public class PathCalculation
 	 * @param enemy an enemy unit.
 	 * @return the y position of the enemy relative to the player.
 	 */
+	//This is an offset to fix unneeded enemy jumping.
+	@SuppressWarnings("checkstyle:magicnumber")
 	public static int moveOnYAxis(Point player, Point enemy)
 	{
-		double yPlayer = (player.getY() + 0.9);
+		
+		double yPlayer = player.getY() + 0.9;
 		double yEnemy = enemy.getY();
 		
 		return (int) Math.floor(yPlayer - yEnemy);

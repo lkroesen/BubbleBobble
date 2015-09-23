@@ -1,65 +1,133 @@
 package website.frontrow.artificial.intelligence;
 
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-
+import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 
-import website.frontrow.board.Bubble;
 import website.frontrow.board.Enemy;
 import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
 import website.frontrow.level.Cell;
 import website.frontrow.level.Level;
-import website.frontrow.artificial.intelligence.ArtificialIntelligence;
+import website.frontrow.game.GameConstants;
 import website.frontrow.util.Grid;
+import website.frontrow.util.Point;
 
-public class ArtificialIntelligenceTest {
+/**
+ * Test the Artificial Intelligence.
+ */
+public class ArtificialIntelligenceTest 
+{
+    
+	private ArrayList<Player> players = new ArrayList<>();
+	private Player player = new Player(new Point(0, 0));
+	private ArrayList<Unit> units = new ArrayList<>();   
+	private Grid<Cell> emptyGrid = new Grid<>(0, 0);
+	private Level simpleLevel;
+	private ArtificialIntelligence simpleArtificialIntelligence;
+	private Point p;
 
-    @Mock Player player;
-    @Mock Enemy enemy;
-	
-	ArrayList<Player> emptyPlayer = new ArrayList<>();
-    ArrayList<Unit> emptyUnit = new ArrayList<>();
-    Grid<Cell> emptyGrid = new Grid<>(0, 0);
-    Level simpleLevel = new Level(emptyPlayer, emptyUnit, emptyGrid);
-    ArtificialIntelligence simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
-    
     /**
-     * AI with empty test.
+     * Setup the lists with one player at a default position.
      */
-    @Test
-    public void emptyMoving()
+    @Before 
+    public void setUp()
     {
-        simpleArtificialIntelligence.aiMover();
-    }
-    
-    /**
-     * AI with units test.
-     */
-    @Test
-    public void basicMoving()
-    {
-    	ArrayList<Player> players = new ArrayList<>();
     	players.add(player);
-        ArrayList<Unit> units = new ArrayList<>();
         units.add(player);
-        units.add(enemy);
-        Grid<Cell> grid = new Grid<>(0, 0);
-        Level level = new Level(players, units, grid);
-        ArtificialIntelligence artificialIntelligence = new ArtificialIntelligence(level);
-        
-    	//artificialIntelligence.aiMover();
+        p = new Point(3.0, 3.0);
     }
     
     /**
-     * 
+     * See if the random alters expected behaviour.
      */
     @Test
-    public void randomizerTest()
+    public void doMovesRandomTest()
+    {      
+        Enemy enemy = new Enemy(p); 
+        units.add(enemy);
+        enemy.setRandom(true);
+        simpleLevel = new Level(players, units, emptyGrid);
+        simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
+        simpleArtificialIntelligence.aiMover();
+        simpleLevel.tick();
+        
+        //TODO: update this test when random changes.
+        
+        assertTrue(enemy.getLocation() == p);
+    }
+    
+    /**
+     * Test the randomizer.
+     */
+    @Test
+    public void doMovesRandomizerTest()
+    {      
+        Enemy enemy = new Enemy(p); 
+        units.add(enemy);
+        enemy.setRandom(true);
+        simpleLevel = new Level(players, units, emptyGrid);
+        simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
+        simpleArtificialIntelligence.aiMover();
+        
+        for(int i = 0; i <= GameConstants.TICKS_PER_MOVE + 1; i++)
+        {
+        	simpleLevel.tick();
+        }
+        assertTrue(enemy.getRandom() || !enemy.getRandom());
+    }
+    
+    /**
+     * See if the ai moves towards the player if it is to the left.
+     */
+    @Test
+    public void doMovesLeftTest()
     {
-        //artificialIntelligence.randomizer(enemy);
+      
+        Enemy enemy = new Enemy(p);
+        units.add(enemy);
+        simpleLevel = new Level(players, units, emptyGrid);
+        simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
+        simpleArtificialIntelligence.aiMover();
+        simpleLevel.tick();
+        
+        assertTrue(enemy.getLocation().getX() < p.getX());
+    }
+    
+    /**
+     * See if the ai moves towards the player if it is to the right.
+     */
+    @Test
+    public void doMovesRightTest()
+    {
+      
+        Point q = new Point(-3.0, -3.0);
+    	Enemy enemy = new Enemy(q);
+        units.add(enemy);
+        simpleLevel = new Level(players, units, emptyGrid);
+        simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
+        simpleArtificialIntelligence.aiMover();
+        simpleLevel.tick();
+        
+        assertTrue(enemy.getLocation().getX() > q.getX());
+    }
+    
+    /**
+     * See if the ai moves towards the player if it is above.
+     */
+    @Test
+    public void doMovesDownTest()
+    {
+            
+    	Enemy enemy = new Enemy(p);
+        units.add(enemy);
+        simpleLevel = new Level(players, units, emptyGrid);
+        simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
+        simpleArtificialIntelligence.aiMover();
+        simpleLevel.tick();
+        
+        assertTrue(enemy.getLocation().getY() < p.getY());
     }
 }
