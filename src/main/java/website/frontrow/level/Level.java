@@ -69,8 +69,7 @@ public class Level
      */
     public ArrayList<Unit> getUnits()
     {
-        ArrayList<Unit> toReturn = new ArrayList<>(units);
-        return toReturn;
+        return new ArrayList<>(units);
     }
 
     /**

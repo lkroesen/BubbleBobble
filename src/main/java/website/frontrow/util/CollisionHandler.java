@@ -284,10 +284,12 @@ public class CollisionHandler
         if(newYLocation > lowerLimit)
         {
             newYLocation = upperLimit;
+			addToLog("[CH]\tA mover went through the bottom of the level.");
         }
         if(newYLocation < upperLimit)
         {
             newYLocation = lowerLimit;
+			addToLog("[CH]\tA mover went through the top of the level.");
         }
 
 		return new Point(newXLocation, newYLocation);
