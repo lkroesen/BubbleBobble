@@ -13,11 +13,7 @@ import website.frontrow.util.Grid;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -80,22 +76,5 @@ public class LevelTest
         level.tick();
         verify(player, times(1)).tick(level);
         verify(enemy, times(2)).tick(level);
-    }
-
-    /**
-     * Tests the add method.
-     */
-    @Test
-    public void testAddUnit()
-    {
-        Level level = new Level(null, mockunits, grid);
-        Unit mockedUnit = mock(Unit.class);
-        when(mockedUnit.isAlive()).thenReturn(true);
-        level.addUnit(mockedUnit);
-
-        assertFalse(level.getUnits().contains(mockedUnit));
-
-        level.tick();
-        assertTrue(level.getUnits().contains(mockedUnit));
     }
 }

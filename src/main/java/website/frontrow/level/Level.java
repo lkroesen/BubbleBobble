@@ -20,7 +20,7 @@ public class Level
     implements Logable
 {
 
-    private ConcurrentLinkedQueue<Unit> unitsToAdd = new ConcurrentLinkedQueue<>();
+    private ConcurrentLinkedQueue<Unit> toAdd = new ConcurrentLinkedQueue<>();
 
     private ArrayList<Player> players;
     private ArrayList<Unit> units;
@@ -74,13 +74,11 @@ public class Level
 
     /**
      * Add a unit to the queue.
-     * Be warned, the units do not appear in the method getUnits()
-     * until the method tick has been called.
      * @param unit Unit to add to the level.
      */
     public void addUnit(Unit unit)
     {
-        unitsToAdd.add(unit);
+        toAdd.add(unit);
     }
 
     /**
@@ -99,9 +97,9 @@ public class Level
      */
     public void tick()
     {
-        while(!unitsToAdd.isEmpty())
+        while(!toAdd.isEmpty())
         {
-            units.add(unitsToAdd.poll());
+            units.add(toAdd.poll());
         }
         Unit unit;
         Iterator<Unit> it = units.iterator();
@@ -145,6 +143,8 @@ public class Level
                 cellToDraw.draw(g,
                         x + i * cellWidth, y + v * cellHeight,
                         cellWidth, cellHeight);
+                
+                
             }
         }
         
@@ -230,6 +230,7 @@ public class Level
      */
     public void updateObservers()
     {
+
         if (!playersAlive())
         {
             for(LevelObserver o : observers)
@@ -244,6 +245,7 @@ public class Level
                 o.levelWon();
             }
         }
+
     }
 
     /**

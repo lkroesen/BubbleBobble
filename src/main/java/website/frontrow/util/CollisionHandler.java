@@ -246,52 +246,9 @@ public class CollisionHandler
 			mover.onWallCollision();
 		}
 
-        double newXLocation
-                = Math.round(collision.getPoint().getX() * ONE_DEV_PRECISION) * PRECISION;
-        double newYLocation
-                = Math.round(collision.getPoint().getY() * ONE_DEV_PRECISION) * PRECISION;
-
-        Point newLocation = new Point(newXLocation, newYLocation);
-
-        newLocation = checkLevelBounds(mover, newLocation);
-		return new Collision(newLocation, collision.isCollided());
-	}
-
-	/**
-	 * Checks whether the the mover is outside the bounds
-	 * of the level and gives the correct new location.
-     *
-     * When the player goes through the bottom it appears at the top of the level.
-     * When the player goes through the top of the level it appears at the bottom of the level.
-     *
-     * If the player tries to go through the sides of the level, nothing happens.
-	 * @param mover the mover to check the level bounds for.
-	 * @param newLocation the new location to check.
-	 * @return The new location based on the bounds of the level.
-	 */
-	public Point checkLevelBounds(Mover mover, Point newLocation)
-	{
-        AABB boundingBox = mover.getAABB();
-        double lowerLimit = this.level.getCells().getHeight() - boundingBox.getYRange().length();
-        double upperLimit = 0;
-
-        double leftLimit = 0;
-        double rightLimit = this.level.getCells().getWidth() - boundingBox.getXRange().length();
-
-        double newXLocation = Math.min(Math.max(leftLimit, newLocation.getX()), rightLimit);
-        double newYLocation = newLocation.getY();
-
-        if(newYLocation > lowerLimit)
-        {
-            newYLocation = upperLimit;
-			addToLog("[CH]\tA mover went through the bottom of the level.");
-        }
-        if(newYLocation < upperLimit)
-        {
-            newYLocation = lowerLimit;
-			addToLog("[CH]\tA mover went through the top of the level.");
-        }
-
-		return new Point(newXLocation, newYLocation);
+		return new Collision(new Point(
+					Math.round(collision.getPoint().getX() * ONE_DEV_PRECISION) * PRECISION,
+					Math.round(collision.getPoint().getY() * ONE_DEV_PRECISION) * PRECISION
+			), collision.isCollided());
 	}
 }

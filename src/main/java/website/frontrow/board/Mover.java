@@ -96,6 +96,8 @@ public abstract class Mover
      */
     public void goLeft()
     {
+        // The horizontal orientation must immediately be changed, so the current horizontal motion
+        // is set to 0.
         this.newMotion.setX(-GameConstants.MOVE_STEP);
     }
 
@@ -159,14 +161,15 @@ public abstract class Mover
 
         Point movement = motion.divide(GameConstants.TICKS_PER_SEC);
 
+        if (!movement.toString().equals("Point(0.0, 0.0)"))
+        {
+            addToLog("[MOVER]\tMoved to " + movement.toString());
+        }
+
         this.handler = new CollisionHandler(level);
         this.handler.checkUnitsAABB(this);
         this.location = handler.findNextPosition(this).getPoint();
 
-        if (!movement.equals(new Point(0, 0)))
-        {
-            addToLog("[MOVER]\tMoved to " + this.location.toString());
-        }
         applyGravity();
     }
 
