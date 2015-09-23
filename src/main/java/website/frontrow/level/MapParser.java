@@ -48,7 +48,8 @@ public class MapParser
         {
             if (line.length() != len)
             {
-                addToLog("[ERROR]\t[MAP PARSER]\t3 - One of the lines in the file is not as long as the other.");
+                addToLog("[ERROR]\t[MAP PARSER]\t3 - One of the lines in the file "
+                        + "is not as long as the other.");
                 return false;
             }
         }
