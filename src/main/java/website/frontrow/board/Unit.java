@@ -130,5 +130,14 @@ public abstract class Unit
     {
         return new AABB(getLocation(), getLocation().add(getAABBDimensions()));
     }
+    
+    /**
+     * Return the default unit speed multiplier.
+     * @return the default speed.
+     */
+    public double getUnitSpeedMultiplier()
+    {
+    	return 1.0;
+    }
 
 }

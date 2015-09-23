@@ -1,5 +1,6 @@
 package website.frontrow.board;
 
+import website.frontrow.game.GameConstants;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.sprite.Sprite;
@@ -86,5 +87,15 @@ public class Enemy
     public void setRandom(Boolean rand)
     {
     	this.random = rand;
+    }
+    
+    /**
+     * Return the enemy speed multiplier.
+     * @return the enemy speed multiplier.
+     */
+    @Override
+    public double getUnitSpeedMultiplier()
+    {
+    	return GameConstants.ENEMY_SPEED_MULTIPLIER;
     }
 }

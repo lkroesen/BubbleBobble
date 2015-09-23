@@ -47,7 +47,17 @@ public abstract class GameConstants
     /**
      * The multiplier for the enemy speed.
      */
-    public static final double ENEMY_SPEED = 0.25;
+    public static final double ENEMY_SPEED_MULTIPLIER = 0.25;
+    
+    /**
+     * The multiplier for the player speed.
+     */
+    public static final double PLAYER_SPEED_MULTIPLIER = 1.0;
+    
+    /**
+     * The multiplier for the bubble speed.
+     */
+    public static final double BUBBLE_SPEED_MULTIPLIER = 1.0;
     
     /**
      * Percentage of enemy movements that is randomized.

@@ -157,19 +157,9 @@ public abstract class Mover
 
         double x = this.motion.getX();
         
-        if(this instanceof Enemy)
-        {
-        	this.motion.setX(
-        			Math.max(Math.min(x, GameConstants.MAX_X_SPEED),
-        					-GameConstants.MAX_X_SPEED) * GameConstants.ENEMY_SPEED);
-        }
-        
-        else
-        {
-        	this.motion.setX(
-        			Math.max(Math.min(x, GameConstants.MAX_X_SPEED),
-        					-GameConstants.MAX_X_SPEED));
-        }
+    	this.motion.setX(
+    			Math.max(Math.min(x, GameConstants.MAX_X_SPEED),
+    					-GameConstants.MAX_X_SPEED) * this.getUnitSpeedMultiplier());
         
         Point movement = motion.divide(GameConstants.TICKS_PER_SEC);
 
