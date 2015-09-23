@@ -176,4 +176,32 @@ public class GameTest
     	game.tickGO();
     	assertFalse(game.isRunning());
     }
+    
+    @Test
+    public void testAddLife()
+    {
+    	levels.add(l);
+    	Player p = new Player(po);
+    	ArrayList<Player> list = new ArrayList<Player>();
+    	list.add(p);
+    	Game game = new Game(levels, list);
+    	game.start();
+    	assertTrue(game.isRunning());
+    	
+    	p.addLife();
+    	// The player now has four lives.
+    	for(int i = 0; i < 3; i++)
+    	{
+    		p.loseLife();
+    	}
+    	game.tickGO();
+    	// After losing three lives, the player should have one life left.
+    	assertTrue(game.isRunning());
+    	
+    	// Now the player loses his last life.
+    	p.loseLife();
+    	game.tickGO();
+    	assertFalse(game.isRunning());
+    }
+    
 }
