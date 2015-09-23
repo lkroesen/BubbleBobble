@@ -259,10 +259,10 @@ public class Game
     }
     
     /**
-     * Prints GAME OVER in the console when a game over occurs.
+     * Adds Game Over message to log.
      */
     public void gameOver()
     {
-    	System.out.println("GAME OVER");
+    	addToLog("GAME OVER");
     }
 }
