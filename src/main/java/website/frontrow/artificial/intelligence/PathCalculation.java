@@ -116,7 +116,7 @@ public class PathCalculation
 	 */
 	public static int moveOnYAxis(Point player, Point enemy)
 	{
-		double yPlayer = player.getY();
+		double yPlayer = (player.getY() + 0.9);
 		double yEnemy = enemy.getY();
 		
 		return (int) Math.floor(yPlayer - yEnemy);
