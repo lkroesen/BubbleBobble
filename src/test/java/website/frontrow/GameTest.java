@@ -177,6 +177,9 @@ public class GameTest
     	assertFalse(game.isRunning());
     }
     
+    /**
+     * Tests the addLife function.
+     */
     @Test
     public void testAddLife()
     {
@@ -204,4 +207,29 @@ public class GameTest
     	assertFalse(game.isRunning());
     }
     
+    /**
+     * Tests the getLife function.
+     */
+    @Test
+    public void testGetLife()
+    {
+    	levels.add(l);
+    	Player p = new Player(po);
+    	ArrayList<Player> list = new ArrayList<Player>();
+    	list.add(p);
+    	Game game = new Game(levels, list);
+    	game.start();
+    	assertTrue(game.isRunning());
+    	
+    	assertTrue(p.getLives() == 3);
+    	
+    	p.setLives(2);
+    	assertTrue(p.getLives() == 2);
+    	
+    	p.loseLife();
+    	assertTrue(p.getLives() == 1);
+    	
+    	p.addLife();
+    	assertTrue(p.getLives() == 2);
+    }
 }
