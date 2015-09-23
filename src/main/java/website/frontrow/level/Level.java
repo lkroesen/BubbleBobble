@@ -20,7 +20,7 @@ public class Level
     implements Logable
 {
 
-    private ConcurrentLinkedQueue<Unit> toAdd = new ConcurrentLinkedQueue<>();
+    private ConcurrentLinkedQueue<Unit> unitsToAdd = new ConcurrentLinkedQueue<>();
 
     private ArrayList<Player> players;
     private ArrayList<Unit> units;
@@ -78,7 +78,7 @@ public class Level
      */
     public void addUnit(Unit unit)
     {
-        toAdd.add(unit);
+        unitsToAdd.add(unit);
     }
 
     /**
@@ -97,9 +97,9 @@ public class Level
      */
     public void tick()
     {
-        while(!toAdd.isEmpty())
+        while(!unitsToAdd.isEmpty())
         {
-            units.add(toAdd.poll());
+            units.add(unitsToAdd.poll());
         }
         Unit unit;
         Iterator<Unit> it = units.iterator();
@@ -143,8 +143,6 @@ public class Level
                 cellToDraw.draw(g,
                         x + i * cellWidth, y + v * cellHeight,
                         cellWidth, cellHeight);
-                
-                
             }
         }
         
@@ -230,7 +228,6 @@ public class Level
      */
     public void updateObservers()
     {
-
         if (!playersAlive())
         {
             for(LevelObserver o : observers)
@@ -245,7 +242,6 @@ public class Level
                 o.levelWon();
             }
         }
-
     }
 
     /**
