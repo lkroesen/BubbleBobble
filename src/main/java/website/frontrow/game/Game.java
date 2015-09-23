@@ -209,7 +209,7 @@ public class Game
     public void levelWon()
     {
         //stop();
-        addToLog("[WON] You win this round.");
+        addToLog("[GAME]\t[WON]\tYou win this round.");
         nextLevel();
     }
 
@@ -217,7 +217,7 @@ public class Game
     public void levelLost()
     {
         stop();
-        addToLog("[LOST] You just lost the game, kind of.");
+        addToLog("[GAME}\t[LOST]\tYou just lost the game, kind of.");
         loadCurrentLevel();
     }
 }

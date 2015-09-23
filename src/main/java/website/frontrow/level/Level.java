@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Class containing a level and positions of entities therein.
  */
 public class Level
-    implements Logable
+    implements Logable, Cloneable
 {
 
     private ConcurrentLinkedQueue<Unit> toAdd = new ConcurrentLinkedQueue<>();
