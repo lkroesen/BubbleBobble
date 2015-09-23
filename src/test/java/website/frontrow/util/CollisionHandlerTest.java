@@ -156,7 +156,7 @@ public class CollisionHandlerTest
      * Test getNextPosition in a terrible box of terribleness.
      */
     @Test
-    public void getNextPositionTestRestricted()
+    public void testGetNextPositionTestRestricted()
     {
         Level check = new Level(emptyPlayer, emptyUnit, new Grid<>(Arrays.asList(
                 Cell.WALL, Cell.WALL, Cell.WALL,
@@ -174,7 +174,7 @@ public class CollisionHandlerTest
      * Some special box of terribleness.
      */
     @Test
-    public void getNextPositionTestSlightlyRestricted()
+    public void testGetNextPositionTestSlightlyRestricted()
     {
         Level check = new Level(emptyPlayer, emptyUnit, new Grid<>(Arrays.asList(
                 Cell.WALL, Cell.WALL, Cell.WALL,

@@ -69,11 +69,14 @@ public class Level
      */
     public ArrayList<Unit> getUnits()
     {
-        return new ArrayList<>(units);
+        ArrayList<Unit> toReturn = new ArrayList<>(units);
+        return toReturn;
     }
 
     /**
      * Add a unit to the queue.
+     * Be warned, the units do not appear in the method getUnits()
+     * until the method tick has been called.
      * @param unit Unit to add to the level.
      */
     public void addUnit(Unit unit)
