@@ -4,10 +4,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import website.frontrow.board.Mover;
-import website.frontrow.board.Player;
-import website.frontrow.board.Enemy;
 import website.frontrow.board.Bubble;
+import website.frontrow.board.Enemy;
+import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
 import website.frontrow.game.GameConstants;
 import website.frontrow.level.Cell;
@@ -19,9 +18,6 @@ import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -156,7 +152,7 @@ public class CollisionHandlerTest
      * Test getNextPosition in a terrible box of terribleness.
      */
     @Test
-    public void testGetNextPositionTestRestricted()
+    public void getNextPositionTestRetricted()
     {
         Level check = new Level(emptyPlayer, emptyUnit, new Grid<>(Arrays.asList(
                 Cell.WALL, Cell.WALL, Cell.WALL,
@@ -174,7 +170,7 @@ public class CollisionHandlerTest
      * Some special box of terribleness.
      */
     @Test
-    public void testGetNextPositionTestSlightlyRestricted()
+    public void getNextPositionTestSlightlyRetricted()
     {
         Level check = new Level(emptyPlayer, emptyUnit, new Grid<>(Arrays.asList(
                 Cell.WALL, Cell.WALL, Cell.WALL,
@@ -187,115 +183,5 @@ public class CollisionHandlerTest
         Collision c = handler.findNextPosition(player);
         assertEquals(new Point(1, 2), c.getPoint());
         assertTrue(c.isCollided());
-    }
-
-    /**
-     * Test the level bounds when the mover is not near it.
-     */
-    @Test
-    public void testCheckLevelBoundsWithinBounds()
-    {
-        Mover mover = mock(Mover.class, RETURNS_DEEP_STUBS);
-        when(mover.getAABB().getXRange().length()).thenReturn(1.0);
-        when(mover.getAABB().getYRange().length()).thenReturn(1.0);
-
-        Level level = mock(Level.class, RETURNS_DEEP_STUBS);
-        when(level.getCells().getWidth()).thenReturn(10);
-        when(level.getCells().getHeight()).thenReturn(10);
-
-        CollisionHandler ch = new CollisionHandler(level);
-
-        Point targetLocation = new Point(5, 2);
-        Point finalLocation = ch.checkLevelBounds(mover, targetLocation);
-
-        assertEquals(targetLocation, finalLocation);
-    }
-
-    /**
-     * Test the level bounds when the mover is about to go over the x bounds.
-     */
-    @Test
-    public void testCheckLevelBoundsNearRightBounds()
-    {
-        Mover mover = mock(Mover.class, RETURNS_DEEP_STUBS);
-        when(mover.getAABB().getXRange().length()).thenReturn(1.0);
-        when(mover.getAABB().getYRange().length()).thenReturn(1.0);
-
-        Level level = mock(Level.class, RETURNS_DEEP_STUBS);
-        when(level.getCells().getWidth()).thenReturn(10);
-        when(level.getCells().getHeight()).thenReturn(10);
-
-        CollisionHandler ch = new CollisionHandler(level);
-
-        Point targetLocation = new Point(10, 1);
-        Point finalLocation = ch.checkLevelBounds(mover, targetLocation);
-
-        assertTrue(targetLocation.getX() > finalLocation.getX());
-    }
-
-    /**
-     * Test the level bounds when the mover is about to go under the x bounds.
-     */
-    @Test
-    public void testCheckLevelBoundsNearLeftBounds()
-    {
-        Mover mover = mock(Mover.class, RETURNS_DEEP_STUBS);
-        when(mover.getAABB().getXRange().length()).thenReturn(1.0);
-        when(mover.getAABB().getYRange().length()).thenReturn(1.0);
-
-        Level level = mock(Level.class, RETURNS_DEEP_STUBS);
-        when(level.getCells().getWidth()).thenReturn(10);
-        when(level.getCells().getHeight()).thenReturn(10);
-
-        CollisionHandler ch = new CollisionHandler(level);
-
-        Point targetLocation = new Point(-1, 1);
-        Point finalLocation = ch.checkLevelBounds(mover, targetLocation);
-
-        assertTrue(targetLocation.getX() < finalLocation.getX());
-    }
-
-    /**
-     * Test the level bounds when the mover is about to go over the y bounds.
-     */
-    @Test
-    public void testCheckLevelBoundsOverLowerBounds()
-    {
-        Mover mover = mock(Mover.class, RETURNS_DEEP_STUBS);
-        when(mover.getAABB().getXRange().length()).thenReturn(1.0);
-        when(mover.getAABB().getYRange().length()).thenReturn(1.0);
-
-        Level level = mock(Level.class, RETURNS_DEEP_STUBS);
-        when(level.getCells().getWidth()).thenReturn(10);
-        when(level.getCells().getHeight()).thenReturn(10);
-
-        CollisionHandler ch = new CollisionHandler(level);
-
-        Point targetLocation = new Point(2, 11);
-        Point finalLocation = ch.checkLevelBounds(mover, targetLocation);
-
-        assertTrue(targetLocation.getY() > finalLocation.getY());
-    }
-
-    /**
-     * Test the level bounds when the mover is about to go under the y bounds.
-     */
-    @Test
-    public void testCheckLevelBoundsOverUpperBounds()
-    {
-        Mover mover = mock(Mover.class, RETURNS_DEEP_STUBS);
-        when(mover.getAABB().getXRange().length()).thenReturn(1.0);
-        when(mover.getAABB().getYRange().length()).thenReturn(1.0);
-
-        Level level = mock(Level.class, RETURNS_DEEP_STUBS);
-        when(level.getCells().getWidth()).thenReturn(10);
-        when(level.getCells().getHeight()).thenReturn(10);
-
-        CollisionHandler ch = new CollisionHandler(level);
-
-        Point targetLocation = new Point(2, -1);
-        Point finalLocation = ch.checkLevelBounds(mover, targetLocation);
-
-        assertTrue(targetLocation.getY() < finalLocation.getY());
     }
 }
