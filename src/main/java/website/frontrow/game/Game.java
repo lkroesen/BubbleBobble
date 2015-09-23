@@ -78,12 +78,9 @@ public class Game
      */
     public void tickGO()
     {
-    	if(running)
+    	if(running && playersDead())
         {
-            if(playersDead())
-            {
-            	levelLost();
-            }
+            levelLost();
         }
     }
 

@@ -25,7 +25,7 @@ public class Player
     /**
      * The amount of lives the player has.
      */
-    private int lives = 3;
+    private int lives;
 
     /**
      * The constructor of the Player Unit.
@@ -36,6 +36,7 @@ public class Player
         super(true, position, new Point(0, 0));
         new Log();
         addToLog("[PLAYER]\t[SPAWN]\tPlayer created.");
+        lives = 3;
     }
 
     /**
