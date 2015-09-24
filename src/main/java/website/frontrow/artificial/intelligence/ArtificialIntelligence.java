@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import website.frontrow.level.Level;
+import website.frontrow.logger.Log;
+import website.frontrow.logger.Logable;
 import website.frontrow.board.Enemy;
 import website.frontrow.board.Mover;
 import website.frontrow.board.Player;
@@ -14,6 +16,7 @@ import website.frontrow.game.GameConstants;
  * Class for the movement of AI units.
  */
 public class ArtificialIntelligence 
+		implements Logable
 {
 	
 	private Level level;
@@ -90,6 +93,7 @@ public class ArtificialIntelligence
 			float chance = r.nextFloat();
 			enemy.setTickCounter(0);
 			enemy.setRandom(chance);
+			addToLog("[AI]\tMovement random seed is now " + enemy.getRandom());
 		}
 	}
 	
@@ -112,7 +116,8 @@ public class ArtificialIntelligence
 		{	
 			if(enemy.getRandom() < (0.03f * GameConstants.AI_RANDOMIZER))
 			{
-				enemy.jump();				
+				enemy.jump();	
+				addToLog("[AI]\tAn enemy just did the super rare JUMP SPAM!");
 			}
 			else if(enemy.getRandom() < (0.50f * GameConstants.AI_RANDOMIZER))
 			{
@@ -159,4 +164,14 @@ public class ArtificialIntelligence
 			enemy.jump();			
 		}
 	}
+	
+	/**
+	 * Write to the log.
+	 * @param action the message.
+	 */
+    @Override
+    public void addToLog(String action)
+    {
+        Log.add(action);
+    }
 }
