@@ -30,7 +30,7 @@ public enum Cell
         @Override
         public Sprite getSprite()
         {
-            return ss.getWallSprite();
+            return sprites.getWallSprite();
         }
     },
     /**
@@ -62,11 +62,11 @@ public enum Cell
         @Override
         public Sprite getSprite()
         {
-            return ss.getPlatformSprite();
+            return sprites.getPlatformSprite();
         }
     };
 
-    private static JBubbleBobbleSprites ss = new JBubbleBobbleSprites();
+    private static JBubbleBobbleSprites sprites = new JBubbleBobbleSprites();
 
     /**
      * Returns the sprite of the cell.
