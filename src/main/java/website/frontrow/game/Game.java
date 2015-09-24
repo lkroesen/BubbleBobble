@@ -207,7 +207,6 @@ public class Game
     @Override
     public void levelWon()
     {
-        stop();
         nextLevel();
     }
 
