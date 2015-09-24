@@ -159,7 +159,7 @@ public class CollisionHandlerTest
                 Cell.WALL, Cell.EMPTY, Cell.WALL,
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 3));
         CollisionHandler handler = new CollisionHandler(check);
-        Player player = new Player(new Point(1, 1));
+        Player player = new Player(new Point(1, 1), null);
         player.setMotion(new Point(1, GameConstants.TICKS_PER_SEC));
         Collision c = handler.findNextPosition(player);
         assertEquals(new Point(1, 1), c.getPoint());
@@ -178,7 +178,7 @@ public class CollisionHandlerTest
                 Cell.WALL, Cell.EMPTY, Cell.WALL,
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 4));
         CollisionHandler handler = new CollisionHandler(check);
-        Player player = new Player(new Point(1, 1));
+        Player player = new Player(new Point(1, 1), null);
         player.setMotion(new Point(0, 3 * GameConstants.TICKS_PER_SEC));
         Collision c = handler.findNextPosition(player);
         assertEquals(new Point(1, 2), c.getPoint());

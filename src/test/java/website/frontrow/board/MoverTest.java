@@ -105,39 +105,6 @@ public abstract class MoverTest
     }
 
     /**
-     * Test if setDirection works.
-     */
-    @Test
-    public void setDirectionLeft()
-    {
-        Mover u = getTestMover(true, null, null);
-        u.setDirection(Direction.LEFT);
-        assertEquals(u.getDirection(), Direction.LEFT);
-    }
-
-    /**
-     * Test if setDirection works.
-     */
-    @Test
-    public void setDirectionRight()
-    {
-        Mover u = getTestMover(true, null, null);
-        u.setDirection(Direction.RIGHT);
-        assertEquals(u.getDirection(), Direction.RIGHT);
-    }
-
-    /**
-     * Test setDirection.
-     */
-    @Test
-    public void setDirectionDownTest()
-    {
-        Mover u = getTestMover(true, null, null);
-        u.setDirection(Direction.DOWN);
-        assertEquals(u.getDirection(), Direction.DOWN);
-    }
-
-    /**
      * Test the tick method.
      */
     @Test

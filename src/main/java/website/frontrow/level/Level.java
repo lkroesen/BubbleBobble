@@ -263,7 +263,7 @@ public class Level
      */
     public boolean enemiesAlive()
     {
-        return (enemies != 0);
+        return enemies != 0;
     }
 
     /**

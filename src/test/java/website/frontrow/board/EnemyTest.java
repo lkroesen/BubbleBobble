@@ -17,14 +17,14 @@ public class EnemyTest
     @Test
     public void constructorTest()
     {
-        Enemy e = new Enemy(super.p);
+        Enemy e = new Enemy(super.p, null);
         assertEquals(e.getLocation(), super.p);
     }
 
     @Override
     public Mover getTestMover(boolean alive, Point start, Point end)
     {
-        Enemy e = new Enemy(start);
+        Enemy e = new Enemy(start, null);
         e.setMotion(end);
         if(!alive)
         {
