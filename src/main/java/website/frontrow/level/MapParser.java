@@ -5,6 +5,7 @@ import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
+import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.util.Grid;
 import website.frontrow.util.Point;
 
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 public class MapParser
     implements Logable
 {
+
+    private JBubbleBobbleSprites spriteStore = new JBubbleBobbleSprites();
 
     /**
      * Check whether a level formed by these strings would create a validly shaped level.
@@ -144,13 +147,13 @@ public class MapParser
                 break;
             case 'p':
                 // The player
-                Player player = new Player(new Point(x, y));
+                Player player = new Player(new Point(x, y), spriteStore.getPlayerSprite());
                 units.add(player);
                 players.add(player);
                 break;
             case 'e':
                 // The enemy.
-                units.add(new Enemy(new Point(x, y)));
+                units.add(new Enemy(new Point(x, y), spriteStore.getEnemySprite()));
                 break;
             case ' ':
                 // Empty area. Keep it empty.

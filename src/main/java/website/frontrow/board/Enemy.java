@@ -6,6 +6,8 @@ import website.frontrow.sprite.Sprite;
 import website.frontrow.sprite.SpriteStore;
 import website.frontrow.util.Point;
 
+import java.util.Map;
+
 /**
  * Enemy Class.
  */
@@ -13,29 +15,17 @@ public class Enemy
         extends Mover
             implements Logable
 {
-
-	private static SpriteStore ss = new SpriteStore();
-	
     /**
      * Constructor of the Enemy Unit.
      * Input a byte with the amount of lives the Enemy has.
-     * @param position THe starting position of the enemy.
+     * @param position The starting position of the enemy.
+     * @param sprites The sprites of the enemy.
      */
-    public Enemy(Point position)
+    public Enemy(Point position, Map<Direction, Sprite> sprites)
     {
-        super(true, position, new Point(0, 0));
+        super(true, position, new Point(0, 0), sprites);
         new Log();
         addToLog("[BUBBLE]\t[SPAWN]\tEnemy created.");
-    }
-    
-    /**
-     * Returns the sprite of the unit, Player/Enemy/Empty respectively.
-     * @return The sprite.
-     */
-    @Override
-    public Sprite getSprite()
-    {
-    	return ss.getEnemySprite(this.getDirection());
     }
 
     /**

@@ -26,6 +26,7 @@ public class ImageStore
 {
 
     private static final int STANDARD_IMAGE_FORMAT = 32;
+
     /**
      * Returns an icon to be used for the border.
      * @return The border icom.
@@ -34,7 +35,7 @@ public class ImageStore
     {
         try
         {
-            return new ImageIcon(getImage("/block.jpg"));
+            return new ImageIcon(getImage("/sprites/block.jpg"));
         }
         catch (IOException e)
         {
@@ -42,142 +43,6 @@ public class ImageStore
             addToLog("[ERROR]\t[IMAGESTORE]\t1 - IOException in getBorderImage().");
             new DumpLog();
             return new ImageIcon(getFileNotFoundImage());
-        }
-    }
-
-    /**
-     * Returns the image for a wall.
-     * @return The image.
-     */
-    public Image getWallImage()
-    {
-        try
-        {
-            return getImage("/wall.png");
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            addToLog("[ERROR]\t[IMAGESTORE]\t2 - IOException in getWallImage().");
-            new DumpLog();
-            return getFileNotFoundImage();
-        }
-    }
-    
-    /**
-     * Returns the image for a platform.
-     * @return The image.
-     */
-    public Image getPlatformImage()
-    {
-        try
-        {
-            return getImage("/platform.png");
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            addToLog("[ERROR]\t[IMAGESTORE]\t3 - IOException in getPlatformImage().");
-            new DumpLog();
-            return getFileNotFoundImage();
-        }
-    }  
-    
-    //TODO: Add sprites for face directions, for both Player and Enemy.
-    // Left and Right are currently the same!
-    
-    /**
-     * Returns the image for a player facing left.
-     * @return The image.
-     */
-    public Image getPlayerLeftImage()
-    {
-        try
-        {
-            return getImage("/playerL.png");
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            addToLog("[ERROR]\t[IMAGESTORE]\t4 - IOException in getPlayerLeftImage().");
-            new DumpLog();
-            return getFileNotFoundImage();
-        }
-    }
-    
-    /**
-     * Returns the image for a player facing right.
-     * @return The image.
-     */
-    public Image getPlayerRightImage()
-    {
-        try
-        {
-            return getImage("/playerR.png");
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            addToLog("[ERROR]\t[IMAGESTORE]\t5 - IOException in getPlayerLeftImage.");
-            new DumpLog();
-            return getFileNotFoundImage();
-        }
-    }
-    
-    /**
-     * Returns the image for a enemy facing left.
-     * @return The image.
-     */
-    public Image getEnemyLeftImage()
-    {
-        try
-        {
-            return getImage("/enemy.png");
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            addToLog("[ERROR]\t[IMAGESTORE]\t6 - IOException in getEnemyLeftImage().");
-            new DumpLog();
-            return getFileNotFoundImage();
-        }
-    }
-    
-    /**
-     * Returns the image for a player facing left.
-     * @return The image.
-     */
-    public Image getEnemyRightImage()
-    {
-        try
-        {
-            return getImage("/enemy.png");
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            addToLog("[ERROR]\t[IMAGESTORE]\t7 - IOException in getEnemyRightImage().");
-            new DumpLog();
-            return getFileNotFoundImage();
-        }
-    }
-
-    /**
-     * Returns the image for the bubble.
-     * @return The image.
-     */
-    public Image getBubbleImage()
-    {
-        try
-        {
-            return getImage("/bubbleProjectile.png");
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            addToLog("[ERROR]\t[IMAGESTORE]\t8 - IOException in getBubbleImage().");
-            new DumpLog();
-            return getFileNotFoundImage();
         }
     }
 

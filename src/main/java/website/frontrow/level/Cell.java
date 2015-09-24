@@ -1,8 +1,8 @@
 package website.frontrow.level;
 
 import website.frontrow.sprite.EmptySprite;
+import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.sprite.Sprite;
-import website.frontrow.sprite.SpriteStore;
 import website.frontrow.util.Point;
 
 import java.awt.Graphics;
@@ -66,7 +66,7 @@ public enum Cell
         }
     };
 
-    private static SpriteStore ss = new SpriteStore();
+    private static JBubbleBobbleSprites ss = new JBubbleBobbleSprites();
 
     /**
      * Returns the sprite of the cell.
