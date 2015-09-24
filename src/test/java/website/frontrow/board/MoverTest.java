@@ -27,6 +27,7 @@ import static org.junit.Assert.assertEquals;
 public abstract class MoverTest
     extends UnitTest
 {
+	//subclasses need to be able to acces this information.
     @SuppressWarnings("checkstyle:visibilitymodifier")
     protected Point m;
     @SuppressWarnings("checkstyle:visibilitymodifier")

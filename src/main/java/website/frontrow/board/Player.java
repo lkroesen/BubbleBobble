@@ -69,7 +69,7 @@ public class Player
      * @return the player speed multiplier.
      */
     @Override
-    public double getUnitSpeedMultiplier()
+    public double getSpeedMultiplier()
     {
     	return GameConstants.PLAYER_SPEED_MULTIPLIER;
     }

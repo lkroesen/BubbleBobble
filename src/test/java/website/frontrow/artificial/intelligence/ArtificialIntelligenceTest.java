@@ -86,7 +86,7 @@ public class ArtificialIntelligenceTest
     public void doMovesRightTest()
     {
       
-        Point q = new Point(-3.0, -3.0);
+    	Point q = new Point(-3.0, -3.0);
     	Enemy enemy = new Enemy(q, null);
         units.add(enemy);
         simpleLevel = new Level(players, units, emptyGrid);
@@ -102,15 +102,14 @@ public class ArtificialIntelligenceTest
      */
     @Test
     public void doMovesDownTest()
-    {
-            
+    {           
     	Enemy enemy = new Enemy(p, null);
-        units.add(enemy);
-        simpleLevel = new Level(players, units, emptyGrid);
-        simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
-        simpleArtificialIntelligence.aiMover();
-        simpleLevel.tick();
+    	units.add(enemy);
+    	simpleLevel = new Level(players, units, emptyGrid);
+    	simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
+    	simpleArtificialIntelligence.aiMover();
+    	simpleLevel.tick();
         
-        assertTrue(enemy.getLocation().getY() < p.getY());
+    	assertTrue(enemy.getLocation().getY() < p.getY());
     }
 }

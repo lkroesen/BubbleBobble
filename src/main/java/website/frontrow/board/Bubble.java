@@ -84,7 +84,7 @@ public class Bubble
      * @return the bubble speed multiplier
      */
     @Override
-    public double getUnitSpeedMultiplier()
+    public double getSpeedMultiplier()
     {
     	return GameConstants.BUBBLE_SPEED_MULTIPLIER;
     }    

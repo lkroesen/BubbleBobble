@@ -94,37 +94,16 @@ public class PathCalculationTest
     }
     
     /**
-     * Test basic functionality of calculatePathX, creating and returning a list.
-     */
-    @Test
-    public void calculateXPathListTest()
-    {
-    	Enemy enemyOne = new Enemy(new Point(0, 0), null);
-    	Enemy enemyTwo = new Enemy(new Point(1, 1), null);
-    	Enemy enemyThree = new Enemy(new Point(2, 2), null);
-    	ArrayList<Enemy> enemies = new ArrayList<>();
-    	enemies.add(enemyOne);
-    	enemies.add(enemyTwo);
-    	enemies.add(enemyThree);
-    	Player player = new Player(new Point(1, 1), null);
-    	
-    	ArrayList<Integer> moves = PathCalculation.calculateXPath(player, enemies, simpleLevel);
-    	assertTrue(moves.size() == enemies.size());
-    }
-    
-    /**
      * Test basic functionality of calculatePathX moving Left.
      */
     @Test
     public void calculateXPathLeftTest()
     {
-    	Enemy enemyOne = new Enemy(new Point(2, 2), null);
-    	ArrayList<Enemy> enemies = new ArrayList<>();
-    	enemies.add(enemyOne);
+    	Enemy enemy = new Enemy(new Point(2, 2), null);
     	Player player = new Player(new Point(1, 1), null);
     	
-    	ArrayList<Integer> moves = PathCalculation.calculateXPath(player, enemies, simpleLevel);
-    	assertTrue(moves.get(0) == -1);
+    	int move = PathCalculation.calculateXPath(player, enemy, simpleLevel);
+    	assertTrue(move == -1);
     }
     
     /**
@@ -133,13 +112,11 @@ public class PathCalculationTest
     @Test
     public void calculateXPathRightTest()
     {
-    	Enemy enemyOne = new Enemy(new Point(0, 0), null);
-    	ArrayList<Enemy> enemies = new ArrayList<>();
-    	enemies.add(enemyOne);
+    	Enemy enemy = new Enemy(new Point(0, 0), null);
     	Player player = new Player(new Point(1, 1), null);
     	
-    	ArrayList<Integer> moves = PathCalculation.calculateXPath(player, enemies, simpleLevel);
-    	assertTrue(moves.get(0) == 1);
+    	int move = PathCalculation.calculateXPath(player, enemy, simpleLevel);
+    	assertTrue(move == 1);
     }
     
     /**
@@ -148,32 +125,11 @@ public class PathCalculationTest
     @Test
     public void calculateXPathStandingStillTest()
     {
-    	Enemy enemyOne = new Enemy(new Point(1, 1), null);
-    	ArrayList<Enemy> enemies = new ArrayList<>();
-    	enemies.add(enemyOne);
+    	Enemy enemy = new Enemy(new Point(1, 1), null);
     	Player player = new Player(new Point(1, 1), null);
     	
-    	ArrayList<Integer> moves = PathCalculation.calculateXPath(player, enemies, simpleLevel);
-    	assertTrue(moves.get(0) == 0);
-    }
-    
-    /**
-     * Test basic functionality of calculatePathY, creating and returning a list.
-     */
-    @Test
-    public void calculateYPathListTest()
-    {
-    	Enemy enemyOne = new Enemy(new Point(0, 0), null);
-    	Enemy enemyTwo = new Enemy(new Point(1, 1), null);
-    	Enemy enemyThree = new Enemy(new Point(2, 2), null);
-    	ArrayList<Enemy> enemies = new ArrayList<>();
-    	enemies.add(enemyOne);
-    	enemies.add(enemyTwo);
-    	enemies.add(enemyThree);
-    	Player player = new Player(new Point(1, 1), null);
-    	
-    	ArrayList<Integer> moves = PathCalculation.calculateYPath(player, enemies, simpleLevel);
-    	assertTrue(moves.size() == enemies.size());
+    	int move = PathCalculation.calculateXPath(player, enemy, simpleLevel);
+    	assertTrue(move == 0);
     }
     
     /**
@@ -182,13 +138,11 @@ public class PathCalculationTest
     @Test
     public void calculateYPathUpTest()
     {
-    	Enemy enemyOne = new Enemy(new Point(2, 2), null);
-    	ArrayList<Enemy> enemies = new ArrayList<>();
-    	enemies.add(enemyOne);
+    	Enemy enemy = new Enemy(new Point(2, 2), null);
     	Player player = new Player(new Point(1, 1), null);
     	
-    	ArrayList<Integer> moves = PathCalculation.calculateYPath(player, enemies, simpleLevel);
-    	assertTrue(moves.get(0) == -1);
+    	int move = PathCalculation.calculateYPath(player, enemy, simpleLevel);
+    	assertTrue(move == -1);
     }
     
     /**
@@ -197,13 +151,11 @@ public class PathCalculationTest
     @Test
     public void calculateYPathDownTest()
     {
-    	Enemy enemyOne = new Enemy(new Point(0, 0), null);
-    	ArrayList<Enemy> enemies = new ArrayList<>();
-    	enemies.add(enemyOne);
+    	Enemy enemy = new Enemy(new Point(0, 0), null);
     	Player player = new Player(new Point(1, 1), null);
     	
-    	ArrayList<Integer> moves = PathCalculation.calculateYPath(player, enemies, simpleLevel);
-    	assertTrue(moves.get(0) == 1);
+    	int move = PathCalculation.calculateYPath(player, enemy, simpleLevel);
+    	assertTrue(move == 1);
     }
     
     /**
@@ -212,13 +164,11 @@ public class PathCalculationTest
     @Test
     public void calculateYPathStandingStillTest()
     {
-    	Enemy enemyOne = new Enemy(new Point(1, 1), null);
-    	ArrayList<Enemy> enemies = new ArrayList<>();
-    	enemies.add(enemyOne);
+    	Enemy enemy = new Enemy(new Point(1, 1), null);
     	Player player = new Player(new Point(1, 1), null);
     	
-    	ArrayList<Integer> moves = PathCalculation.calculateYPath(player, enemies, simpleLevel);
-    	assertTrue(moves.get(0) == 0);
+    	int move = PathCalculation.calculateYPath(player, enemy, simpleLevel);
+    	assertTrue(move == 0);
     }
     
 }

@@ -135,7 +135,7 @@ public abstract class Unit
      * Return the default unit speed multiplier.
      * @return the default speed.
      */
-    public double getUnitSpeedMultiplier()
+    public double getSpeedMultiplier()
     {
     	return 1.0;
     }

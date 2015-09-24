@@ -152,8 +152,8 @@ public abstract class Mover
         double x = this.motion.getX();
         
     	this.motion.setX(
-    			Math.max(Math.min(x, GameConstants.MAX_X_SPEED),
-    					-GameConstants.MAX_X_SPEED) * this.getUnitSpeedMultiplier());
+    		Math.max(Math.min(x, GameConstants.MAX_X_SPEED),
+    			-GameConstants.MAX_X_SPEED) * this.getSpeedMultiplier());
         
         Point movement = motion.divide(GameConstants.TICKS_PER_SEC);
 
@@ -183,7 +183,6 @@ public abstract class Mover
         {
             this.motion.setY(0);
         }
-
     }
 
     @Override

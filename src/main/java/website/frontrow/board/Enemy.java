@@ -104,7 +104,7 @@ public class Enemy
      * @return the enemy speed multiplier.
      */
     @Override
-    public double getUnitSpeedMultiplier()
+    public double getSpeedMultiplier()
     {
     	return GameConstants.ENEMY_SPEED_MULTIPLIER;
     }

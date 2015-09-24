@@ -1,7 +1,5 @@
 package website.frontrow.artificial.intelligence;
 
-import java.util.ArrayList;
-
 import website.frontrow.board.Mover;
 import website.frontrow.board.Enemy;
 import website.frontrow.level.Level;
@@ -9,47 +7,38 @@ import website.frontrow.util.Point;
 
 /**
  * This class can calculate the best path for an AI to take 
- * given some info. //TODO: fix comment.
+ * given the player information, a list of enemies and the current level. 
  * 
  * This method has no use for a constructor because it always returns a path.
  */
 @SuppressWarnings("checkstyle:hideutilityclassconstructor")
 
-public class PathCalculation 
+public abstract class PathCalculation 
 {
-	private static ArrayList<Integer> goal;
 	private static Point location;
 	
 	/**
 	 * Method that returns a list of all relative positions of enemies and the player.
 	 * On the X axis
 	 * @param player the player unit.
-	 * @param enemies list of all enemy units.
+	 * @param enemy the enemy unit.
 	 * @param level the current level.
 	 * @return a list of all relative positions of enemies and the player, on the X axis.
 	 */
-	public static ArrayList<Integer> calculateXPath(
-			Mover player, ArrayList<Enemy> enemies, Level level)
+	public static Integer calculateXPath(Mover player, Enemy enemy, Level level)
 	{
-		location = player.getLocation();
-		goal = new ArrayList<Integer>();
+		location = player.getLocation();	
+		int goal = 0;
 		
-		for(int i = 0; i < enemies.size(); i++)
-		{
-			goal.add(0);
-		}
-			
-		for(int i = 0; i < enemies.size(); i++)
-		{
-			if(moveOnXAxis(location, enemies.get(i).getLocation()) > 0)
+			if(moveOnXAxis(location, enemy.getLocation()) > 0)
 			{
-				goal.set(i, 1);
+				goal = 1;
 			}
-			else if(moveOnXAxis(location, enemies.get(i).getLocation()) < 0)
+			else if(moveOnXAxis(location, enemy.getLocation()) < 0)
 			{
-				goal.set(i, -1);
-			}	
-		}
+				goal = -1;
+			}			
+
 		return goal;
 	}
 	
@@ -57,33 +46,24 @@ public class PathCalculation
 	 * Method that returns a list of all relative positions of enemies and the player.
 	 * On the Y axis.
 	 * @param player the player unit.
-	 * @param enemies list of all enemy units.
+	 * @param enemy the enemy unit.
 	 * @param level the current level.
 	 * @return a list of all relative positions of enemies and the player, on the Y axis.
 	 */
-	public static ArrayList<Integer> calculateYPath(
-			Mover player, ArrayList<Enemy> enemies, Level level)
+	public static Integer calculateYPath(Mover player, Enemy enemy, Level level)
 	{
-		location = player.getLocation();
+		location = player.getLocation();	
+		int goal = 0;
 		
-		goal = new ArrayList<Integer>();
-		
-		for(int i = 0; i < enemies.size(); i++)
-		{
-			goal.add(0);
-		}
-		
-		for(int i = 0; i < enemies.size(); i++)
-		{
-			if(moveOnYAxis(location, enemies.get(i).getLocation()) > 0)
+			if(moveOnYAxis(location, enemy.getLocation()) > 0)
 			{
-				goal.set(i, 1);
+				goal = 1;
 			}
-			else if(moveOnYAxis(location, enemies.get(i).getLocation()) < 0)
+			else if(moveOnYAxis(location, enemy.getLocation()) < 0)
 			{
-				goal.set(i, -1);
+				goal = -1;
 			}			
-		}
+
 		return goal;
 	}
 	

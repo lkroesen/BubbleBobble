@@ -23,8 +23,6 @@ public class ArtificialIntelligence
 	private ArrayList<Player> players;
 	private ArrayList<Unit> units;
 	private ArrayList<Enemy> enemies;
-	private ArrayList<Integer> movementsX;
-	private ArrayList<Integer> movementsY;
 	private Unit player;
 	
 	
@@ -35,10 +33,8 @@ public class ArtificialIntelligence
 	public ArtificialIntelligence(Level level)
 	{
 		this.level = level;
-		this.enemies = new ArrayList<Enemy>();
-		this.units = new ArrayList<Unit>();
-		this.movementsX = new ArrayList<Integer>();
-		this.movementsY = new ArrayList<Integer>();
+		this.enemies = new ArrayList<>();
+		this.units = new ArrayList<>();
 		
 	}
 	
@@ -52,7 +48,7 @@ public class ArtificialIntelligence
 		this.players = this.level.getPlayers();
 		this.units = this.level.getUnits();
 		
-		for(Unit u:units)
+		for(Unit u : units)
 		{
 			if (u instanceof Enemy)
 			{
@@ -63,14 +59,12 @@ public class ArtificialIntelligence
 		if(players.size() > 0)
 		{
 			this.player = this.players.get(0);	
-			movementsX = PathCalculation.calculateXPath((Mover) player, enemies, this.level);
-			movementsY = PathCalculation.calculateYPath((Mover) player, enemies, this.level);
 				
 			for(int i = 0; i < enemies.size(); i++)
 			{
 				Enemy enemy = enemies.get(i);
-				int moveToX = movementsX.get(i);
-				int moveToY = movementsY.get(i);
+				int moveToX = PathCalculation.calculateXPath((Mover) player, enemy, this.level);
+				int moveToY = PathCalculation.calculateYPath((Mover) player, enemy, this.level);
 					
 				randomizer(enemy);
 				doMoves(enemy, moveToX, moveToY);
@@ -103,50 +97,18 @@ public class ArtificialIntelligence
 	 * @param enemy, the enemy that is moving.
 	 * @param x, the x direction the unit should move to.
 	 * @param y, the y direction the unit should move to.
-	 * 
-	 * It's a random: there are magic numbers involved.
-	 * There are 20 lines of brackets in this methods, so it's a little long...
 	 */
-	
-	@SuppressWarnings({"checkstyle:methodlength", "checkstyle:magicnumber"})
 	private void doMoves(Enemy enemy, int x, int y)
 	{
 		
 		if (enemy.getRandom() < GameConstants.AI_RANDOMIZER)
 		{	
-			if(enemy.getRandom() < (0.03f * GameConstants.AI_RANDOMIZER))
-			{
-				enemy.jump();	
-				addToLog("[AI]\tAn enemy just did the super rare JUMP SPAM!");
-			}
-			else if(enemy.getRandom() < (0.50f * GameConstants.AI_RANDOMIZER))
-			{
-				enemy.goLeft();
-			}
-			else if(enemy.getRandom() < (1.00f * GameConstants.AI_RANDOMIZER))
-			{
-				enemy.goRight();
-			}
-			return;			
+			doRandomMove(enemy);	
+			return;
 		}		
 		if(y == 1)
 		{
-			if(enemy.getLastWall())
-			{
-				enemy.goLeft();
-			}
-			else
-			{
-				enemy.goRight();
-			}
-			if(enemy.getLocation().getX() < 3.5)
-			{
-				enemy.setLastWall(false);
-			}
-			else if(enemy.getLocation().getX() > this.level.getCells().getWidth() - 3.5)
-			{
-				enemy.setLastWall(true);
-			}
+			fallOffPlatform(enemy);
 			return;
 		}		
 		if(x == 1)
@@ -162,6 +124,61 @@ public class ArtificialIntelligence
 		if(y == -1)
 		{
 			enemy.jump();			
+		}
+	}
+	
+	/**
+	 * If an enemy is above the player we want it to fall of the platform.
+	 * We do this by moving to one side of the level. 
+	 * If we reach the end without falling down (sufficiently) we go in the other direction.
+	 * @param enemy the enemy that is moving.
+	 * 
+	 * 3.5 is the default wall offset.
+	 */
+	@SuppressWarnings("checkstyle:magicnumber")
+	private void fallOffPlatform(Enemy enemy)
+	{
+		if(enemy.getLastWall())
+		{
+			enemy.goLeft();
+		}
+		else
+		{
+			enemy.goRight();
+		}
+		if(enemy.getLocation().getX() < 3.5)
+		{
+			enemy.setLastWall(false);
+		}
+		else if(enemy.getLocation().getX() > this.level.getCells().getWidth() - 3.5)
+		{
+			enemy.setLastWall(true);
+		}
+	}
+	
+	/**
+	 * If an enemy is eligible to make a random move it comes here.
+	 * It can now randomly choose one option from three movement options 
+	 * depending on it's random seed.
+	 * @param enemy the enemy that is moving
+	 * 
+	 * It's a random, there's magic numbers.
+	 */
+	@SuppressWarnings("checkstyle:magicnumber")
+	private void doRandomMove(Enemy enemy)
+	{
+		if(enemy.getRandom() < (0.03f * GameConstants.AI_RANDOMIZER))
+		{
+			enemy.jump();	
+			addToLog("[AI]\tAn enemy just did the super rare JUMP SPAM!");
+		}
+		else if(enemy.getRandom() < (0.50f * GameConstants.AI_RANDOMIZER))
+		{
+			enemy.goLeft();
+		}
+		else if(enemy.getRandom() < (1.00f * GameConstants.AI_RANDOMIZER))
+		{
+			enemy.goRight();
 		}
 	}
 	
