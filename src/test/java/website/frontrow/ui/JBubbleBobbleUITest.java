@@ -46,7 +46,7 @@ public class JBubbleBobbleUITest
         level = new Level(pl, ul, grid);
         le.add(level);
 
-        g = new Game(le, pl);
+        g = new Game(le);
     }
 
     /**

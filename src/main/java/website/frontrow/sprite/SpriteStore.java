@@ -63,6 +63,28 @@ public class SpriteStore
 			return sprite;
 		}
 	}
+
+	/**
+	 * The Bubble with enemy sprite.
+	 * @return
+	 * The sprite.
+	 */
+	public Sprite getBubbleWithEnemySprite()
+	{
+		StaticImageSprite sprite = spriteMap.get("BubbleEnemy");
+
+		if(sprite != null)
+		{
+			return sprite;
+		}
+		else
+		{
+			addToLog("[WARNING]\t[SPRITESTORE]\tBubble with enemy Sprite was null.");
+			sprite = new StaticImageSprite(is.getBubbleWithEnemyImage());
+			spriteMap.put("BubbleEnemy", sprite);
+			return sprite;
+		}
+	}
     
     /**
      * The platform sprite.

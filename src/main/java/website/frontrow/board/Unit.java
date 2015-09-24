@@ -53,6 +53,14 @@ public abstract class Unit
     }
 
     /**
+     * Revives an enemy after being captured.
+     */
+    public void revive()
+    {
+        alive = true;
+    }
+
+    /**
      * Set alive.
      * @param alive the value.
      */
@@ -112,6 +120,12 @@ public abstract class Unit
     {
 
     }
+
+    /**
+     * Create a duplicate of the current unit.
+     * @return Clone the current unit.
+     */
+    public abstract Unit duplicate();
 
     /**
      * Get the width and height for the bounding box.

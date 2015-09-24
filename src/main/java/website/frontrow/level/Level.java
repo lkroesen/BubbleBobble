@@ -1,11 +1,14 @@
 package website.frontrow.level;
 
+import website.frontrow.board.Bubble;
 import website.frontrow.board.Enemy;
 import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
+import website.frontrow.util.CollisionHandler;
 import website.frontrow.util.Grid;
+import website.frontrow.util.RealCollisionHandler;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -23,11 +26,39 @@ public class Level
     private ConcurrentLinkedQueue<Unit> toAdd = new ConcurrentLinkedQueue<>();
 
     private ArrayList<Player> players;
+    private boolean playersAlive = true;
+
     private ArrayList<Unit> units;
     private Grid<Cell> cells;
     private int enemies;
 
     private List<LevelObserver> observers;
+
+    private final CollisionHandler collisionHandler = new CollisionHandler(this);
+    private final RealCollisionHandler realCollisionHandler = new RealCollisionHandler();
+
+    /**
+     * Duplicates the current level.
+     * @return A duplicate of the current level.
+     */
+    public Level duplicate()
+    {
+        ArrayList<Unit> units = new ArrayList<>(this.getUnits().size());
+        ArrayList<Player> players = new ArrayList<>(this.getPlayers().size());
+        for (Unit unit: this.units)
+        {
+            Unit clone = unit.duplicate();
+            units.add(clone);
+            if(clone instanceof Player)
+            {
+                players.add((Player) clone);
+            }
+        }
+
+        addToLog("[LEVEL]\tCloning succeeded.");
+
+        return new Level(players, units, this.getCells());
+    }
 
     /**
      * Constructor of Level.
@@ -40,16 +71,15 @@ public class Level
      */
     public Level(ArrayList<Player> players, ArrayList<Unit> units, Grid<Cell> cells)
     {
-        this.players = players;
+        this.players = new ArrayList<>(players);
         this.units = new ArrayList<>(units);
         this.cells = new Grid<>(cells);
         addToLog("[LEVEL]\tLevel Object created");
 
         int e = 0;
-        ArrayList<Unit> list = units;
-        for(int i = 0; i < list.size(); i++)
+        for (Unit unit : units)
         {
-            if (isEnemy(list.get(i)))
+            if (isEnemy(unit))
             {
                 e++;
             }
@@ -109,14 +139,43 @@ public class Level
             unit.tick(this);
             if(!unit.isAlive())
             {
-                if(isEnemy(unit))
-                {
-                    setEnemies(enemies - 1);
-                }
+                onUnitDeath(unit);
                 // The unit died during the tick, and must be removed.
                 it.remove();
             }
         }
+    }
+
+    private void onUnitDeath(Unit unit)
+    {
+        if(unit instanceof Bubble)
+        {
+            Bubble bubble = (Bubble) unit;
+            if(bubble.getContains() != null && !bubble.getContains().isAlive())
+            {
+                this.setEnemies(this.getEnemies() - 1);
+                updateObservers();
+            }
+        }
+        else if(unit instanceof Player)
+        {
+            updatePlayerAliveState();
+            updateObservers();
+        }
+    }
+
+    /**
+     * Check if all players are still alive.
+     */
+    private void updatePlayerAliveState()
+    {
+        playersAlive = false;
+
+        for(Player player: players)
+        {
+            playersAlive = playersAlive | player.isAlive();
+        }
+
     }
 
     /**
@@ -249,12 +308,28 @@ public class Level
     }
 
     /**
+     * @return collisionComputer for this level.
+     */
+    public CollisionHandler getCollisionHandler()
+    {
+        return this.collisionHandler;
+    }
+
+    /**
+     * @return collisionHandler for this level.
+     */
+    public RealCollisionHandler getRealCollisionHandler()
+    {
+        return this.realCollisionHandler;
+    }
+
+    /**
      * Returns whether or not there are still players alive in the level.
      * @return boolean (for now true)
      */
     public boolean playersAlive()
     {
-        return true;
+        return playersAlive;
     }
 
     /**

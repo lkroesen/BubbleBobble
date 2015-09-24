@@ -38,18 +38,6 @@ public class BubbleTest
     }
 
     /**
-     * Test contains.
-     */
-    @Test
-    public void containsTest()
-    {
-        Bubble b = new Bubble(super.p, super.m);
-        Enemy e = new Enemy(super.p);
-        b.setContains(e);
-        assertEquals(b.getContains(), e);
-    }
-
-    /**
      * Capture test.
      */
     @Test

@@ -48,7 +48,7 @@ public class Grid<E>
 
     /**
      * Clone a certain grid.
-     * @param grid Grid to clone.
+     * @param grid Grid to duplicate.
      */
     public Grid(Grid<E> grid)
     {

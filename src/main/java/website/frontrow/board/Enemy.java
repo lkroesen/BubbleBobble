@@ -38,6 +38,12 @@ public class Enemy
     	return ss.getEnemySprite(this.getDirection());
     }
 
+    @Override
+    public Unit duplicate()
+    {
+        return new Enemy(location);
+    }
+
     /**
      * Log actions that happened to an Enemy.
      * @param action Input a String that is the action performed.

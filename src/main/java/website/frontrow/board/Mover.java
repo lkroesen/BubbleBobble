@@ -166,8 +166,8 @@ public abstract class Mover
             addToLog("[MOVER]\tMoved to " + movement.toString());
         }
 
-        this.handler = new CollisionHandler(level);
-        this.handler.checkUnitsAABB(this);
+        this.handler = level.getCollisionHandler();
+        this.handler.checkUnitsAABB(this, level.getRealCollisionHandler());
         this.location = handler.findNextPosition(this).getPoint();
 
         applyGravity();
