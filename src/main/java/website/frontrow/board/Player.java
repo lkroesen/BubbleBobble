@@ -122,8 +122,11 @@ public class Player
     	addToLog("The player earned a life, total lives is now: " + lives);
     }
     
-    @Override
-    public boolean isAlive()
+    /**
+     * Returns whether or not the player still has lives left.
+     * @return boolean
+     */
+    public boolean hasLives()
     {
     	return lives > 0;
     }

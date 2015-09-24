@@ -257,7 +257,7 @@ public class Game
     	}
     	for(Player p : this.players)
     	{
-    		if (p.isAlive())
+    		if (p.hasLives())
     		{
     			return false;
     		}
