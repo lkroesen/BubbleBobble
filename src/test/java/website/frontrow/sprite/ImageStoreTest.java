@@ -57,7 +57,7 @@ public class ImageStoreTest
     @Test
     public void testGetImageBadFileName() throws IOException
     {
-        ee.expect(IllegalArgumentException.class);
+        ee.expect(IOException.class);
         is.getImage("/nananananananbatmaaaan.png");
     }
 
