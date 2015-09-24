@@ -5,7 +5,7 @@ import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.sprite.Sprite;
 import website.frontrow.util.Collision;
-import website.frontrow.util.CollisionHandler;
+import website.frontrow.util.CollisionComputer;
 import website.frontrow.game.GameConstants;
 import website.frontrow.util.Point;
 
@@ -35,7 +35,7 @@ public abstract class Mover
     /**
      * The collision handler to handle the collisions.
      */
-    private CollisionHandler handler;
+    private CollisionComputer handler;
 
     /**
      * The sprites for each direction.
@@ -164,8 +164,8 @@ public abstract class Mover
 
         Point movement = motion.divide(GameConstants.TICKS_PER_SEC);
 
-        this.handler = level.getCollisionHandler();
-        this.handler.checkUnitsAABB(this, level.getRealCollisionHandler());
+        this.handler = level.getCollisionComputer();
+        this.handler.checkUnitsAABB(this, level.getCollisionHandler());
 
         this.location = handler.findNextPosition(this).getPoint();
 

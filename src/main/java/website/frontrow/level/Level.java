@@ -6,9 +6,9 @@ import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
+import website.frontrow.util.CollisionComputer;
 import website.frontrow.util.CollisionHandler;
 import website.frontrow.util.Grid;
-import website.frontrow.util.RealCollisionHandler;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -34,8 +34,8 @@ public class Level
 
     private List<LevelObserver> observers;
 
-    private final CollisionHandler collisionHandler = new CollisionHandler(this);
-    private final RealCollisionHandler realCollisionHandler = new RealCollisionHandler();
+    private final CollisionComputer collisionComputer = new CollisionComputer(this);
+    private final CollisionHandler collisionHandler = new CollisionHandler();
 
     /**
      * Duplicates the current level.
@@ -313,17 +313,17 @@ public class Level
     /**
      * @return collisionComputer for this level.
      */
-    public CollisionHandler getCollisionHandler()
+    public CollisionComputer getCollisionComputer()
     {
-        return this.collisionHandler;
+        return this.collisionComputer;
     }
 
     /**
-     * @return collisionHandler for this level.
+     * @return collisionComputer for this level.
      */
-    public RealCollisionHandler getRealCollisionHandler()
+    public CollisionHandler getCollisionHandler()
     {
-        return this.realCollisionHandler;
+        return this.collisionHandler;
     }
 
     /**
