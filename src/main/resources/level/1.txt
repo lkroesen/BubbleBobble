@@ -1,4 +1,4 @@
-XXXXXXXXXXXXXXXXXX
+XXXXXXXXXXX  XXXXX
 XX              XX
 XX              XX
 XX              XX
@@ -15,4 +15,4 @@ XX              XX
 XX_  ________  _XX
 XX              XX
 XX p            XX
-XX______________XX
+XXXXXXXXXXX  XXXXX
