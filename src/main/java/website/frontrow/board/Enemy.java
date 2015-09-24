@@ -3,7 +3,6 @@ package website.frontrow.board;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.sprite.Sprite;
-import website.frontrow.sprite.SpriteStore;
 import website.frontrow.util.Point;
 
 import java.util.Map;

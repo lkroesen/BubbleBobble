@@ -50,7 +50,7 @@ public class JBubbleBobbleSpritesTest
     }
 
     /**
-     * Test spritestore to see if an exception is thrown when Direction.UP is used.
+     * Test getting the player sprites.
      */
     @Test
     public void testGetDirectionalPlayerSprite()
@@ -60,14 +60,34 @@ public class JBubbleBobbleSpritesTest
     }
 
     /**
-     * Test spritestore to see if an exception is thrown when Direction.UP is used.
+     * Test getting the enemy sprites.
      */
     @Test
-    public void testGetEnemySpriteDirectionUP()
+    public void testGetEnemySpriteDirection()
     {
         directionalSprite = sp.getEnemySprite();
         assertEquals(directionalSprite.size(), 4);
     }
+
+    /**
+     * Tests the bubble sprites.
+     */
+    @Test
+    public void testGetBubbleSpriteDirection()
+    {
+        directionalSprite = sp.getBubbleSprite();
+        assertEquals(directionalSprite.size(), 4);
+    }
+
+    /**
+     * Tests that the program stops when a sprite can not be found.
+     */
+    @Test(expected = RuntimeException.class)
+    public void testLoadSpriteFakefile()
+    {
+        s = sp.loadSprite("/youwillneverfindme!.txt");
+    }
+
 
     /**
      * Test getPlatformSprite to see if it returns a platform sprite.

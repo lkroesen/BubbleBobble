@@ -5,8 +5,10 @@ import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.sprite.ImageStore;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
+import javax.swing.border.Border;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -36,10 +38,7 @@ public class PlayingFieldPanel
         super();
         addToLog("[PFP]\tBLOCK_SIZE: " + BLOCK_SIZE + " BORDER_WIDTH: " + BORDER_WIDTH);
         this.setBackground(Color.BLACK);
-        this.setBorder(
-                BorderFactory.createMatteBorder(BORDER_WIDTH, BORDER_WIDTH,
-                        BORDER_WIDTH, BORDER_WIDTH, new ImageStore().getBorderImage())
-        );
+        this.setBorder(createBorder());
 
         Dimension size = new Dimension(
                 BLOCK_SIZE * game.getLevel().getCells().getWidth() + 2 * BORDER_WIDTH,
@@ -59,6 +58,19 @@ public class PlayingFieldPanel
         game.getLevel().draw(graphics, BORDER_WIDTH, BORDER_WIDTH,
                 getSize().width - 2 * BORDER_WIDTH, getSize().height - 2 * BORDER_WIDTH);
     }
+
+    /**
+     * Creates the border for the panel.
+     * @return The border.
+     */
+    private Border createBorder()
+    {
+        ImageIcon borderImage = new ImageStore().getImageIcon("/sprites/block.jpg");
+        Border border = BorderFactory.createMatteBorder(BORDER_WIDTH, BORDER_WIDTH,
+                BORDER_WIDTH, BORDER_WIDTH, borderImage);
+        return border;
+    }
+
 
     /**
      * Log actions in PlayingFieldPanel.
