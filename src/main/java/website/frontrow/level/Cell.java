@@ -1,8 +1,8 @@
 package website.frontrow.level;
 
 import website.frontrow.sprite.EmptySprite;
+import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.sprite.Sprite;
-import website.frontrow.sprite.SpriteStore;
 import website.frontrow.util.Point;
 
 import java.awt.Graphics;
@@ -30,7 +30,7 @@ public enum Cell
         @Override
         public Sprite getSprite()
         {
-            return ss.getWallSprite();
+            return sprites.getWallSprite();
         }
     },
     /**
@@ -62,11 +62,11 @@ public enum Cell
         @Override
         public Sprite getSprite()
         {
-            return ss.getPlatformSprite();
+            return sprites.getPlatformSprite();
         }
     };
 
-    private static SpriteStore ss = new SpriteStore();
+    private static JBubbleBobbleSprites sprites = new JBubbleBobbleSprites();
 
     /**
      * Returns the sprite of the cell.

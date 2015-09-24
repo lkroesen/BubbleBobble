@@ -7,6 +7,7 @@ import website.frontrow.level.Level;
 import website.frontrow.level.MapParser;
 import website.frontrow.logger.DumpLog;
 import website.frontrow.logger.Log;
+import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.ui.Action;
 import website.frontrow.ui.JBubbleBobbleUI;
 import website.frontrow.game.GameConstants;
@@ -154,12 +155,14 @@ public class Launcher implements Logable
             map.put(KeyEvent.VK_Z, () ->
             {
                 addToLog("[KEY]\t< \'Z\' > Pressed.");
+                JBubbleBobbleSprites spriteStore = new JBubbleBobbleSprites();
                 if(game.isRunning())
                 {
                     Player p = game.getPlayers().get(0);
                     game.getLevel().addUnit(
                             new Bubble(p.getLocation(),
-                                    new Point(p.getDirection().getDeltaX() * 4, 0)));
+                                    new Point(p.getDirection().getDeltaX() * 4, 0),
+                                    spriteStore.getBubbleSprite()));
                 }
             });
         }

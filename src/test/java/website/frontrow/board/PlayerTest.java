@@ -17,7 +17,7 @@ public class PlayerTest
     @Test
     public void testConstructor()
     {
-        Player pl = new Player(super.p);
+        Player pl = new Player(super.p, null);
         assertEquals(pl.getLocation(), super.p);
     }
 
@@ -27,7 +27,7 @@ public class PlayerTest
     @Test
     public void testScore()
     {
-        Player pl = new Player(super.p);
+        Player pl = new Player(super.p, null);
         pl.addScore(42);
         assertEquals(pl.getScore(), 42);
     }
@@ -35,7 +35,7 @@ public class PlayerTest
     @Override
     public Mover getTestMover(boolean alive, Point start, Point motion)
     {
-        Player player = new Player(start);
+        Player player = new Player(start, null);
         player.setMotion(motion);
 
         return player;

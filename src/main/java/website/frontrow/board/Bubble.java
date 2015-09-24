@@ -3,8 +3,9 @@ package website.frontrow.board;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.sprite.Sprite;
-import website.frontrow.sprite.SpriteStore;
 import website.frontrow.util.Point;
+
+import java.util.Map;
 
 /**
  * A bubble!
@@ -13,7 +14,6 @@ public class Bubble
         extends Mover
             implements Logable
 {
-    public static final SpriteStore SS = new SpriteStore();
 
     // A bubble can contain an enemy.
     private Enemy contains;
@@ -23,10 +23,11 @@ public class Bubble
      * Input a byte to specify the amount of lives this unit has.
      * @param position The starting position of the bubble.
      * @param motion The starting motion of the bubble.
+     * @param sprites The sprites for this bubble.
      */
-    public Bubble(Point position, Point motion)
+    public Bubble(Point position, Point motion, Map<Direction, Sprite> sprites)
     {
-        super(true, position, motion);
+        super(true, position, motion, sprites);
         addToLog("[BUBBLE]\t[SPAWN]\tBubble created.");
     }
 
@@ -62,12 +63,6 @@ public class Bubble
     public void setContains(Enemy contains)
     {
         this.contains = contains;
-    }
-
-    @Override
-    public Sprite getSprite()
-    {
-        return SS.getBubbleSprite();
     }
 
     @Override
