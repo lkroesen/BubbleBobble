@@ -1,5 +1,6 @@
 package website.frontrow.board;
 
+import website.frontrow.game.GameConstants;
 import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
@@ -61,6 +62,16 @@ public class Player
         {
             getMotion().setX(0);
         }
+    }
+    
+    /**
+     * Return the player speed multiplier.
+     * @return the player speed multiplier.
+     */
+    @Override
+    public double getSpeedMultiplier()
+    {
+    	return GameConstants.PLAYER_SPEED_MULTIPLIER;
     }
 
     /**

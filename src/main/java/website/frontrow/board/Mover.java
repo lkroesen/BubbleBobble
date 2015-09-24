@@ -6,6 +6,7 @@ import website.frontrow.logger.Logable;
 import website.frontrow.sprite.Sprite;
 import website.frontrow.util.Collision;
 import website.frontrow.util.CollisionHandler;
+import website.frontrow.artificial.intelligence.ArtificialIntelligence;
 import website.frontrow.game.GameConstants;
 import website.frontrow.util.Point;
 
@@ -149,10 +150,11 @@ public abstract class Mover
         this.newMotion = new Point(0, 0);
 
         double x = this.motion.getX();
-        this.motion.setX(
-                Math.max(Math.min(x, GameConstants.MAX_X_SPEED),
-                        -GameConstants.MAX_X_SPEED));
-
+        
+    	this.motion.setX(
+    		Math.max(Math.min(x, GameConstants.MAX_X_SPEED),
+    			-GameConstants.MAX_X_SPEED) * this.getSpeedMultiplier());
+        
         Point movement = motion.divide(GameConstants.TICKS_PER_SEC);
 
         this.handler = new CollisionHandler(level);
@@ -164,6 +166,9 @@ public abstract class Mover
             addToLog("[MOVER]\tMoved to " + this.location.toString());
         }
         applyGravity();
+        
+        ArtificialIntelligence artificialintelligence = new ArtificialIntelligence(level);
+        artificialintelligence.aiMover();
     }
 
     /**
@@ -178,7 +183,6 @@ public abstract class Mover
         {
             this.motion.setY(0);
         }
-
     }
 
     @Override

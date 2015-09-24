@@ -1,5 +1,6 @@
 package website.frontrow.board;
 
+import website.frontrow.game.GameConstants;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.sprite.Sprite;
@@ -77,6 +78,16 @@ public class Bubble
     {
         // Ignore gravity.
     }
+    
+    /**
+     * Return the bubble speed multiplier.
+     * @return the bubble speed multiplier
+     */
+    @Override
+    public double getSpeedMultiplier()
+    {
+    	return GameConstants.BUBBLE_SPEED_MULTIPLIER;
+    }    
 
     /**
      * Add log to action that happened to the bubble.
