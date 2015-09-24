@@ -5,8 +5,9 @@ import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.sprite.Sprite;
-import website.frontrow.sprite.SpriteStore;
 import website.frontrow.util.Point;
+
+import java.util.Map;
 
 /**
  * A bubble!
@@ -15,7 +16,6 @@ public class Bubble
         extends Mover
         implements Logable
 {
-    public static final SpriteStore SS = new SpriteStore();
 
     private static final Point FLOAT_UP_MOTION = new Point(0, -2);
 
@@ -41,10 +41,11 @@ public class Bubble
      * Constructor of the Bubble Unit.
      * @param position The starting position of the bubble.
      * @param motion The starting motion of the bubble.
+     * @param sprites The sprites for this bubble.
      */
-    public Bubble(Point position, Point motion)
+    public Bubble(Point position, Point motion, Map<Direction, Sprite> sprites)
     {
-        super(true, position, motion);
+        super(true, position, motion, sprites);
         addToLog("[BUBBLE]\t[SPAWN]\tBubble created.");
     }
 
@@ -96,18 +97,7 @@ public class Bubble
     @Override
     public Unit duplicate()
     {
-        return new Bubble(location, motion);
-    }
-
-    @Override
-    public Sprite getSprite()
-    {
-        if(this.contains == null)
-        {
-            return SS.getBubbleSprite();
-        }
-
-        return SS.getBubbleWithEnemySprite();
+        return new Bubble(location, motion, this.getSprites());
     }
 
     @Override

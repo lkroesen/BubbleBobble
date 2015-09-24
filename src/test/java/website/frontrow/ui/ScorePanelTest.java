@@ -17,7 +17,7 @@ import website.frontrow.util.Point;
 import javax.swing.JLabel;
 
 /**
- * Created by Remi on 8-9-2015.
+ * A test for the score panel.
  */
 public class ScorePanelTest
 {
@@ -47,13 +47,13 @@ public class ScorePanelTest
     {
 
         Point po = new Point(2, 2);
-        Player pl1 = new Player(po);
-        List<Player> players = new ArrayList<Player>();
+        Player pl1 = new Player(po, null);
+        List<Player> players = new ArrayList<>();
         players.add(pl1);
 
         ScorePanel test = new ScorePanel(players);
 
-        Map<Player, JLabel> l = new LinkedHashMap();
+        Map<Player, JLabel> l = new LinkedHashMap<>();
 
         JLabel sl = new JLabel("0", JLabel.CENTER);
         l.put(pl1, sl);
@@ -71,9 +71,9 @@ public class ScorePanelTest
     public void scorePanelTwoPlayersTest()
     {
         Point po1 = new Point(2, 2);
-        Player pl1 = new Player(po1);
+        Player pl1 = new Player(po1, null);
         Point po2 = new Point(17, 2);
-        Player pl2 = new Player(po2);
+        Player pl2 = new Player(po2, null);
 
         List<Player> players = new ArrayList<>();
         players.add(pl1);

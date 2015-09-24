@@ -1,134 +1,64 @@
 package website.frontrow.sprite;
 
 import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import website.frontrow.board.Direction;
+import org.junit.rules.ExpectedException;
+
+import java.io.IOException;
 
 import static org.junit.Assert.assertNotNull;
 
 /**
- * Test Sprite Store.
+ * A test class to test the sprite store.
  */
 public class SpriteStoreTest
 {
-    private Sprite s;
+
+    private SpriteStore ss;
+
+    @SuppressWarnings("visibilitymodifier")
+    @Rule
+    public ExpectedException ee = ExpectedException.none();
 
     /**
-     * Teardown, run after every test.
+     * Set the things up for the tests.
+     */
+    @Before
+    public void setUp()
+    {
+        ss = new SpriteStore();
+    }
+
+    /**
+     * Tear down the things after the tests.
      */
     @After
-    public void teardown()
+    public void tearDown()
     {
-        s = null;
+        ss = null;
     }
 
     /**
-     * Test to see if WallSprite returns a sprite.
+     * Load the sprites succesfully.
+     * @throws IOException The file might not exist.
      */
     @Test
-    public void testGetWallSprite()
+    public void testLoadSpriteSuccess() throws IOException
     {
-        SpriteStore sp = new SpriteStore();
-        s = sp.getWallSprite();
-        assertNotNull(s);
+        Sprite sprite = ss.loadSprite("/testImage100x100.png");
+        assertNotNull(sprite);
     }
 
     /**
-     * Test spritestore to see if an exception is thrown when Direction.UP is used.
+     * Load an unknown file.
+     * @throws IOException This test load an unknown file.
      */
     @Test
-    public void testGetPlayerSpriteDirectionUP()
+    public void testLoadSpriteUnknownFile() throws IOException
     {
-        SpriteStore sp = new SpriteStore();
-        s = sp.getPlayerSprite(Direction.UP);
-        assertNotNull(s);
-    }
-
-    /**
-     * Test spritestore to see if we get a sprite when Direction.LEFT is used.
-     */
-    @Test
-    public void testGetPlayerSpriteDirectionLEFT()
-    {
-        SpriteStore sp = new SpriteStore();
-        s = sp.getPlayerSprite(Direction.LEFT);
-        assertNotNull(s);
-    }
-
-    /**
-     * Test spritestore to see if we get a sprite when Direction.RIGHT is used.
-     */
-    @Test
-    public void testGetPlayerSpriteDirectionRIGHT()
-    {
-        SpriteStore sp = new SpriteStore();
-        s = sp.getPlayerSprite(Direction.RIGHT);
-        assertNotNull(s);
-    }
-
-    /**
-     * Test spritestore to see if an exception is thrown when Direction.DOWN is used.
-     */
-    @Test
-    public void testGetPlayerSpriteDirectionDOWN()
-    {
-        SpriteStore sp = new SpriteStore();
-        s = sp.getPlayerSprite(Direction.DOWN);
-        assertNotNull(s);
-    }
-
-    /**
-     * Test spritestore to see if an exception is thrown when Direction.UP is used.
-     */
-    @Test
-    public void testGetEnemySpriteDirectionUP()
-    {
-        SpriteStore sp = new SpriteStore();
-        s = sp.getEnemySprite(Direction.UP);
-        assertNotNull(s);
-    }
-
-    /**
-     * Test spritestore to see if we get a sprite when Direction.LEFT is used.
-     */
-    @Test
-    public void testGetEnemySpriteDirectionLEFT()
-    {
-        SpriteStore sp = new SpriteStore();
-        s = sp.getEnemySprite(Direction.LEFT);
-        assertNotNull(s);
-    }
-
-    /**
-     * Test spritestore to see if we get a sprite when Direction.RIGHT is used.
-     */
-    @Test
-    public void testGetEnemySpriteDirectionRIGHT()
-    {
-        SpriteStore sp = new SpriteStore();
-        s = sp.getEnemySprite(Direction.RIGHT);
-        assertNotNull(s);
-    }
-
-    /**
-     * Test spritestore to see if an exception is thrown when Direction.DOWN is used.
-     */
-    @Test
-    public void testGetEnemySpriteDirectionDOWN()
-    {
-        SpriteStore sp = new SpriteStore();
-        s = sp.getEnemySprite(Direction.DOWN);
-        assertNotNull(s);
-    }
-
-    /**
-     * Test getPlatformSprite to see if it returns a platform sprite.
-     */
-    @Test
-    public void testGetPlatformSprite()
-    {
-        SpriteStore sp = new SpriteStore();
-        s = sp.getPlatformSprite();
-        assertNotNull(s);
+        ee.expect(IOException.class);
+        ss.loadSprite("/cantfindthisone.png");
     }
 }

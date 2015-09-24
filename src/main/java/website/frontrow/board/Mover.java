@@ -3,10 +3,13 @@ package website.frontrow.board;
 import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
+import website.frontrow.sprite.Sprite;
 import website.frontrow.util.Collision;
 import website.frontrow.util.CollisionHandler;
 import website.frontrow.game.GameConstants;
 import website.frontrow.util.Point;
+
+import java.util.Map;
 
 /**
  * Created by larsstegman on 13-09-15.
@@ -17,9 +20,6 @@ public abstract class Mover
     extends Unit
         implements Logable
 {
-    @SuppressWarnings("visibilitymodifier") // subclasses have to have access to this variable
-    protected Direction direction;
-
     /**
      * Current direction of motion.
      */
@@ -38,17 +38,43 @@ public abstract class Mover
     private CollisionHandler handler;
 
     /**
+     * The sprites for each direction.
+     */
+    private Map<Direction, Sprite> sprites;
+
+    private Direction previousDirection = Direction.RIGHT;
+
+    /**
      * Creates a mover.
      * @param alive Whether the mover is alive.
      * @param location The current location of the mover.
      * @param motion The current motion of the mover.
+     * @param sprites The sprites for this mover.
      */
-    public Mover(boolean alive, Point location, Point motion)
+    public Mover(boolean alive, Point location, Point motion, Map<Direction, Sprite> sprites)
     {
         super(alive, location);
         this.motion = motion;
-        this.direction = Direction.RIGHT;
         this.newMotion = new Point(0, 0);
+        this.sprites = sprites;
+    }
+
+    /**
+     * Returns the sprite for the mover.
+     * @return the sprite.
+     */
+    public Sprite getSprite()
+    {
+        return sprites.get(getDirection());
+    }
+
+    /**
+     * Returns the list of sprites for this mover.
+     * @return The sprites.
+     */
+    public Map<Direction, Sprite> getSprites()
+    {
+        return sprites;
     }
 
     /**
@@ -76,19 +102,15 @@ public abstract class Mover
      */
     public Direction getDirection()
     {
-    	return this.direction;
-    }
-
-    /**
-     * Set the direction the Unit is facing.
-     * Checks whether the direction is a movement along the x-axis
-     * and adjusts the 'faceLeft' value accordingly
-     * @param dir
-     * Sets the Direction value.
-     */
-    public void setDirection(Direction dir)
-    {
-    	this.direction = dir;
+        if(this.motion.getX() > 0)
+        {
+            previousDirection = Direction.RIGHT;
+        }
+        if(this.motion.getX() < 0)
+        {
+            previousDirection = Direction.LEFT;
+        }
+        return previousDirection;
     }
 
     /**
@@ -96,8 +118,6 @@ public abstract class Mover
      */
     public void goLeft()
     {
-        // The horizontal orientation must immediately be changed, so the current horizontal motion
-        // is set to 0.
         this.newMotion.setX(-GameConstants.MOVE_STEP);
     }
 
@@ -107,22 +127,6 @@ public abstract class Mover
     public void goRight()
     {
         this.newMotion.setX(GameConstants.MOVE_STEP);
-    }
-
-    /**
-     * Update the direction variable according to the current motion variable.
-     */
-    private void updateDirection()
-    {
-        if (motion.getX() > 0)
-        {
-            this.setDirection(Direction.RIGHT);
-        }
-        else if (motion.getX() < 0)
-        {
-            this.setDirection(Direction.LEFT);
-        }
-        // Keep current direction if motion is zero.
     }
 
     /**
@@ -151,7 +155,6 @@ public abstract class Mover
     public void tick(Level level)
     {
         this.motion = this.motion.add(newMotion);
-        updateDirection();
         this.newMotion = new Point(0, 0);
 
         double x = this.motion.getX();
@@ -161,15 +164,15 @@ public abstract class Mover
 
         Point movement = motion.divide(GameConstants.TICKS_PER_SEC);
 
-        if (!movement.toString().equals("Point(0.0, 0.0)"))
-        {
-            addToLog("[MOVER]\tMoved to " + movement.toString());
-        }
-
         this.handler = level.getCollisionHandler();
         this.handler.checkUnitsAABB(this, level.getRealCollisionHandler());
+
         this.location = handler.findNextPosition(this).getPoint();
 
+        if (!movement.equals(new Point(0, 0)))
+        {
+            addToLog("[MOVER]\tMoved to " + this.location.toString());
+        }
         applyGravity();
     }
 
