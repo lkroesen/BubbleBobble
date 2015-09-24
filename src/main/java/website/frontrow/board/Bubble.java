@@ -13,18 +13,21 @@ import website.frontrow.util.Point;
  */
 public class Bubble
         extends Mover
-            implements Logable
+        implements Logable
 {
     public static final SpriteStore SS = new SpriteStore();
 
-    private static final Point HIT_MOTION = new Point(0, -2);
+    private static final Point FLOAT_UP_MOTION = new Point(0, -2);
 
     /**
      * The amount of ticks needed to escape.
      */
     private static final long TIME_TO_ESCPAPE = 2 * GameConstants.TICKS_PER_SEC;
 
-    // A bubble can contain an enemy.
+    /**
+     * The enemy the bubble currently contains.
+     * Is null when the bubble is empty.
+     */
     private Enemy contains;
 
     private long timeLeft = TIME_TO_ESCPAPE;
@@ -36,7 +39,6 @@ public class Bubble
 
     /**
      * Constructor of the Bubble Unit.
-     * Input a byte to specify the amount of lives this unit has.
      * @param position The starting position of the bubble.
      * @param motion The starting motion of the bubble.
      */
@@ -136,7 +138,7 @@ public class Bubble
     private void hit()
     {
         this.hit = true;
-        this.setMotion(new Point(HIT_MOTION));
+        this.setMotion(new Point(FLOAT_UP_MOTION));
     }
 
     /**

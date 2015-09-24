@@ -146,6 +146,11 @@ public class Level
         }
     }
 
+    /**
+     * Handle special behavior on death.
+     * @param unit Unit that has died.
+     */
+    // TODO: Replace this with a behavior design pattern maybe?
     private void onUnitDeath(Unit unit)
     {
         if(unit instanceof Bubble)

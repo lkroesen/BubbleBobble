@@ -208,7 +208,6 @@ public class Game
     @Override
     public void levelWon()
     {
-        //stop();
         addToLog("[GAME]\t[WON]\tYou win this round.");
         nextLevel();
     }
