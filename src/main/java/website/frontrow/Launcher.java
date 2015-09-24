@@ -301,7 +301,6 @@ public class Launcher implements Logable
             {
                 musicPlayer.stopSound();
             }
-            game.levelLost();
         });
 
         // Create a DumpLog

@@ -29,6 +29,8 @@ public class GameTest
     private ArrayList<Level> levels = new ArrayList<>();
     @Mock private Level l;
     @Mock private Point po;
+    
+    
 
     /**
      * Test whether starting the game changes the running state.
@@ -132,7 +134,6 @@ public class GameTest
     @Test
     public void testGameOverSetLives()
     {
-
     	levels.add(l);
     	Player p = new Player(po);
     	ArrayList<Player> list = new ArrayList<Player>();
@@ -144,7 +145,6 @@ public class GameTest
     	p.setLives(0);
     	game.tickGO();
     	assertFalse(game.isRunning());
-    	
     }
     
     /**
@@ -221,15 +221,16 @@ public class GameTest
     	game.start();
     	assertTrue(game.isRunning());
     	
-    	assertTrue(p.getLives() == 3);
+    	assertEquals(p.getLives(), 3);
     	
     	p.setLives(2);
-    	assertTrue(p.getLives() == 2);
+    	assertEquals(p.getLives(), 2);
     	
     	p.loseLife();
-    	assertTrue(p.getLives() == 1);
+    	assertEquals(p.getLives(), 1);
     	
     	p.addLife();
-    	assertTrue(p.getLives() == 2);
+    	assertEquals(p.getLives(), 2);
     }
+   
 }

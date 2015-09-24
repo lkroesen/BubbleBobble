@@ -238,8 +238,11 @@ public class Game
     public void levelLost()
     {
     	stop();
-    	levelPack.set(currentIndex+1,gameOver);
-        gameOver();
+    	if(levelPack.size() != 1)
+    	{
+    		levelPack.set(currentIndex+1,gameOver);
+    		gameOver();
+    	}
     }
     
     /**
@@ -270,6 +273,7 @@ public class Game
     {
     	currentLevel = gameOver;
         this.players = currentLevel.getPlayers();
+        stop();
     }
     
     /**
