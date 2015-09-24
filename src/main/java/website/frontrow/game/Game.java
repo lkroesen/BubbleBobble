@@ -255,15 +255,14 @@ public class Game
     	{
     		return false;
     	}
-    	boolean b = true;
     	for(Player p : this.players)
     	{
-    		if (p.playerAlive())
+    		if (p.isAlive())
     		{
-    			b = false;
+    			return false;
     		}
     	}
-    	return b;
+    	return true;
     }
     
     /**
