@@ -22,7 +22,7 @@ public class ArtificialIntelligenceTest
 {
     
 	private ArrayList<Player> players = new ArrayList<>();
-	private Player player = new Player(new Point(0, 0));
+	private Player player = new Player(new Point(0, 0), null);
 	private ArrayList<Unit> units = new ArrayList<>();   
 	private Grid<Cell> emptyGrid = new Grid<>(0, 0);
 	private Level simpleLevel;
@@ -46,7 +46,7 @@ public class ArtificialIntelligenceTest
     @Test
     public void doMovesRandomizerTest()
     {      
-	    	Enemy enemy = new Enemy(p); 
+	    	Enemy enemy = new Enemy(p, null);
 	        units.add(enemy);
 	        enemy.setRandom(0);
 	        simpleLevel = new Level(players, units, emptyGrid);
@@ -69,7 +69,7 @@ public class ArtificialIntelligenceTest
     public void doMovesLeftTest()
     {
       
-        Enemy enemy = new Enemy(p);
+        Enemy enemy = new Enemy(p, null);
         units.add(enemy);
         simpleLevel = new Level(players, units, emptyGrid);
         simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
@@ -87,7 +87,7 @@ public class ArtificialIntelligenceTest
     {
       
         Point q = new Point(-3.0, -3.0);
-    	Enemy enemy = new Enemy(q);
+    	Enemy enemy = new Enemy(q, null);
         units.add(enemy);
         simpleLevel = new Level(players, units, emptyGrid);
         simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
@@ -104,7 +104,7 @@ public class ArtificialIntelligenceTest
     public void doMovesDownTest()
     {
             
-    	Enemy enemy = new Enemy(p);
+    	Enemy enemy = new Enemy(p, null);
         units.add(enemy);
         simpleLevel = new Level(players, units, emptyGrid);
         simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);

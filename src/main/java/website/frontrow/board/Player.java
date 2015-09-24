@@ -5,19 +5,17 @@ import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.sprite.Sprite;
-import website.frontrow.sprite.SpriteStore;
 import website.frontrow.util.Point;
+
+import java.util.Map;
 
 /**
  * The player as part of a game.
  */
 public class Player
         extends Mover
-            implements Logable
+        implements Logable
 {
-
-	private static SpriteStore ss = new SpriteStore();
-	
     /**
      * The points accumulated by the player.
      */
@@ -27,10 +25,11 @@ public class Player
      * The constructor of the Player Unit.
      * Input a byte with the amount of lives the Player has.
      * @param position A players starting position.
+     * @param sprites The sprite for this player.
      */
-    public Player(Point position)
+    public Player(Point position, Map<Direction, Sprite> sprites)
     {
-        super(true, position, new Point(0, 0));
+        super(true, position, new Point(0, 0), sprites);
         new Log();
         addToLog("[PLAYER]\t[SPAWN]\tPlayer created.");
     }
@@ -52,16 +51,6 @@ public class Player
     {
         addToLog("[PLAYER]\t[SCORE]\tScore increased by " + p);
         score += p;
-    }
-    
-    /**
-     * Returns the sprite of the unit, Player/Enemy/Empty respectively.
-     * @return The sprite.
-     */
-    @Override
-    public Sprite getSprite()
-    {
-    	return ss.getPlayerSprite(this.getDirection());
     }
 
     @Override

@@ -1,192 +1,57 @@
 package website.frontrow.sprite;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import website.frontrow.board.Direction;
-import website.frontrow.logger.Log;
-import website.frontrow.logger.Logable;
+import javax.imageio.ImageIO;
 
 /**
  * A store to get sprites.
  */
 public class SpriteStore
-		implements Logable
 {
-    private static ImageStore is = new ImageStore();
-    
     /**
      * A map to store sprite images in, so they don't need to be read every time.
      */
-    private static Map<String, StaticImageSprite> spriteMap = new HashMap<>();
-
-    /**
-     * The wall sprite.
-     * @return The sprite.
-     */
-    public Sprite getWallSprite()
-    {
-    	StaticImageSprite sprite = spriteMap.get("Wall");
-    	
-    	if(sprite != null)
-        {
-    		return sprite;
-    	}
-    	else
-        {
-			addToLog("[WARNING]\t[SPRITESTORE]\tWall Sprite was null.");
-    		sprite = new StaticImageSprite(is.getWallImage());
-    		spriteMap.put("Wall", sprite);
-    		return sprite;
-    	}
-        
-    }
+    private static Map<String, Sprite> spriteMap = new HashMap<>();
 
 	/**
-	 * The Bubble sprite.
-	 * @return
-	 * The sprite.
+	 * Loads a sprite.
+	 * @param resource The location of the file.
+	 * @return The sprite.
+	 * @throws IOException The file might not be found.
 	 */
-	public Sprite getBubbleSprite()
+	public Sprite loadSprite(String resource) throws IOException
 	{
-		StaticImageSprite sprite = spriteMap.get("Bubble");
-
-		if(sprite != null)
+		Sprite sprite = spriteMap.get(resource);
+		if(sprite == null)
 		{
-			return sprite;
+			sprite = loadSpriteFromResource(resource);
+			spriteMap.put(resource, sprite);
 		}
-		else
-		{
-			addToLog("[WARNING]\t[SPRITESTORE]\tBubble Sprite was null.");
-			sprite = new StaticImageSprite(is.getBubbleImage());
-			spriteMap.put("Bubble", sprite);
-			return sprite;
-		}
+		return sprite;
 	}
-    
-    /**
-     * The platform sprite.
-     * @return The sprite.
-     */
-    public Sprite getPlatformSprite()
-    {
-    	StaticImageSprite sprite = spriteMap.get("Platform");
-    	
-    	if(sprite != null)
-        {
-    		return sprite;
-    	}
-    	else
-        {
-			addToLog("[WARNING]\t[SPRITESTORE]\tPlatform Sprite was null.");
-    		sprite = new StaticImageSprite(is.getPlatformImage());
-    		spriteMap.put("Platform", sprite);
-    		return sprite;
-    	}
-    }
-    
-    /**
-     * The player sprite, can differ depending on the units face direction.
-     * @param face The direction the player is facing.
-     *             Allowed values: LEFT, RIGHT.
-     * @return The sprite.
-     */
-	// Don't suppress the method length warning, this method should really be refactored.
-    public Sprite getPlayerSprite(Direction face)
-    {
-    	StaticImageSprite sprite;
-    	
-    	switch(face)
-        {
-			case UP:
-			case DOWN:
-			case LEFT:
-            	sprite = spriteMap.get("PlayerLeft");
-            	
-            	if(sprite != null)
-                {
-            		return sprite;
-            	}
-            	else
-                {
-					addToLog("[WARNING]\t[SPRITESTORE]\tPlayer Sprite LEFT was null.");
-            		sprite = new StaticImageSprite(is.getPlayerLeftImage());
-            		spriteMap.put("PlayerLeft", sprite);
-            		return sprite;
-            	}
-            case RIGHT:
-            	sprite = spriteMap.get("PlayerRight");
-            	
-            	if(sprite != null)
-                {
-            		return sprite;
-            	}
-            	else
-                {
-					addToLog("[WARNING]\t[SPRITESTORE]\tPlayer Sprite RIGHT was null.");
-            		sprite = new StaticImageSprite(is.getPlayerRightImage());
-            		spriteMap.put("PlayerRight", sprite);
-            		return sprite;
-            	}
-			default:
-				return new EmptySprite();
-        }
-    }
-    
-    /**
-     * The enemy sprite, can differ depending on the units face direction.
-     * @param face The direction the enemy is facing.
-     *             Allowed values: LEFT, RIGHT.
-     * @return The sprite.
-     */
-	// Don't suppress the method length warning, this method should really be refactored.
-    public Sprite getEnemySprite(Direction face)
-    {
-        StaticImageSprite sprite;
-        
-    	switch(face)
-        {
-			case UP:
-			case DOWN:
-        	case LEFT:
-            	sprite = spriteMap.get("EnemyLeft");
-            	
-            	if(sprite != null)
-                {
-            		return sprite;
-            	}
-            	else
-                {
-					addToLog("[WARNING]\t[SPRITESTORE]\tEnemy Sprite LEFT was null.");
-            		sprite = new StaticImageSprite(is.getEnemyLeftImage());
-            		spriteMap.put("EnemyLeft", sprite);
-            		return sprite;
-            	}
-            case RIGHT:
-            	sprite = spriteMap.get("EnemyRight");
-            	
-            	if(sprite != null)
-                {
-            		return sprite;
-            	}
-            	else
-				{
-					addToLog("[WARNING]\t[SPRITESTORE]\tWall Sprite RIGHT was null.");
-					sprite = new StaticImageSprite(is.getEnemyRightImage());
-					spriteMap.put("EnemyRight", sprite);
-					return sprite;
-				}
-			default: return new EmptySprite();
-        }
-    }
 
 	/**
-	 * Input a String to be logged.
-	 * @param action Input a String that is the action performed.
+	 * Returns a sprite based on the specified resource.
+	 * @param resource The location of the file.
+	 * @return The sprite.
+	 * @throws IOException Is thrown when the specified file is cannot be found.
 	 */
-	@Override
-	public void addToLog(String action)
+	private Sprite loadSpriteFromResource(String resource) throws IOException
 	{
-		Log.add(action);
+		try (InputStream input = SpriteStore.class.getResourceAsStream(resource))
+		{
+			if(input == null)
+			{
+				throw new IOException("Could not find specified resource " + resource);
+			}
+
+			BufferedImage image = ImageIO.read(input);
+			return new StaticImageSprite(image);
+		}
 	}
 }

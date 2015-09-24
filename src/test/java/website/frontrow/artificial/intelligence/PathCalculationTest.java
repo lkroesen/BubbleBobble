@@ -99,14 +99,14 @@ public class PathCalculationTest
     @Test
     public void calculateXPathListTest()
     {
-    	Enemy enemyOne = new Enemy(new Point(0, 0));
-    	Enemy enemyTwo = new Enemy(new Point(1, 1));
-    	Enemy enemyThree = new Enemy(new Point(2, 2));
+    	Enemy enemyOne = new Enemy(new Point(0, 0), null);
+    	Enemy enemyTwo = new Enemy(new Point(1, 1), null);
+    	Enemy enemyThree = new Enemy(new Point(2, 2), null);
     	ArrayList<Enemy> enemies = new ArrayList<>();
     	enemies.add(enemyOne);
     	enemies.add(enemyTwo);
     	enemies.add(enemyThree);
-    	Player player = new Player(new Point(1, 1));
+    	Player player = new Player(new Point(1, 1), null);
     	
     	ArrayList<Integer> moves = PathCalculation.calculateXPath(player, enemies, simpleLevel);
     	assertTrue(moves.size() == enemies.size());
@@ -118,10 +118,10 @@ public class PathCalculationTest
     @Test
     public void calculateXPathLeftTest()
     {
-    	Enemy enemyOne = new Enemy(new Point(2, 2));
+    	Enemy enemyOne = new Enemy(new Point(2, 2), null);
     	ArrayList<Enemy> enemies = new ArrayList<>();
     	enemies.add(enemyOne);
-    	Player player = new Player(new Point(1, 1));
+    	Player player = new Player(new Point(1, 1), null);
     	
     	ArrayList<Integer> moves = PathCalculation.calculateXPath(player, enemies, simpleLevel);
     	assertTrue(moves.get(0) == -1);
@@ -133,10 +133,10 @@ public class PathCalculationTest
     @Test
     public void calculateXPathRightTest()
     {
-    	Enemy enemyOne = new Enemy(new Point(0, 0));
+    	Enemy enemyOne = new Enemy(new Point(0, 0), null);
     	ArrayList<Enemy> enemies = new ArrayList<>();
     	enemies.add(enemyOne);
-    	Player player = new Player(new Point(1, 1));
+    	Player player = new Player(new Point(1, 1), null);
     	
     	ArrayList<Integer> moves = PathCalculation.calculateXPath(player, enemies, simpleLevel);
     	assertTrue(moves.get(0) == 1);
@@ -148,10 +148,10 @@ public class PathCalculationTest
     @Test
     public void calculateXPathStandingStillTest()
     {
-    	Enemy enemyOne = new Enemy(new Point(1, 1));
+    	Enemy enemyOne = new Enemy(new Point(1, 1), null);
     	ArrayList<Enemy> enemies = new ArrayList<>();
     	enemies.add(enemyOne);
-    	Player player = new Player(new Point(1, 1));
+    	Player player = new Player(new Point(1, 1), null);
     	
     	ArrayList<Integer> moves = PathCalculation.calculateXPath(player, enemies, simpleLevel);
     	assertTrue(moves.get(0) == 0);
@@ -163,14 +163,14 @@ public class PathCalculationTest
     @Test
     public void calculateYPathListTest()
     {
-    	Enemy enemyOne = new Enemy(new Point(0, 0));
-    	Enemy enemyTwo = new Enemy(new Point(1, 1));
-    	Enemy enemyThree = new Enemy(new Point(2, 2));
+    	Enemy enemyOne = new Enemy(new Point(0, 0), null);
+    	Enemy enemyTwo = new Enemy(new Point(1, 1), null);
+    	Enemy enemyThree = new Enemy(new Point(2, 2), null);
     	ArrayList<Enemy> enemies = new ArrayList<>();
     	enemies.add(enemyOne);
     	enemies.add(enemyTwo);
     	enemies.add(enemyThree);
-    	Player player = new Player(new Point(1, 1));
+    	Player player = new Player(new Point(1, 1), null);
     	
     	ArrayList<Integer> moves = PathCalculation.calculateYPath(player, enemies, simpleLevel);
     	assertTrue(moves.size() == enemies.size());
@@ -182,10 +182,10 @@ public class PathCalculationTest
     @Test
     public void calculateYPathUpTest()
     {
-    	Enemy enemyOne = new Enemy(new Point(2, 2));
+    	Enemy enemyOne = new Enemy(new Point(2, 2), null);
     	ArrayList<Enemy> enemies = new ArrayList<>();
     	enemies.add(enemyOne);
-    	Player player = new Player(new Point(1, 1));
+    	Player player = new Player(new Point(1, 1), null);
     	
     	ArrayList<Integer> moves = PathCalculation.calculateYPath(player, enemies, simpleLevel);
     	assertTrue(moves.get(0) == -1);
@@ -197,10 +197,10 @@ public class PathCalculationTest
     @Test
     public void calculateYPathDownTest()
     {
-    	Enemy enemyOne = new Enemy(new Point(0, 0));
+    	Enemy enemyOne = new Enemy(new Point(0, 0), null);
     	ArrayList<Enemy> enemies = new ArrayList<>();
     	enemies.add(enemyOne);
-    	Player player = new Player(new Point(1, 1));
+    	Player player = new Player(new Point(1, 1), null);
     	
     	ArrayList<Integer> moves = PathCalculation.calculateYPath(player, enemies, simpleLevel);
     	assertTrue(moves.get(0) == 1);
@@ -212,10 +212,10 @@ public class PathCalculationTest
     @Test
     public void calculateYPathStandingStillTest()
     {
-    	Enemy enemyOne = new Enemy(new Point(1, 1));
+    	Enemy enemyOne = new Enemy(new Point(1, 1), null);
     	ArrayList<Enemy> enemies = new ArrayList<>();
     	enemies.add(enemyOne);
-    	Player player = new Player(new Point(1, 1));
+    	Player player = new Player(new Point(1, 1), null);
     	
     	ArrayList<Integer> moves = PathCalculation.calculateYPath(player, enemies, simpleLevel);
     	assertTrue(moves.get(0) == 0);
