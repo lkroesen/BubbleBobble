@@ -11,13 +11,12 @@ import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.ui.Action;
 import website.frontrow.ui.JBubbleBobbleUI;
 import website.frontrow.game.GameConstants;
-import website.frontrow.util.LevelCollecter;
+import website.frontrow.util.FileNameCollector;
 import website.frontrow.util.MusicPlayer;
 import website.frontrow.util.Point;
 import website.frontrow.logger.Logable;
 
 import java.awt.event.KeyEvent;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -54,7 +53,15 @@ public class Launcher implements Logable
         new Log();
         Log.togglePrinting();
 
-        new Launcher().start(new LevelCollecter().obtain("/level/"));
+        try
+        {
+            new Launcher().start(new FileNameCollector().obtain("/level/"));
+        }
+        catch (URISyntaxException exception)
+        {
+            Log.add("[LAUNCHER]\t[ERROR]\tLauncher couldn't start due to FileNameCollector.");
+            exception.printStackTrace();
+        }
     }
 
     /**
