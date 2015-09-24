@@ -30,7 +30,7 @@ public class GameTest
 {
     @SuppressWarnings("visibilitymodifier")
     private ArrayList<Level> levels = new ArrayList<>();
-    @Mock private Level l;
+    @Mock private Level level;
     @Mock private Point point;
     @Mock private Map<Direction, Sprite> map;   
 
@@ -40,7 +40,7 @@ public class GameTest
     @Test
     public void testStart()
     {
-        levels.add(l);
+        levels.add(level);
 
         Game game = new Game(levels, null);
         game.start();
@@ -54,7 +54,7 @@ public class GameTest
     @Test
     public void testStartStopped()
     {
-        levels.add(l);
+        levels.add(level);
 
         Game game = new Game(levels, null);
         assertFalse(game.isRunning());
@@ -66,7 +66,7 @@ public class GameTest
     @Test
     public void testStop()
     {
-        levels.add(l);
+        levels.add(level);
 
         Game game = new Game(levels, null);
         game.start();
@@ -80,7 +80,7 @@ public class GameTest
     @Test
     public void testGetScore()
     {
-        levels.add(l);
+        levels.add(level);
 
         Game game = new Game(levels, null);
         assertEquals(0, game.getScore());
@@ -92,7 +92,7 @@ public class GameTest
     @Test
     public void testSetScore()
     {
-        levels.add(l);
+        levels.add(level);
 
         Game game = new Game(levels, null);
         game.setScore(15);
@@ -107,7 +107,7 @@ public class GameTest
     @Test
     public void testTick1()
     {
-        levels.add(l);
+        levels.add(level);
 
         Game game = new Game(levels, null);
         assertFalse(game.isRunning());
@@ -121,7 +121,7 @@ public class GameTest
     @Test
     public void testTick2()
     {
-        levels.add(l);
+        levels.add(level);
 
         Game game = new Game(levels, null);
         game.start();
@@ -136,7 +136,7 @@ public class GameTest
     @Test
     public void testGameOverSetLives()
     {
-    	levels.add(l);
+    	levels.add(level);
     	Player p = new Player(point, map);
     	ArrayList<Player> list = new ArrayList<Player>();
     	list.add(p);
@@ -155,7 +155,7 @@ public class GameTest
     @Test
     public void testGameOverLoseLife()
     {
-    	levels.add(l);
+    	levels.add(level);
     	Player p = new Player(point, map);
     	ArrayList<Player> list = new ArrayList<Player>();
     	list.add(p);
@@ -185,7 +185,7 @@ public class GameTest
     @Test
     public void testAddLife()
     {
-    	levels.add(l);
+    	levels.add(level);
     	Player p = new Player(point, map);
     	ArrayList<Player> list = new ArrayList<Player>();
     	list.add(p);
@@ -215,7 +215,7 @@ public class GameTest
     @Test
     public void testGetLife()
     {
-    	levels.add(l);
+    	levels.add(level);
     	Player p = new Player(point, map);
     	ArrayList<Player> list = new ArrayList<Player>();
     	list.add(p);
