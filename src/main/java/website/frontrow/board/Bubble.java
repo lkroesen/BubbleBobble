@@ -1,10 +1,7 @@
 package website.frontrow.board;
 
 import website.frontrow.game.GameConstants;
-<<<<<<< HEAD
 import website.frontrow.level.Level;
-=======
->>>>>>> dev
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.sprite.Sprite;
