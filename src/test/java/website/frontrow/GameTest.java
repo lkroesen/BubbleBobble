@@ -1,8 +1,10 @@
 package website.frontrow;
 
+import website.frontrow.board.Direction;
 import website.frontrow.board.Player;
 import website.frontrow.game.Game;
 import website.frontrow.level.Level;
+import website.frontrow.sprite.Sprite;
 import website.frontrow.util.Point;
 
 import org.junit.Test;
@@ -11,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -28,9 +31,8 @@ public class GameTest
     @SuppressWarnings("visibilitymodifier")
     private ArrayList<Level> levels = new ArrayList<>();
     @Mock private Level l;
-    @Mock private Point po;
-    
-    
+    @Mock private Point point;
+    @Mock private Map<Direction, Sprite> map;   
 
     /**
      * Test whether starting the game changes the running state.
@@ -135,7 +137,7 @@ public class GameTest
     public void testGameOverSetLives()
     {
     	levels.add(l);
-    	Player p = new Player(po);
+    	Player p = new Player(point, map);
     	ArrayList<Player> list = new ArrayList<Player>();
     	list.add(p);
     	Game game = new Game(levels, list);
@@ -154,7 +156,7 @@ public class GameTest
     public void testGameOverLoseLife()
     {
     	levels.add(l);
-    	Player p = new Player(po);
+    	Player p = new Player(point, map);
     	ArrayList<Player> list = new ArrayList<Player>();
     	list.add(p);
     	Game game = new Game(levels, list);
@@ -184,7 +186,7 @@ public class GameTest
     public void testAddLife()
     {
     	levels.add(l);
-    	Player p = new Player(po);
+    	Player p = new Player(point, map);
     	ArrayList<Player> list = new ArrayList<Player>();
     	list.add(p);
     	Game game = new Game(levels, list);
@@ -214,7 +216,7 @@ public class GameTest
     public void testGetLife()
     {
     	levels.add(l);
-    	Player p = new Player(po);
+    	Player p = new Player(point, map);
     	ArrayList<Player> list = new ArrayList<Player>();
     	list.add(p);
     	Game game = new Game(levels, list);
