@@ -11,13 +11,16 @@ import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.ui.Action;
 import website.frontrow.ui.JBubbleBobbleUI;
 import website.frontrow.game.GameConstants;
+import website.frontrow.util.LevelCollecter;
 import website.frontrow.util.MusicPlayer;
 import website.frontrow.util.Point;
 import website.frontrow.logger.Logable;
 
 import java.awt.event.KeyEvent;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,9 +52,9 @@ public class Launcher implements Logable
     {
         // Initialize the Logger Class, so that it can Log actions taken.
         new Log();
+        Log.togglePrinting();
 
-        String[] levels = {"/level/1.txt", "/level/2.txt", "/level/3.txt"};
-        new Launcher().start(levels);
+        new Launcher().start(new LevelCollecter().obtain("/level/"));
     }
 
     /**
@@ -60,8 +63,6 @@ public class Launcher implements Logable
      */
     public void start(String[] filename)
     {
-        Log.togglePrinting();
-
         addToLog("[LAUNCHER]\tLoading file: " + filename + ".");
 
         try
