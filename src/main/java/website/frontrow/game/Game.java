@@ -2,11 +2,14 @@ package website.frontrow.game;
 
 import website.frontrow.board.Player;
 import website.frontrow.level.Level;
+import website.frontrow.level.MapParser;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.level.Level.LevelObserver;
-
 import website.frontrow.ui.JBubbleKeyListener;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
@@ -18,6 +21,7 @@ public class Game
     private int score = 0;
     private int currentIndex;
     private Level currentLevel;
+    private Level gameOver;
     private ArrayList<Level> levelPack;
 
     private boolean running = false;
@@ -233,8 +237,9 @@ public class Game
     @Override
     public void levelLost()
     {
+    	stop();
+    	levelPack.set(currentIndex+1,gameOver);
         gameOver();
-        stop();
     }
     
     /**
@@ -261,8 +266,19 @@ public class Game
     /**
      * Adds Game Over message to log.
      */
-    public void gameOver()
+    public void gameOver() 
     {
-    	addToLog("GAME OVER");
+    	currentLevel = gameOver;
+        this.players = currentLevel.getPlayers();
+    }
+    
+    /**
+     * The setter for gameOver.
+     * @param l Level
+     */
+    public void setGameOver(Level l)
+    {
+    	gameOver = l;
+    	levelPack.add(gameOver);
     }
 }

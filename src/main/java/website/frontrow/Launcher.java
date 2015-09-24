@@ -79,6 +79,10 @@ public class Launcher implements Logable
             Game game = new Game(levelList, levelList.get(0).getPlayers());
             Map<Integer, Action> keyMappings = createSinglePlayerKeyMappings(game);
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
+            
+            InputStream map = getClass().getResourceAsStream("/game_over.txt");
+    		Level go = mp.parseMap(map);
+    		game.setGameOver(go);
 
             game.setKeyListener(ui.getKeyListener());
 
@@ -297,6 +301,7 @@ public class Launcher implements Logable
             {
                 musicPlayer.stopSound();
             }
+            game.levelLost();
         });
 
         // Create a DumpLog
