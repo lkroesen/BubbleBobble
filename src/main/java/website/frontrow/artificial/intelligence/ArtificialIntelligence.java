@@ -81,22 +81,15 @@ public class ArtificialIntelligence
 	 */
 	private void randomizer(Enemy enemy)
 	{
-		Random r = new Random();
+		
 		enemy.setTickCounter(enemy.getTickCounter() + 1);
 		
 		if(enemy.getTickCounter() >= GameConstants.TICKS_PER_MOVE)
 		{
+			Random r = new Random();
 			float chance = r.nextFloat();
 			enemy.setTickCounter(0);
-			
-			if (chance <= GameConstants.AI_RANDOMIZER)
-			{
-				enemy.setRandom(true);
-			}
-			else
-			{
-				enemy.setRandom(false);
-			}
+			enemy.setRandom(chance);
 		}
 	}
 	
@@ -106,28 +99,64 @@ public class ArtificialIntelligence
 	 * @param enemy, the enemy that is moving.
 	 * @param x, the x direction the unit should move to.
 	 * @param y, the y direction the unit should move to.
+	 * 
+	 * It's a random: there are magic numbers involved.
+	 * There are 20 lines of brackets in this methods, so it's a little long...
 	 */
+	
+	@SuppressWarnings({"checkstyle:methodlength", "checkstyle:magicnumber"})
 	private void doMoves(Enemy enemy, int x, int y)
 	{
-		if (enemy.getRandom())
-		{
-		    //TODO: Improve the way things are randomized
-			x = 0;
-			y = 0;
-		}
 		
+		if (enemy.getRandom() < GameConstants.AI_RANDOMIZER)
+		{	
+			if(enemy.getRandom() < (0.03f * GameConstants.AI_RANDOMIZER))
+			{
+				enemy.jump();				
+			}
+			else if(enemy.getRandom() < (0.50f * GameConstants.AI_RANDOMIZER))
+			{
+				enemy.goLeft();
+			}
+			else if(enemy.getRandom() < (1.00f * GameConstants.AI_RANDOMIZER))
+			{
+				enemy.goRight();
+			}
+			return;			
+		}		
+		if(y == 1)
+		{
+			if(enemy.getLastWall())
+			{
+				enemy.goLeft();
+			}
+			else
+			{
+				enemy.goRight();
+			}
+			if(enemy.getLocation().getX() < 3.5)
+			{
+				enemy.setLastWall(false);
+			}
+			else if(enemy.getLocation().getX() > this.level.getCells().getWidth() - 3.5)
+			{
+				enemy.setLastWall(true);
+			}
+			return;
+		}		
 		if(x == 1)
 		{
 			enemy.goRight();
 		}
-		else if(x == -1)
+		
+		if(x == -1)
 		{
 			enemy.goLeft();
-		}
+		}		
 		
 		if(y == -1)
 		{
-			enemy.jump();
+			enemy.jump();			
 		}
 	}
 }

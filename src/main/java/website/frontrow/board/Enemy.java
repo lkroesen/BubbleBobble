@@ -17,7 +17,8 @@ public class Enemy
 
 	private static SpriteStore ss = new SpriteStore();
 	private int tickCounter;
-	private Boolean random;
+	private float random;
+	private Boolean lastWall;
 	
     /**
      * Constructor of the Enemy Unit.
@@ -28,7 +29,8 @@ public class Enemy
     {
         super(true, position, new Point(0, 0));
         this.tickCounter = 0;
-        this.random = false;
+        this.random = 1.00f;
+        this.lastWall = false;
         new Log();
         addToLog("[BUBBLE]\t[SPAWN]\tEnemy created.");
     }
@@ -72,21 +74,39 @@ public class Enemy
     }
     
     /**
-     * Return the random boolean.
-     * @return the random boolean.
+     * Return the random float.
+     * @return the random float.
      */
-    public Boolean getRandom()
+    public float getRandom()
     {
     	return this.random;
     }
     
     /**
-     * Set the random boolean.
-     * @param rand the value to set the boolean to.
+     * Set the random float.
+     * @param rand the value to set the float to.
      */
-    public void setRandom(Boolean rand)
+    public void setRandom(float rand)
     {
     	this.random = rand;
+    }
+    
+    /**
+     * Return the lastWall boolean.
+     * @return the lastWall boolean.
+     */
+    public Boolean getLastWall()
+    {
+    	return this.lastWall;
+    }
+    
+    /**
+     * Set the lastWall boolean.
+     * @param lastWall the value to set the boolean to.
+     */
+    public void setLastWall(Boolean lastWall)
+    {
+    	this.lastWall = lastWall;
     }
     
     /**

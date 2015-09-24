@@ -62,7 +62,7 @@ public abstract class GameConstants
     /**
      * Percentage of enemy movements that is randomized.
      */
-    public static final float AI_RANDOMIZER = 0.25f;
+    public static final float AI_RANDOMIZER = 0.20f;
     
     /**
      * Amount of ticks per enemy move update.

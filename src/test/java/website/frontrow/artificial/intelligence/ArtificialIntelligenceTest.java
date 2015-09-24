@@ -41,42 +41,25 @@ public class ArtificialIntelligenceTest
     }
     
     /**
-     * See if the random alters expected behaviour.
-     */
-    @Test
-    public void doMovesRandomTest()
-    {      
-        Enemy enemy = new Enemy(p); 
-        units.add(enemy);
-        enemy.setRandom(true);
-        simpleLevel = new Level(players, units, emptyGrid);
-        simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
-        simpleArtificialIntelligence.aiMover();
-        simpleLevel.tick();
-        
-        //TODO: update this test when random changes.
-        
-        assertTrue(enemy.getLocation() == p);
-    }
-    
-    /**
      * Test the randomizer.
      */
     @Test
     public void doMovesRandomizerTest()
     {      
-        Enemy enemy = new Enemy(p); 
-        units.add(enemy);
-        enemy.setRandom(true);
-        simpleLevel = new Level(players, units, emptyGrid);
-        simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
-        simpleArtificialIntelligence.aiMover();
-        
-        for(int i = 0; i <= GameConstants.TICKS_PER_MOVE + 1; i++)
-        {
-        	simpleLevel.tick();
-        }
-        assertTrue(enemy.getRandom() || !enemy.getRandom());
+	    	Enemy enemy = new Enemy(p); 
+	        units.add(enemy);
+	        enemy.setRandom(0);
+	        simpleLevel = new Level(players, units, emptyGrid);
+	        simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
+	        simpleArtificialIntelligence.aiMover();
+	        
+	        for(int i = 0; i <= GameConstants.TICKS_PER_MOVE + 1; i++)
+	        {
+	        	simpleLevel.tick();
+	        	
+	        }
+	        
+	        assertTrue(enemy.getRandom() < 1);
     }
     
     /**
