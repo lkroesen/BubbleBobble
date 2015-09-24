@@ -92,7 +92,7 @@ public class Bubble
     }
 
     @Override
-    public Unit clone()
+    public Unit duplicate()
     {
         return new Bubble(location, motion);
     }

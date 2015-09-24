@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Class containing a level and positions of entities therein.
  */
 public class Level
-    implements Logable, Cloneable
+    implements Logable
 {
 
     private ConcurrentLinkedQueue<Unit> toAdd = new ConcurrentLinkedQueue<>();
@@ -38,16 +38,16 @@ public class Level
     private final RealCollisionHandler realCollisionHandler = new RealCollisionHandler();
 
     /**
-     * Clones the current level.
-     * @return A clone of the current level.
+     * Duplicates the current level.
+     * @return A duplicate of the current level.
      */
-    public Level clone()
+    public Level duplicate()
     {
         ArrayList<Unit> units = new ArrayList<>(this.getUnits().size());
         ArrayList<Player> players = new ArrayList<>(this.getPlayers().size());
         for (Unit unit: this.units)
         {
-            Unit clone = unit.clone();
+            Unit clone = unit.duplicate();
             units.add(clone);
             if(clone instanceof Player)
             {

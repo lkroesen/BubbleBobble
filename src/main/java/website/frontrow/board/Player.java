@@ -75,7 +75,7 @@ public class Player
     }
 
     @Override
-    public Unit clone()
+    public Unit duplicate()
     {
         return new Player(location);
     }

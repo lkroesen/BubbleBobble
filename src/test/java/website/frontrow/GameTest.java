@@ -37,7 +37,7 @@ public class GameTest
     @Before
     public void setUp()
     {
-        when(level.clone()).thenReturn(level);
+        when(level.duplicate()).thenReturn(level);
         levels.add(level);
 
         game = new Game(levels);

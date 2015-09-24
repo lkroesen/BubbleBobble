@@ -11,7 +11,6 @@ import website.frontrow.util.Point;
  * A Unit, or Entity is something that is part of a level, but not restricted to grid cells.
  */
 public abstract class Unit
-    implements Cloneable
 {
     /**
      * Amount of lives an entity has.
@@ -123,10 +122,10 @@ public abstract class Unit
     }
 
     /**
-     * Create a clone of the current unit.
+     * Create a duplicate of the current unit.
      * @return Clone the current unit.
      */
-    public abstract Unit clone();
+    public abstract Unit duplicate();
 
     /**
      * Get the width and height for the bounding box.

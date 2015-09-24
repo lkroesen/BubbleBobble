@@ -61,7 +61,7 @@ public class Game
      */
     private void loadCurrentLevel()
     {
-        this.currentLevel = levelPack.get(currentIndex).clone();
+        this.currentLevel = levelPack.get(currentIndex).duplicate();
         if(currentLevel != null)
         {
             currentLevel.addObserver(this);

@@ -11,7 +11,7 @@ public class Point
 
     /**
      * Clone a point.
-     * @param point Point to clone.
+     * @param point Point to duplicate.
      */
     public Point(Point point)
     {

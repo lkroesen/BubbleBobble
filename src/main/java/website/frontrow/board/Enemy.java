@@ -39,7 +39,7 @@ public class Enemy
     }
 
     @Override
-    public Unit clone()
+    public Unit duplicate()
     {
         return new Enemy(location);
     }
