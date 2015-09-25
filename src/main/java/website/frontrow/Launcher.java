@@ -85,7 +85,7 @@ public class Launcher implements Logable
                 levelList.add(level);
             }
 
-            Game game = new Game(levelList, levelList.get(0).getPlayers());
+            Game game = new Game(levelList);
             Map<Integer, Action> keyMappings = createSinglePlayerKeyMappings(game);
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
             

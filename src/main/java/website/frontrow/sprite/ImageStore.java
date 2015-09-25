@@ -38,6 +38,7 @@ public class ImageStore
             throw new RuntimeException("Could not load icon " + filename, e);
         }
     }
+
     /**
      * Loads the image.
      * @param filename The filename

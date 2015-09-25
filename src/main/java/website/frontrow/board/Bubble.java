@@ -1,6 +1,7 @@
 package website.frontrow.board;
 
 import website.frontrow.game.GameConstants;
+import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.sprite.Sprite;
@@ -13,15 +14,26 @@ import java.util.Map;
  */
 public class Bubble
         extends Mover
-            implements Logable
+        implements Logable
 {
 
-    // A bubble can contain an enemy.
+    private static final Point FLOAT_UP_MOTION = new Point(0, -2);
+
+    /**
+     * The enemy the bubble currently contains.
+     * Is null when the bubble is empty.
+     */
     private Enemy contains;
+
+    private long timeContained = 0;
+
+    /**
+     * Did this bubble hit something?
+     */
+    private boolean hit = false;
 
     /**
      * Constructor of the Bubble Unit.
-     * Input a byte to specify the amount of lives this unit has.
      * @param position The starting position of the bubble.
      * @param motion The starting motion of the bubble.
      * @param sprites The sprites for this bubble.
@@ -51,26 +63,43 @@ public class Bubble
         addToLog("[BUBBLE]\t" + other.toString() + " captured by bubble.");
 
         this.contains = other;
+
+        this.hit();
         // Kill the enemy for good measure.
         // (Do not forget to revive and re-add to the level when he escapes.)
         other.kill();
     }
 
-    /**
-     * Set an enemy to be contained by a bubble.
-     * @param contains
-     * Sets the enemy as contained by the bubble.
-     */
-    public void setContains(Enemy contains)
+    @Override
+    public void tick(Level level)
     {
-        this.contains = contains;
+        super.tick(level);
+
+        if(this.contains != null)
+        {
+            timeContained++;
+
+            if(timeContained >= this.contains.getChaughtTime())
+            {
+                this.contains.revive();
+                this.contains.setLocation(this.location);
+                level.addUnit(this.contains);
+                this.kill();
+            }
+        }
+    }
+
+    @Override
+    public Unit duplicate()
+    {
+        return new Bubble(location, motion, this.getSprites());
     }
 
     @Override
     public void onWallCollision()
     {
         addToLog("[BUBBLE]\tHit wall.");
-        this.kill();
+        this.hit();
     }
 
     @Override
@@ -88,6 +117,24 @@ public class Bubble
     {
     	return GameConstants.BUBBLE_SPEED_MULTIPLIER;
     }    
+
+    /**
+     * Check whether this bubble has hit something.
+     * @return Was this bubble hit.
+     */
+    public boolean isHit()
+    {
+        return hit;
+    }
+
+    /**
+     * Change the bubble to a hit bubble.
+     */
+    private void hit()
+    {
+        this.hit = true;
+        this.setMotion(new Point(FLOAT_UP_MOTION));
+    }
 
     /**
      * Add log to action that happened to the bubble.

@@ -5,8 +5,11 @@ import website.frontrow.util.Point;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -36,18 +39,6 @@ public class BubbleTest
     }
 
     /**
-     * Test contains.
-     */
-    @Test
-    public void containsTest()
-    {
-        Bubble b = new Bubble(super.p, super.m, null);
-        Enemy e = new Enemy(super.p, null);
-        b.setContains(e);
-        assertEquals(b.getContains(), e);
-    }
-
-    /**
      * Capture test.
      */
     @Test
@@ -60,6 +51,35 @@ public class BubbleTest
         verify(enemy, times(1)).kill();
         assertSame(enemy, bubble.getContains());
 
+    }
+
+    /**
+     * Testing whether the bubble properly changes state after hitting a wall.
+     */
+    @Test
+    public void onHitTest()
+    {
+        Bubble bubble = new Bubble(new Point(0, 0), new Point(0, 0), null);
+        bubble.onWallCollision();
+
+        assertTrue(bubble.isHit());
+    }
+
+    /**
+     * Test whether escaping from a bubble works.
+     */
+    @Test
+    public void testEscapeFromBubble()
+    {
+        Bubble bubble = new Bubble(new Point(0, 0), new Point(0, 0), null);
+        Enemy enemy = mock(Enemy.class);
+
+        when(enemy.getChaughtTime()).thenReturn(0L);
+
+        bubble.capture(enemy);
+        bubble.tick(emptyLevel);
+
+        verify(enemy, times(1)).revive();
     }
 
     @Override

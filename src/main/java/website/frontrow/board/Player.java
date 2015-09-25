@@ -25,6 +25,13 @@ public class Player
      * The amount of lives the player has.
      */
     private int lives;
+
+
+    private static final int INVINCIBILITY_TICKS = GameConstants.TICKS_PER_SEC;
+    /**
+     * The amount of ticks the player is still immune to losing lives.
+     */
+    private int ticksLeft = 0;
     
     /**
      * To avoid Checkstyle warnings.
@@ -74,6 +81,11 @@ public class Player
         {
             getMotion().setX(0);
         }
+
+        if(ticksLeft > 0)
+        {
+            ticksLeft--;
+        }
     }
     
     /**
@@ -86,6 +98,12 @@ public class Player
     	return GameConstants.PLAYER_SPEED_MULTIPLIER;
     }
 
+    @Override
+    public Unit duplicate()
+    {
+        return new Player(location, this.getSprites());
+    }
+
     /**
      * Input an action that is perfored by the player class.
      * @param action Input a String that is the action performed.
@@ -95,7 +113,20 @@ public class Player
     {
         Log.add(action);
     }
-    
+
+    /**
+     * Handle getting hit.
+     */
+    public void onEnemyCollision()
+    {
+        if(ticksLeft <= 0)
+        {
+            ticksLeft = INVINCIBILITY_TICKS;
+            loseLife();
+        }
+
+    }
+
     /**
      * A getter for lives.
      * @return lives integer

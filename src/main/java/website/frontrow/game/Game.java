@@ -23,8 +23,6 @@ public class Game
 
     private boolean running = false;
 
-    private ArrayList<Player> players;
-
     private ArrayList<GameObserver> observers;
 
     private JBubbleKeyListener keyListener;
@@ -32,14 +30,12 @@ public class Game
     /**
      * Constructor of Game.
      * @param levels All the levels of the game.
-     * @param players The players in this game.
      */
-    public Game(ArrayList<Level> levels, ArrayList<Player> players)
+    public Game(ArrayList<Level> levels)
     {
         this.levelPack = levels;
         this.currentIndex = 0;
-        this.currentLevel = levelPack.get(currentIndex);
-        this.players = players;
+        loadCurrentLevel();
         this.observers = new ArrayList<>();
         addToLog("[GAME]\tGame Object Created");
     }
@@ -49,39 +45,26 @@ public class Game
      */
     public void tick()
     {
-        if(running)
+        if (running)
         {
-            if(keyListener != null)
+            if (keyListener != null)
             {
                 keyListener.update();
             }
             currentLevel.tick();
-
-            if(currentLevel.getEnemies() == 0)
-            {
-                levelWon();
-            }
-            
-            if(playersDead())
-            {
-            	levelLost();
-            }
         }
         updateObservers();
     }
-    
+
     /**
-     * This is used by just a few tests that didn't work the way they
-     * should've worked, because they used a mocked level.
-     * Because the level has no enemies, the game would stop.
-     * In order for the tests to be accurate, I made a new tick
-     * function that only checks whether or not the players are dead.
+     * Replaces the current level with a copy of the level at the current index.
      */
-    public void tickGO()
+    private void loadCurrentLevel()
     {
-    	if(running && playersDead())
+        this.currentLevel = levelPack.get(currentIndex).duplicate();
+        if(currentLevel != null)
         {
-            levelLost();
+            currentLevel.addObserver(this);
         }
     }
 
@@ -91,8 +74,7 @@ public class Game
     public void start()
     {
         running = true;
-        currentLevel.addObserver(this);
-        System.out.println("Started");
+        addToLog("[GAME]\tStarted game.");
     }
 
     /**
@@ -101,7 +83,7 @@ public class Game
     public void stop()
     {
         running = false;
-        System.out.println("Paused");
+        addToLog("[GAME]\tStopped game.");
     }
 
     /**
@@ -111,16 +93,6 @@ public class Game
     public boolean isRunning()
     {
         return running;
-    }
-
-
-    /**
-     * Restarts the game and sets the score to 0.
-     * TODO: Restart the level.
-     */
-    private void restart()
-    {
-        score = 0;
     }
 
     /**
@@ -158,7 +130,7 @@ public class Game
      */
     public ArrayList<Player> getPlayers()
     {
-        return this.players;
+        return this.currentLevel.getPlayers();
     }
 
     /**
@@ -167,8 +139,7 @@ public class Game
     public void nextLevel()
     {
         currentIndex = Math.min(currentIndex + 1, levelPack.size() - 1);
-        currentLevel = levelPack.get(currentIndex);
-        this.players = currentLevel.getPlayers();
+        loadCurrentLevel();
     }
 
     /**
@@ -227,39 +198,18 @@ public class Game
     @Override
     public void levelWon()
     {
+        addToLog("[GAME]\t[WON]\tYou win this round.");
+
         nextLevel();
     }
 
-	@Override
-	public void levelLost() 
-	{
-		stop();
-		if (levelPack.size() != 1) 
-		{
-			levelPack.set(currentIndex + 1, gameOver);
-			gameOver();
-		}
-	}
-
-	/**
-	 * Returns whether or not all players are dead.
-	 * @return b boolean
-	 */
-	public boolean playersDead() 
-	{
-		if (!this.isRunning()) 
-		{
-			return false;
-		}
-		for (Player p : this.players) 
-		{
-			if (p.hasLives()) 
-			{
-				return false;
-			}
-		}
-		return true;
-	}
+    @Override
+    public void levelLost()
+    {
+        stop();
+        gameOver();
+        addToLog("[GAME]\t[LOST]\tYou just lost the game, kind of.");
+    }
 
 	/**
 	 * Adds Game Over message to log.
@@ -267,13 +217,11 @@ public class Game
 	public void gameOver() 
 	{
 		currentLevel = gameOver;
-		this.players = currentLevel.getPlayers();
-		stop();
 	}
 
 	/**
 	 * The setter for gameOver.
-	 * @param l Level
+     * @param l Level
 	 */
 	public void setGameOver(Level l) 
 	{

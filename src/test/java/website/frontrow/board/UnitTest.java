@@ -1,12 +1,12 @@
 package website.frontrow.board;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import website.frontrow.util.Point;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Tests for testing the Unit class.
@@ -15,24 +15,90 @@ public abstract class UnitTest
 {
 
     @SuppressWarnings("checkstyle:visibilitymodifier")
-    protected Point p;
+    protected Point p = new Point(1.0, 1.0);
 
     /**
-     * Set the location of the unit.
+     * Test the duplicate method.
      */
-    @Before
-    public void setUp()
+    @Test
+    public void duplicateTest()
     {
-        p = new Point(1.0, 1.0);
+        Unit u = getTestUnit(true, p);
+        Unit duplicate = u.duplicate();
+
+        // Same object.
+        assertEquals(u, duplicate);
+        // Memory location differs.
+        assertFalse(u == duplicate);
     }
 
     /**
-     * Tears down the dependencies for the tests.
+     * Test hashcode.
+     * Equal objects have an equal hashcode.
      */
-    @After
-    public void tearDown()
+    @Test
+    public void hashCodeTest()
     {
-        p = null;
+        Unit u = getTestUnit(true, p);
+        Unit duplicate = u.duplicate();
+
+        assertEquals(u.hashCode(), duplicate.hashCode());
+    }
+
+    /**
+     * Test hashcode.
+     * Equal objects have an equal hashcode.
+     */
+    @Test
+    public void inequalHashCodeTest()
+    {
+        Unit u = getTestUnit(true, p);
+        Unit other = getTestUnit(false, p);
+
+        assertNotEquals(u.hashCode(), other.hashCode());
+    }
+
+    /**
+     * Test equals with the same objects.
+     */
+    @Test
+    public void equalsTest()
+    {
+        Unit u = getTestUnit(true, p);
+        assertEquals(u, u);
+    }
+
+    /**
+     * Test equals with different objects.
+     */
+    @Test
+    public void notEqualsTest()
+    {
+        Unit u = getTestUnit(true, p);
+        Unit other = getTestUnit(true, new Point(15, 15));
+        assertNotEquals(other, u);
+    }
+
+    /**
+     * Test equals with absolutely different objects.
+     */
+    @Test
+    public void absolutelyNotEqualsTest()
+    {
+        Unit u = getTestUnit(true, p);
+        String other = ":3";
+        assertNotEquals(u, other);
+    }
+
+    /**
+     * Test revive.
+     */
+    @Test
+    public void reviveTest()
+    {
+        Unit u = getTestUnit(true, p);
+        u.revive();
+        assertTrue(u.isAlive());
     }
 
     /**

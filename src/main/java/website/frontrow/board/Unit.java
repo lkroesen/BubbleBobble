@@ -13,6 +13,11 @@ import website.frontrow.util.Point;
 public abstract class Unit
 {
     /**
+     * Prime number used for hashing.
+     */
+    private static final int PRIME = 31;
+
+    /**
      * Amount of lives an entity has.
      */
     private boolean alive;
@@ -53,12 +58,11 @@ public abstract class Unit
     }
 
     /**
-     * Set alive.
-     * @param alive the value.
+     * Revives an enemy after being captured.
      */
-    public void setAlive(boolean alive)
+    public void revive()
     {
-        this.alive = alive;
+        alive = true;
     }
 
     /**
@@ -112,6 +116,37 @@ public abstract class Unit
     {
 
     }
+
+    /**
+     * Check whether two units are equal to each other.
+     * @param other The unit to check against.
+     * @return Whether the two are equal.
+     */
+    @Override
+    public boolean equals(Object other)
+    {
+        if(other instanceof Unit)
+        {
+            Unit that = (Unit) other;
+
+            return  this.alive == that.alive
+                    &&
+                    this.location.equals(that.location);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return location.hashCode() + PRIME * Boolean.hashCode(alive);
+    }
+
+    /**
+     * Create a duplicate of the current unit.
+     * @return Clone the current unit.
+     */
+    public abstract Unit duplicate();
 
     /**
      * Get the width and height for the bounding box.

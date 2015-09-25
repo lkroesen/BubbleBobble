@@ -1,26 +1,40 @@
 package website.frontrow.ui;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import website.frontrow.game.Game;
-import website.frontrow.board.Player;
 import website.frontrow.level.Level;
 
 import javax.swing.JLabel;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Remi Flinterman on 13-9-2015.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class StatusLabelPanelTest
 {
 
-    @Mock private ArrayList<Player> p;
     @Mock private Level level;
-    private ArrayList<Level> l = new ArrayList<Level>();
-    private Game g;
+    private ArrayList<Level> levels = new ArrayList<Level>();
+    private Game game;
+
+    /**
+     * Set up for testing.
+     */
+    @Before
+    public void setUp()
+    {
+        when(level.duplicate()).thenReturn(level);
+        levels.add(level);
+        game = new Game(levels);
+    }
 
     /**
      * Tests whether or not runningLabel turns out correctly when calling
@@ -29,11 +43,7 @@ public class StatusLabelPanelTest
     @Test
     public void runningLabelTest()
     {
-
-        l.add(level);
-        g = new Game(l, p);
-
-        StatusLabelPanel slp = new StatusLabelPanel(g);
+        StatusLabelPanel slp = new StatusLabelPanel(game);
 
         JLabel rl = slp.getRunningLabel();
         JLabel label = new JLabel("Paused");
@@ -48,11 +58,7 @@ public class StatusLabelPanelTest
     @Test
     public void setRunningLabelTest()
     {
-
-        l.add(level);
-        g = new Game(l, p);
-
-        StatusLabelPanel slp = new StatusLabelPanel(g);
+        StatusLabelPanel slp = new StatusLabelPanel(game);
 
         JLabel label = new JLabel("Test");
         slp.setRunningLabel(label);
@@ -67,11 +73,7 @@ public class StatusLabelPanelTest
     @Test
     public void getRunningLabelTest()
     {
-
-        l.add(level);
-        g = new Game(l, p);
-
-        StatusLabelPanel slp = new StatusLabelPanel(g);
+        StatusLabelPanel slp = new StatusLabelPanel(game);
 
         JLabel label = new JLabel("Paused");
         JLabel l = slp.getRunningLabel();

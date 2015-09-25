@@ -10,6 +10,16 @@ public class Point
     private double y;
 
     /**
+     * Clone a point.
+     * @param point Point to duplicate.
+     */
+    public Point(Point point)
+    {
+        this.x = point.x;
+        this.y = point.y;
+    }
+
+    /**
      * A simple point.
      * @param x x coordinate
      * @param y y coordinate

@@ -5,7 +5,7 @@ import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.sprite.Sprite;
 import website.frontrow.util.Collision;
-import website.frontrow.util.CollisionHandler;
+import website.frontrow.util.CollisionComputer;
 import website.frontrow.artificial.intelligence.ArtificialIntelligence;
 import website.frontrow.game.GameConstants;
 import website.frontrow.util.Point;
@@ -19,8 +19,13 @@ import java.util.Map;
  */
 public abstract class Mover
     extends Unit
-        implements Logable
+    implements Logable
 {
+    /**
+     * Prime number used for hashing.
+     */
+    private static final int PRIME = 31;
+
     /**
      * Current direction of motion.
      */
@@ -36,7 +41,7 @@ public abstract class Mover
     /**
      * The collision handler to handle the collisions.
      */
-    private CollisionHandler handler;
+    private CollisionComputer handler;
 
     /**
      * The sprites for each direction.
@@ -67,6 +72,15 @@ public abstract class Mover
     public Sprite getSprite()
     {
         return sprites.get(getDirection());
+    }
+
+    /**
+     * Returns the list of sprites for this mover.
+     * @return The sprites.
+     */
+    public Map<Direction, Sprite> getSprites()
+    {
+        return sprites;
     }
 
     /**
@@ -110,6 +124,7 @@ public abstract class Mover
      */
     public void goLeft()
     {
+        this.previousDirection = Direction.LEFT;
         this.newMotion.setX(-GameConstants.MOVE_STEP);
     }
 
@@ -118,6 +133,7 @@ public abstract class Mover
      */
     public void goRight()
     {
+        this.previousDirection = Direction.RIGHT;
         this.newMotion.setX(GameConstants.MOVE_STEP);
     }
 
@@ -157,8 +173,9 @@ public abstract class Mover
         
         Point movement = motion.divide(GameConstants.TICKS_PER_SEC);
 
-        this.handler = new CollisionHandler(level);
-        this.handler.checkUnitsAABB(this);
+        this.handler = level.getCollisionComputer();
+        this.handler.checkUnitsAABB(this, level.getCollisionHandler());
+
         this.location = handler.findNextPosition(this).getPoint();
 
         if (!movement.equals(new Point(0, 0)))
@@ -183,6 +200,25 @@ public abstract class Mover
         {
             this.motion.setY(0);
         }
+    }
+
+    @Override
+    public boolean equals(Object other)
+    {
+        if(other instanceof Mover)
+        {
+            Mover that = (Mover) other;
+            return  super.equals(other)
+                    &&
+                    this.motion.equals(that.motion);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return super.hashCode() + PRIME * motion.hashCode();
     }
 
     @Override

@@ -1,10 +1,9 @@
 package website.frontrow;
 
-import website.frontrow.board.Direction;
+import org.junit.Before;
 import website.frontrow.board.Player;
 import website.frontrow.game.Game;
 import website.frontrow.level.Level;
-import website.frontrow.sprite.Sprite;
 import website.frontrow.util.Point;
 
 import org.junit.Test;
@@ -13,14 +12,15 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * Test class for Game.
@@ -31,8 +31,23 @@ public class GameTest
     @SuppressWarnings("visibilitymodifier")
     private ArrayList<Level> levels = new ArrayList<>();
     @Mock private Level level;
+    @Mock private Level level2;
+    private Game game;
+
+    /**
+     * Set up for testing.
+     */
+    @Before
+    public void setUp()
+    {
+        when(level.duplicate()).thenReturn(level);
+        when(level2.duplicate()).thenReturn(level2);
+        levels.add(level);
+        levels.add(level2);
+
+        game = new Game(levels);
+    }
     @Mock private Point point;
-    @Mock private Map<Direction, Sprite> map;   
 
     /**
      * Test whether starting the game changes the running state.
@@ -40,9 +55,6 @@ public class GameTest
     @Test
     public void testStart()
     {
-        levels.add(level);
-
-        Game game = new Game(levels, null);
         game.start();
 
         assertTrue(game.isRunning());
@@ -54,9 +66,6 @@ public class GameTest
     @Test
     public void testStartStopped()
     {
-        levels.add(level);
-
-        Game game = new Game(levels, null);
         assertFalse(game.isRunning());
     }
 
@@ -66,9 +75,6 @@ public class GameTest
     @Test
     public void testStop()
     {
-        levels.add(level);
-
-        Game game = new Game(levels, null);
         game.start();
         game.stop();
         assertFalse(game.isRunning());
@@ -80,9 +86,6 @@ public class GameTest
     @Test
     public void testGetScore()
     {
-        levels.add(level);
-
-        Game game = new Game(levels, null);
         assertEquals(0, game.getScore());
     }
 
@@ -92,9 +95,6 @@ public class GameTest
     @Test
     public void testSetScore()
     {
-        levels.add(level);
-
-        Game game = new Game(levels, null);
         game.setScore(15);
         assertEquals(15, game.getScore());
         game.setScore(42);
@@ -107,9 +107,6 @@ public class GameTest
     @Test
     public void testTick1()
     {
-        levels.add(level);
-
-        Game game = new Game(levels, null);
         assertFalse(game.isRunning());
         game.tick();
         verify(levels.get(0), never()).tick();
@@ -121,118 +118,32 @@ public class GameTest
     @Test
     public void testTick2()
     {
-        levels.add(level);
-
-        Game game = new Game(levels, null);
         game.start();
         assertTrue(game.isRunning());
         game.tick();
         verify(levels.get(0), times(1)).tick();
     }
-    
+
     /**
-     * Tests that a game over occurs when the player has no lives left.
+     * Test if levelWon works as expected.
      */
     @Test
-    public void testGameOverSetLives()
+    public void testLevelWon()
     {
-    	levels.add(level);
-    	Player p = new Player(point, map);
-    	ArrayList<Player> list = new ArrayList<Player>();
-    	list.add(p);
-    	Game game = new Game(levels, list);
-    	game.start();
-    	assertTrue(game.isRunning());
-    	
-    	p.setLives(0);
-    	game.tickGO();
-    	assertFalse(game.isRunning());
+        game.levelWon();
+        assertEquals(level2, game.getLevel());
     }
-    
+
     /**
-     * Tests that a game over occurs after the player has lost all three lives.
+     * Test if levelLost works as expected.
      */
     @Test
-    public void testGameOverLoseLife()
+    public void testLevelLost()
     {
-    	levels.add(level);
-    	Player p = new Player(point, map);
-    	ArrayList<Player> list = new ArrayList<Player>();
-    	list.add(p);
-    	Game game = new Game(levels, list);
-    	game.start();
-    	assertTrue(game.isRunning());
-    	
-    	// Lost a life, but not dead yet
-    	p.loseLife();
-    	game.tickGO();
-    	assertTrue(game.isRunning());
-    	
-    	// Lost a life, but not dead yet
-    	p.loseLife();
-    	game.tickGO();
-    	assertTrue(game.isRunning());
-    	
-    	// Lost the last life
-    	p.loseLife();
-    	game.tickGO();
-    	assertFalse(game.isRunning());
+        game.levelLost();
+        assertFalse(game.isRunning());
+        verify(level, times(1)).duplicate();
+        verify(level2, never()).duplicate();
     }
-    
-    /**
-     * Tests the addLife function.
-     */
-    @Test
-    public void testAddLife()
-    {
-    	levels.add(level);
-    	Player p = new Player(point, map);
-    	ArrayList<Player> list = new ArrayList<Player>();
-    	list.add(p);
-    	Game game = new Game(levels, list);
-    	game.start();
-    	assertTrue(game.isRunning());
-    	
-    	p.addLife();
-    	// The player now has four lives.
-    	for(int i = 0; i < 3; i++)
-    	{
-    		p.loseLife();
-    	}
-    	game.tickGO();
-    	// After losing three lives, the player should have one life left.
-    	assertTrue(game.isRunning());
-    	
-    	// Now the player loses his last life.
-    	p.loseLife();
-    	game.tickGO();
-    	assertFalse(game.isRunning());
-    }
-    
-    /**
-     * Tests the getLife function.
-     */
-    @Test
-    public void testGetLife()
-    {
-    	levels.add(level);
-    	Player p = new Player(point, map);
-    	ArrayList<Player> list = new ArrayList<Player>();
-    	list.add(p);
-    	Game game = new Game(levels, list);
-    	game.start();
-    	assertTrue(game.isRunning());
-    	
-    	assertEquals(p.getLives(), 3);
-    	
-    	p.setLives(2);
-    	assertEquals(p.getLives(), 2);
-    	
-    	p.loseLife();
-    	assertEquals(p.getLives(), 1);
-    	
-    	p.addLife();
-    	assertEquals(p.getLives(), 2);
-    }
-   
+
 }
