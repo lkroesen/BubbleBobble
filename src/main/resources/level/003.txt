@@ -1,9 +1,9 @@
-XXXXXX  XXX  XXXXX
+XXXXXX  XX  XXXXXX
+XX              XX
 XX              XX
 XX   __    __   XX
-XX              XX
 XX   e      e   XX
-XX  X__    __X  XX
+XX  ___    ___  XX
 XX  X        X  XX
 XX  Xe     e X  XX
 XX  X___  ___X  XX

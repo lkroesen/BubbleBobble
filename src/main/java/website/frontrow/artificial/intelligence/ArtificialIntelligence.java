@@ -131,13 +131,16 @@ public class ArtificialIntelligence
 	 * If an enemy is above the player we want it to fall of the platform.
 	 * We do this by moving to one side of the level. 
 	 * If we reach the end without falling down (sufficiently) we go in the other direction.
+	 * If we are running into a wall we want to go the other way.
 	 * @param enemy the enemy that is moving.
-	 * 
-	 * 3.5 is the default wall offset.
 	 */
-	@SuppressWarnings("checkstyle:magicnumber")
 	private void fallOffPlatform(Enemy enemy)
 	{
+		if(enemy.getWallCollision())
+		{
+			enemy.setLastWall(!enemy.getLastWall());
+			enemy.setWallCollision(false);
+		}
 		if(enemy.getLastWall())
 		{
 			enemy.goLeft();
@@ -145,15 +148,7 @@ public class ArtificialIntelligence
 		else
 		{
 			enemy.goRight();
-		}
-		if(enemy.getLocation().getX() < 3.5)
-		{
-			enemy.setLastWall(false);
-		}
-		else if(enemy.getLocation().getX() > this.level.getCells().getWidth() - 3.5)
-		{
-			enemy.setLastWall(true);
-		}
+		}		
 	}
 	
 	/**

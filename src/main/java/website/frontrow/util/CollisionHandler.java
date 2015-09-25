@@ -148,7 +148,7 @@ public class CollisionHandler
 	 * @param motion The motion to keep in mind
 	 * @return True when there is a collision, false when not.
 	 */
-	public boolean checkLevelAABB(AABB aabb, Point motion)
+	public Cell checkLevelAABB(AABB aabb, Point motion)
 	{
 		// Find the cells we need to check.
 		Grid<Cell> cells = level.getCells();
@@ -167,12 +167,12 @@ public class CollisionHandler
 				AABB tile = new AABB(c.add(aabbo), c.add(aabbo).add(cell.getAABBDimensions()));
 				if (cell.collides(motion) && aabb.overlaps(tile))
 				{
-					return true;
+					return cell;
 				}
 			}
 		}
 
-		return false;
+		return Cell.EMPTY;
 	}
 
 	/**
@@ -181,10 +181,10 @@ public class CollisionHandler
 	 * @param wh Width and height of movers AABB.
 	 * @return amount of steps.
 	 */
-	private int getSteps(Mover mover, Point wh)
+	private int getSteps(Mover mover, Point widthHeight)
 	{
-		double stepsX = Math.abs(mover.getMotion().getX()) / wh.getX();
-		double stepsY = Math.abs(mover.getMotion().getY()) / wh.getY();
+		double stepsX = Math.abs(mover.getMotion().getX()) / widthHeight.getX();
+		double stepsY = Math.abs(mover.getMotion().getY()) / widthHeight.getY();
 
 		return (int) Math.ceil(Math.max(stepsX, stepsY) * SAMPLING);
 	}
@@ -201,7 +201,8 @@ public class CollisionHandler
 	 * @param level Recursion loop cap.
 	 * @return Collision after sweep
 	 */
-	private Collision sweep(Point start, Point delta, Point wh, Point motion, int steps, int level)
+	private Collision sweep(Mover mover, Point start, 
+			Point delta, Point widthHeight, Point motion, int steps, int level)
 	{
 		if(level >= MAX_DEPTH)
 		{
@@ -211,10 +212,15 @@ public class CollisionHandler
 		for(int i = 0; i <= steps; i++)
 		{
 			Point current = found.add(delta);
-
-			if(checkLevelAABB(new AABB(current, current.add(wh)), motion))
+			Cell cell = checkLevelAABB(new AABB(current, current.add(widthHeight)), motion);
+			if(cell != Cell.EMPTY)
 			{
-				return sweep(found, delta.divide(steps), wh, motion, steps, level + 1);
+				if(cell == Cell.WALL)
+				{
+					mover.onWallCollision();
+				}
+				return sweep(
+					mover, found, delta.divide(steps), widthHeight, motion, steps, level + 1);
 			}
 
 			found = current;
@@ -238,13 +244,8 @@ public class CollisionHandler
 		}
 		Point delta = mover.getMotion().divide(steps).divide(GameConstants.TICKS_PER_SEC);
 
-		Collision collision = sweep(mover.getLocation(), delta, mover.getAABBDimensions(),
+		Collision collision = sweep(mover, mover.getLocation(), delta, mover.getAABBDimensions(),
 				mover.getMotion(), steps, 0);
-
-		if(collision.isCollided())
-		{
-			mover.onWallCollision();
-		}
 
         double newXLocation
                 = Math.round(collision.getPoint().getX() * ONE_DEV_PRECISION) * PRECISION;
