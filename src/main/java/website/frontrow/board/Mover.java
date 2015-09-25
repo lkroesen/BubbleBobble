@@ -124,6 +124,7 @@ public abstract class Mover
      */
     public void goLeft()
     {
+        this.previousDirection = Direction.LEFT;
         this.newMotion.setX(-GameConstants.MOVE_STEP);
     }
 
@@ -132,6 +133,7 @@ public abstract class Mover
      */
     public void goRight()
     {
+        this.previousDirection = Direction.RIGHT;
         this.newMotion.setX(GameConstants.MOVE_STEP);
     }
 
