@@ -123,6 +123,10 @@ public class Player
         {
             ticksLeft = INVINCIBILITY_TICKS;
             loseLife();
+            if(lives < 0)
+            {
+                this.kill();
+            }
         }
 
     }
