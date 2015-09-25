@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
@@ -100,7 +100,7 @@ public class CollisionHandlerTest
         CollisionHandler handler = new CollisionHandler(check);
         Cell cell = handler.checkLevelAABB(
                 new AABB(new Point(1, 1), new Point(2, 2)), new Point(0, 0));
-        assertTrue(cell.getType() == Cell.EMPTY);
+        assertEquals(cell, Cell.EMPTY);
     }
 
     /**
@@ -116,7 +116,7 @@ public class CollisionHandlerTest
         CollisionHandler handler = new CollisionHandler(check);
         Cell cell = handler.checkLevelAABB(
                 new AABB(new Point(1.5, 1.5), new Point(2.5, 2.5)), new Point(0, 0));
-        assertFalse(cell.getType() == Cell.EMPTY);
+        assertNotEquals(cell, Cell.EMPTY);
     }
 
     /**
@@ -132,7 +132,7 @@ public class CollisionHandlerTest
         CollisionHandler handler = new CollisionHandler(check);
         Cell cell = handler.checkLevelAABB(
         		new AABB(new Point(1, 1), new Point(2, 2)), new Point(0, -1));
-        assertTrue(cell.getType() == Cell.EMPTY);
+        assertEquals(cell, Cell.EMPTY);
     }
 
     /**
@@ -149,7 +149,7 @@ public class CollisionHandlerTest
         CollisionHandler handler = new CollisionHandler(check);
         Cell cell = handler.checkLevelAABB(
                 new AABB(new Point(1, 1.1), new Point(2, 2.1)), new Point(0, 1));
-        assertFalse(cell.getType() == Cell.EMPTY);
+        assertNotEquals(cell, Cell.EMPTY);
     }
 
     /**
