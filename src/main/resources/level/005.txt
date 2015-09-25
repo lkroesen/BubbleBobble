@@ -1,0 +1,18 @@
+XXXXX  XXXX  XXXXX
+XX  X  X  X  X  XX
+XX  X__X  X__X  XX
+XX              XX
+XX   e      e   XX
+XX  __________  XX
+XX              XX
+XX   e      e   XX
+XX  __________  XX
+XX              XX
+XX      e       XX
+XX  __________  XX
+XX              XX
+XX       e      XX
+XX  __________  XX
+XX              XX
+XX p            XX
+XXXXX  XXXX  XXXXX

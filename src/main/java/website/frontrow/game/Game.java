@@ -5,10 +5,9 @@ import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.level.Level.LevelObserver;
-
 import website.frontrow.ui.JBubbleKeyListener;
+
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The current state of the game.
@@ -19,11 +18,10 @@ public class Game
     private int score = 0;
     private int currentIndex;
     private Level currentLevel;
+    private Level gameOver;
     private ArrayList<Level> levelPack;
 
     private boolean running = false;
-
-    private ArrayList<Player> players;
 
     private ArrayList<GameObserver> observers;
 
@@ -32,14 +30,12 @@ public class Game
     /**
      * Constructor of Game.
      * @param levels All the levels of the game.
-     * @param players The players in this game.
      */
-    public Game(ArrayList<Level> levels, ArrayList<Player> players)
+    public Game(ArrayList<Level> levels)
     {
         this.levelPack = levels;
         this.currentIndex = 0;
-        this.currentLevel = levelPack.get(currentIndex);
-        this.players = players;
+        loadCurrentLevel();
         this.observers = new ArrayList<>();
         addToLog("[GAME]\tGame Object Created");
     }
@@ -49,20 +45,27 @@ public class Game
      */
     public void tick()
     {
-        if(running)
+        if (running)
         {
-            if(keyListener != null)
+            if (keyListener != null)
             {
                 keyListener.update();
             }
             currentLevel.tick();
-
-            if(currentLevel.getEnemies() == 0)
-            {
-                levelWon();
-            }
         }
         updateObservers();
+    }
+
+    /**
+     * Replaces the current level with a copy of the level at the current index.
+     */
+    private void loadCurrentLevel()
+    {
+        this.currentLevel = levelPack.get(currentIndex).duplicate();
+        if(currentLevel != null)
+        {
+            currentLevel.addObserver(this);
+        }
     }
 
     /**
@@ -71,8 +74,7 @@ public class Game
     public void start()
     {
         running = true;
-        currentLevel.addObserver(this);
-        System.out.println("Started");
+        addToLog("[GAME]\tStarted game.");
     }
 
     /**
@@ -81,7 +83,7 @@ public class Game
     public void stop()
     {
         running = false;
-        System.out.println("Paused");
+        addToLog("[GAME]\tStopped game.");
     }
 
     /**
@@ -91,16 +93,6 @@ public class Game
     public boolean isRunning()
     {
         return running;
-    }
-
-
-    /**
-     * Restarts the game and sets the score to 0.
-     * TODO: Restart the level.
-     */
-    private void restart()
-    {
-        score = 0;
     }
 
     /**
@@ -136,9 +128,9 @@ public class Game
      * Returns the players in the game.
      * @return The list of players.
      */
-    public List<Player> getPlayers()
+    public ArrayList<Player> getPlayers()
     {
-        return this.players;
+        return this.currentLevel.getPlayers();
     }
 
     /**
@@ -147,8 +139,7 @@ public class Game
     public void nextLevel()
     {
         currentIndex = Math.min(currentIndex + 1, levelPack.size() - 1);
-        currentLevel = levelPack.get(currentIndex);
-        this.players = currentLevel.getPlayers();
+        loadCurrentLevel();
     }
 
     /**
@@ -207,7 +198,8 @@ public class Game
     @Override
     public void levelWon()
     {
-        stop();
+        addToLog("[GAME]\t[WON]\tYou win this round.");
+
         nextLevel();
     }
 
@@ -215,5 +207,25 @@ public class Game
     public void levelLost()
     {
         stop();
+        gameOver();
+        addToLog("[GAME]\t[LOST]\tYou just lost the game, kind of.");
     }
+
+	/**
+	 * Adds Game Over message to log.
+	 */
+	public void gameOver() 
+	{
+		currentLevel = gameOver;
+	}
+
+	/**
+	 * The setter for gameOver.
+     * @param l Level
+	 */
+	public void setGameOver(Level l) 
+	{
+		gameOver = l;
+		levelPack.add(gameOver);
+	}
 }
