@@ -74,7 +74,7 @@ public class Game
     public void start()
     {
         running = true;
-        System.out.println("Started");
+        addToLog("[GAME]\tStarted game.");
     }
 
     /**
@@ -83,7 +83,7 @@ public class Game
     public void stop()
     {
         running = false;
-        System.out.println("Paused");
+        addToLog("[GAME]\tStopped game.");
     }
 
     /**

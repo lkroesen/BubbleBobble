@@ -16,6 +16,7 @@ import website.frontrow.logger.Logable;
 public class CollisionComputer
 	implements Logable
 {
+	// Precision is a constant.
 	@SuppressWarnings("checkstyle:magicnumber")
 	private static final double PRECISION = 0.0001d;
 	private static final double ONE_DEV_PRECISION = 1 / PRECISION;
