@@ -234,54 +234,53 @@ public class Game
         nextLevel();
     }
 
-    @Override
-    public void levelLost()
-    {
-    	stop();
-    	if(levelPack.size() != 1)
-    	{
-    		levelPack.set(currentIndex+1,gameOver);
-    		gameOver();
-    	}
-    }
-    
-    /**
-     * Returns whether or not all players are dead.
-     * @return b boolean
-     */
-    public boolean playersDead()
-    {
-    	if(!this.isRunning())
-    	{
-    		return false;
-    	}
-    	for(Player p : this.players)
-    	{
-    		if (p.hasLives())
-    		{
-    			return false;
-    		}
-    	}
-    	return true;
-    }
-    
-    /**
-     * Adds Game Over message to log.
-     */
-    public void gameOver() 
-    {
-    	currentLevel = gameOver;
-        this.players = currentLevel.getPlayers();
-        stop();
-    }
-    
-    /**
-     * The setter for gameOver.
-     * @param l Level
-     */
-    public void setGameOver(Level l)
-    {
-    	gameOver = l;
-    	levelPack.add(gameOver);
-    }
+	@Override
+	public void levelLost() 
+	{
+		stop();
+		if (levelPack.size() != 1) 
+		{
+			levelPack.set(currentIndex + 1, gameOver);
+			gameOver();
+		}
+	}
+
+	/**
+	 * Returns whether or not all players are dead.
+	 * @return b boolean
+	 */
+	public boolean playersDead() 
+	{
+		if (!this.isRunning()) 
+		{
+			return false;
+		}
+		for (Player p : this.players) 
+		{
+			if (p.hasLives()) 
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Adds Game Over message to log.
+	 */
+	public void gameOver() 
+	{
+		currentLevel = gameOver;
+		this.players = currentLevel.getPlayers();
+		stop();
+	}
+
+	/**
+	 * The setter for gameOver.
+	 * @param l Level
+	 */
+	public void setGameOver(Level l) {
+		gameOver = l;
+		levelPack.add(gameOver);
+	}
 }

@@ -82,8 +82,8 @@ public class Launcher implements Logable
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
             
             InputStream map = getClass().getResourceAsStream("/game_over.txt");
-    		Level go = mp.parseMap(map);
-    		game.setGameOver(go);
+    		Level gameOverLevel = mp.parseMap(map);
+    		game.setGameOver(gameOverLevel);
 
             game.setKeyListener(ui.getKeyListener());
 
