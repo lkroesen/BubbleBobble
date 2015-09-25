@@ -32,6 +32,12 @@ public enum Cell
         {
             return sprites.getWallSprite();
         }
+        
+        @Override
+        public Cell getType()
+        {
+            return Cell.WALL;
+        }
     },
     /**
      * A platform.
@@ -63,6 +69,12 @@ public enum Cell
         public Sprite getSprite()
         {
             return sprites.getPlatformSprite();
+        }
+        
+        @Override
+        public Cell getType()
+        {
+            return Cell.PLATFORM;
         }
     };
 
@@ -103,6 +115,15 @@ public enum Cell
     public Point getAABBOffset()
     {
         return new Point(0, 0);
+    }
+    
+    /**
+     * return the celltype.
+     * @return the type.
+     */
+    public Cell getType()
+    {
+        return Cell.EMPTY;
     }
 
     /**

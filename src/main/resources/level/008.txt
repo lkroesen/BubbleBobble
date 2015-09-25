@@ -7,7 +7,7 @@ XX  X e    e X  XX
 XX  X __  __ X  XX
 XX  X        X  XX
 XX  X        X  XX
-XX  X __  __ X  XX
+XX    __  __    XX
 XX              XX
 XX    ______    XX
 XX              XX

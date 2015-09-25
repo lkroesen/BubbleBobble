@@ -98,9 +98,9 @@ public class CollisionHandlerTest
                 Cell.WALL, Cell.EMPTY, Cell.WALL,
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 3));
         CollisionHandler handler = new CollisionHandler(check);
-        assertFalse(handler.checkLevelAABB(
-                new AABB(new Point(1, 1), new Point(2, 2)), new Point(0, 0)
-        ));
+        Cell cell = handler.checkLevelAABB(
+                new AABB(new Point(1, 1), new Point(2, 2)), new Point(0, 0));
+        assertTrue(cell.getType() == Cell.EMPTY);
     }
 
     /**
@@ -114,9 +114,9 @@ public class CollisionHandlerTest
                 Cell.WALL, Cell.EMPTY, Cell.WALL,
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 3));
         CollisionHandler handler = new CollisionHandler(check);
-        assertTrue(handler.checkLevelAABB(
-                new AABB(new Point(1.5, 1.5), new Point(2.5, 2.5)), new Point(0, 0)
-        ));
+        Cell cell = handler.checkLevelAABB(
+                new AABB(new Point(1.5, 1.5), new Point(2.5, 2.5)), new Point(0, 0));
+        assertFalse(cell.getType() == Cell.EMPTY);
     }
 
     /**
@@ -130,9 +130,9 @@ public class CollisionHandlerTest
                 Cell.WALL, Cell.PLATFORM, Cell.WALL,
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 3));
         CollisionHandler handler = new CollisionHandler(check);
-        assertFalse(handler.checkLevelAABB(
-                new AABB(new Point(1, 1), new Point(2, 2)), new Point(0, -1)
-        ));
+        Cell cell = handler.checkLevelAABB(
+        		new AABB(new Point(1, 1), new Point(2, 2)), new Point(0, -1));
+        assertTrue(cell.getType() == Cell.EMPTY);
     }
 
     /**
@@ -147,9 +147,9 @@ public class CollisionHandlerTest
                 Cell.WALL, Cell.PLATFORM, Cell.WALL,
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 4));
         CollisionHandler handler = new CollisionHandler(check);
-        assertTrue(handler.checkLevelAABB(
-                new AABB(new Point(1, 1.1), new Point(2, 2.1)), new Point(0, 1)
-        ));
+        Cell cell = handler.checkLevelAABB(
+                new AABB(new Point(1, 1.1), new Point(2, 2.1)), new Point(0, 1));
+        assertFalse(cell.getType() == Cell.EMPTY);
     }
 
     /**
