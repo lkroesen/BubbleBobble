@@ -29,6 +29,7 @@ public class GameTest
     @SuppressWarnings("visibilitymodifier")
     private ArrayList<Level> levels = new ArrayList<>();
     @Mock private Level level;
+    @Mock private Level level2;
     private Game game;
 
     /**
@@ -38,7 +39,9 @@ public class GameTest
     public void setUp()
     {
         when(level.duplicate()).thenReturn(level);
+        when(level2.duplicate()).thenReturn(level2);
         levels.add(level);
+        levels.add(level2);
 
         game = new Game(levels);
     }
@@ -116,5 +119,27 @@ public class GameTest
         assertTrue(game.isRunning());
         game.tick();
         verify(levels.get(0), times(1)).tick();
+    }
+
+    /**
+     * Test if levelWon works as expected.
+     */
+    @Test
+    public void testLevelWon()
+    {
+        game.levelWon();
+        assertEquals(level2, game.getLevel());
+    }
+
+    /**
+     * Test if levelLost works as expected.
+     */
+    @Test
+    public void testLevelLost()
+    {
+        game.levelLost();
+        assertFalse(game.isRunning());
+        verify(level, times(2)).duplicate();
+        verify(level2, never()).duplicate();
     }
 }

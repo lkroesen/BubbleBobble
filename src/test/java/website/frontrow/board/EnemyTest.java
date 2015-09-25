@@ -22,6 +22,17 @@ public class EnemyTest
         assertEquals(e.getLocation(), super.p);
     }
 
+    /**
+     * Test whether the caught time is returned properly.
+     */
+    @Test
+    public void getChaughtTimeTest()
+    {
+        Enemy e = new Enemy(super.p, null);
+
+        assertEquals(Enemy.TIME_TO_ESCPAPE, e.getChaughtTime());
+    }
+
     @Override
     public Mover getTestMover(boolean alive, Point start, Point end)
     {

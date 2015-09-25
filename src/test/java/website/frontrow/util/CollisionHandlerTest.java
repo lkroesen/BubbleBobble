@@ -60,6 +60,16 @@ public class CollisionHandlerTest
         }
 
         /**
+         * Test if a player hit by an enemy gets killed.
+         */
+        @Test
+        public void enemyHitPlayerTest()
+        {
+            collisionHandler.applyCollision(enemy, player);
+            verify(player, times(1)).kill();
+        }
+
+        /**
          * Test if enemy and bubble die in this instance.
          */
         @Test

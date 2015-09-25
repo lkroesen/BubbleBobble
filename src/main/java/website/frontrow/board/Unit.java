@@ -61,15 +61,6 @@ public abstract class Unit
     }
 
     /**
-     * Set alive.
-     * @param alive the value.
-     */
-    public void setAlive(boolean alive)
-    {
-        this.alive = alive;
-    }
-
-    /**
      * Returns the sprite of the unit.
      * @return The sprite.
      */
@@ -119,6 +110,24 @@ public abstract class Unit
     public void tick(Level level)
     {
 
+    }
+
+    /**
+     * Check whether two units are equal to each other.
+     * @param other The unit to check against.
+     * @return Whether the two are equal.
+     */
+    public boolean equals(Object other)
+    {
+        if(other instanceof Unit)
+        {
+            Unit that = (Unit) other;
+
+            return  this.alive == that.alive
+                    &&
+                    this.location.equals(that.location);
+        }
+        return false;
     }
 
     /**

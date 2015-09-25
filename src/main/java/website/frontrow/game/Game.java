@@ -95,16 +95,6 @@ public class Game
         return running;
     }
 
-
-    /**
-     * Restarts the game and sets the score to 0.
-     * TODO: Restart the level.
-     */
-    private void restart()
-    {
-        score = 0;
-    }
-
     /**
      * Get the current score.
      * @return
@@ -217,7 +207,7 @@ public class Game
     public void levelLost()
     {
         stop();
-        addToLog("[GAME}\t[LOST]\tYou just lost the game, kind of.");
+        addToLog("[GAME]\t[LOST]\tYou just lost the game, kind of.");
         loadCurrentLevel();
     }
 }

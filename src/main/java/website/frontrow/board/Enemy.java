@@ -20,6 +20,11 @@ public class Enemy
 	private Boolean lastWall;
 
     /**
+     * The amount of ticks needed to escape.
+     */
+    public static final long TIME_TO_ESCPAPE = 2 * GameConstants.TICKS_PER_SEC;
+
+    /**
      * Constructor of the Enemy Unit.
      * Input a byte with the amount of lives the Enemy has.
      * @param position The starting position of the enemy.
@@ -113,5 +118,14 @@ public class Enemy
     public double getSpeedMultiplier()
     {
     	return GameConstants.ENEMY_SPEED_MULTIPLIER;
+    }
+
+    /**
+     * The amount of time it costs for this enemy to escape.
+     * @return Amount of time it costs for this enemy to escape.
+     */
+    public long getChaughtTime()
+    {
+        return TIME_TO_ESCPAPE;
     }
 }

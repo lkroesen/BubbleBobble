@@ -20,17 +20,12 @@ public class Bubble
     private static final Point FLOAT_UP_MOTION = new Point(0, -2);
 
     /**
-     * The amount of ticks needed to escape.
-     */
-    private static final long TIME_TO_ESCPAPE = 2 * GameConstants.TICKS_PER_SEC;
-
-    /**
      * The enemy the bubble currently contains.
      * Is null when the bubble is empty.
      */
     private Enemy contains;
 
-    private long timeLeft = TIME_TO_ESCPAPE;
+    private long timeContained = 0;
 
     /**
      * Did this bubble hit something?
@@ -82,9 +77,9 @@ public class Bubble
 
         if(this.contains != null)
         {
-            timeLeft--;
+            timeContained++;
 
-            if(timeLeft <= 0)
+            if(timeContained >= this.contains.getChaughtTime())
             {
                 this.contains.revive();
                 this.contains.setLocation(this.location);

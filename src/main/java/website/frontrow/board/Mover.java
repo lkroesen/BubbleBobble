@@ -196,6 +196,19 @@ public abstract class Mover
     }
 
     @Override
+    public boolean equals(Object other)
+    {
+        if(other instanceof Mover)
+        {
+            Mover that = (Mover) other;
+            return  super.equals(other)
+                    &&
+                    this.motion.equals(that.motion);
+        }
+        return false;
+    }
+
+    @Override
     public void addToLog(String action)
     {
         Log.add(action);

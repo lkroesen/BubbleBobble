@@ -33,23 +33,6 @@ public class CollisionComputer
     {
         this.level = level;
     }
-    
-    /**
-     * Create an ArrayList with box values for a mover.
-     * @param location
-     * Input the location point of a mover
-     * @return
-     * Return an ArrayList of all box values.
-     */
-    public ArrayList<Point> buildBox(Point location)
-    {   	
-    	ArrayList<Point> aabb = new ArrayList<>();
-        aabb.add(new Point(location.getX(), location.getY()));
-        aabb.add(new Point(location.getX(), location.getY() + LOC_OFFSET));
-        aabb.add(new Point(location.getX() + LOC_OFFSET, location.getY()));
-        aabb.add(new Point(location.getX() + LOC_OFFSET, location.getY() + LOC_OFFSET));
-        return aabb;
-    }
 
     /**
      * Check if a mover collides with another mover. Call collisionApplier if it does.
