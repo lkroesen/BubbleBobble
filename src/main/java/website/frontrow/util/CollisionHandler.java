@@ -220,7 +220,7 @@ public class CollisionHandler
 					mover.onWallCollision();
 				}
 				return sweep(
-						mover, found, delta.divide(steps), widthHeight, motion, steps, level + 1);
+					mover, found, delta.divide(steps), widthHeight, motion, steps, level + 1);
 			}
 
 			found = current;
