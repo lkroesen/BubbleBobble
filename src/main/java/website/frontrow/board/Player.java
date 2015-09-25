@@ -20,10 +20,21 @@ public class Player
      * The points accumulated by the player.
      */
     private int score;
+    
+    /**
+     * The amount of lives the player has.
+     */
+    private int lives;
+    
+    /**
+     * To avoid Checkstyle warnings.
+     * The amount of lives the player starts with is 3.
+     * However, if that integer is final, we can't change it.
+     */
+    private static final int DEFAULT_LIVES = 3;
 
     /**
      * The constructor of the Player Unit.
-     * Input a byte with the amount of lives the Player has.
      * @param position A players starting position.
      * @param sprites The sprite for this player.
      */
@@ -32,6 +43,7 @@ public class Player
         super(true, position, new Point(0, 0), sprites);
         new Log();
         addToLog("[PLAYER]\t[SPAWN]\tPlayer created.");
+        lives = DEFAULT_LIVES;
     }
 
     /**
@@ -82,5 +94,51 @@ public class Player
     public void addToLog(String action)
     {
         Log.add(action);
+    }
+    
+    /**
+     * A getter for lives.
+     * @return lives integer
+     */
+    public int getLives() 
+    {
+    	return lives;
+    }
+    
+    /**
+     * A setter for lives.
+     * @param l integer
+     */
+    public void setLives(int l)
+    {
+    	lives = l;
+    	addToLog("[PLAYER]\t Player's current amount of lives is now: " + lives);
+    }
+    
+    /**
+     * Decreases the lives by one.
+     */
+    public void loseLife()
+    {
+    	lives--;
+    	addToLog("[PLAYER]\t Player lost a life, total lives is now: " + lives);
+    }
+    
+    /**
+     * Increases the lives by one.
+     */
+    public void addLife()
+    {
+    	lives++;
+    	addToLog("[PLAYER]\t Player earned a life, total lives is now: " + lives);
+    }
+    
+    /**
+     * Returns whether or not the player still has lives left.
+     * @return boolean
+     */
+    public boolean hasLives()
+    {
+    	return lives > 0;
     }
 }

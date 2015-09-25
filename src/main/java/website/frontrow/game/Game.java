@@ -5,10 +5,9 @@ import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.level.Level.LevelObserver;
-
 import website.frontrow.ui.JBubbleKeyListener;
+
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The current state of the game.
@@ -19,6 +18,7 @@ public class Game
     private int score = 0;
     private int currentIndex;
     private Level currentLevel;
+    private Level gameOver;
     private ArrayList<Level> levelPack;
 
     private boolean running = false;
@@ -61,8 +61,28 @@ public class Game
             {
                 levelWon();
             }
+            
+            if(playersDead())
+            {
+            	levelLost();
+            }
         }
         updateObservers();
+    }
+    
+    /**
+     * This is used by just a few tests that didn't work the way they
+     * should've worked, because they used a mocked level.
+     * Because the level has no enemies, the game would stop.
+     * In order for the tests to be accurate, I made a new tick
+     * function that only checks whether or not the players are dead.
+     */
+    public void tickGO()
+    {
+    	if(running && playersDead())
+        {
+            levelLost();
+        }
     }
 
     /**
@@ -136,7 +156,7 @@ public class Game
      * Returns the players in the game.
      * @return The list of players.
      */
-    public List<Player> getPlayers()
+    public ArrayList<Player> getPlayers()
     {
         return this.players;
     }
@@ -210,9 +230,54 @@ public class Game
         nextLevel();
     }
 
-    @Override
-    public void levelLost()
-    {
-        stop();
-    }
+	@Override
+	public void levelLost() 
+	{
+		stop();
+		if (levelPack.size() != 1) 
+		{
+			levelPack.set(currentIndex + 1, gameOver);
+			gameOver();
+		}
+	}
+
+	/**
+	 * Returns whether or not all players are dead.
+	 * @return b boolean
+	 */
+	public boolean playersDead() 
+	{
+		if (!this.isRunning()) 
+		{
+			return false;
+		}
+		for (Player p : this.players) 
+		{
+			if (p.hasLives()) 
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Adds Game Over message to log.
+	 */
+	public void gameOver() 
+	{
+		currentLevel = gameOver;
+		this.players = currentLevel.getPlayers();
+		stop();
+	}
+
+	/**
+	 * The setter for gameOver.
+	 * @param l Level
+	 */
+	public void setGameOver(Level l) 
+	{
+		gameOver = l;
+		levelPack.add(gameOver);
+	}
 }
