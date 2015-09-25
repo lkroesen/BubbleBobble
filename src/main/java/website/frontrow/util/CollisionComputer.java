@@ -47,8 +47,10 @@ public class CollisionComputer
 	{
 		ArrayList<Unit> units = this.level.getUnits();
 		AABB me = user.getAABB();
-		for (Unit other : units) {
-			if (other != user && other.getAABB().overlaps(me)) {
+		for (Unit other : units)
+		{
+			if (other != user && other.getAABB().overlaps(me))
+			{
 				handler.applyCollision(user, other);
 			}
 		}
