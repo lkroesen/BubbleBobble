@@ -30,7 +30,7 @@ public class Player
      * The amount of lives the player starts with is 3.
      * However, if that integer is final, we can't change it.
      */
-    private final int three = 3;
+    private static final int DEFAULT_LIVES = 3;
 
     /**
      * The constructor of the Player Unit.
@@ -42,7 +42,7 @@ public class Player
         super(true, position, new Point(0, 0), sprites);
         new Log();
         addToLog("[PLAYER]\t[SPAWN]\tPlayer created.");
-        lives = three;
+        lives = DEFAULT_LIVES;
     }
 
     /**
