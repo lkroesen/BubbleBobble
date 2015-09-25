@@ -101,7 +101,7 @@ public class Player
     public void setLives(int l)
     {
     	lives = l;
-    	addToLog("[PLAYER]/t's current amount of lives is now: " + lives);
+    	addToLog("[PLAYER]\t's current amount of lives is now: " + lives);
     }
     
     /**
@@ -110,7 +110,7 @@ public class Player
     public void loseLife()
     {
     	lives--;
-    	addToLog("[PLAYER]/t lost a life, total lives is now: " + lives);
+    	addToLog("[PLAYER]\t lost a life, total lives is now: " + lives);
     }
     
     /**
@@ -119,7 +119,7 @@ public class Player
     public void addLife()
     {
     	lives++;
-    	addToLog("[PLAYER]/t earned a life, total lives is now: " + lives);
+    	addToLog("[PLAYER]\t earned a life, total lives is now: " + lives);
     }
     
     /**
