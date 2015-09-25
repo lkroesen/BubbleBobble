@@ -1,7 +1,9 @@
 package website.frontrow;
 
+import org.junit.Before;
 import website.frontrow.game.Game;
 import website.frontrow.level.Level;
+import website.frontrow.util.Point;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,10 +15,11 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * Test class for Game.
@@ -26,7 +29,24 @@ public class GameTest
 {
     @SuppressWarnings("visibilitymodifier")
     private ArrayList<Level> levels = new ArrayList<>();
-    @Mock private Level l;
+    @Mock private Level level;
+    @Mock private Level level2;
+    private Game game;
+
+    /**
+     * Set up for testing.
+     */
+    @Before
+    public void setUp()
+    {
+        when(level.duplicate()).thenReturn(level);
+        when(level2.duplicate()).thenReturn(level2);
+        levels.add(level);
+        levels.add(level2);
+
+        game = new Game(levels);
+    }
+    @Mock private Point point;
 
     /**
      * Test whether starting the game changes the running state.
@@ -34,9 +54,6 @@ public class GameTest
     @Test
     public void testStart()
     {
-        levels.add(l);
-
-        Game game = new Game(levels, null);
         game.start();
 
         assertTrue(game.isRunning());
@@ -48,9 +65,6 @@ public class GameTest
     @Test
     public void testStartStopped()
     {
-        levels.add(l);
-
-        Game game = new Game(levels, null);
         assertFalse(game.isRunning());
     }
 
@@ -60,9 +74,6 @@ public class GameTest
     @Test
     public void testStop()
     {
-        levels.add(l);
-
-        Game game = new Game(levels, null);
         game.start();
         game.stop();
         assertFalse(game.isRunning());
@@ -74,9 +85,6 @@ public class GameTest
     @Test
     public void testGetScore()
     {
-        levels.add(l);
-
-        Game game = new Game(levels, null);
         assertEquals(0, game.getScore());
     }
 
@@ -86,9 +94,6 @@ public class GameTest
     @Test
     public void testSetScore()
     {
-        levels.add(l);
-
-        Game game = new Game(levels, null);
         game.setScore(15);
         assertEquals(15, game.getScore());
         game.setScore(42);
@@ -101,9 +106,6 @@ public class GameTest
     @Test
     public void testTick1()
     {
-        levels.add(l);
-
-        Game game = new Game(levels, null);
         assertFalse(game.isRunning());
         game.tick();
         verify(levels.get(0), never()).tick();
@@ -115,12 +117,32 @@ public class GameTest
     @Test
     public void testTick2()
     {
-        levels.add(l);
-
-        Game game = new Game(levels, null);
         game.start();
         assertTrue(game.isRunning());
         game.tick();
         verify(levels.get(0), times(1)).tick();
     }
+
+    /**
+     * Test if levelWon works as expected.
+     */
+    @Test
+    public void testLevelWon()
+    {
+        game.levelWon();
+        assertEquals(level2, game.getLevel());
+    }
+
+    /**
+     * Test if levelLost works as expected.
+     */
+    @Test
+    public void testLevelLost()
+    {
+        game.levelLost();
+        assertFalse(game.isRunning());
+        verify(level, times(1)).duplicate();
+        verify(level2, never()).duplicate();
+    }
+
 }

@@ -5,9 +5,12 @@ import org.junit.Before;
 import org.junit.Test;
 import website.frontrow.level.Level;
 import website.frontrow.game.GameConstants;
+import website.frontrow.level.MapParser;
 import website.frontrow.util.Grid;
 import website.frontrow.util.Point;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertTrue;
@@ -20,9 +23,11 @@ import static org.junit.Assert.assertEquals;
 public abstract class MoverTest
     extends UnitTest
 {
+	//subclasses need to be able to acces this information.
     @SuppressWarnings("checkstyle:visibilitymodifier")
     protected Point m;
-    private Level emptyLevel = new Level(new ArrayList<>(), new ArrayList<>(), new Grid<>(0, 0));
+    @SuppressWarnings("checkstyle:visibilitymodifier")
+    protected Level emptyLevel = new Level(new ArrayList<>(), new ArrayList<>(), new Grid<>(0, 0));
 
     /**
      * Create the mover for the tests.
@@ -105,39 +110,6 @@ public abstract class MoverTest
     }
 
     /**
-     * Test if setDirection works.
-     */
-    @Test
-    public void setDirectionLeft()
-    {
-        Mover u = getTestMover(true, null, null);
-        u.setDirection(Direction.LEFT);
-        assertEquals(u.getDirection(), Direction.LEFT);
-    }
-
-    /**
-     * Test if setDirection works.
-     */
-    @Test
-    public void setDirectionRight()
-    {
-        Mover u = getTestMover(true, null, null);
-        u.setDirection(Direction.RIGHT);
-        assertEquals(u.getDirection(), Direction.RIGHT);
-    }
-
-    /**
-     * Test setDirection.
-     */
-    @Test
-    public void setDirectionDownTest()
-    {
-        Mover u = getTestMover(true, null, null);
-        u.setDirection(Direction.DOWN);
-        assertEquals(u.getDirection(), Direction.DOWN);
-    }
-
-    /**
      * Test the tick method.
      */
     @Test
@@ -148,35 +120,47 @@ public abstract class MoverTest
         u.tick(emptyLevel);
         // TODO When collisions are implemented, some calls to those checks need to be checked here.
 
-        assertEquals(0.25, u.getLocation().getX(), 0.0004);
+        assertEquals(-1, u.getLocation().getX(), 0.0004);
     }
 
     /**
      * Test whether the unit moves left.
+     * @throws IOException The test file might not be found.
      */
     @Test
-    public void testGoLeft()
+    public void testGoLeft() throws IOException
     {
-        Mover u = getTestMover(true, new Point(0, 0), new Point(0, 0));
+
+        MapParser mp = new MapParser();
+        InputStream map = getClass().getResourceAsStream("/testMove.txt");
+        Level level = mp.parseMap(map);
+
+        Player u = level.getPlayers().get(0);
+        Point location = u.getLocation();
 
         u.goLeft();
-        u.tick(emptyLevel);
+        u.tick(level);
 
-        assertTrue(u.getLocation().getX() < 0);
+        assertTrue(u.getLocation().getX() < location.getX());
     }
 
     /**
      * Test whether the unit moves right.
+     * @throws IOException The test file might not be found.
      */
     @Test
-    public void testGoRight()
+    public void testGoRight() throws IOException
     {
-        Mover u = getTestMover(true, new Point(0, 0), new Point(0, 0));
+        MapParser mp = new MapParser();
+        InputStream map = getClass().getResourceAsStream("/testMove.txt");
+        Level level = mp.parseMap(map);
+
+        Player u = level.getPlayers().get(0);
+        Point location = u.getLocation();
 
         u.goRight();
-        u.tick(emptyLevel);
-
-        assertTrue(u.getLocation().getX() > 0);
+        u.tick(level);
+        assertTrue(u.getLocation().getX() > location.getX());
     }
 
     /**

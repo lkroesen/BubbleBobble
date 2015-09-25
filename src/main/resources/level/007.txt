@@ -1,18 +1,18 @@
-XX______________XX
+XXXXXXXXXXXXXXXXXX
 XX              XX
 XX              XX
 XX              XX
+XXe            eXX
+XX__          __XX
 XX              XX
-XX       e      XX
-XX       e      XX
-XX       e      XX
-XX_  ________  _XX
-XX              XX
-XX              XX
-XX_  ________  _XX
+XX  e        e  XX
+XX___        ___XX
 XX              XX
 XX              XX
-XX_  ________  _XX
+XX____      ____XX
+XX              XX
+XX              XX
+XX  ____  ____  XX
 XX              XX
 XX p            XX
-XX______________XX
+XXXXXXXXXXXXXXXXXX

@@ -16,6 +16,11 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -33,6 +38,7 @@ public class LevelTest
     @Mock
     private Enemy enemy;
     private ArrayList<Unit> mockunits = new ArrayList<>();
+    private ArrayList<Player> mockplayer = new ArrayList<>();
 
     /**
      * Set up.
@@ -44,6 +50,8 @@ public class LevelTest
         mockunits.add(player);
         mockunits.add(enemy);
         mockunits.add(enemy);
+
+        mockplayer.add(player);
     }
 
     /**
@@ -52,7 +60,7 @@ public class LevelTest
     @Test
     public void testGetCells()
     {
-        Level level = new Level(null, units, grid);
+        Level level = new Level(mockplayer, units, grid);
         assertEquals(grid, level.getCells());
     }
 
@@ -62,7 +70,7 @@ public class LevelTest
     @Test
     public void testGetUnits()
     {
-        Level level = new Level(null, units, grid);
+        Level level = new Level(mockplayer, units, grid);
         assertEquals(units, level.getUnits());
     }
 
@@ -72,9 +80,26 @@ public class LevelTest
     @Test
     public void testTick()
     {
-        Level level = new Level(null, mockunits, grid);
+        Level level = new Level(mockplayer, mockunits, grid);
         level.tick();
         verify(player, times(1)).tick(level);
         verify(enemy, times(2)).tick(level);
+    }
+
+    /**
+     * Tests the add method.
+     */
+    @Test
+    public void testAddUnit()
+    {
+        Level level = new Level(mockplayer, mockunits, grid);
+        Unit mockedUnit = mock(Unit.class);
+        when(mockedUnit.isAlive()).thenReturn(true);
+        level.addUnit(mockedUnit);
+
+        assertFalse(level.getUnits().contains(mockedUnit));
+
+        level.tick();
+        assertTrue(level.getUnits().contains(mockedUnit));
     }
 }

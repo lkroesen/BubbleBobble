@@ -7,9 +7,11 @@ import website.frontrow.level.Level;
 import website.frontrow.level.MapParser;
 import website.frontrow.logger.DumpLog;
 import website.frontrow.logger.Log;
+import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.ui.Action;
 import website.frontrow.ui.JBubbleBobbleUI;
 import website.frontrow.game.GameConstants;
+import website.frontrow.util.FileNameCollector;
 import website.frontrow.util.MusicPlayer;
 import website.frontrow.util.Point;
 import website.frontrow.logger.Logable;
@@ -17,6 +19,7 @@ import website.frontrow.logger.Logable;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,19 +51,26 @@ public class Launcher implements Logable
     {
         // Initialize the Logger Class, so that it can Log actions taken.
         new Log();
+        Log.togglePrinting();
 
-        String[] levels = {"/level/1.txt", "/level/2.txt", "/level/3.txt"};
-        new Launcher().start(levels);
+        try
+        {
+            new Launcher().start(new FileNameCollector().obtain("/level/"));
+        }
+        catch (URISyntaxException exception)
+        {
+            Log.add("[LAUNCHER]\t[ERROR]\tLauncher couldn't start due to FileNameCollector.");
+            exception.printStackTrace();
+        }
     }
 
     /**
      * Starts the game.
      * @param filename The file name of the level to load.
      */
+    @SuppressWarnings("methodlength") // We need to make a GameFactory and UIBuilder
     public void start(String[] filename)
     {
-        Log.togglePrinting();
-
         addToLog("[LAUNCHER]\tLoading file: " + filename + ".");
 
         try
@@ -76,9 +86,13 @@ public class Launcher implements Logable
                 levelList.add(level);
             }
 
-            Game game = new Game(levelList, levelList.get(0).getPlayers());
+            Game game = new Game(levelList);
             Map<Integer, Action> keyMappings = createSinglePlayerKeyMappings(game);
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
+            
+            InputStream map = getClass().getResourceAsStream("/game_over.txt");
+    		Level gameOverLevel = mp.parseMap(map);
+    		game.setGameOver(gameOverLevel);
 
             game.setKeyListener(ui.getKeyListener());
 
@@ -150,12 +164,14 @@ public class Launcher implements Logable
             map.put(KeyEvent.VK_Z, () ->
             {
                 addToLog("[KEY]\t< \'Z\' > Pressed.");
+                JBubbleBobbleSprites spriteStore = new JBubbleBobbleSprites();
                 if(game.isRunning())
                 {
                     Player p = game.getPlayers().get(0);
                     game.getLevel().addUnit(
                             new Bubble(p.getLocation(),
-                                    new Point(p.getDirection().getDeltaX() * 4, 0)));
+                                    new Point(p.getDirection().getDeltaX() * 4, 0),
+                                    spriteStore.getBubbleSprite()));
                 }
             });
         }

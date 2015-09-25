@@ -40,13 +40,13 @@ public class JBubbleBobbleUITest
         ArrayList<Level> le = new ArrayList<>();
         Grid<Cell> grid = new Grid<>(2, 2);
 
-        pl.add(new Player(new Point(0, 0)));
-        ul.add(new Enemy(new Point(1, 1)));
+        pl.add(new Player(new Point(0, 0), null));
+        ul.add(new Enemy(new Point(1, 1), null));
 
         level = new Level(pl, ul, grid);
         le.add(level);
 
-        g = new Game(le, pl);
+        g = new Game(le);
     }
 
     /**

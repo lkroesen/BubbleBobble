@@ -50,9 +50,10 @@ public class StaticImageSprite
     {
         if(withinImage(x, y) && withinImage(x + width - 1, y + height - 1))
         {
-            BufferedImage bi = ImageStore.createTranslucentImage(width, height);
-            bi.createGraphics().drawImage(image, x, y, width, height, null);
-            return new StaticImageSprite(bi);
+            BufferedImage newImage = ImageStore.createTranslucentImage(width, height);
+            newImage.createGraphics().drawImage(this.image, 0, 0, width, height, x,
+                    y, x + width, y + height, null);
+            return new StaticImageSprite(newImage);
         }
         return new EmptySprite();
     }
