@@ -2,14 +2,11 @@ package website.frontrow.game;
 
 import website.frontrow.board.Player;
 import website.frontrow.level.Level;
-import website.frontrow.level.MapParser;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.level.Level.LevelObserver;
 import website.frontrow.ui.JBubbleKeyListener;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
@@ -279,7 +276,8 @@ public class Game
 	 * The setter for gameOver.
 	 * @param l Level
 	 */
-	public void setGameOver(Level l) {
+	public void setGameOver(Level l) 
+	{
 		gameOver = l;
 		levelPack.add(gameOver);
 	}
