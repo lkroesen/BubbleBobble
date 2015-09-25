@@ -18,6 +18,7 @@ public class Enemy
 	private int tickCounter;
 	private float random;
 	private Boolean lastWall;
+	private Boolean wallCollision;
 
     /**
      * The amount of ticks needed to escape.
@@ -36,6 +37,7 @@ public class Enemy
         this.tickCounter = 0;
         this.random = 1.00f;
         this.lastWall = false;
+        this.wallCollision = false;
         new Log();
         addToLog("[BUBBLE]\t[SPAWN]\tEnemy created.");
     }
@@ -73,6 +75,35 @@ public class Enemy
     {
     	this.tickCounter = ticks;
     }
+    
+    /**
+     * If the enemy collides with a wall we set the boolean to true.
+     * This way the ai can set a new course 
+     */
+    @Override
+    public void onWallCollision()
+    {
+    	this.wallCollision = true;
+    }
+    
+    /**
+     * Return the wall collision.
+     * @return the wall collision boolean.
+     */
+    public Boolean getWallCollision()
+    {
+    	return this.wallCollision;
+    }
+    
+    /**
+     * Set the wall collision.
+     * @param collision set the wall collision boolean.
+     */
+    public void setWallCollision(Boolean collision)
+    {
+    	this.wallCollision = collision;
+    }
+    
     
     /**
      * Return the random float.

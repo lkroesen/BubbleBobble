@@ -47,10 +47,8 @@ public class CollisionComputer
 	{
 		ArrayList<Unit> units = this.level.getUnits();
 		AABB me = user.getAABB();
-		for(Unit other: units)
-		{
-			if(other != user && other.getAABB().overlaps(me))
-			{
+		for (Unit other : units) {
+			if (other != user && other.getAABB().overlaps(me)) {
 				handler.applyCollision(user, other);
 			}
 		}
@@ -72,7 +70,7 @@ public class CollisionComputer
 	 * @param motion The motion to keep in mind
 	 * @return True when there is a collision, false when not.
 	 */
-	public boolean checkLevelAABB(AABB aabb, Point motion)
+	public Cell checkLevelAABB(AABB aabb, Point motion)
 	{
 		// Find the cells we need to check.
 		Grid<Cell> cells = level.getCells();
@@ -91,41 +89,25 @@ public class CollisionComputer
 				AABB tile = new AABB(c.add(aabbo), c.add(aabbo).add(cell.getAABBDimensions()));
 				if (cell.collides(motion) && aabb.overlaps(tile))
 				{
-					return true;
+					return cell;
 				}
 			}
 		}
 
-		return false;
+		return Cell.EMPTY;
 	}
 
-	/**
-	 * Get the amount of steps for a mover.
-	 * @param mover Mover to compute for.
-	 * @param wh Width and height of movers AABB.
-	 * @return amount of steps.
-	 */
-	private int getSteps(Mover mover, Point wh)
-	{
-		double stepsX = Math.abs(mover.getMotion().getX()) / wh.getX();
-		double stepsY = Math.abs(mover.getMotion().getY()) / wh.getY();
-
-		return (int) Math.ceil(Math.max(stepsX, stepsY) * SAMPLING);
-	}
-
-	// 8 is the max recusion depth.
-	@SuppressWarnings("checkstyle:magicnumber")
-	private static final int MAX_DEPTH = 8;
 	/**
 	 * Sweep from start until steps until you get a collision.
 	 * @param start Starting position of the sweep.
 	 * @param delta Delta between each step.
-	 * @param wh Width and height of the unit to sweep.
+	 * @param widthHeight Width and height of the unit to sweep.
 	 * @param steps Amount of steps to do.
 	 * @param level Recursion loop cap.
 	 * @return Collision after sweep
 	 */
-	private Collision sweep(Point start, Point delta, Point wh, Point motion, int steps, int level)
+	private Collision sweep(Mover mover, Point start,
+							Point delta, Point widthHeight, Point motion, int steps, int level)
 	{
 		if(level >= MAX_DEPTH)
 		{
@@ -135,10 +117,15 @@ public class CollisionComputer
 		for(int i = 0; i <= steps; i++)
 		{
 			Point current = found.add(delta);
-
-			if(checkLevelAABB(new AABB(current, current.add(wh)), motion))
+			Cell cell = checkLevelAABB(new AABB(current, current.add(widthHeight)), motion);
+			if(cell != Cell.EMPTY)
 			{
-				return sweep(found, delta.divide(steps), wh, motion, steps, level + 1);
+				if(cell == Cell.WALL)
+				{
+					mover.onWallCollision();
+				}
+				return sweep(
+						mover, found, delta.divide(steps), widthHeight, motion, steps, level + 1);
 			}
 
 			found = current;
@@ -162,24 +149,37 @@ public class CollisionComputer
 		}
 		Point delta = mover.getMotion().divide(steps).divide(GameConstants.TICKS_PER_SEC);
 
-		Collision collision = sweep(mover.getLocation(), delta, mover.getAABBDimensions(),
+		Collision collision = sweep(mover, mover.getLocation(), delta, mover.getAABBDimensions(),
 				mover.getMotion(), steps, 0);
 
-		if(collision.isCollided())
-		{
-			mover.onWallCollision();
-		}
+		double newXLocation
+				= Math.round(collision.getPoint().getX() * ONE_DEV_PRECISION) * PRECISION;
+		double newYLocation
+				= Math.round(collision.getPoint().getY() * ONE_DEV_PRECISION) * PRECISION;
 
-        double newXLocation
-                = Math.round(collision.getPoint().getX() * ONE_DEV_PRECISION) * PRECISION;
-        double newYLocation
-                = Math.round(collision.getPoint().getY() * ONE_DEV_PRECISION) * PRECISION;
+		Point newLocation = new Point(newXLocation, newYLocation);
 
-        Point newLocation = new Point(newXLocation, newYLocation);
-
-        newLocation = checkLevelBounds(mover, newLocation);
+		newLocation = checkLevelBounds(mover, newLocation);
 		return new Collision(newLocation, collision.isCollided());
 	}
+
+	/**
+	 * Get the amount of steps for a mover.
+	 * @param mover Mover to compute for.
+	 * @param wh Width and height of movers AABB.
+	 * @return amount of steps.
+	 */
+	private int getSteps(Mover mover, Point wh)
+	{
+		double stepsX = Math.abs(mover.getMotion().getX()) / wh.getX();
+		double stepsY = Math.abs(mover.getMotion().getY()) / wh.getY();
+
+		return (int) Math.ceil(Math.max(stepsX, stepsY) * SAMPLING);
+	}
+
+	// 8 is the max recusion depth.
+	@SuppressWarnings("checkstyle:magicnumber")
+	private static final int MAX_DEPTH = 8;
 
 	/**
 	 * Checks whether the the mover is outside the bounds
@@ -218,4 +218,5 @@ public class CollisionComputer
 
 		return new Point(newXLocation, newYLocation);
 	}
+
 }
