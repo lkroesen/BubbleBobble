@@ -209,6 +209,7 @@ public class Game
     public void levelWon()
     {
         addToLog("[GAME]\t[WON]\tYou win this round.");
+
         nextLevel();
     }
 
