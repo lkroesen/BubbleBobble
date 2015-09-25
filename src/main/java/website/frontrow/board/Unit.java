@@ -13,6 +13,11 @@ import website.frontrow.util.Point;
 public abstract class Unit
 {
     /**
+     * Prime number used for hashing.
+     */
+    private static final int PRIME = 31;
+
+    /**
      * Amount of lives an entity has.
      */
     private boolean alive;
@@ -117,6 +122,7 @@ public abstract class Unit
      * @param other The unit to check against.
      * @return Whether the two are equal.
      */
+    @Override
     public boolean equals(Object other)
     {
         if(other instanceof Unit)
@@ -128,6 +134,12 @@ public abstract class Unit
                     this.location.equals(that.location);
         }
         return false;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return location.hashCode() + PRIME * Boolean.hashCode(alive);
     }
 
     /**

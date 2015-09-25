@@ -19,8 +19,13 @@ import java.util.Map;
  */
 public abstract class Mover
     extends Unit
-        implements Logable
+    implements Logable
 {
+    /**
+     * Prime number used for hashing.
+     */
+    private static final int PRIME = 31;
+
     /**
      * Current direction of motion.
      */
@@ -206,6 +211,12 @@ public abstract class Mover
                     this.motion.equals(that.motion);
         }
         return false;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return super.hashCode() + PRIME * motion.hashCode();
     }
 
     @Override

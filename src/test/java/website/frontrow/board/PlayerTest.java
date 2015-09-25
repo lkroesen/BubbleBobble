@@ -36,6 +36,10 @@ public class PlayerTest
     public Mover getTestMover(boolean alive, Point start, Point motion)
     {
         Player player = new Player(start, null);
+        if(!alive)
+        {
+            player.kill();
+        }
         player.setMotion(motion);
 
         return player;

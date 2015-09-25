@@ -20,7 +20,6 @@ public class CollisionComputer
 	private static final double PRECISION = 0.0001d;
 	private static final double ONE_DEV_PRECISION = 1 / PRECISION;
 	private static final int SAMPLING = 64;
-    private static final double LOC_OFFSET = 0.99d;
     private Level level;
 
     

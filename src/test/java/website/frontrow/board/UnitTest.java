@@ -11,17 +11,18 @@ import static org.junit.Assert.assertNotEquals;
 /**
  * Tests for testing the Unit class.
  */
-public abstract class UnitTest {
+public abstract class UnitTest
+{
 
     @SuppressWarnings("checkstyle:visibilitymodifier")
     protected Point p = new Point(1.0, 1.0);
-    ;
 
     /**
      * Test the duplicate method.
      */
     @Test
-    public void duplicateTest() {
+    public void duplicateTest()
+    {
         Unit u = getTestUnit(true, p);
         Unit duplicate = u.duplicate();
 
@@ -29,6 +30,32 @@ public abstract class UnitTest {
         assertEquals(u, duplicate);
         // Memory location differs.
         assertFalse(u == duplicate);
+    }
+
+    /**
+     * Test hashcode.
+     * Equal objects have an equal hashcode.
+     */
+    @Test
+    public void hashCodeTest()
+    {
+        Unit u = getTestUnit(true, p);
+        Unit duplicate = u.duplicate();
+
+        assertEquals(u.hashCode(), duplicate.hashCode());
+    }
+
+    /**
+     * Test hashcode.
+     * Equal objects have an equal hashcode.
+     */
+    @Test
+    public void inequalHashCodeTest()
+    {
+        Unit u = getTestUnit(true, p);
+        Unit other = getTestUnit(false, p);
+
+        assertNotEquals(u.hashCode(), other.hashCode());
     }
 
     /**
