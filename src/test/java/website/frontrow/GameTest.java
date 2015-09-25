@@ -1,8 +1,10 @@
 package website.frontrow;
 
 import org.junit.Before;
+import website.frontrow.board.Player;
 import website.frontrow.game.Game;
 import website.frontrow.level.Level;
+import website.frontrow.util.Point;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,9 +16,9 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
-
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 
@@ -45,6 +47,7 @@ public class GameTest
 
         game = new Game(levels);
     }
+    @Mock private Point point;
 
     /**
      * Test whether starting the game changes the running state.
@@ -139,7 +142,8 @@ public class GameTest
     {
         game.levelLost();
         assertFalse(game.isRunning());
-        verify(level, times(2)).duplicate();
+        verify(level, times(1)).duplicate();
         verify(level2, never()).duplicate();
     }
+
 }

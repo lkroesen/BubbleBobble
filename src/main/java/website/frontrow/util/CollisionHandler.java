@@ -60,7 +60,7 @@ public class CollisionHandler
         // Kill the player.
         if(other instanceof Enemy)
         {
-            player.kill();
+            player.onEnemyCollision();
         }
     }
 

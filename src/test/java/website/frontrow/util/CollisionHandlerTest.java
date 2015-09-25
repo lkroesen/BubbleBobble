@@ -56,7 +56,7 @@ public class CollisionHandlerTest
         public void playerHitEnemyTest()
         {
             collisionHandler.applyCollision(player, enemy);
-            verify(player, times(1)).kill();
+            verify(player, times(1)).onEnemyCollision();
         }
 
         /**
@@ -66,7 +66,7 @@ public class CollisionHandlerTest
         public void enemyHitPlayerTest()
         {
             collisionHandler.applyCollision(enemy, player);
-            verify(player, times(1)).kill();
+            verify(player, times(1)).onEnemyCollision();
         }
 
         /**

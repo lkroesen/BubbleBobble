@@ -180,7 +180,7 @@ public class Level
 
         for(Player player: players)
         {
-            playersAlive = playersAlive | player.isAlive();
+            playersAlive = playersAlive | player.hasLives();
         }
 
     }

@@ -5,10 +5,9 @@ import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.level.Level.LevelObserver;
-
 import website.frontrow.ui.JBubbleKeyListener;
+
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The current state of the game.
@@ -19,6 +18,7 @@ public class Game
     private int score = 0;
     private int currentIndex;
     private Level currentLevel;
+    private Level gameOver;
     private ArrayList<Level> levelPack;
 
     private boolean running = false;
@@ -128,7 +128,7 @@ public class Game
      * Returns the players in the game.
      * @return The list of players.
      */
-    public List<Player> getPlayers()
+    public ArrayList<Player> getPlayers()
     {
         return this.currentLevel.getPlayers();
     }
@@ -207,7 +207,25 @@ public class Game
     public void levelLost()
     {
         stop();
+        gameOver();
         addToLog("[GAME]\t[LOST]\tYou just lost the game, kind of.");
-        loadCurrentLevel();
     }
+
+	/**
+	 * Adds Game Over message to log.
+	 */
+	public void gameOver() 
+	{
+		currentLevel = gameOver;
+	}
+
+	/**
+	 * The setter for gameOver.
+     * @param l Level
+	 */
+	public void setGameOver(Level l) 
+	{
+		gameOver = l;
+		levelPack.add(gameOver);
+	}
 }

@@ -88,6 +88,10 @@ public class Launcher implements Logable
             Game game = new Game(levelList);
             Map<Integer, Action> keyMappings = createSinglePlayerKeyMappings(game);
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
+            
+            InputStream map = getClass().getResourceAsStream("/game_over.txt");
+    		Level gameOverLevel = mp.parseMap(map);
+    		game.setGameOver(gameOverLevel);
 
             game.setKeyListener(ui.getKeyListener());
 
