@@ -19,6 +19,7 @@ public class Game
     private int currentIndex;
     private Level currentLevel;
     private Level gameOver;
+    private Level gameWon;
     private ArrayList<Level> levelPack;
 
     private boolean running = false;
@@ -199,8 +200,14 @@ public class Game
     public void levelWon()
     {
         addToLog("[GAME]\t[WON]\tYou win this round.");
-
-        nextLevel();
+        if(currentIndex + 1 < levelPack.size())
+        {
+            nextLevel();
+        }
+        else
+        {
+            currentLevel = gameWon;
+        }
     }
 
     @Override
@@ -221,11 +228,15 @@ public class Game
 
 	/**
 	 * The setter for gameOver.
-     * @param l Level
+     * @param level Level
 	 */
-	public void setGameOver(Level l) 
+	public void setGameOver(Level level)
 	{
-		gameOver = l;
-		levelPack.add(gameOver);
+		gameOver = level;
 	}
+
+    public void setGameWon(Level level)
+    {
+        gameWon = level;
+    }
 }
