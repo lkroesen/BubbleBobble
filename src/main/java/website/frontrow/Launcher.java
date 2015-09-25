@@ -94,6 +94,10 @@ public class Launcher implements Logable
     		Level gameOverLevel = mp.parseMap(map);
     		game.setGameOver(gameOverLevel);
 
+            InputStream winMap = getClass().getResourceAsStream("/game_won.txt");
+            Level gameWonLevel = mp.parseMap(winMap);
+            game.setGameWon(gameWonLevel);
+
             game.setKeyListener(ui.getKeyListener());
 
             ui.start();
