@@ -45,11 +45,11 @@ public class ScorePanel
 
         labels = new LinkedHashMap<>();
 
-        for (Player pl : players)
+        for (Player player : players)
         {
-            JLabel sl = new JLabel("0", JLabel.CENTER);
-            labels.put(pl, sl);
-            add(sl);
+            JLabel jLabel = new JLabel("0", JLabel.CENTER);
+            labels.put(player, jLabel);
+            add(jLabel);
         }
 
         addToLog("[ScP]\tScore Panel Created Successfully.");

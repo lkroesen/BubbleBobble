@@ -37,11 +37,11 @@ public class StatusLabelPanel extends JPanel
 
     /**
      * Setter for runningLabel.
-     * @param rl JLabel
+     * @param jLabel JLabel
      */
-    public void setRunningLabel(JLabel rl)
+    public void setRunningLabel(JLabel jLabel)
     {
-        runningLabel = rl;
+        runningLabel = jLabel;
     }
 
     @Override
