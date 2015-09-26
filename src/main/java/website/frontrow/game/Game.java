@@ -13,20 +13,22 @@ import java.util.ArrayList;
  * The current state of the game.
  */
 public class Game
-        implements Logable, LevelObserver
+        implements  Logable,
+                    LevelObserver
 {
-    private int score = 0;
-    private int currentIndex;
-    private Level currentLevel;
-    private Level gameOver;
-    private Level gameWon;
-    private ArrayList<Level> levelPack;
+    private ArrayList<GameObserver> observers = new ArrayList<>();
+    private ArrayList<Level> levelPack = new ArrayList<>();
 
     private boolean running = false;
 
-    private ArrayList<GameObserver> observers;
+    private int currentIndex = 0;
+    private int score = 0;
 
     private JBubbleKeyListener keyListener;
+
+    private Level currentLevel;
+    private Level gameOver;
+    private Level gameWon;
 
     /**
      * Constructor of Game.
@@ -35,9 +37,7 @@ public class Game
     public Game(ArrayList<Level> levels)
     {
         this.levelPack = levels;
-        this.currentIndex = 0;
         loadCurrentLevel();
-        this.observers = new ArrayList<>();
         addToLog("[GAME]\tGame Object Created");
     }
 
@@ -52,8 +52,10 @@ public class Game
             {
                 keyListener.update();
             }
+
             currentLevel.tick();
         }
+
         updateObservers();
     }
 
@@ -63,6 +65,7 @@ public class Game
     private void loadCurrentLevel()
     {
         this.currentLevel = levelPack.get(currentIndex).duplicate();
+
         if(currentLevel != null)
         {
             currentLevel.addObserver(this);
@@ -98,8 +101,7 @@ public class Game
 
     /**
      * Get the current score.
-     * @return
-     * Returns an int with the score
+     * @return Returns an int with the score
      */
     public int getScore()
     {
@@ -108,8 +110,7 @@ public class Game
 
     /**
      * Set the current score.
-     * @param score
-     * Input an int with the value to set the score with.
+     * @param score Input an int with the value to set the score with.
      */
     public void setScore(int score)
     {
@@ -145,11 +146,11 @@ public class Game
 
     /**
      * Registers an observer to this game.
-     * @param o The observer.
+     * @param gameObserver The observer.
      */
-    public void registerObserver(GameObserver o)
+    public void registerObserver(GameObserver gameObserver)
     {
-        observers.add(o);
+        observers.add(gameObserver);
     }
 
     /**
@@ -163,11 +164,11 @@ public class Game
 
     /**
      * Removes an observer from this game.
-     * @param o The observer to remove.
+     * @param gameObserver The observer to remove.
      */
-    public void removeObserver(GameObserver o)
+    public void removeObserver(GameObserver gameObserver)
     {
-        observers.remove(o);
+        observers.remove(gameObserver);
     }
 
     /**

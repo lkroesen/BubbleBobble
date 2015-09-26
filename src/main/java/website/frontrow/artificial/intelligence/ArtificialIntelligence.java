@@ -99,7 +99,7 @@ public class ArtificialIntelligence
 	private void doMoves(Enemy enemy, int x, int y)
 	{
 		
-		if (enemy.getRandom() < GameConstants.AI_RANDOMIZER)
+		if (enemy.getRandom() < GameConstants.AI_RANDOMIZE)
 		{	
 			doRandomMove(enemy);
 			return;
@@ -162,16 +162,16 @@ public class ArtificialIntelligence
 	 */
 	private void doRandomMove(Enemy enemy)
 	{
-		if(enemy.getRandom() < (JUMP_RATE * GameConstants.AI_RANDOMIZER))
+		if(enemy.getRandom() < (JUMP_RATE * GameConstants.AI_RANDOMIZE))
 		{
 			enemy.jump();	
 			addToLog("[AI]\tAn enemy just did the super rare JUMP SPAM!");
 		}
-		else if(enemy.getRandom() < (LEFT_RATE * GameConstants.AI_RANDOMIZER))
+		else if(enemy.getRandom() < (LEFT_RATE * GameConstants.AI_RANDOMIZE))
 		{
 			enemy.goLeft();
 		}
-		else if(enemy.getRandom() < (RIGHT_RATE * GameConstants.AI_RANDOMIZER))
+		else if(enemy.getRandom() < (RIGHT_RATE * GameConstants.AI_RANDOMIZE))
 		{
 			enemy.goRight();
 		}
