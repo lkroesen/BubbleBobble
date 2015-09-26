@@ -2,7 +2,6 @@ package website.frontrow.artificial.intelligence;
 
 import website.frontrow.board.Mover;
 import website.frontrow.board.Enemy;
-import website.frontrow.level.Level;
 import website.frontrow.util.Point;
 
 /**
@@ -15,17 +14,18 @@ import website.frontrow.util.Point;
 
 public abstract class PathCalculation 
 {
+	private static final double Y_OFFSET = 0.9;
+
 	private static Point location;
-	
+
 	/**
 	 * Method that returns a list of all relative positions of enemies and the player.
 	 * On the X axis
 	 * @param player the player unit.
 	 * @param enemy the enemy unit.
-	 * @param level the current level.
 	 * @return a list of all relative positions of enemies and the player, on the X axis.
 	 */
-	public static Integer calculateXPath(Mover player, Enemy enemy, Level level)
+	public static Integer calculateXPath(Mover player, Enemy enemy)
 	{
 		location = player.getLocation();	
 		int goal = 0;
@@ -47,10 +47,9 @@ public abstract class PathCalculation
 	 * On the Y axis.
 	 * @param player the player unit.
 	 * @param enemy the enemy unit.
-	 * @param level the current level.
 	 * @return a list of all relative positions of enemies and the player, on the Y axis.
 	 */
-	public static Integer calculateYPath(Mover player, Enemy enemy, Level level)
+	public static Integer calculateYPath(Mover player, Enemy enemy)
 	{
 		location = player.getLocation();	
 		int goal = 0;
@@ -87,12 +86,10 @@ public abstract class PathCalculation
 	 * @param enemy an enemy unit.
 	 * @return the y position of the enemy relative to the player.
 	 */
-	//This is an offset to fix unneeded enemy jumping.
-	@SuppressWarnings("checkstyle:magicnumber")
 	public static int moveOnYAxis(Point player, Point enemy)
 	{
 		
-		double yPlayer = player.getY() + 0.9;
+		double yPlayer = player.getY() + Y_OFFSET;
 		double yEnemy = enemy.getY();
 		
 		return (int) Math.floor(yPlayer - yEnemy);

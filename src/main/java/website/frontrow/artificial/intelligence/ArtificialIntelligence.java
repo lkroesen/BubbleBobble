@@ -47,13 +47,13 @@ public class ArtificialIntelligence
 	{
 		this.players = this.level.getPlayers();
 		this.units = this.level.getUnits();
-		
+
 		for(Unit u : units)
 		{
 			if (u instanceof Enemy)
 			{
 					this.enemies.add((Enemy) u);
-			}		
+			}
 		}
 		
 		if(players.size() > 0)
@@ -63,8 +63,8 @@ public class ArtificialIntelligence
 			for(int i = 0; i < enemies.size(); i++)
 			{
 				Enemy enemy = enemies.get(i);
-				int moveToX = PathCalculation.calculateXPath((Mover) player, enemy, this.level);
-				int moveToY = PathCalculation.calculateYPath((Mover) player, enemy, this.level);
+				int moveToX = PathCalculation.calculateXPath((Mover) player, enemy);
+				int moveToY = PathCalculation.calculateYPath((Mover) player, enemy);
 					
 				randomizer(enemy);
 				doMoves(enemy, moveToX, moveToY);
