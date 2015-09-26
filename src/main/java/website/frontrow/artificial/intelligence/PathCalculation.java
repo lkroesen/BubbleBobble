@@ -6,12 +6,10 @@ import website.frontrow.util.Point;
 
 /**
  * This class can calculate the best path for an AI to take 
- * given the player information, a list of enemies and the current level. 
- * 
- * This method has no use for a constructor because it always returns a path.
+ * given the player information, a list of enemies and the current level.
  */
 @SuppressWarnings("checkstyle:hideutilityclassconstructor")
-
+/* This method has no use for a constructor because it always returns a path. */
 public abstract class PathCalculation 
 {
 	private static final double Y_OFFSET = 0.9;
@@ -21,9 +19,9 @@ public abstract class PathCalculation
 	/**
 	 * Method that returns a list of all relative positions of enemies and the player.
 	 * On the X axis
-	 * @param player the player unit.
-	 * @param enemy the enemy unit.
-	 * @return a list of all relative positions of enemies and the player, on the X axis.
+	 * @param player The player unit.
+	 * @param enemy The enemy unit.
+	 * @return A list of all relative positions of enemies and the player, on the X axis.
 	 */
 	public static Integer calculateXPath(Mover player, Enemy enemy)
 	{
@@ -68,9 +66,9 @@ public abstract class PathCalculation
 	
 	/**
 	 * Returns the x position of the enemy relative to the player.
-	 * @param player the player unit.
-	 * @param enemy an enemy unit.
-	 * @return the x position of the enemy relative to the player.
+	 * @param player The player unit.
+	 * @param enemy An enemy unit.
+	 * @return The x position of the enemy relative to the player.
 	 */
 	public static int moveOnXAxis(Point player, Point enemy)
 	{
@@ -82,13 +80,12 @@ public abstract class PathCalculation
 	
 	/**
 	 * Returns the y position of the enemy relative to the player.
-	 * @param player the player unit.
-	 * @param enemy an enemy unit.
-	 * @return the y position of the enemy relative to the player.
+	 * @param player The player unit.
+	 * @param enemy An enemy unit.
+	 * @return The y position of the enemy relative to the player.
 	 */
 	public static int moveOnYAxis(Point player, Point enemy)
 	{
-		
 		double yPlayer = player.getY() + Y_OFFSET;
 		double yEnemy = enemy.getY();
 		
