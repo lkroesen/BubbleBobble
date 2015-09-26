@@ -41,8 +41,7 @@ public abstract class Unit
 
     /**
      * Get the status of the unit, whether it's dead or alive.
-     * @return
-     * Return true if the Unit is alive, false if it's dead.
+     * @return true if the Unit is alive, false if it's dead.
      */
     public boolean isAlive()
     {
@@ -71,7 +70,6 @@ public abstract class Unit
      */
     public abstract Sprite getSprite();
 
-
     /**
      * Get the location of a Unit.
      * @return Location of a unit.
@@ -90,7 +88,6 @@ public abstract class Unit
     {
         this.location = location;
     }
-
 
     /**
      * Draws the unit.
@@ -112,10 +109,7 @@ public abstract class Unit
      * Do the logic for this tick.
      * @param level The level in which the unit has to perform its logic.
      */
-    public void tick(Level level)
-    {
-
-    }
+    public abstract void tick(Level level);
 
     /**
      * Check whether two units are equal to each other.
@@ -125,15 +119,24 @@ public abstract class Unit
     @Override
     public boolean equals(Object other)
     {
-        if(other instanceof Unit)
+        if(!(other instanceof Unit))
         {
-            Unit that = (Unit) other;
-
-            return  this.alive == that.alive
-                    &&
-                    this.location.equals(that.location);
+            return false;
         }
-        return false;
+
+        Unit that = (Unit) other;
+
+        if(this.alive != that.alive)
+        {
+            return false;
+        }
+
+        if(!this.location.equals(that.location))
+        {
+            return false;
+        }
+
+        return true;
     }
 
     @Override

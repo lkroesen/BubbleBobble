@@ -29,14 +29,12 @@ public abstract class Mover
     /**
      * Current direction of motion.
      */
-    @SuppressWarnings("visibilitymodifier") // subclasses have to have access to this variable
-    protected Point motion;
+    private Point motion;
 
     /**
      * The direction that is to be added on the next tick.
      */
-    @SuppressWarnings("visibilitymodifier") // subclasses have to have access to this variable
-    protected Point newMotion;
+    private Point newMotion = new Point(0, 0);
 
     /**
      * The collision handler to handle the collisions.
@@ -61,7 +59,6 @@ public abstract class Mover
     {
         super(alive, location);
         this.motion = motion;
-        this.newMotion = new Point(0, 0);
         this.sprites = sprites;
     }
 
@@ -103,8 +100,7 @@ public abstract class Mover
 
     /**
      * Get the direction the Unit is facing.
-     * @return
-     * Returns a Direction value.
+     * @return The current direction value.
      */
     public Direction getDirection()
     {
@@ -202,9 +198,7 @@ public abstract class Mover
         if(other instanceof Mover)
         {
             Mover that = (Mover) other;
-            return  super.equals(other)
-                    &&
-                    this.motion.equals(that.motion);
+            return super.equals(other) && this.motion.equals(that.motion);
         }
         return false;
     }

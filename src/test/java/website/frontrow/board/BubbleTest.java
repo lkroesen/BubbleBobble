@@ -50,7 +50,6 @@ public class BubbleTest
 
         verify(enemy, times(1)).kill();
         assertSame(enemy, bubble.getContains());
-
     }
 
     /**
@@ -74,7 +73,7 @@ public class BubbleTest
         Bubble bubble = new Bubble(new Point(0, 0), new Point(0, 0), null);
         Enemy enemy = mock(Enemy.class);
 
-        when(enemy.getChaughtTime()).thenReturn(0L);
+        when(enemy.getCaughtTime()).thenReturn(0L);
 
         bubble.capture(enemy);
         bubble.tick(emptyLevel);
@@ -90,6 +89,7 @@ public class BubbleTest
         {
             bubble.kill();
         }
+
         return bubble;
     }
 }

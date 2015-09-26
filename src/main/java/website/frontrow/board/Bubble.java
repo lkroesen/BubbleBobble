@@ -79,7 +79,7 @@ public class Bubble
         {
             timeContained++;
 
-            if(timeContained >= this.contains.getChaughtTime())
+            if(timeContained >= this.contains.getCaughtTime())
             {
                 this.contains.revive();
                 this.contains.setLocation(this.location);
@@ -92,7 +92,7 @@ public class Bubble
     @Override
     public Unit duplicate()
     {
-        return new Bubble(location, motion, this.getSprites());
+        return new Bubble(location, super.getMotion(), this.getSprites());
     }
 
     @Override
