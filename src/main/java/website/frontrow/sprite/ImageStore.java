@@ -33,9 +33,9 @@ public class ImageStore
         {
             return new ImageIcon(getImage(filename));
         }
-        catch (IOException e)
+        catch (IOException exception)
         {
-            throw new RuntimeException("Could not load icon " + filename, e);
+            throw new RuntimeException("Could not load icon " + filename, exception);
         }
     }
 
@@ -67,10 +67,10 @@ public class ImageStore
      */
     public static BufferedImage createTranslucentImage(int width, int height)
     {
-        GraphicsConfiguration gc = GraphicsEnvironment
+        GraphicsConfiguration graphicsConfiguration = GraphicsEnvironment
                 .getLocalGraphicsEnvironment().getDefaultScreenDevice()
                 .getDefaultConfiguration();
-        return gc.createCompatibleImage(width, height, Transparency.TRANSLUCENT);
+        return graphicsConfiguration.createCompatibleImage(width, height, Transparency.TRANSLUCENT);
     }
 
     /**

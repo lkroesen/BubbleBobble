@@ -67,12 +67,12 @@ public class Point
 
     /**
      * Add two points together.
-     * @param b The point to add.
+     * @param point The point to add.
      * @return The result.
      */
-    public Point add(Point b)
+    public Point add(Point point)
     {
-        return new Point(this.x + b.x, this.y + b.y);
+        return new Point(this.x + point.x, this.y + point.y);
     }
 
     /**
@@ -109,21 +109,11 @@ public class Point
     {
         if (other instanceof Point)
         {
-            return false;
+            Point that = (Point) other;
+            return  this.x == that.x
+                    &  this.y == that.y;
         }
-
-        Point that = (Point) other;
-        if(this.x != that.x)
-        {
-            return false;
-        }
-
-        if(this.y != that.y)
-        {
-            return false;
-        }
-
-        return true;
+        return false;
     }
 
     @Override
