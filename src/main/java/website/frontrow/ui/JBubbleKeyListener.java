@@ -2,6 +2,7 @@ package website.frontrow.ui;
 
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+
 import java.util.HashMap;
 import java.util.Collections;
 import java.util.Map;
@@ -10,8 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The key listener makes sure that when certain keys are pressed,
- *      the corresponding action is performed in the game.
- * Created by Remi Flinterman on 2-9-2015.
+ * the corresponding action is performed in the game.
  */
 public class JBubbleKeyListener implements KeyListener
 {
@@ -39,9 +39,9 @@ public class JBubbleKeyListener implements KeyListener
      */
     public void keyPressed(KeyEvent ke)
     {
-    	if (mapping.get(ke.getKeyCode()) != null)
+    	if(mapping.get(ke.getKeyCode()) != null)
     	{
-    		if (pressed.get(ke.getKeyCode()) == null || !pressed.get(ke.getKeyCode()))    		
+    		if(pressed.get(ke.getKeyCode()) == null || !pressed.get(ke.getKeyCode()))
 	    	{            
 	    		pressed.put(ke.getKeyCode(), true);
 	    		pressedKeys.add(ke.getKeyCode());       	

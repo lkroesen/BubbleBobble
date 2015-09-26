@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 public class StatusLabelPanel extends JPanel
     implements GameObserver
 {
-
     private JLabel runningLabel;
 
     /**
@@ -33,9 +32,7 @@ public class StatusLabelPanel extends JPanel
      */
     public JLabel getRunningLabel()
     {
-
         return runningLabel;
-
     }
 
     /**
@@ -44,9 +41,7 @@ public class StatusLabelPanel extends JPanel
      */
     public void setRunningLabel(JLabel rl)
     {
-
         runningLabel = rl;
-
     }
 
     @Override

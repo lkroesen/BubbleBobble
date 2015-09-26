@@ -23,11 +23,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class JBubbleBobbleUI
         extends JFrame
-            implements Logable
+        implements Logable
 {
-
     private PlayingFieldPanel pfp;
-    private SidePanel sp;
 
     private JBubbleKeyListener keyListener;
 
@@ -51,7 +49,7 @@ public class JBubbleBobbleUI
         contentPanel.setLayout(new BorderLayout());
 
         pfp = new PlayingFieldPanel(game);
-        sp = new SidePanel(game);
+        SidePanel sp = new SidePanel(game);
 
         contentPanel.add(pfp, BorderLayout.LINE_START);
         contentPanel.add(sp, BorderLayout.LINE_END);
@@ -72,9 +70,8 @@ public class JBubbleBobbleUI
                 .newSingleThreadScheduledExecutor();
 
         service.scheduleAtFixedRate(() ->
-        {
-            drawNextFrame();
-        }, 0, 1000 / GameConstants.FRAME_REFRESH_RATE, TimeUnit.MILLISECONDS);
+                drawNextFrame(),
+        0, 1000 / GameConstants.FRAME_REFRESH_RATE, TimeUnit.MILLISECONDS);
         addToLog("[JBBUI]\tBubble Bobble UI started successfully.");
     }
 
@@ -84,7 +81,6 @@ public class JBubbleBobbleUI
     public void drawNextFrame()
     {
         pfp.repaint();
-        // Do logic and graphics stuff.
     }
 
     /**
@@ -99,7 +95,7 @@ public class JBubbleBobbleUI
 
     /**
      * Returns the JBubbleKeyListener.
-     * @return The keylistener.
+     * @return The key listener.
      */
     public JBubbleKeyListener getKeyListener()
     {
