@@ -228,13 +228,17 @@ public class Game
 
 	/**
 	 * The setter for gameOver.
-     * @param level Level
+     * @param level Input a Level.
 	 */
 	public void setGameOver(Level level)
 	{
 		gameOver = level;
 	}
 
+    /**
+     * The setter for GameWon.
+     * @param level Input a Level.
+     */
     public void setGameWon(Level level)
     {
         gameWon = level;

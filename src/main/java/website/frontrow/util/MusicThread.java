@@ -28,9 +28,9 @@ public class MusicThread
         }
         catch (Exception exception)
         {
-            addToLog("[MT]\t[ERROR]\tMusic Thread encountered an exception: " + exception.toString() + ".");
+            addToLog("[MT]\t[ERROR]\tMusic Thread encountered: " + exception.toString() + ".");
             new DumpLog();
-            throw new RuntimeException("Error Occured in Thread " + exception);
+            throw new RuntimeException("Error Occurred in Thread " + exception);
         }
     }
 
