@@ -71,11 +71,11 @@ public class Launcher implements Logable
     @SuppressWarnings("methodlength") // We need to make a GameFactory and UIBuilder
     public void start(String[] filename)
     {
-        addToLog("[LAUNCHER]\tLoading file: " + filename + ".");
+        addToLog("[LAUNCHER]\tLoading file: " + filename.toString() + ".");
 
         try
         {
-            addToLog("[LAUNCHER]\tLoading file: " + filename + " succeeded.");
+            addToLog("[LAUNCHER]\tLoading file: " + filename.toString() + " succeeded.");
 
             MapParser mp = new MapParser();
             ArrayList<Level> levelList = new ArrayList<>();
@@ -103,7 +103,8 @@ public class Launcher implements Logable
             ui.start();
             startScheduler(game);
 
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             addToLog("[ERROR]\tLoading file: " + filename + " failed.");
             new DumpLog();

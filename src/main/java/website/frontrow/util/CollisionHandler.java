@@ -76,7 +76,6 @@ public class CollisionHandler
             bubble.setLocation(other.getLocation());
             bubble.capture((Enemy) other);
         }
-
     }
 
     @Override

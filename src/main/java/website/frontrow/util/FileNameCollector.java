@@ -33,7 +33,7 @@ public class FileNameCollector
         String[] levels = levelDir.list();
         assert levels != null;
 
-        for (int c = 0; c < levels.length; c++)
+        for(int c = 0; c < levels.length; c++)
         {
             levels[c] = dir + levels[c];
         }
