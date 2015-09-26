@@ -20,22 +20,23 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Class containing a level and positions of entities therein.
  */
 public class Level
-    implements Logable
+        implements  Logable
 {
+    private final CollisionComputer collisionComputer = new CollisionComputer(this);
+    private final CollisionHandler collisionHandler = new CollisionHandler();
+
+    private ArrayList<Player> players = new ArrayList<>();
+    private ArrayList<Unit> units = new ArrayList<>();
+
+    private boolean playersAlive = true;
 
     private ConcurrentLinkedQueue<Unit> toAdd = new ConcurrentLinkedQueue<>();
 
-    private ArrayList<Player> players;
-    private boolean playersAlive = true;
-
-    private ArrayList<Unit> units;
     private Grid<Cell> cells;
-    private int enemies;
 
-    private List<LevelObserver> observers;
+    private int numberOfEnemies = 0;
 
-    private final CollisionComputer collisionComputer = new CollisionComputer(this);
-    private final CollisionHandler collisionHandler = new CollisionHandler();
+    private List<LevelObserver> observers = new ArrayList<>();
 
     /**
      * Duplicates the current level.
@@ -45,6 +46,7 @@ public class Level
     {
         ArrayList<Unit> units = new ArrayList<>(this.getUnits().size());
         ArrayList<Player> players = new ArrayList<>(this.getPlayers().size());
+
         for (Unit unit: this.units)
         {
             Unit clone = unit.duplicate();
@@ -56,39 +58,24 @@ public class Level
         }
 
         addToLog("[LEVEL]\tCloning succeeded.");
-
         return new Level(players, units, this.getCells());
     }
 
     /**
      * Constructor of Level.
-     * @param units
-     *      Input an ArrayList of Unit.
-     * @param cells
-     *      Input a Grid with E of Cell.
-     * @param players
-     *      The players in the game.
+     * @param units Input an ArrayList of Unit.
+     * @param cells Input a Grid with E of Cell.
+     * @param players   The players in the game.
      */
     public Level(ArrayList<Player> players, ArrayList<Unit> units, Grid<Cell> cells)
     {
         this.players = new ArrayList<>(players);
         this.units = new ArrayList<>(units);
         this.cells = new Grid<>(cells);
+
+        //Abbreviated u because of lambda expression.
+        units.stream().filter(this::isEnemy).forEach(u -> numberOfEnemies++);
         addToLog("[LEVEL]\tLevel Object created");
-
-        int e = 0;
-        for (Unit unit : units)
-        {
-            if (isEnemy(unit))
-            {
-                e++;
-            }
-        }
-
-        this.enemies = e;
-
-        this.observers = new ArrayList<>();
-
     }
 
     /**
@@ -131,8 +118,10 @@ public class Level
         {
             units.add(toAdd.poll());
         }
+
         Unit unit;
         Iterator<Unit> it = units.iterator();
+
         while (it.hasNext())
         {
             unit = it.next();
@@ -158,7 +147,7 @@ public class Level
             Bubble bubble = (Bubble) unit;
             if(bubble.getContains() != null && !bubble.getContains().isAlive())
             {
-                this.setEnemies(this.getEnemies() - 1);
+                this.setNumberOfEnemies(this.getNumberOfEnemies() - 1);
                 updateObservers();
             }
         }
@@ -180,18 +169,17 @@ public class Level
         {
             playersAlive = playersAlive | player.hasLives();
         }
-
     }
 
     /**
      * Draw the level. First draw the cell content's then the units.
-     * @param g The graphics context to draw in.
+     * @param graphics The graphics context to draw in.
      * @param x The x coordinate to draw the level at.
      * @param y The y coordinate to draw the level at.
      * @param width The width of the field the level has to draw itself on.
      * @param height The height of the field the level has to draw itself on.
      */
-    public void draw(Graphics g, int x, int y, int width, int height)
+    public void draw(Graphics graphics, int x, int y, int width, int height)
     {
         int numberOfCellsInWidth = cells.getWidth();
         int numberOfCellsInHeight = cells.getHeight();
@@ -204,17 +192,15 @@ public class Level
             for(int v = 0; v < numberOfCellsInHeight; v++)
             {
                 Cell cellToDraw = cells.get(i, v);
-                cellToDraw.draw(g,
+                cellToDraw.draw(graphics,
                         x + i * cellWidth, y + v * cellHeight,
                         cellWidth, cellHeight);
-                
-                
             }
         }
-        
-        for(int i = 0; i < units.size(); i++)
+
+        for (Unit unit : units)
         {
-        	units.get(i).draw(g, x, y, cellWidth, cellHeight);
+            unit.draw(graphics, x, y, cellWidth, cellHeight);
         }
     }
 
@@ -239,54 +225,52 @@ public class Level
 
     /**
      * Returns whether or not a unit is an enemy.
-     * @param u Unit
+     * @param unit Unit
      * @return boolean
      */
-    public boolean isEnemy(Unit u)
+    public boolean isEnemy(Unit unit)
     {
-        return u instanceof Enemy;
+        return unit instanceof Enemy;
     }
 
     /**
-     * Getter for enemies.
-     * @return enemies int
+     * Getter for numberOfEnemies.
+     * @return numberOfEnemies int
      */
-    public int getEnemies()
+    public int getNumberOfEnemies()
     {
-        return enemies;
+        return numberOfEnemies;
     }
 
     /**
-     * Setter for enemies.
-     * @param e int
+     * Setter for numberOfEnemies.
+     * @param numberOfEnemies int
      */
-    public void setEnemies(int e)
+    public void setNumberOfEnemies(int numberOfEnemies)
     {
-        enemies = e;
+        this.numberOfEnemies = numberOfEnemies;
     }
 
     /**
      * Adds a level observer.
-     * @param o LevelObserver
+     * @param levelObserver LevelObserver
      */
-    public void addObserver(LevelObserver o)
+    public void addObserver(LevelObserver levelObserver)
     {
-
-        if(observers.contains(o))
+        if(observers.contains(levelObserver))
         {
             return;
         }
-        observers.add(o);
-
+        observers.add(levelObserver);
     }
 
     /**
      * Removes a level observer.
-     * @param o LevelObserver
+     * @param levelObserver LevelObserver
      */
-    public void removeObserver(LevelObserver o)
+    public void removeObserver(LevelObserver levelObserver)
     {
-        observers.remove(o);
+        observers.remove(levelObserver);
     }
 
     /**
@@ -294,25 +278,19 @@ public class Level
      */
     public void updateObservers()
     {
-
         if (!playersAlive())
         {
-            for(LevelObserver o : observers)
-            {
-                o.levelLost();
-            }
-        }
-        if (!enemiesAlive())
-        {
-            for(LevelObserver o : observers)
-            {
-                o.levelWon();
-            }
+            observers.forEach(Level.LevelObserver::levelLost);
         }
 
+        if (!enemiesAlive())
+        {
+            observers.forEach(Level.LevelObserver::levelWon);
+        }
     }
 
     /**
+     * Getter for CollisionComputer.
      * @return collisionComputer for this level.
      */
     public CollisionComputer getCollisionComputer()
@@ -321,6 +299,7 @@ public class Level
     }
 
     /**
+     * Getter for CollisionHandler.
      * @return collisionComputer for this level.
      */
     public CollisionHandler getCollisionHandler()
@@ -338,12 +317,12 @@ public class Level
     }
 
     /**
-     * Returns true if there are still enemies alive in the level.
+     * Returns true if there are still numberOfEnemies alive in the level.
      * @return boolean
      */
     public boolean enemiesAlive()
     {
-        return enemies != 0;
+        return numberOfEnemies != 0;
     }
 
     /**

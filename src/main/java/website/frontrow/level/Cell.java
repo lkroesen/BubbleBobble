@@ -16,6 +16,7 @@ public enum Cell
      * An empty cell.
      */
     EMPTY,
+
     /**
      * A wall.
      */
@@ -33,6 +34,7 @@ public enum Cell
             return sprites.getWallSprite();
         }
     },
+
     /**
      * A platform.
      */
@@ -45,8 +47,8 @@ public enum Cell
             return movement.getY() > 0;
         }
 
-        // Magic number is AABB height.
         @SuppressWarnings("checkstyle:magicnumber")
+        /* Magic number is AABB height. */
         @Override
         public Point getAABBDimensions()
         {
@@ -107,14 +109,14 @@ public enum Cell
 
     /**
      * Draws the cell.
-     * @param g The graphics context to draw in.
+     * @param graphics The graphics context to draw in.
      * @param x The x coordinate to draw the cell at.
      * @param y The y coordinate to draw the cell at.
      * @param width The width to draw the cell with.
      * @param height The height to draw the cell with.
      */
-    public void draw(Graphics g, int x, int y, int width, int height)
+    public void draw(Graphics graphics, int x, int y, int width, int height)
     {
-        getSprite().draw(g, x, y, width, height);
+        getSprite().draw(graphics, x, y, width, height);
     }
 }
