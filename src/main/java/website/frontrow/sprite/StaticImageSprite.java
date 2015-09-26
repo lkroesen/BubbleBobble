@@ -55,6 +55,7 @@ public class StaticImageSprite
                     y, x + width, y + height, null);
             return new StaticImageSprite(newImage);
         }
+
         return new EmptySprite();
     }
 

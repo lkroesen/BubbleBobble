@@ -59,7 +59,6 @@ public class JBubbleBobbleSprites
     public Map<Direction, Sprite> getPlayerSprite()
     {
         return getDirectionalSprite("/sprites/player.png");
-
     }
 
     /**
