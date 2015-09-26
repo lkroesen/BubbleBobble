@@ -51,6 +51,5 @@ public class MusicThread
     public void addToLog(String action)
     {
         Log.add(action);
-
     }
 }

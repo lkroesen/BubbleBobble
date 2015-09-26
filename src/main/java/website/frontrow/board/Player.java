@@ -24,7 +24,7 @@ public class Player
     /**
      * The amount of lives the player has.
      */
-    private int lives = 3;
+    private int lives = GameConstants.DEFAULT_AMOUNT_OF_LIVES;
 
     /**
      * The player is invincible for a certain amount of time.

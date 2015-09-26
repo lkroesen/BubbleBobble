@@ -108,8 +108,7 @@ public class MusicPlayer
 
     /**
      * Play a specific filename, will be called internally.
-     * @param filename
-     * Input the file of the song to be played.
+     * @param filename The file of the song to be played.
      */
     @SuppressWarnings("checkstyle:methodlength")
     private void play(String filename)
@@ -210,8 +209,7 @@ public class MusicPlayer
      * Adjust volume by inputted amount.
      * -0.1 lowers by 10.
      * 0.1 raises by 10.
-     * @param deltaVolume
-     * Input a float with the amount of volume to change by.
+     * @param deltaVolume A float with the amount of volume to change by.
      */
     public void volumeAdjust(float deltaVolume)
     {
@@ -233,8 +231,7 @@ public class MusicPlayer
 
     /**
      * Get the AudioDevice currently in use on the computer.
-     * @return
-     * Returns the Audio Device used.
+     * @return The Audio Device used.
      */
     @SuppressWarnings("checkstyle:magicnumber")
     public Info getAudioDevice()
@@ -260,8 +257,7 @@ public class MusicPlayer
 
     /**
      * Get the sound that was played last.
-     * @return
-     * Returns a String with the file name.
+     * @return A String with the file name.
      */
     public String getCurrSound()
     {
@@ -270,8 +266,7 @@ public class MusicPlayer
 
     /**
      * Get the FloatControl volume.
-     * @return
-     * Returns the volume.
+     * @return the volume.
      */
     public FloatControl getVolume()
     {

@@ -67,4 +67,9 @@ public abstract class GameConstants
      * Amount of ticks per enemy move update.
      */
     public static final int TICKS_PER_MOVE = 150;
+
+    /**
+     * The default amount of lives the player has.
+     */
+    public static final int DEFAULT_AMOUNT_OF_LIVES = 3;
 }

@@ -5,7 +5,6 @@ package website.frontrow.util;
  */
 public class Point
 {
-
     private double x;
     private double y;
 
@@ -110,11 +109,21 @@ public class Point
     {
         if (other instanceof Point)
         {
-            Point that = (Point) other;
-            return  this.x == that.x
-                    &  this.y == that.y;
+            return false;
         }
-        return false;
+
+        Point that = (Point) other;
+        if(this.x != that.x)
+        {
+            return false;
+        }
+
+        if(this.y != that.y)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -125,6 +134,7 @@ public class Point
 
     @SuppressWarnings("checkstyle:magicnumber")
     private static int prime = 31;
+
     @Override
     public int hashCode()
     {
