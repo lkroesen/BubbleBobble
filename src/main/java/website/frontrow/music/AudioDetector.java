@@ -13,13 +13,15 @@ import javax.sound.sampled.Port;
 public class AudioDetector
         implements Logable
 {
-    public static boolean noAudio = true;
+    @SuppressWarnings("checkstyle:visibilitymodifier")
+    /* Due to intended implementations this will be public. */
+    private static boolean noAudio = true;
 
     /**
-     * Get the AudioDevice currently in use on the computer.
-     * @return The Audio Device used.
+     * See if there's an audio device on the computer.
      */
     @SuppressWarnings("checkstyle:magicnumber")
+    /* Magicnumbers are due to directly numbering the arrays. */
     public AudioDetector()
     {
         Line.Info[] audioDevicesList = new Line.Info[4];
@@ -33,14 +35,25 @@ public class AudioDetector
             if (AudioSystem.isLineSupported(audioDevicesList[c]))
             {
                 noAudio = false;
+                addToLog("[AD]\tAudio device detected");
                 break;
             }
         }
+        addToLog("[AD]\t[ERROR]\tNo audio devices on this machine!");
     }
 
     @Override
     public void addToLog(String action)
     {
         Log.add(action);
+    }
+
+    /**
+     * Get whether we can play audio on this device.
+     * @return Returns true or false.
+     */
+    public static boolean isNoAudio()
+    {
+        return noAudio;
     }
 }

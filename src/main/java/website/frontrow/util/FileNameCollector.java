@@ -1,11 +1,15 @@
 package website.frontrow.util;
 
+import sun.misc.IOUtils;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * A method for indexing the levels in the resources and returning them.
@@ -27,16 +31,26 @@ public class FileNameCollector
             throw new URISyntaxException("null", "Null is not an accepted Syntax as a directory.");
         }
 
-        URL url = this.getClass().getResource(dir);
-        File levelDir = new File(url.toURI());
+        InputStream inputStream = FileNameCollector.class.getResourceAsStream(dir);
 
-        String[] levels = levelDir.list();
-        assert levels != null;
+        Scanner scanner = new Scanner(inputStream);
 
-        for(int c = 0; c < levels.length; c++)
+        ArrayList<String> stringList = new ArrayList<>();
+
+        // Get the amount of levels.
+        while(scanner.hasNextLine())
         {
-            levels[c] = dir + levels[c];
+            stringList.add(dir + scanner.nextLine());
         }
+
+        String[] levels = new String[stringList.size()];
+
+        for (int c = 0; c < levels.length; c++)
+        {
+            levels[c] = stringList.get(c);
+        }
+
+        scanner.close();
 
         return levels;
     }

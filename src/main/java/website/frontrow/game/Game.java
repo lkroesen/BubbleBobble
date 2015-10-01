@@ -212,7 +212,7 @@ public class Game
         {
             currentLevel = gameWon;
 
-            if (!AudioDetector.noAudio)
+            if (!AudioDetector.isNoAudio())
             {
                 MusicPlayer.stop();
                 MusicPlayer.setLooping(false);
@@ -236,7 +236,7 @@ public class Game
 	{
 		currentLevel = gameOver;
 
-        if (!AudioDetector.noAudio)
+        if (!AudioDetector.isNoAudio())
         {
             MusicPlayer.stop();
             MusicPlayer.setLooping(false);

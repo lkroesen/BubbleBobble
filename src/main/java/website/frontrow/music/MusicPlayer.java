@@ -4,11 +4,12 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import website.frontrow.logger.Log;
-import website.frontrow.logger.Logable;
 
 /**
  * Class for playing music files.
  */
+@SuppressWarnings("checkstyle:hideutilityclassconstructor")
+/* The constructor is used to play the opening song and to make sure JavaFX is running. */
 public class MusicPlayer
 {
     private static boolean toggleLooping = false;
@@ -25,9 +26,15 @@ public class MusicPlayer
         selectSong(Songs.TITLE_SCREEN);
     }
 
-    public static void selectSong(String fileLocation)
+    /**
+     * Select a Song to be played.
+     * @param fileLocation Input the file location, pick from the abstract Songs class.
+     * @return Returns 0 upon success.
+     */
+    public static int selectSong(String fileLocation)
     {
         songFile = new Media(MusicPlayer.class.getResource(fileLocation).toExternalForm());
+        Log.add("[MUSIC]\tPlaying the file at location: " + fileLocation);
         musicPlayer = new MediaPlayer(songFile);
 
         if (toggleLooping)
@@ -36,26 +43,53 @@ public class MusicPlayer
         }
 
         play();
+        return 0;
     }
 
-    public static void stop()
+    /**
+     * Stop the music from playing.
+     * @return Returns 0 upon success.
+     */
+    public static int stop()
     {
         musicPlayer.stop();
+        return 0;
     }
 
-    private static void play()
+    /**
+     * Plays music, stops before playing again.
+     * @return Returns 0 upon success.
+     */
+    private static int play()
     {
         stop();
         musicPlayer.play();
+        return 0;
     }
 
-    public static void volumeAdjust(double delta)
+    /**
+     * Adjust the volume by a certain value.
+     * @param delta Input a value to adjust the volume by.
+     * @return Returns 0 upon success.
+     */
+    public static int volumeAdjust(double delta)
     {
         musicPlayer.setVolume(musicPlayer.getVolume() + delta);
+        Log.add("[MUSIC]\tVolume adjusted by: " + delta);
+        return 0;
     }
 
-    public static void setLooping(Boolean looping)
+    /**
+     * Set looping to true or false.
+     * @param looping Input true or false.
+     * @return Returns the previous value.
+     */
+    public static boolean setLooping(Boolean looping)
     {
+        boolean previous = toggleLooping;
         toggleLooping = looping;
+        Log.add("[MUSIC]\tLooping set to: " + looping);
+
+        return previous;
     }
 }

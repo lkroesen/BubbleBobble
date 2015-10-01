@@ -23,6 +23,8 @@ public class SidePanel
      * Creates a sidepanel to contain the score, buttons and other statistics.
      * @param game The game to display the statistics of.
      */
+    @SuppressWarnings("checkstyle:methodlength")
+    /* The music caused this method to be longer. */
     public SidePanel(Game game)
     {
         super();
@@ -38,7 +40,7 @@ public class SidePanel
             {
                 game.stop();
 
-                if (!AudioDetector.noAudio)
+                if (!AudioDetector.isNoAudio())
                 {
                     MusicPlayer.stop();
                 }
@@ -47,7 +49,7 @@ public class SidePanel
             {
                 game.start();
 
-                if (!AudioDetector.noAudio)
+                if (!AudioDetector.isNoAudio())
                 {
                     MusicPlayer.stop();
                     MusicPlayer.setLooping(true);

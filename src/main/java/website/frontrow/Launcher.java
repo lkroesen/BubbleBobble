@@ -54,13 +54,19 @@ public class Launcher implements Logable
         new Log();
         Log.togglePrinting();
 
-        if (!AudioDetector.noAudio)
+        if (!AudioDetector.isNoAudio())
         {
             new MusicPlayer();
         }
 
-        String[] foo = {"/level/001.txt", "/level/002.txt"};
-        new Launcher().start(foo);
+        try
+        {
+            new Launcher().start(new FileNameCollector().obtain("/level/"));
+        }
+        catch (URISyntaxException e)
+        {
+            e.printStackTrace();
+        }
 
     }
 
@@ -186,7 +192,7 @@ public class Launcher implements Logable
         {
             addToLog("[KEY]\t< \'-\' > Pressed.");
 
-            if (!AudioDetector.noAudio)
+            if (!AudioDetector.isNoAudio())
             {
                 MusicPlayer.volumeAdjust(-1.0d);
             }
@@ -195,7 +201,7 @@ public class Launcher implements Logable
         map.put(KeyEvent.VK_EQUALS, () ->
         {
             addToLog("[KEY]\t< \'=\' > Pressed.");
-            if (!AudioDetector.noAudio)
+            if (!AudioDetector.isNoAudio())
             {
                 MusicPlayer.volumeAdjust(1.0d);
             }
