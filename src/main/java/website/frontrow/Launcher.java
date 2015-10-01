@@ -12,9 +12,10 @@ import website.frontrow.ui.Action;
 import website.frontrow.ui.JBubbleBobbleUI;
 import website.frontrow.game.GameConstants;
 import website.frontrow.util.FileNameCollector;
-import website.frontrow.util.MusicPlayer;
 import website.frontrow.util.Point;
 import website.frontrow.logger.Logable;
+import website.frontrow.music.MusicPlayer;
+import website.frontrow.music.Songs;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -33,14 +34,11 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings("checkstyle:magicnumber")
 public class Launcher implements Logable
 {
-    private MusicPlayer musicPlayer;
-
     /**
      * Construct a launcher, currently not doing anything.
      */
     public Launcher()
     {
-        musicPlayer = new MusicPlayer();
     }
 
     /**
@@ -53,15 +51,11 @@ public class Launcher implements Logable
         new Log();
         Log.togglePrinting();
 
-        try
-        {
-            new Launcher().start(new FileNameCollector().obtain("/level/"));
-        }
-        catch (URISyntaxException exception)
-        {
-            Log.add("[LAUNCHER]\t[ERROR]\tLauncher couldn't start due to FileNameCollector.");
-            exception.printStackTrace();
-        }
+        new MusicPlayer();
+
+        String[] foo = {"/level/001.txt", "/level/002.txt"};
+        new Launcher().start(foo);
+
     }
 
     /**
@@ -187,7 +181,8 @@ public class Launcher implements Logable
             addToLog("[KEY]\t< \'1\' > Pressed.");
             if (game.isRunning())
             {
-                musicPlayer.playSelection(0);
+                MusicPlayer.selectSong(Songs.SECRET_ROOM);
+                //musicPlayer.playSelection(0);
             }
         });
 
@@ -196,7 +191,7 @@ public class Launcher implements Logable
             addToLog("[KEY]\t< \'2\' > Pressed.");
             if (game.isRunning())
             {
-                musicPlayer.playSelection(1);
+                //musicPlayer.playSelection(1);
             }
         });
 
@@ -205,7 +200,7 @@ public class Launcher implements Logable
             addToLog("[KEY]\t< \'3\' > Pressed.");
             if (game.isRunning())
             {
-                musicPlayer.playSelection(2);
+               // musicPlayer.playSelection(2);
             }
         });
 
@@ -214,7 +209,7 @@ public class Launcher implements Logable
             addToLog("[KEY]\t< \'4\' > Pressed.");
             if (game.isRunning())
             {
-                musicPlayer.playSelection(3);
+                //musicPlayer.playSelection(3);
             }
         });
 
@@ -223,7 +218,7 @@ public class Launcher implements Logable
             addToLog("[KEY]\t< \'5\' > Pressed.");
             if (game.isRunning())
             {
-                musicPlayer.playSelection(4);
+                //musicPlayer.playSelection(4);
             }
         });
 
@@ -232,7 +227,7 @@ public class Launcher implements Logable
             addToLog("[KEY]\t< \'6\' > Pressed.");
             if (game.isRunning())
             {
-                musicPlayer.playSelection(5);
+                //musicPlayer.playSelection(5);
             }
         });
 
@@ -241,7 +236,7 @@ public class Launcher implements Logable
             addToLog("[KEY]\t< \'7\' > Pressed.");
             if (game.isRunning())
             {
-                musicPlayer.playSelection(6);
+                //musicPlayer.playSelection(6);
             }
         });
 
@@ -250,7 +245,7 @@ public class Launcher implements Logable
             addToLog("[KEY]\t< \'8\' > Pressed.");
             if (game.isRunning())
             {
-                musicPlayer.playSelection(7);
+                //musicPlayer.playSelection(7);
             }
         });
 
@@ -259,7 +254,7 @@ public class Launcher implements Logable
             addToLog("[KEY]\t< \'9\' > Pressed.");
             if (game.isRunning())
             {
-                musicPlayer.playSelection(8);
+                //musicPlayer.playSelection(8);
             }
         });
 
@@ -268,7 +263,7 @@ public class Launcher implements Logable
             addToLog("[KEY]\t< \'0\' > Pressed.");
             if (game.isRunning())
             {
-                musicPlayer.playSelection(9);
+                //musicPlayer.playSelection(9);
             }
         });
 
@@ -277,7 +272,7 @@ public class Launcher implements Logable
             addToLog("[KEY]\t< \'[\' > Pressed.");
             if (game.isRunning())
             {
-                musicPlayer.playSelection(10);
+                //musicPlayer.playSelection(10);
             }
         });
 
@@ -286,7 +281,7 @@ public class Launcher implements Logable
             addToLog("[KEY]\t< \']\' > Pressed.");
             if (game.isRunning())
             {
-                musicPlayer.playSelection(11);
+                //musicPlayer.playSelection(11);
             }
         });
 
@@ -297,7 +292,7 @@ public class Launcher implements Logable
 
             if (game.isRunning())
             {
-                musicPlayer.volumeAdjust(-0.1f);
+                //musicPlayer.volumeAdjust(-0.1f);
             }
         });
 
@@ -306,7 +301,7 @@ public class Launcher implements Logable
             addToLog("[KEY]\t< \'=\' > Pressed.");
             if (game.isRunning())
             {
-                musicPlayer.volumeAdjust(0.1f);
+                //musicPlayer.volumeAdjust(0.1f);
             }
         });
 
@@ -316,7 +311,7 @@ public class Launcher implements Logable
             addToLog("[KEY]\t< \'BACK_SPACE\' > Pressed.");
             if (game.isRunning())
             {
-                musicPlayer.stopSound();
+                MusicPlayer.pause();
             }
         });
 

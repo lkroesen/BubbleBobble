@@ -5,6 +5,8 @@ import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.level.Level.LevelObserver;
+import website.frontrow.music.MusicPlayer;
+import website.frontrow.music.Songs;
 import website.frontrow.ui.JBubbleKeyListener;
 
 import java.util.ArrayList;
@@ -208,6 +210,8 @@ public class Game
         else
         {
             currentLevel = gameWon;
+            MusicPlayer.stop();
+            MusicPlayer.selectSong(Songs.VICTORY);
         }
     }
 
@@ -225,7 +229,9 @@ public class Game
 	public void gameOver() 
 	{
 		currentLevel = gameOver;
-	}
+        MusicPlayer.stop();
+        MusicPlayer.selectSong(Songs.GAME_OVER);
+    }
 
 	/**
 	 * The setter for gameOver.

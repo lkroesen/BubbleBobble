@@ -3,6 +3,8 @@ package website.frontrow.ui;
 import website.frontrow.game.Game;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
+import website.frontrow.music.MusicPlayer;
+import website.frontrow.music.Songs;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -34,10 +36,13 @@ public class SidePanel
             if(game.isRunning())
             {
                 game.stop();
+                MusicPlayer.stop();
             }
             else
             {
+                MusicPlayer.stop();
                 game.start();
+                MusicPlayer.selectSong(Songs.QUEST_BEGINS);
             }
         });
 
