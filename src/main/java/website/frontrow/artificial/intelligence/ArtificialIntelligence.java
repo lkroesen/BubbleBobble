@@ -76,7 +76,6 @@ public class ArtificialIntelligence
 	 */
 	private void randomize(Enemy enemy)
 	{
-		
 		enemy.setTickCounter(enemy.getTickCounter() + 1);
 		
 		if(enemy.getTickCounter() >= GameConstants.TICKS_PER_MOVE)
@@ -98,7 +97,6 @@ public class ArtificialIntelligence
 	 */
 	private void doMoves(Enemy enemy, int x, int y)
 	{
-		
 		if (enemy.getRandom() < GameConstants.AI_RANDOMIZE)
 		{	
 			doRandomMove(enemy);
