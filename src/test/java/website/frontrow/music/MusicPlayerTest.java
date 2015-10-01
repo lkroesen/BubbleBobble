@@ -45,6 +45,10 @@ public class MusicPlayerTest
         {
             assertEquals(MusicPlayer.selectSong("foo"), 0);
         }
+        else
+        {
+            throw new NullPointerException();
+        }
     }
 
     /**
