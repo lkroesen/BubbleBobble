@@ -7,6 +7,7 @@ import website.frontrow.level.Level;
 import website.frontrow.level.MapParser;
 import website.frontrow.logger.DumpLog;
 import website.frontrow.logger.Log;
+import website.frontrow.music.AudioDetector;
 import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.ui.Action;
 import website.frontrow.ui.JBubbleBobbleUI;
@@ -47,11 +48,16 @@ public class Launcher implements Logable
      */
     public static void main(String[] args)
     {
+        new AudioDetector();
+
         // Initialize the Logger Class, so that it can Log actions taken.
         new Log();
         Log.togglePrinting();
 
-        new MusicPlayer();
+        if (!AudioDetector.noAudio)
+        {
+            new MusicPlayer();
+        }
 
         String[] foo = {"/level/001.txt", "/level/002.txt"};
         new Launcher().start(foo);
@@ -175,143 +181,23 @@ public class Launcher implements Logable
             });
         }
 
-        // Keys 1-0 & -, =, SOUND CONTROL
-        map.put(KeyEvent.VK_1, () ->
-        {
-            addToLog("[KEY]\t< \'1\' > Pressed.");
-            if (game.isRunning())
-            {
-                MusicPlayer.selectSong(Songs.SECRET_ROOM);
-                //musicPlayer.playSelection(0);
-            }
-        });
-
-        map.put(KeyEvent.VK_2, () ->
-        {
-            addToLog("[KEY]\t< \'2\' > Pressed.");
-            if (game.isRunning())
-            {
-                //musicPlayer.playSelection(1);
-            }
-        });
-
-        map.put(KeyEvent.VK_3, () ->
-        {
-            addToLog("[KEY]\t< \'3\' > Pressed.");
-            if (game.isRunning())
-            {
-               // musicPlayer.playSelection(2);
-            }
-        });
-
-        map.put(KeyEvent.VK_4, () ->
-        {
-            addToLog("[KEY]\t< \'4\' > Pressed.");
-            if (game.isRunning())
-            {
-                //musicPlayer.playSelection(3);
-            }
-        });
-
-        map.put(KeyEvent.VK_5, () ->
-        {
-            addToLog("[KEY]\t< \'5\' > Pressed.");
-            if (game.isRunning())
-            {
-                //musicPlayer.playSelection(4);
-            }
-        });
-
-        map.put(KeyEvent.VK_6, () ->
-        {
-            addToLog("[KEY]\t< \'6\' > Pressed.");
-            if (game.isRunning())
-            {
-                //musicPlayer.playSelection(5);
-            }
-        });
-
-        map.put(KeyEvent.VK_7, () ->
-        {
-            addToLog("[KEY]\t< \'7\' > Pressed.");
-            if (game.isRunning())
-            {
-                //musicPlayer.playSelection(6);
-            }
-        });
-
-        map.put(KeyEvent.VK_8, () ->
-        {
-            addToLog("[KEY]\t< \'8\' > Pressed.");
-            if (game.isRunning())
-            {
-                //musicPlayer.playSelection(7);
-            }
-        });
-
-        map.put(KeyEvent.VK_9, () ->
-        {
-            addToLog("[KEY]\t< \'9\' > Pressed.");
-            if (game.isRunning())
-            {
-                //musicPlayer.playSelection(8);
-            }
-        });
-
-        map.put(KeyEvent.VK_0, () ->
-        {
-            addToLog("[KEY]\t< \'0\' > Pressed.");
-            if (game.isRunning())
-            {
-                //musicPlayer.playSelection(9);
-            }
-        });
-
-        map.put(KeyEvent.VK_OPEN_BRACKET, () ->
-        {
-            addToLog("[KEY]\t< \'[\' > Pressed.");
-            if (game.isRunning())
-            {
-                //musicPlayer.playSelection(10);
-            }
-        });
-
-        map.put(KeyEvent.VK_CLOSE_BRACKET, () ->
-        {
-            addToLog("[KEY]\t< \']\' > Pressed.");
-            if (game.isRunning())
-            {
-                //musicPlayer.playSelection(11);
-            }
-        });
-
         // Volume Control
         map.put(KeyEvent.VK_MINUS, () ->
         {
             addToLog("[KEY]\t< \'-\' > Pressed.");
 
-            if (game.isRunning())
+            if (!AudioDetector.noAudio)
             {
-                //musicPlayer.volumeAdjust(-0.1f);
+                MusicPlayer.volumeAdjust(-1.0d);
             }
         });
 
         map.put(KeyEvent.VK_EQUALS, () ->
         {
             addToLog("[KEY]\t< \'=\' > Pressed.");
-            if (game.isRunning())
+            if (!AudioDetector.noAudio)
             {
-                //musicPlayer.volumeAdjust(0.1f);
-            }
-        });
-
-        // Restart Sound
-        map.put(KeyEvent.VK_BACK_SPACE, () ->
-        {
-            addToLog("[KEY]\t< \'BACK_SPACE\' > Pressed.");
-            if (game.isRunning())
-            {
-                MusicPlayer.pause();
+                MusicPlayer.volumeAdjust(1.0d);
             }
         });
 

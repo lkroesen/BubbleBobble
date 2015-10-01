@@ -3,6 +3,7 @@ package website.frontrow.ui;
 import website.frontrow.game.Game;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
+import website.frontrow.music.AudioDetector;
 import website.frontrow.music.MusicPlayer;
 import website.frontrow.music.Songs;
 
@@ -36,13 +37,23 @@ public class SidePanel
             if(game.isRunning())
             {
                 game.stop();
-                MusicPlayer.stop();
+
+                if (!AudioDetector.noAudio)
+                {
+                    MusicPlayer.stop();
+                }
             }
             else
             {
-                MusicPlayer.stop();
                 game.start();
-                MusicPlayer.selectSong(Songs.QUEST_BEGINS);
+
+                if (!AudioDetector.noAudio)
+                {
+                    MusicPlayer.stop();
+                    MusicPlayer.setLooping(true);
+                    MusicPlayer.selectSong(Songs.QUEST_BEGINS);
+                }
+
             }
         });
 

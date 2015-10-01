@@ -3,15 +3,15 @@ package website.frontrow.music;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
+import website.frontrow.logger.Log;
+import website.frontrow.logger.Logable;
 
 /**
  * Class for playing music files.
  */
 public class MusicPlayer
 {
-    private static boolean toggleLooping = true;
-    private static boolean paused = false;
+    private static boolean toggleLooping = false;
     private static Media songFile;
     private static MediaPlayer musicPlayer;
 
@@ -38,20 +38,6 @@ public class MusicPlayer
         play();
     }
 
-    public static void pause()
-    {
-        if (paused)
-        {
-            musicPlayer.play();
-            paused = false;
-        }
-        else
-        {
-            musicPlayer.pause();
-            paused = true;
-        }
-    }
-
     public static void stop()
     {
         musicPlayer.stop();
@@ -65,6 +51,11 @@ public class MusicPlayer
 
     public static void volumeAdjust(double delta)
     {
-        musicPlayer.setVolume(1d);
+        musicPlayer.setVolume(musicPlayer.getVolume() + delta);
+    }
+
+    public static void setLooping(Boolean looping)
+    {
+        toggleLooping = looping;
     }
 }

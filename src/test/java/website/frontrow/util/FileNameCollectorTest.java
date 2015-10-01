@@ -29,7 +29,7 @@ public class FileNameCollectorTest
     @Test
     public void testObtainSoundDir() throws URISyntaxException
     {
-        assertEquals(new FileNameCollector().obtain("/sound/").length, 12);
+        assertEquals(new FileNameCollector().obtain("/sound/").length, 13);
     }
 
     /**
