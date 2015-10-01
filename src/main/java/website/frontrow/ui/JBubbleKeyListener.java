@@ -66,7 +66,7 @@ public class JBubbleKeyListener implements KeyListener
     @Override
     public void keyReleased(KeyEvent keyEvent)
     {
-        pressed.put(keyEvent.getKeyCode(), false);
+    	pressed.put(keyEvent.getKeyCode(), false);
     	pressedKeys.remove(keyEvent.getKeyCode());
     }
 
