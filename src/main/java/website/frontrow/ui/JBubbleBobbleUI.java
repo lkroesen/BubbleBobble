@@ -23,38 +23,36 @@ import java.util.concurrent.TimeUnit;
  */
 public class JBubbleBobbleUI
         extends JFrame
-            implements Logable
+        implements Logable
 {
-
-    private PlayingFieldPanel pfp;
-    private SidePanel sp;
+    private PlayingFieldPanel playingFieldPanel;
 
     private JBubbleKeyListener keyListener;
 
     /**
      * Creates a JBubble Bobble UI.
      * @param game The game to display in the ui.
-     * @param klm The key listener mapping.
+     * @param integerActionMap The key listener mapping.
      */
-    public JBubbleBobbleUI(Game game, Map<Integer, Action> klm)
+    public JBubbleBobbleUI(Game game, Map<Integer, Action> integerActionMap)
     {
         super("Bubble Bobble");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setFocusable(true);
 
-        this.keyListener = new JBubbleKeyListener(klm);
+        this.keyListener = new JBubbleKeyListener(integerActionMap);
         addKeyListener(this.keyListener);
 
         Container contentPanel = getContentPane();
         contentPanel.setBackground(Color.white);
         contentPanel.setLayout(new BorderLayout());
 
-        pfp = new PlayingFieldPanel(game);
-        sp = new SidePanel(game);
+        playingFieldPanel = new PlayingFieldPanel(game);
+        SidePanel sidePanel = new SidePanel(game);
 
-        contentPanel.add(pfp, BorderLayout.LINE_START);
-        contentPanel.add(sp, BorderLayout.LINE_END);
+        contentPanel.add(playingFieldPanel, BorderLayout.LINE_START);
+        contentPanel.add(sidePanel, BorderLayout.LINE_END);
 
         pack();
         addToLog("[JBBUI]\tBubble Bobble UI created successfully.");
@@ -72,9 +70,8 @@ public class JBubbleBobbleUI
                 .newSingleThreadScheduledExecutor();
 
         service.scheduleAtFixedRate(() ->
-        {
-            drawNextFrame();
-        }, 0, 1000 / GameConstants.FRAME_REFRESH_RATE, TimeUnit.MILLISECONDS);
+                drawNextFrame(),
+        0, 1000 / GameConstants.FRAME_REFRESH_RATE, TimeUnit.MILLISECONDS);
         addToLog("[JBBUI]\tBubble Bobble UI started successfully.");
     }
 
@@ -83,8 +80,7 @@ public class JBubbleBobbleUI
      */
     public void drawNextFrame()
     {
-        pfp.repaint();
-        // Do logic and graphics stuff.
+        playingFieldPanel.repaint();
     }
 
     /**
@@ -99,7 +95,7 @@ public class JBubbleBobbleUI
 
     /**
      * Returns the JBubbleKeyListener.
-     * @return The keylistener.
+     * @return The key listener.
      */
     public JBubbleKeyListener getKeyListener()
     {

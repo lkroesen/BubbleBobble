@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class SidePanel
         extends JPanel
-            implements Logable
+        implements Logable
 {
     /**
      * Creates a sidepanel to contain the score, buttons and other statistics.

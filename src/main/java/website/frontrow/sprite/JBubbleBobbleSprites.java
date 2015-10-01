@@ -59,7 +59,6 @@ public class JBubbleBobbleSprites
     public Map<Direction, Sprite> getPlayerSprite()
     {
         return getDirectionalSprite("/sprites/player.png");
-
     }
 
     /**
@@ -78,10 +77,10 @@ public class JBubbleBobbleSprites
         {
             return super.loadSprite(resource);
         }
-        catch (IOException e)
+        catch (IOException exception)
         {
             Log.add("[SS]\tThe sprite could not be loaded from " + resource);
-            throw new RuntimeException("Could not load sprite.", e);
+            throw new RuntimeException("Could not load sprite.", exception);
         }
     }
 

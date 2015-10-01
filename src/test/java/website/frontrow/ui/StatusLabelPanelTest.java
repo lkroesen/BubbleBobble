@@ -15,14 +15,16 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 /**
- * Created by Remi Flinterman on 13-9-2015.
+ * A test for the status label panel.
  */
 @RunWith(MockitoJUnitRunner.class)
 public class StatusLabelPanelTest
 {
 
-    @Mock private Level level;
-    private ArrayList<Level> levels = new ArrayList<Level>();
+    @Mock
+    private Level level;
+
+    private ArrayList<Level> levels = new ArrayList<>();
     private Game game;
 
     /**
@@ -49,7 +51,6 @@ public class StatusLabelPanelTest
         JLabel label = new JLabel("Paused");
 
         assertEquals(rl.toString(), label.toString());
-
     }
 
     /**
@@ -64,7 +65,6 @@ public class StatusLabelPanelTest
         slp.setRunningLabel(label);
 
         assertEquals(slp.getRunningLabel().toString(), label.toString());
-
     }
 
     /**
@@ -79,7 +79,5 @@ public class StatusLabelPanelTest
         JLabel l = slp.getRunningLabel();
 
         assertEquals(l.toString(), label.toString());
-
     }
-
 }

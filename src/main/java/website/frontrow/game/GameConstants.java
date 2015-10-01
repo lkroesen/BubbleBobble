@@ -7,7 +7,6 @@ package website.frontrow.game;
 // These constants have to be accessible everywhere.
 public abstract class GameConstants
 {
-
     /**
      * The constant for the gravity in the game.
      */
@@ -42,30 +41,35 @@ public abstract class GameConstants
      * The number of ticks per second that the game processes.
      */
     public static final int TICKS_PER_SEC = 60;
-    
-    
+
+
     /**
      * The multiplier for the enemy speed.
      */
     public static final double ENEMY_SPEED_MULTIPLIER = 0.25;
-    
+
     /**
      * The multiplier for the player speed.
      */
     public static final double PLAYER_SPEED_MULTIPLIER = 1.0;
-    
+
     /**
      * The multiplier for the bubble speed.
      */
     public static final double BUBBLE_SPEED_MULTIPLIER = 1.0;
-    
+
     /**
      * Percentage of enemy movements that is randomized.
      */
-    public static final float AI_RANDOMIZER = 0.20f;
-    
+    public static final float AI_RANDOMIZE = 0.20f;
+
     /**
      * Amount of ticks per enemy move update.
      */
     public static final int TICKS_PER_MOVE = 150;
+
+    /**
+     * The default amount of lives the player has.
+     */
+    public static final int DEFAULT_AMOUNT_OF_LIVES = 3;
 }

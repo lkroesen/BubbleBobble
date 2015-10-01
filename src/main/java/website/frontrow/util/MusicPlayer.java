@@ -15,15 +15,17 @@ import website.frontrow.logger.Logable;
  * Play Music during the game.
  */
 public class MusicPlayer
-    implements Logable
+        implements  Logable
 {
-    private Player music;
-    private MusicThread mt;
     private boolean threadActive;
-    private String currSound;
-    private FloatControl volume;
     private boolean volumeInitialized;
     private boolean noAudio;
+
+    private FloatControl volume;
+    private MusicThread mt;
+    private Player music;
+    private String currSound;
+
 
     /**
      * Constructor is empty.
@@ -47,6 +49,7 @@ public class MusicPlayer
             addToLog("[MP]\t[WARNING]\tNo audio devices detected!");
             return;
         }
+
         play("/sound/Quest Begins.mp3");
     }
 
@@ -79,11 +82,12 @@ public class MusicPlayer
             new DumpLog();
             throw new RuntimeException("Wrong Selection");
         }
+
         if (noAudio)
         {
-            addToLog("[MP]\t[WARNING]\tNo audio devices detected!");
             return;
         }
+
         switch(selection)
         {
             case 0  : play("/sound/Quest Begins.mp3");  break;
@@ -104,8 +108,7 @@ public class MusicPlayer
 
     /**
      * Play a specific filename, will be called internally.
-     * @param filename
-     * Input the file of the song to be played.
+     * @param filename The file of the song to be played.
      */
     @SuppressWarnings("checkstyle:methodlength")
     private void play(String filename)
@@ -126,11 +129,11 @@ public class MusicPlayer
             music = new Player(getClass().getResourceAsStream(filename));
             currSound = filename;
         }
-        catch (Exception e)
+        catch (Exception exception)
         {
             addToLog("[MP]\t[ERROR]\tAudio File couldn't be played.");
             new DumpLog();
-            System.out.println(e);
+            exception.printStackTrace();
         }
 
         new Thread()
@@ -143,11 +146,11 @@ public class MusicPlayer
                     mt = new MusicThread();
                     mt.run(music);
                 }
-                catch (Exception e)
+                catch (Exception exception)
                 {
                     addToLog("[MP]\t[ERROR]\tAudio File couldn't be played.");
                     new DumpLog();
-                    System.out.println(e);
+                    System.out.println(exception);
                 }
             }
         }.start();
@@ -206,8 +209,7 @@ public class MusicPlayer
      * Adjust volume by inputted amount.
      * -0.1 lowers by 10.
      * 0.1 raises by 10.
-     * @param deltaVolume
-     * Input a float with the amount of volume to change by.
+     * @param deltaVolume A float with the amount of volume to change by.
      */
     public void volumeAdjust(float deltaVolume)
     {
@@ -222,14 +224,14 @@ public class MusicPlayer
             makeFloatControl();
             volumeInitialized = true;
         }
+
         addToLog("[MP]\tVolume Adjusted by: " + deltaVolume + ".");
         volume.setValue(volume.getValue() + deltaVolume);
     }
 
     /**
      * Get the AudioDevice currently in use on the computer.
-     * @return
-     * Returns the Audio Device used.
+     * @return The Audio Device used.
      */
     @SuppressWarnings("checkstyle:magicnumber")
     public Info getAudioDevice()
@@ -255,8 +257,7 @@ public class MusicPlayer
 
     /**
      * Get the sound that was played last.
-     * @return
-     * Returns a String with the file name.
+     * @return A String with the file name.
      */
     public String getCurrSound()
     {
@@ -265,8 +266,7 @@ public class MusicPlayer
 
     /**
      * Get the FloatControl volume.
-     * @return
-     * Returns the volume.
+     * @return the volume.
      */
     public FloatControl getVolume()
     {

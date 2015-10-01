@@ -39,6 +39,7 @@ public class EmptySprite
         {
             return false;
         }
+
         EmptySprite otherSprite = (EmptySprite) other;
         if(otherSprite.getWidth() != getWidth())
         {

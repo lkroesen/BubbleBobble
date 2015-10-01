@@ -116,6 +116,7 @@ public class CollisionComputer
 		{
 			return new Collision(start, true);
 		}
+
 		Point found = start;
 		for(int i = 0; i <= steps; i++)
 		{
@@ -127,6 +128,7 @@ public class CollisionComputer
 				{
 					mover.onWallCollision();
 				}
+
 				return sweep(
 						mover, found, delta.divide(steps), widthHeight, motion, steps, level + 1);
 			}

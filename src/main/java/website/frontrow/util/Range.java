@@ -1,7 +1,7 @@
 package website.frontrow.util;
 
 /**
- * Detones a continuous range.
+ * Denotes a continuous range.
  */
 public class Range
 {

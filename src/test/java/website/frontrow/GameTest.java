@@ -1,7 +1,6 @@
 package website.frontrow;
 
 import org.junit.Before;
-import website.frontrow.board.Player;
 import website.frontrow.game.Game;
 import website.frontrow.level.Level;
 import website.frontrow.util.Point;

@@ -10,27 +10,27 @@ import website.frontrow.logger.Logable;
  */
 public class MusicThread
         extends Thread
-            implements Logable
+        implements Logable
 {
     private Player music;
 
     /**
      * Start playing music.
-     * @param m
+     * @param musicPlayer
      * Input the music to be played.
      */
-    public void run(Player m)
+    public void run(Player musicPlayer)
     {
-        this.music = m;
+        this.music = musicPlayer;
         try
         {
             music.play();
         }
-        catch (Exception e)
+        catch (Exception exception)
         {
-            addToLog("[MT]\t[ERROR]\tMusic Thread encountered an exception: " + e.toString() + ".");
+            addToLog("[MT]\t[ERROR]\tMusic Thread encountered: " + exception.toString() + ".");
             new DumpLog();
-            throw new RuntimeException("Error Occured in Thread " + e);
+            throw new RuntimeException("Error Occurred in Thread " + exception);
         }
     }
 
@@ -51,6 +51,5 @@ public class MusicThread
     public void addToLog(String action)
     {
         Log.add(action);
-
     }
 }

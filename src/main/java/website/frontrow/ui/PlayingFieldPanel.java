@@ -20,7 +20,7 @@ import java.awt.Dimension;
  */
 public class PlayingFieldPanel
         extends JPanel
-            implements Logable
+        implements Logable
 {
     private static final int BLOCK_SIZE = 32; //Pixels
 
@@ -47,14 +47,13 @@ public class PlayingFieldPanel
         this.setPreferredSize(size);
         this.setMinimumSize(size);
         this.game = game;
-        addToLog("[PFP]\tPlaying Field Panel finished successfully.");
+        addToLog("[PFP]\tPlaying Field Panel created successfully.");
     }
 
     @Override
     public void paint(Graphics graphics)
     {
         super.paint(graphics);
-
         game.getLevel().draw(graphics, BORDER_WIDTH, BORDER_WIDTH,
                 getSize().width - 2 * BORDER_WIDTH, getSize().height - 2 * BORDER_WIDTH);
     }
@@ -66,9 +65,8 @@ public class PlayingFieldPanel
     private Border createBorder()
     {
         ImageIcon borderImage = new ImageStore().getImageIcon("/sprites/block.jpg");
-        Border border = BorderFactory.createMatteBorder(BORDER_WIDTH, BORDER_WIDTH,
+        return BorderFactory.createMatteBorder(BORDER_WIDTH, BORDER_WIDTH,
                 BORDER_WIDTH, BORDER_WIDTH, borderImage);
-        return border;
     }
 
 

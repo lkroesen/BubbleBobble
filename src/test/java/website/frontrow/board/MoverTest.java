@@ -3,9 +3,6 @@ package website.frontrow.board;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
-
 import website.frontrow.level.Level;
 import website.frontrow.game.GameConstants;
 import website.frontrow.level.MapParser;
@@ -23,7 +20,6 @@ import static org.junit.Assert.assertEquals;
  * Tests the mover class.
  *
  */
-@RunWith(MockitoJUnitRunner.class)
 public abstract class MoverTest
     extends UnitTest
 {
@@ -134,6 +130,7 @@ public abstract class MoverTest
     @Test
     public void testGoLeft() throws IOException
     {
+
         MapParser mp = new MapParser();
         InputStream map = getClass().getResourceAsStream("/testMove.txt");
         Level level = mp.parseMap(map);
@@ -143,6 +140,7 @@ public abstract class MoverTest
 
         u.goLeft();
         u.tick(level);
+
         assertTrue(u.getLocation().getX() < location.getX());
     }
 
@@ -168,20 +166,16 @@ public abstract class MoverTest
     /**
      * Tests whether the unit does not move when not speed is given.
      * Except there is gravity. So we need to keep that in mind.
-     * @throws IOException The test file might not be found.
      */
     @Test
-    public void testDontMove() throws IOException
+    public void testDontMove() // There's a wasp in your hair.
     {
-        MapParser mp = new MapParser();
-        InputStream map = getClass().getResourceAsStream("/testMove.txt");
-        Level level = mp.parseMap(map);
+        Point start = new Point(0, 0);
+        Mover u = getTestMover(true, start, new Point(0, 0));
 
-        Player u = level.getPlayers().get(0);
-        Point location = u.getLocation();
+        u.tick(emptyLevel);
 
-        u.tick(level);
-        assertEquals(u.getLocation().getX(), location.getX(), 0.001);
+        assertEquals(0, u.getLocation().getX(), 0.00001);
     }
 
     /**

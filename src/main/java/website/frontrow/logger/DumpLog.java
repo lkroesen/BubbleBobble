@@ -8,9 +8,7 @@ import java.io.PrintWriter;
  * Create a file out of the current log.
  */
 @SuppressWarnings("checkstyle:hideutilityclassconstructor")
-/*
-    Due to the way DumpLog is intended, this checkstyle warning will be ignored.
- */
+/* Due to the way DumpLog is intended, this checkstyle warning will be ignored. */
 public class DumpLog
 {
     private static File fTemp;
@@ -24,25 +22,24 @@ public class DumpLog
         {
             fTemp = File.createTempFile("DumpLog", ".txt");
 
-            PrintWriter w = new PrintWriter(fTemp);
+            PrintWriter printWriter = new PrintWriter(fTemp);
             for (long c = 0; c < Log.getLogMap().size(); c++)
             {
-                w.println(Log.getLogMap().get(c));
+                printWriter.println(Log.getLogMap().get(c));
             }
-            w.close();
+            printWriter.close();
         }
-        catch (IOException e)
+        catch (IOException exception)
         {
             Log.add("[DUMP LOG]\tDump Log failed to make a DumpLog.");
             new DumpLog();
-            e.printStackTrace();
+            exception.printStackTrace();
         }
     }
 
     /**
      * Get the file made.
-     * @return
-     * Returns the file.
+     * @return  Returns the file.
      */
     public static File getfTemp()
     {

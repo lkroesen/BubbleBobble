@@ -68,13 +68,14 @@ public class Launcher implements Logable
      * Starts the game.
      * @param filename The file name of the level to load.
      */
+    @SuppressWarnings("methodlength") // We need to make a GameFactory and UIBuilder
     public void start(String[] filename)
     {
-        addToLog("[LAUNCHER]\tLoading file: " + filename + ".");
+        addToLog("[LAUNCHER]\tLoading file: " + filename.toString() + ".");
 
         try
         {
-            addToLog("[LAUNCHER]\tLoading file: " + filename + " succeeded.");
+            addToLog("[LAUNCHER]\tLoading file: " + filename.toString() + " succeeded.");
 
             MapParser mp = new MapParser();
             ArrayList<Level> levelList = new ArrayList<>();
@@ -93,12 +94,17 @@ public class Launcher implements Logable
     		Level gameOverLevel = mp.parseMap(map);
     		game.setGameOver(gameOverLevel);
 
+            InputStream winMap = getClass().getResourceAsStream("/game_won.txt");
+            Level gameWonLevel = mp.parseMap(winMap);
+            game.setGameWon(gameWonLevel);
+
             game.setKeyListener(ui.getKeyListener());
 
             ui.start();
             startScheduler(game);
 
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             addToLog("[ERROR]\tLoading file: " + filename + " failed.");
             new DumpLog();

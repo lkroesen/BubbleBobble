@@ -19,26 +19,22 @@ public class Player
     /**
      * The points accumulated by the player.
      */
-    private int score;
+    private int score = 0;
     
     /**
      * The amount of lives the player has.
      */
-    private int lives;
+    private int lives = GameConstants.DEFAULT_AMOUNT_OF_LIVES;
 
-
+    /**
+     * The player is invincible for a certain amount of time.
+     */
     private static final int INVINCIBILITY_TICKS = GameConstants.TICKS_PER_SEC;
+
     /**
      * The amount of ticks the player is still immune to losing lives.
      */
     private int ticksLeft = 0;
-    
-    /**
-     * To avoid Checkstyle warnings.
-     * The amount of lives the player starts with is 3.
-     * However, if that integer is final, we can't change it.
-     */
-    private static final int DEFAULT_LIVES = 3;
 
     /**
      * The constructor of the Player Unit.
@@ -50,7 +46,6 @@ public class Player
         super(true, position, new Point(0, 0), sprites);
         new Log();
         addToLog("[PLAYER]\t[SPAWN]\tPlayer created.");
-        lives = DEFAULT_LIVES;
     }
 
     /**
@@ -123,8 +118,11 @@ public class Player
         {
             ticksLeft = INVINCIBILITY_TICKS;
             loseLife();
+            if(lives < 0)
+            {
+                this.kill();
+            }
         }
-
     }
 
     /**
@@ -147,7 +145,7 @@ public class Player
     }
     
     /**
-     * Decreases the lives by one.
+     * Decreases the number of lives by one.
      */
     public void loseLife()
     {
@@ -156,7 +154,7 @@ public class Player
     }
     
     /**
-     * Increases the lives by one.
+     * Increases the number of lives by one.
      */
     public void addLife()
     {

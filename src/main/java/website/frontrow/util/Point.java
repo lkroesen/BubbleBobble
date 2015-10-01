@@ -5,7 +5,6 @@ package website.frontrow.util;
  */
 public class Point
 {
-
     private double x;
     private double y;
 
@@ -68,12 +67,12 @@ public class Point
 
     /**
      * Add two points together.
-     * @param b The point to add.
+     * @param point The point to add.
      * @return The result.
      */
-    public Point add(Point b)
+    public Point add(Point point)
     {
-        return new Point(this.x + b.x, this.y + b.y);
+        return new Point(this.x + point.x, this.y + point.y);
     }
 
     /**
@@ -125,6 +124,7 @@ public class Point
 
     @SuppressWarnings("checkstyle:magicnumber")
     private static int prime = 31;
+
     @Override
     public int hashCode()
     {
