@@ -34,7 +34,7 @@ public class AudioDetector
         {
             if (AudioSystem.isLineSupported(audioDevicesList[c]))
             {
-                noAudio = false;
+                setNoAudio(false);
                 addToLog("[AD]\tAudio device detected");
                 break;
             }
@@ -46,6 +46,15 @@ public class AudioDetector
     public void addToLog(String action)
     {
         Log.add(action);
+    }
+
+    /**
+     * Set the value of noAudio.
+     * @param noAudio Input the value to be set.
+     */
+    private static void setNoAudio(boolean noAudio)
+    {
+        AudioDetector.noAudio = noAudio;
     }
 
     /**

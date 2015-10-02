@@ -82,13 +82,13 @@ public class FileNameCollector
     {
         if (folder == null)
         {
-            addToLog("[LC]\t[ERROR]\tDirectory is null.");
+            addToLog("[FNC]\t[ERROR]\tDirectory is null.");
             throw new URISyntaxException("null", "Null is not an accepted Syntax as a directory.");
         }
         ArrayList<String> stringList = new ArrayList<>();
         InputStream inputStream = FileNameCollector.class.getResourceAsStream("/" + folder);
 
-        Scanner scanner = new Scanner(inputStream);
+        Scanner scanner = new Scanner(inputStream, "UTF-8");
 
         // Get the amount of levels.
         while(scanner.hasNextLine())

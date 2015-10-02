@@ -51,8 +51,6 @@ public class Launcher implements Logable
     {
         new AudioDetector();
 
-        // Initialize the Logger Class, so that it can Log actions taken.
-        new Log();
         Log.togglePrinting();
 
         if (!AudioDetector.isNoAudio())
