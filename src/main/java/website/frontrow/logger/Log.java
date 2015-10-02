@@ -1,5 +1,7 @@
 package website.frontrow.logger;
 
+import javax.swing.text.DateFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +27,7 @@ public class Log
      */
     public static void add(String action)
     {
-        String timestamp = "[" + (System.currentTimeMillis() - startOfLoggingMillis) + " ms]\t";
+        String timestamp = "[" + (new Date()).toString() + "]\t";
         logMap.put(counter++, timestamp + action);
 
         if (togglePrinting)

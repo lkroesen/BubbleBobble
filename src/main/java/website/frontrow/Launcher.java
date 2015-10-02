@@ -16,13 +16,13 @@ import website.frontrow.util.FileNameCollector;
 import website.frontrow.util.Point;
 import website.frontrow.logger.Logable;
 import website.frontrow.music.MusicPlayer;
-import website.frontrow.music.Songs;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -45,8 +45,9 @@ public class Launcher implements Logable
     /**
      * The starting point of the program.
      * @param args The arguments of the program. Currently no parameters are used.
+     * @throws IOException Some files might not be found.
      */
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
         new AudioDetector();
 
@@ -61,7 +62,7 @@ public class Launcher implements Logable
 
         try
         {
-            new Launcher().start(new FileNameCollector().obtain("/level/"));
+            new Launcher().start(new FileNameCollector().obtain("level/"));
         }
         catch (URISyntaxException e)
         {
@@ -77,11 +78,11 @@ public class Launcher implements Logable
     @SuppressWarnings("methodlength") // We need to make a GameFactory and UIBuilder
     public void start(String[] filename)
     {
-        addToLog("[LAUNCHER]\tLoading file: " + filename.toString() + ".");
+        addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + ".");
 
         try
         {
-            addToLog("[LAUNCHER]\tLoading file: " + filename.toString() + " succeeded.");
+
 
             MapParser mp = new MapParser();
             ArrayList<Level> levelList = new ArrayList<>();
@@ -108,11 +109,11 @@ public class Launcher implements Logable
 
             ui.start();
             startScheduler(game);
-
+            addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + " succeeded.");
         }
         catch (IOException e)
         {
-            addToLog("[ERROR]\tLoading file: " + filename + " failed.");
+            addToLog("[ERROR]\tLoading file: " + Arrays.toString(filename) + " failed.");
             new DumpLog();
             throw new RuntimeException();
         }
