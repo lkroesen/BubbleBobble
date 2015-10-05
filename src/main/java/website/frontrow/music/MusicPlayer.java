@@ -8,22 +8,37 @@ import website.frontrow.logger.Log;
 /**
  * Class for playing music files.
  */
-@SuppressWarnings("checkstyle:hideutilityclassconstructor")
-/* The constructor is used to play the opening song and to make sure JavaFX is running. */
-public class MusicPlayer
+public final class MusicPlayer
 {
     private static boolean toggleLooping = false;
     private static Media songFile;
     private static MediaPlayer musicPlayer;
+    private static final MusicPlayer INSTANCE = new MusicPlayer();
 
     /**
-     * The constructor will play the title menu when it's initalized initially.
+     * Hidden Constructor for UtilityClass.
      */
-    public MusicPlayer()
+    private MusicPlayer()
     {
-        // Initialize JavaFX, the hacker way!
+
+    }
+
+    /**
+     * Return the instance of the class.
+     * @return Returns the current instance.
+     */
+    public static MusicPlayer getInstance()
+    {
+        return INSTANCE;
+    }
+
+
+    /**
+     * Initialize JavaFX.
+     */
+    public static void init()
+    {
         new JFXPanel();
-        selectSong(Songs.TITLE_SCREEN);
     }
 
     /**

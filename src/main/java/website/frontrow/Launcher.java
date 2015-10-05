@@ -8,6 +8,7 @@ import website.frontrow.level.MapParser;
 import website.frontrow.logger.DumpLog;
 import website.frontrow.logger.Log;
 import website.frontrow.music.AudioDetector;
+import website.frontrow.music.Songs;
 import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.ui.Action;
 import website.frontrow.ui.JBubbleBobbleUI;
@@ -55,7 +56,8 @@ public class Launcher implements Logable
 
         if (!AudioDetector.isNoAudio())
         {
-            new MusicPlayer();
+            MusicPlayer.getInstance().init();
+            MusicPlayer.getInstance().selectSong(Songs.TITLE_SCREEN);
         }
 
         try

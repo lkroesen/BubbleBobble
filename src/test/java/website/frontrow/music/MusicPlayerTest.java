@@ -19,7 +19,7 @@ public class MusicPlayerTest
         new AudioDetector();
         if (!AudioDetector.isNoAudio())
         {
-            new MusicPlayer();
+            MusicPlayer.init();
         }
     }
 
