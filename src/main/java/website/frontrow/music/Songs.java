@@ -17,4 +17,5 @@ public abstract class Songs
     public static final String THANK_YOU = "/sound/Thank You!.mp3";
     public static final String TITLE_SCREEN = "/sound/Title Screen.mp3";
     public static final String VICTORY = "/sound/Victory!.mp3";
+    public static final String DECISIVE_VICTORY = "/sound/Victory2!.mp3";
 }

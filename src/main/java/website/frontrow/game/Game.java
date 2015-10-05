@@ -216,7 +216,7 @@ public class Game
             {
                 MusicPlayer.stop();
                 MusicPlayer.setLooping(false);
-                MusicPlayer.selectSong(Songs.VICTORY);
+                MusicPlayer.selectSong(Songs.DECISIVE_VICTORY);
             }
         }
     }
