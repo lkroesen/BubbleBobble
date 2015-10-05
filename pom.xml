@@ -4,7 +4,7 @@
     <groupId>website.frontrow</groupId>
     <artifactId>jbubble-bobble</artifactId>
     <packaging>jar</packaging>
-    <version>0.3.1</version>
+    <version>0.3</version>
     <name>jbubble-bobble</name>
     <url>https://github.com/lkroesen/BubbleBobble</url>
     <dependencies>
@@ -55,6 +55,7 @@
                 <version>3.2</version>
                 <configuration>
                     <format>xml</format>
+                    <skipEmptyReport>false</skipEmptyReport>
                 </configuration>
             </plugin>
             <plugin>
