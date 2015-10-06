@@ -169,14 +169,14 @@ public class Launcher implements Logable
             map.put(KeyEvent.VK_Z, () ->
             {
                 addToLog("[KEY]\t< \'Z\' > Pressed.");
-                JBubbleBobbleSprites spriteStore = new JBubbleBobbleSprites();
+
                 if(game.isRunning())
                 {
                     Player p = game.getPlayers().get(0);
                     game.getLevel().addUnit(
                             new Bubble(p.getLocation(),
                                     new Point(p.getDirection().getDeltaX() * 4, 0),
-                                    spriteStore.getBubbleSprite()));
+                                    JBubbleBobbleSprites.getInstance().getBubbleSprite()));
                 }
             });
         }

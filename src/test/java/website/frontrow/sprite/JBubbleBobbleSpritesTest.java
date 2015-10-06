@@ -25,7 +25,7 @@ public class JBubbleBobbleSpritesTest
     @Before
     public void setUp()
     {
-        sp = new JBubbleBobbleSprites();
+        sp = JBubbleBobbleSprites.getInstance();
     }
 
     /**
@@ -37,6 +37,15 @@ public class JBubbleBobbleSpritesTest
         s = null;
         sp = null;
         directionalSprite = null;
+    }
+
+    /**
+     * Test if the Instance is equal to the one created in the setup.
+     */
+    @Test
+    public void testSingleTonGetter()
+    {
+        assertEquals(sp, JBubbleBobbleSprites.getInstance());
     }
 
     /**
