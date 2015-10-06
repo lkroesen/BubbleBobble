@@ -5,7 +5,6 @@ import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.level.Level.LevelObserver;
-import website.frontrow.music.AudioDetector;
 import website.frontrow.music.MusicPlayer;
 import website.frontrow.music.Songs;
 import website.frontrow.ui.JBubbleKeyListener;
@@ -212,12 +211,8 @@ public class Game
         {
             currentLevel = gameWon;
 
-            if (!AudioDetector.isNoAudio())
-            {
-                MusicPlayer.stop();
-                MusicPlayer.setLooping(false);
-                MusicPlayer.selectSong(Songs.DECISIVE_VICTORY);
-            }
+            MusicPlayer.getInstance().setLooping(false);
+            MusicPlayer.getInstance().selectSong(Songs.DECISIVE_VICTORY);
         }
     }
 
@@ -236,12 +231,8 @@ public class Game
 	{
 		currentLevel = gameOver;
 
-        if (!AudioDetector.isNoAudio())
-        {
-            MusicPlayer.stop();
-            MusicPlayer.setLooping(false);
-            MusicPlayer.selectSong(Songs.GAME_OVER);
-        }
+        MusicPlayer.getInstance().setLooping(false);
+        MusicPlayer.getInstance().selectSong(Songs.GAME_OVER);
     }
 
 	/**

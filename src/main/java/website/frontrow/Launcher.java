@@ -7,7 +7,6 @@ import website.frontrow.level.Level;
 import website.frontrow.level.MapParser;
 import website.frontrow.logger.DumpLog;
 import website.frontrow.logger.Log;
-import website.frontrow.music.AudioDetector;
 import website.frontrow.music.Songs;
 import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.ui.Action;
@@ -50,15 +49,10 @@ public class Launcher implements Logable
      */
     public static void main(String[] args) throws IOException
     {
-        new AudioDetector();
-
         Log.togglePrinting();
 
-        if (!AudioDetector.isNoAudio())
-        {
-            MusicPlayer.getInstance().init();
-            MusicPlayer.getInstance().selectSong(Songs.TITLE_SCREEN);
-        }
+        MusicPlayer.getInstance().init();
+        MusicPlayer.getInstance().selectSong(Songs.TITLE_SCREEN);
 
         try
         {
@@ -192,20 +186,13 @@ public class Launcher implements Logable
         map.put(KeyEvent.VK_MINUS, () ->
         {
             addToLog("[KEY]\t< \'-\' > Pressed.");
-
-            if (!AudioDetector.isNoAudio())
-            {
-                MusicPlayer.volumeAdjust(-1.0d);
-            }
+            MusicPlayer.getInstance().volumeAdjust(-1.0d);
         });
 
         map.put(KeyEvent.VK_EQUALS, () ->
         {
             addToLog("[KEY]\t< \'=\' > Pressed.");
-            if (!AudioDetector.isNoAudio())
-            {
-                MusicPlayer.volumeAdjust(1.0d);
-            }
+            MusicPlayer.getInstance().volumeAdjust(1.0d);
         });
 
         // Create a DumpLog

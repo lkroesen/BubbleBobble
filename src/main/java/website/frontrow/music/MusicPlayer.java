@@ -10,17 +10,18 @@ import website.frontrow.logger.Log;
  */
 public final class MusicPlayer
 {
-    private static boolean toggleLooping = false;
-    private static Media songFile;
-    private static MediaPlayer musicPlayer;
+    private boolean toggleLooping = false;
+    private Media songFile;
+    private MediaPlayer musicPlayer;
     private static final MusicPlayer INSTANCE = new MusicPlayer();
+    private final JFXPanel panel;
 
     /**
      * Hidden Constructor for UtilityClass.
      */
     private MusicPlayer()
     {
-
+        panel = new JFXPanel();
     }
 
     /**
@@ -38,60 +39,75 @@ public final class MusicPlayer
      */
     public static void init()
     {
-        new JFXPanel();
     }
 
     /**
      * Select a Song to be played.
      * @param fileLocation Input the file location, pick from the abstract Songs class.
-     * @return Returns 0 upon success.
      */
-    public static int selectSong(String fileLocation)
+    public void selectSong(String fileLocation)
     {
+        // Stop if there is no audio device.
+        if(AudioDetector.getInstance().isNoAudio())
+        {
+            return;
+        }
+
         songFile = new Media(MusicPlayer.class.getResource(fileLocation).toExternalForm());
         Log.add("[MUSIC]\tPlaying the file at location: " + fileLocation);
         musicPlayer = new MediaPlayer(songFile);
 
         if (toggleLooping)
         {
-            musicPlayer.setCycleCount(musicPlayer.INDEFINITE);
+            musicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         }
 
         play();
-        return 0;
     }
 
     /**
      * Stop the music from playing.
-     * @return Returns 0 upon success.
      */
-    public static int stop()
+    public void stop()
     {
+        if(AudioDetector.getInstance().isNoAudio() || musicPlayer == null)
+        {
+            return;
+        }
+
+
         musicPlayer.stop();
-        return 0;
     }
 
     /**
      * Plays music, stops before playing again.
-     * @return Returns 0 upon success.
      */
-    private static int play()
+    private void play()
     {
+        // Stop if there is no audio device.
+        if(AudioDetector.getInstance().isNoAudio())
+        {
+            return;
+        }
+
         stop();
         musicPlayer.play();
-        return 0;
     }
 
     /**
      * Adjust the volume by a certain value.
      * @param delta Input a value to adjust the volume by.
-     * @return Returns 0 upon success.
      */
-    public static int volumeAdjust(double delta)
+    public void volumeAdjust(double delta)
     {
+        // Stop if there is no audio device.
+        if(AudioDetector.getInstance().isNoAudio())
+        {
+            return;
+        }
+
         musicPlayer.setVolume(musicPlayer.getVolume() + delta);
         Log.add("[MUSIC]\tVolume adjusted by: " + delta);
-        return 0;
     }
 
     /**
@@ -99,12 +115,28 @@ public final class MusicPlayer
      * @param looping Input true or false.
      * @return Returns the previous value.
      */
-    public static boolean setLooping(Boolean looping)
+    public boolean setLooping(Boolean looping)
     {
+        // Stop if there is no audio device.
+        if(AudioDetector.getInstance().isNoAudio())
+        {
+            return toggleLooping;
+        }
+
         boolean previous = toggleLooping;
         toggleLooping = looping;
         Log.add("[MUSIC]\tLooping set to: " + looping);
 
         return previous;
+    }
+
+    /**
+     * The JFXPanel that enables us to use JavaFX and thus audio.
+     * Do not worry too much about this.
+     * @return The JFXPanel.
+     */
+    public JFXPanel getPanel()
+    {
+        return panel;
     }
 }

@@ -1,7 +1,6 @@
 package website.frontrow.music;
 
 import website.frontrow.logger.Log;
-import website.frontrow.logger.Logable;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Line;
@@ -10,19 +9,18 @@ import javax.sound.sampled.Port;
 /**
  * Class for detecting audio devices.
  */
-public class AudioDetector
-        implements Logable
+public final class AudioDetector
 {
-    @SuppressWarnings("checkstyle:visibilitymodifier")
-    /* Due to intended implementations this will be public. */
-    private static boolean noAudio = true;
+    private boolean noAudio = true;
+
+    private static final AudioDetector INSTANCE = new AudioDetector();
 
     /**
      * See if there's an audio device on the computer.
      */
     @SuppressWarnings("checkstyle:magicnumber")
     /* Magicnumbers are due to directly numbering the arrays. */
-    public AudioDetector()
+    private AudioDetector()
     {
         Line.Info[] audioDevicesList = new Line.Info[4];
         audioDevicesList[0] = Port.Info.SPEAKER;
@@ -35,34 +33,37 @@ public class AudioDetector
             if (AudioSystem.isLineSupported(audioDevicesList[c]))
             {
                 setNoAudio(false);
-                addToLog("[AD]\tAudio device detected");
+                Log.add("[AD]\tAudio device detected");
                 break;
             }
         }
-        addToLog("[AD]\t[ERROR]\tNo audio devices on this machine!");
-    }
-
-    @Override
-    public void addToLog(String action)
-    {
-        Log.add(action);
+        Log.add("[AD]\t[ERROR]\tNo audio devices on this machine!");
     }
 
     /**
      * Set the value of noAudio.
      * @param noAudio Input the value to be set.
      */
-    private static void setNoAudio(boolean noAudio)
+    private void setNoAudio(boolean noAudio)
     {
-        AudioDetector.noAudio = noAudio;
+        this.noAudio = noAudio;
     }
 
     /**
      * Get whether we can play audio on this device.
      * @return Returns true or false.
      */
-    public static boolean isNoAudio()
+    public boolean isNoAudio()
     {
         return noAudio;
+    }
+
+    /**
+     * Get the instance of AudioDetector.
+     * @return Returns the instance.
+     */
+    public static AudioDetector getInstance()
+    {
+        return INSTANCE;
     }
 }

@@ -77,7 +77,7 @@ public class CollisionHandler
             bubble.capture((Enemy) other);
         }
 
-        if(other instanceof Bubble && !(bubble.getContains() instanceof Enemy) && bubble.isHit())
+        if(other instanceof Bubble && !(bubble.getContains() != null) && bubble.isHit())
         {
             bubble.kill();
         }

@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assume.assumeFalse;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Test the Music Player class.
@@ -16,23 +18,9 @@ public class MusicPlayerTest
     @Before
     public void setup()
     {
-        new AudioDetector();
-        if (!AudioDetector.isNoAudio())
-        {
-            MusicPlayer.init();
-        }
-    }
-
-    /**
-     * Test if we can select a song succesfuly.
-     */
-    @Test
-    public void testSelectSong()
-    {
-        if (!AudioDetector.isNoAudio())
-        {
-            assertEquals(MusicPlayer.selectSong(Songs.BOSS_THEME), 0);
-        }
+        assumeFalse("No audio devices are available. Skipping...",
+                AudioDetector.getInstance().isNoAudio());
+        MusicPlayer.init();
     }
 
     /**
@@ -41,40 +29,7 @@ public class MusicPlayerTest
     @Test(expected = NullPointerException.class)
     public void testSelectSongNoSong()
     {
-        if (!AudioDetector.isNoAudio())
-        {
-            assertEquals(MusicPlayer.selectSong("foo"), 0);
-        }
-        else
-        {
-            throw new NullPointerException();
-        }
-    }
-
-    /**
-     * Test if stopping the music works.
-     */
-    @Test
-    public void testStop()
-    {
-        if (!AudioDetector.isNoAudio())
-        {
-            MusicPlayer.selectSong(Songs.INVINCIBILITY);
-            assertEquals(MusicPlayer.stop(), 0);
-        }
-    }
-
-    /**
-     * Test if adjusting the volume works.
-     */
-    @Test
-    public void testVolumeAdjust()
-    {
-        if (!AudioDetector.isNoAudio())
-        {
-            MusicPlayer.selectSong(Songs.BAD_END);
-            assertEquals(MusicPlayer.volumeAdjust(0.0d), 0);
-        }
+        MusicPlayer.getInstance().selectSong("foo");
     }
 
     /**
@@ -83,10 +38,16 @@ public class MusicPlayerTest
     @Test
     public void testSetLooping()
     {
-        if (!AudioDetector.isNoAudio())
-        {
-            MusicPlayer.selectSong(Songs.CREDITS);
-            assertEquals(MusicPlayer.setLooping(true), false);
-        }
+        MusicPlayer.getInstance().selectSong(Songs.CREDITS);
+        assertEquals(MusicPlayer.getInstance().setLooping(true), false);
+    }
+
+    /**
+     * Test the getter of the JavaFX Panel.
+     */
+    @Test
+    public void testGetPanel()
+    {
+        assertNotNull(MusicPlayer.getInstance().getPanel());
     }
 }
