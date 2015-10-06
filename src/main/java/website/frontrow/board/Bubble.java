@@ -28,6 +28,9 @@ public class Bubble
     private long timeContained = 0;
     
     private long timeEmpty = 0;
+    
+    private final long TIME_FLOAT_UPWARDS = 50;
+    private final long TIME_KILL = 500;
 
     /**
      * Did this bubble hit something?
@@ -81,11 +84,22 @@ public class Bubble
         {
         	timeEmpty++;
         	
-        	if(timeEmpty >= 50)
+        	if(timeEmpty >= TIME_FLOAT_UPWARDS)
         	{
         		this.hit();
         	}
         }
+        
+        if(this.contains == null && hit == true)
+        {
+        	timeEmpty++;
+        	
+        	if(timeEmpty >= TIME_KILL)
+        	{
+        		this.kill();
+        	}
+        }
+        
 
         if(this.contains != null)
         {
