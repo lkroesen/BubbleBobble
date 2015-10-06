@@ -73,7 +73,7 @@ public class MapParser
     {
         addToLog("[MAP PARSER]\tparseMap() called.");
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
         ArrayList<String> lines = new ArrayList<>();
 
         String line;
