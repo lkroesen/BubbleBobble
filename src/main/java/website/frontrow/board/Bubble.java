@@ -1,5 +1,6 @@
 package website.frontrow.board;
 
+import website.frontrow.board.behaviour.BubbleGravityBehaviour;
 import website.frontrow.game.GameConstants;
 import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
@@ -40,7 +41,7 @@ public class Bubble
      */
     public Bubble(Point position, Point motion, Map<Direction, Sprite> sprites)
     {
-        super(true, position, motion, sprites);
+        super(true, position, motion, sprites, new BubbleGravityBehaviour());
         addToLog("[BUBBLE]\t[SPAWN]\tBubble created.");
     }
 
@@ -100,12 +101,6 @@ public class Bubble
     {
         addToLog("[BUBBLE]\tHit wall.");
         this.hit();
-    }
-
-    @Override
-    public void applyGravity()
-    {
-        // Ignore gravity.
     }
     
     /**
