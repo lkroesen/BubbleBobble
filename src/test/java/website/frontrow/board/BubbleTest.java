@@ -10,6 +10,7 @@ import website.frontrow.level.Level;
 import website.frontrow.util.Grid;
 import website.frontrow.util.Point;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -106,7 +107,7 @@ public class BubbleTest
     	ArrayList<Player> playerList = new ArrayList<Player>();
     	ArrayList<Unit> unitList = new ArrayList<Unit>();
     	List<Object> items = new ArrayList<Object>();
-    	items.add(bubble);
+    	items.add(Cell.EMPTY);
     	Grid<Cell> cells = new Grid(items, 1, 1);
     	Level level = new Level(playerList, unitList, cells);
     	
@@ -120,5 +121,35 @@ public class BubbleTest
     	
     	assertTrue(bubble.isHit());
     	assertEquals(bubble.getMotion(), FLOAT_UP_MOTION);
+    }
+    
+    @Test
+    public void testKillEmpty()
+    {
+    	Bubble bubble = new Bubble(new Point(0, 0), new Point(0, 0), null);
+    	
+    	ArrayList<Player> playerList = new ArrayList<Player>();
+    	ArrayList<Unit> unitList = new ArrayList<Unit>();
+    	List<Object> items = new ArrayList<Object>();
+    	items.add(Cell.EMPTY);
+    	Grid<Cell> cells = new Grid(items, 1, 1);
+    	Level level = new Level(playerList, unitList, cells);
+    	
+    	final int TIME_ALMOST_KILL = 498;
+    	final Point FLOAT_UP_MOTION = new Point(0, -2);
+    	
+    	assertTrue(bubble.isAlive());
+    	
+    	for(int i = 0; i < TIME_ALMOST_KILL; i++)
+    	{
+    		bubble.tick(level);
+    	}
+    	
+    	assertTrue(bubble.isHit());
+    	assertTrue(bubble.isAlive());
+    	
+    	bubble.tick(level);
+    	
+    	assertFalse(bubble.isAlive());
     }
 }
