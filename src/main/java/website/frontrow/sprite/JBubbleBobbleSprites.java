@@ -10,9 +10,28 @@ import java.util.Map;
 /**
  * Contains all the sprites for JBubbleBobble.
  */
-public class JBubbleBobbleSprites
+public final class JBubbleBobbleSprites
     extends SpriteStore
 {
+    private static final JBubbleBobbleSprites INSTANCE = new JBubbleBobbleSprites();
+
+    /**
+     * Private Constructor due to being a Singleton.
+     */
+    private JBubbleBobbleSprites()
+    {
+
+    }
+
+    /**
+     * Get the instance of the Singleton Class JBubbleBobbleSprites.
+     * @return Returns the instance of the Class.
+     */
+    public static JBubbleBobbleSprites getInstance()
+    {
+        return INSTANCE;
+    }
+
     /**
      * The order of the directions of the sprites in an image file.
      */
@@ -68,6 +87,15 @@ public class JBubbleBobbleSprites
     public Map<Direction, Sprite> getEnemySprite()
     {
         return getDirectionalSprite("/sprites/enemy.png");
+    }
+
+    /**
+     * Creates a map with a sprite for each direction for captured enemies.
+     * @return The map.
+     */
+    public Map<Direction, Sprite> getCapturedEnemySprite()
+    {
+        return getDirectionalSprite("/sprites/Bubble_Containing_Zen.png");
     }
 
     @Override
