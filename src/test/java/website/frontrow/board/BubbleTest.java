@@ -152,4 +152,34 @@ public class BubbleTest
     	
     	assertFalse(bubble.isAlive());
     }
+    
+    @Test
+    public void testFloatingUpwardsEnemyCollision()
+    {
+    	Bubble bubble = new Bubble(new Point(0, 0), new Point(0, 0), null);
+    	
+    	ArrayList<Player> playerList = new ArrayList<Player>();
+    	ArrayList<Unit> unitList = new ArrayList<Unit>();
+    	List<Object> items = new ArrayList<Object>();
+    	items.add(Cell.EMPTY);
+    	Grid<Cell> cells = new Grid(items, 1, 1);
+    	Level level = new Level(playerList, unitList, cells);
+    	
+    	final int TIME_FLOAT_UPWARDS = 50;
+    	final Point FLOAT_UP_MOTION = new Point(0, -2);
+    	
+    	for(int i = 0; i < TIME_FLOAT_UPWARDS; i++)
+    	{
+    		bubble.tick(level);
+    	}
+    	
+    	assertTrue(bubble.isHit());
+    	assertEquals(bubble.getMotion(), FLOAT_UP_MOTION);
+    	
+    	Enemy enemy = mock(Enemy.class);
+    	enemy.setLocation(bubble.getLocation());
+    	
+    	// The bubble does NOT capture the enemy.
+    	assertEquals(bubble.getContains(), null);
+    }
 }
