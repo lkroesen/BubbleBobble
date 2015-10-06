@@ -76,6 +76,16 @@ public class Bubble
     public void tick(Level level)
     {
         super.tick(level);
+        
+        if(this.contains == null && hit == false)
+        {
+        	timeEmpty++;
+        	
+        	if(timeEmpty >= 50)
+        	{
+        		this.hit();
+        	}
+        }
 
         if(this.contains != null)
         {
