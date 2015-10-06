@@ -147,4 +147,14 @@ public class Bubble
     {
         Log.add(action);
     }
+    
+    public long getTimeEmpty()
+    {
+    	return timeEmpty;
+    }
+    
+    public void setTimeEmpty(long time)
+    {
+    	timeEmpty = time;
+    }
 }
