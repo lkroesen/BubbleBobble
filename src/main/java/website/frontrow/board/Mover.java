@@ -4,7 +4,6 @@ import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.sprite.Sprite;
-import website.frontrow.util.Collision;
 import website.frontrow.util.CollisionComputer;
 import website.frontrow.artificial.intelligence.ArtificialIntelligence;
 import website.frontrow.game.GameConstants;
@@ -174,7 +173,7 @@ public abstract class Mover
         this.handler = level.getCollisionComputer();
         this.handler.checkUnitsAABB(this, level.getCollisionHandler());
 
-        this.location = handler.findNextPosition(this).getPoint();
+        this.location = handler.findNextPosition(this);
 
         applyGravity();
         
@@ -188,12 +187,6 @@ public abstract class Mover
     protected void applyGravity()
     {
         this.motion.setY(this.motion.getY() - GameConstants.GRAVITY);
-
-        Collision c = this.handler.findNextPosition(this);
-        if(c.isCollided())
-        {
-            this.motion.setY(0);
-        }
     }
 
     @Override

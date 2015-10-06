@@ -87,6 +87,26 @@ public class Point
     }
 
     /**
+     * Subtract a point from the current point.
+     * @param b Point to subtract.
+     * @return Result of subtraction.
+     */
+    public Point subtract(Point b)
+    {
+        return new Point(this.x - b.x, this.y - b.y);
+    }
+
+    /**
+     * Multiply both coordinates of a point by a number.
+     * @param b The number to multiply by.
+     * @return A point with both coordinates multiplied by b.
+     */
+    public Point multiply(double b)
+    {
+        return new Point(this.x * b, this.y * b);
+    }
+
+    /**
      * Calculates the distance to the origin squared.
      * @return The distance to the origin squared
      */
@@ -102,6 +122,15 @@ public class Point
     public double length()
     {
         return Math.sqrt(this.lengthsq());
+    }
+
+    /**
+     * Get the angle in radians as used by polar coordinates.
+     * @return Angle in -pi to pi range.
+     */
+    public double angle()
+    {
+        return Math.atan2(this.y, this.x);
     }
 
 

@@ -21,6 +21,8 @@ public class CollisionComputer
 	private static final double PRECISION = 0.0001d;
 	private static final double ONE_DEV_PRECISION = 1 / PRECISION;
 	private static final int SAMPLING = 64;
+	private static final Point ZERO = new Point(0, 0);
+	//private static final Range Y_ANGLE_RANGE = new Range(Math.PI/4, Math.PI/4*2);
     private Level level;
 
     
@@ -73,7 +75,7 @@ public class CollisionComputer
 	 * @param motion The motion to keep in mind
 	 * @return True when there is a collision, false when not.
 	 */
-	public Cell checkLevelAABB(AABB aabb, Point motion)
+	public CellCollision checkLevelAABB(AABB aabb, Point motion)
 	{
 		// Find the cells we need to check.
 		Grid<Cell> cells = level.getCells();
@@ -92,14 +94,19 @@ public class CollisionComputer
 				AABB tile = new AABB(c.add(aabbo), c.add(aabbo).add(cell.getAABBDimensions()));
 				if (cell.collides(motion) && aabb.overlaps(tile))
 				{
-					return cell;
+					return new CellCollision(new Point(x, y), cell);
 				}
 			}
 		}
 
-		return Cell.EMPTY;
+		return new CellCollision(new Point(0, 0), Cell.EMPTY);
 	}
 
+	// ParameterNumber: Due to the method being recursive,
+	// some local variables need to be transferred in case
+	// of the end case being reached.
+	// Also to avoid having to recompute values.
+	@SuppressWarnings("checkstyle:parameternumber")
 	/**
 	 * Sweep from start until steps until you get a collision.
 	 * @param start Starting position of the sweep.
@@ -109,50 +116,114 @@ public class CollisionComputer
 	 * @param level Recursion loop cap.
 	 * @return Collision after sweep
 	 */
-	private Collision sweep(Mover mover, Point start,
-							Point delta, Point widthHeight, Point motion, int steps, int level)
+	private Collision sweep(Mover mover, Point start, Point lastCell,
+							Point delta, Point widthHeight, Point motion, int steps,
+							int level)
 	{
+		Point lastCollision = start.add(delta.multiply(steps));
 		if(level >= MAX_DEPTH)
 		{
-			return new Collision(start, true);
+			return new Collision(start, lastCollision, true, lastCell);
 		}
 		Point found = start;
 		for(int i = 0; i <= steps; i++)
 		{
 			Point current = found.add(delta);
-			Cell cell = checkLevelAABB(new AABB(current, current.add(widthHeight)), motion);
-			if(cell != Cell.EMPTY)
+			CellCollision cell =
+					checkLevelAABB(new AABB(current, current.add(widthHeight)), motion);
+			if(cell.getType() != Cell.EMPTY)
 			{
-				if(cell == Cell.WALL)
+				if(cell.getType() == Cell.WALL)
 				{
 					mover.onWallCollision();
 				}
-				return sweep(
-						mover, found, delta.divide(steps), widthHeight, motion, steps, level + 1);
+				Collision c = sweep(mover, found, cell.getLocation(),
+						delta.divide(steps), widthHeight, motion, steps, level + 1);
+				return c;
 			}
 
 			found = current;
 		}
-		return new Collision(found, level != 0);
+		return new Collision(found, lastCollision, level != 0, lastCell);
+	}
+
+	/**
+	 * Compute the new motion.
+	 * @param position Position during the collision
+	 * @param motion Motion during the collision
+	 * @param cell Cell you collided with.
+	 * @return The new motion.
+	 */
+	// 45 degree angles are not that magical.
+	@SuppressWarnings("checkstyle:magicnumber")
+	private Point computeNewMotion(Point position, Point motion, Point cell)
+	{
+		// Compute the angle of the collision.
+		double diffangle = Math.abs(position.subtract(cell).angle());
+		if(Math.PI / 4 < diffangle && diffangle < Math.PI / 4 * 3)
+		{
+			return new Point(motion.getX(), 0);
+		}
+		else
+		{
+			return new Point(0, motion.getY());
+		}
+	}
+
+	/**
+	 * Find the next position of the given mover.
+	 * @param mover The mover to find the next position for.
+	 * @return The next position of the given mover.
+	 */
+	public Point findNextPosition(Mover mover)
+	{
+		double part = 1d;
+		Point location = mover.getLocation();
+		Point motion = mover.getMotion().divide(GameConstants.TICKS_PER_SEC);
+		while(part > 0 && !motion.equals(ZERO))
+		{
+			Collision collision = findWithMotion(mover, location, motion, part);
+			// Compute new part.
+			double partused = collision.getPoint().subtract(location).length()
+					/ mover.getMotion().length();
+			part -= partused;
+			location = collision.getPoint();
+			// Change motion on collision.
+			if(collision.isCollided())
+			{
+				motion = computeNewMotion(collision.getCurrent(),
+						motion, collision.getCell());
+			}
+			else
+			{
+				// No collision occurred. Collision value should be fine.
+				// However, due to bounds check the unit may have gotten warped.
+				break;
+			}
+		}
+		return location;
 	}
 
 	/**
 	 * Find the next position for the given mover.
 	 * @param mover Mover to get next position for.
+	 * @param start The starting point.
+	 * @param motion The motion.
+	 * @param part The percentage of motion of this unit left in this tick.
 	 * @return The next position of a given mover.
 	 */
-	public Collision findNextPosition(Mover mover)
+	public Collision findWithMotion(Mover mover, Point start, Point motion, double part)
 	{
 		Point wh = mover.getAABBDimensions();
-		int steps = getSteps(mover, wh);
+		int steps = getSteps(mover, part, wh);
 
 		if(steps == 0)
 		{
-			return new Collision(mover.getLocation(), false);
+			return new Collision(start, motion, false, null);
 		}
-		Point delta = mover.getMotion().divide(steps).divide(GameConstants.TICKS_PER_SEC);
+		Point delta = motion.multiply(part).divide(steps);
 
-		Collision collision = sweep(mover, mover.getLocation(), delta, mover.getAABBDimensions(),
+		Collision collision = sweep(mover, start, null, delta, mover.getAABBDimensions(),
 				mover.getMotion(), steps, 0);
 
 		double newXLocation
@@ -163,7 +234,8 @@ public class CollisionComputer
 		Point newLocation = new Point(newXLocation, newYLocation);
 
 		newLocation = checkLevelBounds(mover, newLocation);
-		return new Collision(newLocation, collision.isCollided());
+		return new Collision(newLocation, collision.getCurrent(), collision.isCollided(),
+				collision.getCell());
 	}
 
 	/**
@@ -172,17 +244,17 @@ public class CollisionComputer
 	 * @param wh Width and height of movers AABB.
 	 * @return amount of steps.
 	 */
-	private int getSteps(Mover mover, Point wh)
+	private int getSteps(Mover mover, double delta, Point wh)
 	{
-		double stepsX = Math.abs(mover.getMotion().getX()) / wh.getX();
-		double stepsY = Math.abs(mover.getMotion().getY()) / wh.getY();
+		double stepsX = Math.abs(mover.getMotion().getX() * delta) / wh.getX();
+		double stepsY = Math.abs(mover.getMotion().getY() * delta) / wh.getY();
 
 		return (int) Math.ceil(Math.max(stepsX, stepsY) * SAMPLING);
 	}
 
 	// 8 is the max recusion depth.
 	@SuppressWarnings("checkstyle:magicnumber")
-	private static final int MAX_DEPTH = 8;
+	private static final int MAX_DEPTH = 3;
 
 	/**
 	 * Checks whether the the mover is outside the bounds
@@ -220,6 +292,45 @@ public class CollisionComputer
         }
 
 		return new Point(newXLocation, newYLocation);
+	}
+
+}
+
+/**
+ * A collision with a cell.
+ */
+class CellCollision
+{
+	private final Point location;
+	private final Cell type;
+
+	/**
+	 * Construct a CellCollision.
+	 * @param location Cell location.
+	 * @param type Cell type.
+	 */
+	public CellCollision(Point location, Cell type)
+	{
+		this.location = location;
+		this.type = type;
+	}
+
+	/**
+	 * Get the location of the cell that caused a collision.
+	 * @return The cells' location.
+	 */
+	public Point getLocation()
+	{
+		return location;
+	}
+
+	/**
+	 * Get the type of the cell that caused a collision.
+	 * @return The cells' type.
+	 */
+	public Cell getType()
+	{
+		return type;
 	}
 
 }

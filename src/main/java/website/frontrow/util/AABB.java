@@ -76,4 +76,13 @@ public class AABB
                 &&
                 this.getYRange().overlaps(other.getYRange());
     }
+
+    /**
+     * Get the center of the AABB.
+     * @return The center of the AABB.
+     */
+    public Point center()
+    {
+        return start.add(end).divide(2);
+    }
 }

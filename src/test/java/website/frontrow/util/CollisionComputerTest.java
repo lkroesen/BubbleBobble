@@ -44,7 +44,7 @@ public class CollisionComputerTest
         CollisionComputer handler = new CollisionComputer(check);
         assertEquals(Cell.EMPTY, handler.checkLevelAABB(
                 new AABB(new Point(1, 1), new Point(2, 2)), new Point(0, 0)
-        ));
+        ).getType());
     }
 
     /**
@@ -60,7 +60,7 @@ public class CollisionComputerTest
         CollisionComputer handler = new CollisionComputer(check);
         assertNotEquals(Cell.EMPTY, handler.checkLevelAABB(
                 new AABB(new Point(1.5, 1.5), new Point(2.5, 2.5)), new Point(0, 0)
-        ));
+        ).getType());
     }
 
     /**
@@ -76,7 +76,7 @@ public class CollisionComputerTest
         CollisionComputer handler = new CollisionComputer(check);
         assertEquals(Cell.EMPTY, handler.checkLevelAABB(
                 new AABB(new Point(1, 1), new Point(2, 2)), new Point(0, -1)
-        ));
+        ).getType());
     }
 
     /**
@@ -93,7 +93,7 @@ public class CollisionComputerTest
         CollisionComputer handler = new CollisionComputer(check);
         assertNotEquals(Cell.EMPTY, handler.checkLevelAABB(
                 new AABB(new Point(1, 1.1), new Point(2, 2.1)), new Point(0, 1)
-        ));
+        ).getType());
     }
 
     /**
@@ -109,9 +109,7 @@ public class CollisionComputerTest
         CollisionComputer handler = new CollisionComputer(check);
         Player player = new Player(new Point(1, 1), null);
         player.setMotion(new Point(1, GameConstants.TICKS_PER_SEC));
-        Collision c = handler.findNextPosition(player);
-        assertEquals(new Point(1, 1), c.getPoint());
-        assertTrue(c.isCollided());
+        assertEquals(new Point(1, 1), handler.findNextPosition(player));
     }
 
     /**
@@ -128,9 +126,8 @@ public class CollisionComputerTest
         CollisionComputer handler = new CollisionComputer(check);
         Player player = new Player(new Point(1, 1), null);
         player.setMotion(new Point(0, 3 * GameConstants.TICKS_PER_SEC));
-        Collision c = handler.findNextPosition(player);
-        assertEquals(new Point(1, 2), c.getPoint());
-        assertTrue(c.isCollided());
+        Point c = handler.findNextPosition(player);
+        assertEquals(new Point(1, 2), c);
     }
 
     /**

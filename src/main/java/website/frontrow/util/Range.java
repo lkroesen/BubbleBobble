@@ -19,10 +19,11 @@ public class Range
      * Create a range going from start to end.
      * Start is always the minimum.
      * End always the maximum.
-     *
+     * <p>
      * As such,
      * if x <= y, then start is x and end is y.
      * else (x > y), then start is y and end is x.
+     *
      * @param x Starting value.
      * @param y Ending value.
      */
@@ -34,8 +35,9 @@ public class Range
 
     /**
      * Get the starting value of this range.
-     *
+     * <p>
      * getStart always returns a value lower or equal to getEnd.
+     *
      * @return The starting value.
      */
     public double getStart()
@@ -45,8 +47,9 @@ public class Range
 
     /**
      * Get the ending value of this range.
-     *
+     * <p>
      * getEnd always returns a value higher or equal to getStart.
+     *
      * @return The ending value.
      */
     public double getEnd()
@@ -56,6 +59,7 @@ public class Range
 
     /**
      * Get the length of this range.
+     *
      * @return The length of this range.
      */
     public double length()
@@ -65,11 +69,23 @@ public class Range
 
     /**
      * Checks whether two ranges overlap.
+     *
      * @param other The range to check against.
      * @return Whether the two ranges overlap.
      */
     public boolean overlaps(Range other)
     {
         return this.getStart() <= other.getEnd() && other.getStart() <= this.getEnd();
+    }
+
+    /**
+     * Checks whether a double is inside the range.
+     *
+     * @param number Double to check in range.
+     * @return Whether the double is inside.
+     */
+    public boolean in(double number)
+    {
+        return start <= number && number <= end;
     }
 }
