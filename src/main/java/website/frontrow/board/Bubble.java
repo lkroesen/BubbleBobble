@@ -26,6 +26,8 @@ public class Bubble
     private Enemy contains;
 
     private long timeContained = 0;
+    
+    private long timeEmpty = 0;
 
     /**
      * Did this bubble hit something?
