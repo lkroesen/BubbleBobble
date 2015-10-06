@@ -106,9 +106,9 @@ public class BubbleTest
     	
     	ArrayList<Player> playerList = new ArrayList<Player>();
     	ArrayList<Unit> unitList = new ArrayList<Unit>();
-    	List<Object> items = new ArrayList<Object>();
+    	List<Cell> items = new ArrayList<Cell>();
     	items.add(Cell.EMPTY);
-    	Grid<Cell> cells = new Grid(items, 1, 1);
+    	Grid<Cell> cells = new Grid<Cell>(items, 1, 1);
     	Level level = new Level(playerList, unitList, cells);
     	
     	final int TIME_FLOAT_UPWARDS = 50;
@@ -130,13 +130,12 @@ public class BubbleTest
     	
     	ArrayList<Player> playerList = new ArrayList<Player>();
     	ArrayList<Unit> unitList = new ArrayList<Unit>();
-    	List<Object> items = new ArrayList<Object>();
+    	List<Cell> items = new ArrayList<Cell>();
     	items.add(Cell.EMPTY);
-    	Grid<Cell> cells = new Grid(items, 1, 1);
+    	Grid<Cell> cells = new Grid<Cell>(items, 1, 1);
     	Level level = new Level(playerList, unitList, cells);
     	
     	final int TIME_ALMOST_KILL = 498;
-    	final Point FLOAT_UP_MOTION = new Point(0, -2);
     	
     	assertTrue(bubble.isAlive());
     	
@@ -160,9 +159,9 @@ public class BubbleTest
     	
     	ArrayList<Player> playerList = new ArrayList<Player>();
     	ArrayList<Unit> unitList = new ArrayList<Unit>();
-    	List<Object> items = new ArrayList<Object>();
+    	List<Cell> items = new ArrayList<Cell>();
     	items.add(Cell.EMPTY);
-    	Grid<Cell> cells = new Grid(items, 1, 1);
+    	Grid<Cell> cells = new Grid<Cell>(items, 1, 1);
     	Level level = new Level(playerList, unitList, cells);
     	
     	final int TIME_FLOAT_UPWARDS = 50;

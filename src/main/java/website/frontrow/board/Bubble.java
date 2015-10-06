@@ -175,11 +175,19 @@ public class Bubble
         Log.add(action);
     }
     
+    /**
+     * Getter for timeEmpty.
+     * @return timeEmpty long
+     */
     public long getTimeEmpty()
     {
     	return timeEmpty;
     }
     
+    /**
+     * Setter for timeEmpty.
+     * @param time long
+     */
     public void setTimeEmpty(long time)
     {
     	timeEmpty = time;
