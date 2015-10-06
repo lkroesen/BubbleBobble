@@ -65,14 +65,15 @@ public class Bubble
      */
     public void capture(Enemy other)
     {
-        addToLog("[BUBBLE]\t" + other.toString() + " captured by bubble.");
+		addToLog("[BUBBLE]\t" + other.toString() + " captured by bubble.");
 
-        this.contains = other;
+		this.contains = other;
 
-        this.hit();
-        // Kill the enemy for good measure.
-        // (Do not forget to revive and re-add to the level when he escapes.)
-        other.kill();
+		this.hit();
+		// Kill the enemy for good measure.
+		// (Do not forget to revive and re-add to the level when he
+		// escapes.)
+		other.kill();
     }
 
     @Override
@@ -87,6 +88,7 @@ public class Bubble
         	if(timeEmpty >= TIME_FLOAT_UPWARDS)
         	{
         		this.hit();
+        		addToLog("[BUBBLE]\t is empty and floating upwards");
         	}
         }
         
@@ -97,6 +99,7 @@ public class Bubble
         	if(timeEmpty >= TIME_KILL)
         	{
         		this.kill();
+        		addToLog("[BUBBLE]\t was empty and popped");
         	}
         }
         
