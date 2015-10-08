@@ -149,6 +149,10 @@ public abstract class Mover
         }
     }
 
+    /**
+     * Redirects a collision to the proper method.
+     * @param type Cell type that was collided with.
+     */
     public void onCollision(Cell type)
     {
         if(type == Cell.WALL)

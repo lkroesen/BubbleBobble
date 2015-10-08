@@ -2,7 +2,6 @@ package website.frontrow.util;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Queue;
 
 import website.frontrow.board.Unit;
 import website.frontrow.board.Mover;
@@ -167,6 +166,10 @@ public class CollisionComputer
 		}
 	}
 
+	// Special cap to avoid edge case infinite loops.
+	@SuppressWarnings("checkstyle:magicnumber")
+	private static final int CAP = 15;
+
 	/**
 	 * Find the next position of the given mover.
 	 * @param mover The mover to find the next position for.
@@ -181,8 +184,8 @@ public class CollisionComputer
 		LinkedList<Cell> cells = new LinkedList<>();
 		// In some cases, the computation of the new motion vector is incorrect
 		// (and may need tweaking) This is to avoid infinite loops in this edgecase.
-		int edgecase = 15;
-		while(part > 0 && !motion.equals(ZERO) && edgecase-->0)
+		int edgecase = CAP;
+		while(part > 0 && !motion.equals(ZERO) && edgecase-- > 0)
 		{
 			Collision collision = findWithMotion(mover, location, motion, part);
 			// Compute new part.
@@ -197,7 +200,8 @@ public class CollisionComputer
 				motion = computeNewMotion(collision.getCurrent(),
 						motion, collision.getCell());
 				Point cellPosition = collision.getCell();
-				cells.add(level.getCells().get((int) cellPosition.getX(), (int) cellPosition.getY()));
+				cells.add(level.getCells().get(
+						(int) cellPosition.getX(), (int) cellPosition.getY()));
 			}
 			else
 			{
@@ -207,7 +211,8 @@ public class CollisionComputer
 			}
 		}
 
-		return new CollisionSummary(location, motion.multiply(GameConstants.TICKS_PER_SEC), collided, cells);
+		return new CollisionSummary(location,
+				motion.multiply(GameConstants.TICKS_PER_SEC), collided, cells);
 	}
 
 	/**
@@ -315,7 +320,7 @@ class CellCollision
 	 * @param location Cell location.
 	 * @param type Cell type.
 	 */
-	public CellCollision(Point location, Cell type)
+	CellCollision(Point location, Cell type)
 	{
 		this.location = location;
 		this.type = type;
