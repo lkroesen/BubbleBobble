@@ -126,7 +126,7 @@ public class CollisionComputerTest
         CollisionComputer handler = new CollisionComputer(check);
         Player player = new Player(new Point(1, 1), null);
         player.setMotion(new Point(0, 3 * GameConstants.TICKS_PER_SEC));
-        Point c = handler.findNextPosition(player);
+        Point c = handler.findNextPosition(player).getLocation();
         assertEquals(new Point(1, 2), c);
     }
 

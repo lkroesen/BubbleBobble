@@ -1,5 +1,6 @@
 package website.frontrow.board;
 
+import website.frontrow.level.Cell;
 import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
@@ -7,6 +8,7 @@ import website.frontrow.sprite.Sprite;
 import website.frontrow.util.CollisionComputer;
 import website.frontrow.artificial.intelligence.ArtificialIntelligence;
 import website.frontrow.game.GameConstants;
+import website.frontrow.util.CollisionSummary;
 import website.frontrow.util.Point;
 
 import java.util.Map;
@@ -147,6 +149,14 @@ public abstract class Mover
         }
     }
 
+    public void onCollision(Cell type)
+    {
+        if(type == Cell.WALL)
+        {
+            onWallCollision();
+        }
+    }
+
     /**
      * Called when this unit collides with a wall.
      */
@@ -173,9 +183,14 @@ public abstract class Mover
         this.handler = level.getCollisionComputer();
         this.handler.checkUnitsAABB(this, level.getCollisionHandler());
 
-        this.location = handler.findNextPosition(this);
+        CollisionSummary collision = handler.findNextPosition(this);
+        this.location = collision.getLocation();
+        this.setMotion(collision.getMotion());
+
+        collision.runCollisionEvents(this);
 
         applyGravity();
+
         
         ArtificialIntelligence artificialintelligence = new ArtificialIntelligence(level);
         artificialintelligence.aiMover();
@@ -187,6 +202,12 @@ public abstract class Mover
     protected void applyGravity()
     {
         this.motion.setY(this.motion.getY() - GameConstants.GRAVITY);
+
+        CollisionSummary collision = handler.findNextPosition(this);
+        if(collision.isCollided())
+        {
+            this.motion = new Point(0, 0);
+        }
     }
 
     @Override

@@ -1,6 +1,8 @@
 package website.frontrow.util;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import website.frontrow.board.Unit;
 import website.frontrow.board.Mover;
@@ -133,13 +135,8 @@ public class CollisionComputer
 					checkLevelAABB(new AABB(current, current.add(widthHeight)), motion);
 			if(cell.getType() != Cell.EMPTY)
 			{
-				if(cell.getType() == Cell.WALL)
-				{
-					mover.onWallCollision();
-				}
-				Collision c = sweep(mover, found, cell.getLocation(),
+				return sweep(mover, found, cell.getLocation(),
 						delta.divide(steps), widthHeight, motion, steps, level + 1);
-				return c;
 			}
 
 			found = current;
@@ -175,12 +172,17 @@ public class CollisionComputer
 	 * @param mover The mover to find the next position for.
 	 * @return The next position of the given mover.
 	 */
-	public Point findNextPosition(Mover mover)
+	public CollisionSummary findNextPosition(Mover mover)
 	{
 		double part = 1d;
 		Point location = mover.getLocation();
 		Point motion = mover.getMotion().divide(GameConstants.TICKS_PER_SEC);
-		while(part > 0 && !motion.equals(ZERO))
+		Boolean collided = false;
+		LinkedList<Cell> cells = new LinkedList<>();
+		// In some cases, the computation of the new motion vector is incorrect
+		// (and may need tweaking) This is to avoid infinite loops in this edgecase.
+		int edgecase = 15;
+		while(part > 0 && !motion.equals(ZERO) && edgecase-->0)
 		{
 			Collision collision = findWithMotion(mover, location, motion, part);
 			// Compute new part.
@@ -191,8 +193,11 @@ public class CollisionComputer
 			// Change motion on collision.
 			if(collision.isCollided())
 			{
+				collided = true;
 				motion = computeNewMotion(collision.getCurrent(),
 						motion, collision.getCell());
+				Point cellPosition = collision.getCell();
+				cells.add(level.getCells().get((int) cellPosition.getX(), (int) cellPosition.getY()));
 			}
 			else
 			{
@@ -201,7 +206,8 @@ public class CollisionComputer
 				break;
 			}
 		}
-		return location;
+
+		return new CollisionSummary(location, motion.multiply(GameConstants.TICKS_PER_SEC), collided, cells);
 	}
 
 	/**
