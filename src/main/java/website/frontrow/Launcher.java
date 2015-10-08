@@ -7,20 +7,22 @@ import website.frontrow.level.Level;
 import website.frontrow.level.MapParser;
 import website.frontrow.logger.DumpLog;
 import website.frontrow.logger.Log;
+import website.frontrow.music.Songs;
 import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.ui.Action;
 import website.frontrow.ui.JBubbleBobbleUI;
 import website.frontrow.game.GameConstants;
 import website.frontrow.util.FileNameCollector;
-import website.frontrow.util.MusicPlayer;
 import website.frontrow.util.Point;
 import website.frontrow.logger.Logable;
+import website.frontrow.music.MusicPlayer;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -33,35 +35,34 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings("checkstyle:magicnumber")
 public class Launcher implements Logable
 {
-    private MusicPlayer musicPlayer;
-
     /**
      * Construct a launcher, currently not doing anything.
      */
     public Launcher()
     {
-        musicPlayer = new MusicPlayer();
     }
 
     /**
      * The starting point of the program.
      * @param args The arguments of the program. Currently no parameters are used.
+     * @throws IOException Some files might not be found.
      */
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
-        // Initialize the Logger Class, so that it can Log actions taken.
-        new Log();
         Log.togglePrinting();
+
+        MusicPlayer.getInstance().init();
+        MusicPlayer.getInstance().selectSong(Songs.TITLE_SCREEN);
 
         try
         {
-            new Launcher().start(new FileNameCollector().obtain("/level/"));
+            new Launcher().start(new FileNameCollector().obtain("level/"));
         }
-        catch (URISyntaxException exception)
+        catch (URISyntaxException e)
         {
-            Log.add("[LAUNCHER]\t[ERROR]\tLauncher couldn't start due to FileNameCollector.");
-            exception.printStackTrace();
+            e.printStackTrace();
         }
+
     }
 
     /**
@@ -71,11 +72,11 @@ public class Launcher implements Logable
     @SuppressWarnings("methodlength") // We need to make a GameFactory and UIBuilder
     public void start(String[] filename)
     {
-        addToLog("[LAUNCHER]\tLoading file: " + filename.toString() + ".");
+        addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + ".");
 
         try
         {
-            addToLog("[LAUNCHER]\tLoading file: " + filename.toString() + " succeeded.");
+
 
             MapParser mp = new MapParser();
             ArrayList<Level> levelList = new ArrayList<>();
@@ -102,11 +103,11 @@ public class Launcher implements Logable
 
             ui.start();
             startScheduler(game);
-
+            addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + " succeeded.");
         }
         catch (IOException e)
         {
-            addToLog("[ERROR]\tLoading file: " + filename + " failed.");
+            addToLog("[ERROR]\tLoading file: " + Arrays.toString(filename) + " failed.");
             new DumpLog();
             throw new RuntimeException();
         }
@@ -169,155 +170,29 @@ public class Launcher implements Logable
             map.put(KeyEvent.VK_Z, () ->
             {
                 addToLog("[KEY]\t< \'Z\' > Pressed.");
-                JBubbleBobbleSprites spriteStore = new JBubbleBobbleSprites();
+
                 if(game.isRunning())
                 {
                     Player p = game.getPlayers().get(0);
                     game.getLevel().addUnit(
                             new Bubble(p.getLocation(),
                                     new Point(p.getDirection().getDeltaX() * 4, 0),
-                                    spriteStore.getBubbleSprite()));
+                                    JBubbleBobbleSprites.getInstance().getBubbleSprite()));
                 }
             });
         }
-
-        // Keys 1-0 & -, =, SOUND CONTROL
-        map.put(KeyEvent.VK_1, () ->
-        {
-            addToLog("[KEY]\t< \'1\' > Pressed.");
-            if (game.isRunning())
-            {
-                musicPlayer.playSelection(0);
-            }
-        });
-
-        map.put(KeyEvent.VK_2, () ->
-        {
-            addToLog("[KEY]\t< \'2\' > Pressed.");
-            if (game.isRunning())
-            {
-                musicPlayer.playSelection(1);
-            }
-        });
-
-        map.put(KeyEvent.VK_3, () ->
-        {
-            addToLog("[KEY]\t< \'3\' > Pressed.");
-            if (game.isRunning())
-            {
-                musicPlayer.playSelection(2);
-            }
-        });
-
-        map.put(KeyEvent.VK_4, () ->
-        {
-            addToLog("[KEY]\t< \'4\' > Pressed.");
-            if (game.isRunning())
-            {
-                musicPlayer.playSelection(3);
-            }
-        });
-
-        map.put(KeyEvent.VK_5, () ->
-        {
-            addToLog("[KEY]\t< \'5\' > Pressed.");
-            if (game.isRunning())
-            {
-                musicPlayer.playSelection(4);
-            }
-        });
-
-        map.put(KeyEvent.VK_6, () ->
-        {
-            addToLog("[KEY]\t< \'6\' > Pressed.");
-            if (game.isRunning())
-            {
-                musicPlayer.playSelection(5);
-            }
-        });
-
-        map.put(KeyEvent.VK_7, () ->
-        {
-            addToLog("[KEY]\t< \'7\' > Pressed.");
-            if (game.isRunning())
-            {
-                musicPlayer.playSelection(6);
-            }
-        });
-
-        map.put(KeyEvent.VK_8, () ->
-        {
-            addToLog("[KEY]\t< \'8\' > Pressed.");
-            if (game.isRunning())
-            {
-                musicPlayer.playSelection(7);
-            }
-        });
-
-        map.put(KeyEvent.VK_9, () ->
-        {
-            addToLog("[KEY]\t< \'9\' > Pressed.");
-            if (game.isRunning())
-            {
-                musicPlayer.playSelection(8);
-            }
-        });
-
-        map.put(KeyEvent.VK_0, () ->
-        {
-            addToLog("[KEY]\t< \'0\' > Pressed.");
-            if (game.isRunning())
-            {
-                musicPlayer.playSelection(9);
-            }
-        });
-
-        map.put(KeyEvent.VK_OPEN_BRACKET, () ->
-        {
-            addToLog("[KEY]\t< \'[\' > Pressed.");
-            if (game.isRunning())
-            {
-                musicPlayer.playSelection(10);
-            }
-        });
-
-        map.put(KeyEvent.VK_CLOSE_BRACKET, () ->
-        {
-            addToLog("[KEY]\t< \']\' > Pressed.");
-            if (game.isRunning())
-            {
-                musicPlayer.playSelection(11);
-            }
-        });
 
         // Volume Control
         map.put(KeyEvent.VK_MINUS, () ->
         {
             addToLog("[KEY]\t< \'-\' > Pressed.");
-
-            if (game.isRunning())
-            {
-                musicPlayer.volumeAdjust(-0.1f);
-            }
+            MusicPlayer.getInstance().volumeAdjust(-1.0d);
         });
 
         map.put(KeyEvent.VK_EQUALS, () ->
         {
             addToLog("[KEY]\t< \'=\' > Pressed.");
-            if (game.isRunning())
-            {
-                musicPlayer.volumeAdjust(0.1f);
-            }
-        });
-
-        // Restart Sound
-        map.put(KeyEvent.VK_BACK_SPACE, () ->
-        {
-            addToLog("[KEY]\t< \'BACK_SPACE\' > Pressed.");
-            if (game.isRunning())
-            {
-                musicPlayer.stopSound();
-            }
+            MusicPlayer.getInstance().volumeAdjust(1.0d);
         });
 
         // Create a DumpLog

@@ -1,9 +1,11 @@
 package website.frontrow.board;
 
+import website.frontrow.board.behaviour.BubbleGravityBehaviour;
 import website.frontrow.game.GameConstants;
 import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
+import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.sprite.Sprite;
 import website.frontrow.util.Point;
 
@@ -45,7 +47,7 @@ public class Bubble
      */
     public Bubble(Point position, Point motion, Map<Direction, Sprite> sprites)
     {
-        super(true, position, motion, sprites);
+        super(true, position, motion, sprites, BubbleGravityBehaviour.getInstance());
         addToLog("[BUBBLE]\t[SPAWN]\tBubble created.");
     }
 
@@ -65,9 +67,8 @@ public class Bubble
      */
     public void capture(Enemy other)
     {
-		addToLog("[BUBBLE]\t" + other.toString() + " captured by bubble.");
-
-		this.contains = other;
+        addToLog("[BUBBLE]\t" + other.toString() + " captured by bubble.");
+        this.contains = other;
 
 		this.hit();
 		// Kill the enemy for good measure.
@@ -125,16 +126,27 @@ public class Bubble
     }
 
     @Override
+    public Sprite getSprite()
+    {
+        if (contains != null)
+        {
+            return JBubbleBobbleSprites.getInstance().getCapturedEnemySprite().get(getDirection());
+        }
+        else if (hit)
+        {
+            return JBubbleBobbleSprites.getInstance().getBubbleSprite().get(Direction.UP);
+        }
+        else
+        {
+            return JBubbleBobbleSprites.getInstance().getBubbleSprite().get(getDirection());
+        }
+    }
+
+    @Override
     public void onWallCollision()
     {
         addToLog("[BUBBLE]\tHit wall.");
         this.hit();
-    }
-
-    @Override
-    public void applyGravity()
-    {
-        // Ignore gravity.
     }
     
     /**

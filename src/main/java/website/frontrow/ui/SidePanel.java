@@ -3,6 +3,8 @@ package website.frontrow.ui;
 import website.frontrow.game.Game;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
+import website.frontrow.music.MusicPlayer;
+import website.frontrow.music.Songs;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -20,6 +22,8 @@ public class SidePanel
      * Creates a sidepanel to contain the score, buttons and other statistics.
      * @param game The game to display the statistics of.
      */
+    @SuppressWarnings("checkstyle:methodlength")
+    /* The music caused this method to be longer. */
     public SidePanel(Game game)
     {
         super();
@@ -34,10 +38,14 @@ public class SidePanel
             if(game.isRunning())
             {
                 game.stop();
+                MusicPlayer.getInstance().stop();
             }
             else
             {
                 game.start();
+
+                MusicPlayer.getInstance().setLooping(true);
+                MusicPlayer.getInstance().selectSong(Songs.QUEST_BEGINS);
             }
         });
 

@@ -1,10 +1,11 @@
 package website.frontrow.board;
 
+import website.frontrow.board.behaviour.DefaultGravityBehaviour;
+import website.frontrow.board.behaviour.GravityBehaviour;
 import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.sprite.Sprite;
-import website.frontrow.util.Collision;
 import website.frontrow.util.CollisionComputer;
 import website.frontrow.artificial.intelligence.ArtificialIntelligence;
 import website.frontrow.game.GameConstants;
@@ -37,16 +38,16 @@ public abstract class Mover
     private Point newMotion = new Point(0, 0);
 
     /**
-     * The collision handler to handle the collisions.
-     */
-    private CollisionComputer handler;
-
-    /**
      * The sprites for each direction.
      */
     private Map<Direction, Sprite> sprites;
 
     private Direction previousDirection = Direction.RIGHT;
+
+    /**
+     * The gravity behaviour for this mover.
+     */
+    private GravityBehaviour gravity;
 
     /**
      * Creates a mover.
@@ -57,9 +58,24 @@ public abstract class Mover
      */
     public Mover(boolean alive, Point location, Point motion, Map<Direction, Sprite> sprites)
     {
+        this(alive, location, motion, sprites, DefaultGravityBehaviour.getInstance());
+    }
+
+    /**
+     * Creates a mover with the specified gravity behaviour.
+     * @param alive Whether the mover is alive.
+     * @param location The current location of the mover.
+     * @param motion The current motion of the mover.
+     * @param sprites The sprites for this mover.
+     * @param gravity The gravity behaviour for this mover.
+     */
+    public Mover(boolean alive, Point location, Point motion, Map<Direction, Sprite> sprites,
+                 GravityBehaviour gravity)
+    {
         super(alive, location);
         this.motion = motion;
         this.sprites = sprites;
+        this.gravity = gravity;
     }
 
     /**
@@ -167,29 +183,15 @@ public abstract class Mover
     		Math.max(Math.min(x, GameConstants.MAX_X_SPEED),
     			-GameConstants.MAX_X_SPEED) * this.getSpeedMultiplier());
 
-        this.handler = level.getCollisionComputer();
-        this.handler.checkUnitsAABB(this, level.getCollisionHandler());
+        CollisionComputer handler = level.getCollisionComputer();
+        handler.checkUnitsAABB(this, level.getCollisionHandler());
 
         this.location = handler.findNextPosition(this).getPoint();
 
-        applyGravity();
+        this.gravity.apply(this, handler);
         
         ArtificialIntelligence artificialintelligence = new ArtificialIntelligence(level);
         artificialintelligence.aiMover();
-    }
-
-    /**
-     * Applies the gravity to the unit.
-     */
-    protected void applyGravity()
-    {
-        this.motion.setY(this.motion.getY() - GameConstants.GRAVITY);
-
-        Collision c = this.handler.findNextPosition(this);
-        if(c.isCollided())
-        {
-            this.motion.setY(0);
-        }
     }
 
     @Override

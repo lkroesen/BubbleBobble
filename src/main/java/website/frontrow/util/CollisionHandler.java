@@ -76,6 +76,11 @@ public class CollisionHandler
             bubble.setLocation(other.getLocation());
             bubble.capture((Enemy) other);
         }
+
+        if(other instanceof Bubble && !(bubble.getContains() != null) && bubble.isHit())
+        {
+            bubble.kill();
+        }
     }
 
     @Override

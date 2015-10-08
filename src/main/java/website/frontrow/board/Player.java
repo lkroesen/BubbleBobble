@@ -44,7 +44,6 @@ public class Player
     public Player(Point position, Map<Direction, Sprite> sprites)
     {
         super(true, position, new Point(0, 0), sprites);
-        new Log();
         addToLog("[PLAYER]\t[SPAWN]\tPlayer created.");
     }
 

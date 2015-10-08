@@ -21,8 +21,6 @@ import java.util.ArrayList;
 public class MapParser
         implements  Logable
 {
-    private JBubbleBobbleSprites spriteStore = new JBubbleBobbleSprites();
-
     /**
      * Check whether a level formed by these strings would create a validly shaped level.
      * It fails whenever:
@@ -75,7 +73,7 @@ public class MapParser
     {
         addToLog("[MAP PARSER]\tparseMap() called.");
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
         ArrayList<String> lines = new ArrayList<>();
 
         String line;
@@ -137,26 +135,25 @@ public class MapParser
     private void handleCharacter(char character, int x, int y,
                                  ArrayList<Unit> units, ArrayList<Player> players, Grid<Cell> grid)
     {
+        /* X means a Wall, _ is a platform, p is a Player, e is an enemy, and ' ' is empty */
         grid.set(x, y, Cell.EMPTY);
         switch (character)
         {
             case 'X':
-                // A wall
                 grid.set(x, y, Cell.WALL);
                 break;
             case '_':
-                // A platform
                 grid.set(x, y, Cell.PLATFORM);
                 break;
             case 'p':
-                // The player
-                Player player = new Player(new Point(x, y), spriteStore.getPlayerSprite());
+                Player player = new Player(new Point(x, y),
+                        JBubbleBobbleSprites.getInstance().getPlayerSprite());
                 units.add(player);
                 players.add(player);
                 break;
             case 'e':
-                // The enemy.
-                units.add(new Enemy(new Point(x, y), spriteStore.getEnemySprite()));
+                units.add(new Enemy(new Point(x, y),
+                        JBubbleBobbleSprites.getInstance().getEnemySprite()));
                 break;
             case ' ':
                 // Empty area. Keep it empty.
