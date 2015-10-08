@@ -31,7 +31,7 @@ public class EmptySpriteTest
     @Before
     public void setUp()
     {
-        es = new EmptySprite();
+        es = EmptySprite.getInstance();
     }
 
     /**
@@ -78,7 +78,7 @@ public class EmptySpriteTest
     @Test
     public void testSlice()
     {
-        assertEquals(es.slice(0, 0, 10, 10), new EmptySprite());
+        assertEquals(es.slice(0, 0, 10, 10), EmptySprite.getInstance());
     }
 
     /**
@@ -87,7 +87,7 @@ public class EmptySpriteTest
     @Test
     public void testEqualsEqual()
     {
-        assertTrue(es.equals(new EmptySprite()));
+        assertTrue(es.equals(EmptySprite.getInstance()));
     }
 
     /**

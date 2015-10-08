@@ -5,9 +5,24 @@ import java.awt.Graphics;
 /**
  * An empty image sprite, which draws nothing.
  */
-public class EmptySprite
+public final class EmptySprite
     implements Sprite
 {
+    private static final EmptySprite INSTANCE = new EmptySprite();
+
+    /**
+     * Private constructor for Singleton class.
+     */
+    private EmptySprite()
+    {
+
+    }
+
+    public static EmptySprite getInstance()
+    {
+        return INSTANCE;
+    }
+
     @Override
     public void draw(Graphics graphics, int x, int y, int width, int height)
     {
