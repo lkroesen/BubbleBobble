@@ -58,7 +58,7 @@ public abstract class Mover
      */
     public Mover(boolean alive, Point location, Point motion, Map<Direction, Sprite> sprites)
     {
-        this(alive, location, motion, sprites, new DefaultGravityBehaviour());
+        this(alive, location, motion, sprites, DefaultGravityBehaviour.getInstance());
     }
 
     /**

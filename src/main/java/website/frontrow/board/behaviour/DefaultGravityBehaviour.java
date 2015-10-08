@@ -8,21 +8,40 @@ import website.frontrow.util.CollisionComputer;
 /**
  * The default behaviour for movers affected by gravity.
  */
-public class DefaultGravityBehaviour
+public final class DefaultGravityBehaviour
     implements GravityBehaviour
 {
+
+    private static final DefaultGravityBehaviour INSTANCE = new DefaultGravityBehaviour();
+
+    /**
+     * A private constructor for singleton.
+     */
+    private DefaultGravityBehaviour()
+    {
+
+    }
+
+    /**
+     * Returns the instance.
+     * @return the instance.
+     */
+    public static DefaultGravityBehaviour getInstance()
+    {
+        return INSTANCE;
+    }
 
     /**
      * Provides the default gravity behaviour.
      * @param mover The mover to apply the gravity to.
-     * @param cc The collision computer which has to be used for the calculation.
+     * @param collisionComputer The collision computer which has to be used for the calculation.
      */
-    public void apply(Mover mover, CollisionComputer cc)
+    public void apply(Mover mover, CollisionComputer collisionComputer)
     {
         mover.getMotion().setY(mover.getMotion().getY() - GameConstants.GRAVITY);
 
-        Collision c = cc.findNextPosition(mover);
-        if(c.isCollided())
+        Collision collision = collisionComputer.findNextPosition(mover);
+        if(collision.isCollided())
         {
             mover.getMotion().setY(0.0);
         }

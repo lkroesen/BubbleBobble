@@ -41,7 +41,7 @@ public class Bubble
      */
     public Bubble(Point position, Point motion, Map<Direction, Sprite> sprites)
     {
-        super(true, position, motion, sprites, new BubbleGravityBehaviour());
+        super(true, position, motion, sprites, BubbleGravityBehaviour.getInstance());
         addToLog("[BUBBLE]\t[SPAWN]\tBubble created.");
     }
 

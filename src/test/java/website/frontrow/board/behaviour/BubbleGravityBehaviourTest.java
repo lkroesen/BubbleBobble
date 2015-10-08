@@ -25,7 +25,7 @@ public class BubbleGravityBehaviourTest
         Mover mover = mock(Mover.class);
         CollisionComputer collisionComputer = mock(CollisionComputer.class);
 
-        BubbleGravityBehaviour bubbleGravityBehaviour = new BubbleGravityBehaviour();
+        BubbleGravityBehaviour bubbleGravityBehaviour = BubbleGravityBehaviour.getInstance();
         bubbleGravityBehaviour.apply(mover, collisionComputer);
 
         verifyZeroInteractions(mover);

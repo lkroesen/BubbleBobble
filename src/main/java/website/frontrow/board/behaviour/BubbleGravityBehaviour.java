@@ -6,9 +6,29 @@ import website.frontrow.util.CollisionComputer;
 /**
  * The gravity behaviour for bubbles.
  */
-public class BubbleGravityBehaviour
+public final class BubbleGravityBehaviour
     implements GravityBehaviour
 {
+
+    private static final BubbleGravityBehaviour INSTANCE = new BubbleGravityBehaviour();
+
+    /**
+     * A private constructor for the singleton design pattern.
+     */
+    private BubbleGravityBehaviour()
+    {
+
+    }
+
+    /**
+     * Returns the instance for the behaviour.
+     * @return The behaviour
+     */
+    public static BubbleGravityBehaviour getInstance()
+    {
+        return INSTANCE;
+    }
+
     /**
      * Provides the gravity behaviour for bubbles. As bubbles are not affected by gravity, it just
      * returns the existing motion.

@@ -12,7 +12,7 @@ public interface GravityBehaviour
     /**
      * This method applies gravity to a mover.
      * @param mover The mover to apply the gravity to.
-     * @param cc The collision computer which has to be used for the calculation.
+     * @param collisionComputer The collision computer which has to be used for the calculation.
      */
-    void apply(Mover mover, CollisionComputer cc);
+    void apply(Mover mover, CollisionComputer collisionComputer);
 }

@@ -37,7 +37,7 @@ public class DefaultGravityBehaviourTest
         when(collisionComputer.findNextPosition(mover)).thenReturn(collision);
         when(mover.getMotion()).thenReturn(motion);
 
-        DefaultGravityBehaviour defaultGravityBehaviour = new DefaultGravityBehaviour();
+        DefaultGravityBehaviour defaultGravityBehaviour = DefaultGravityBehaviour.getInstance();
 
         defaultGravityBehaviour.apply(mover, collisionComputer);
         assertEquals(-GameConstants.GRAVITY, motion.getY(), 0.001);
@@ -58,7 +58,7 @@ public class DefaultGravityBehaviourTest
         when(collisionComputer.findNextPosition(mover)).thenReturn(collision);
         when(mover.getMotion()).thenReturn(motion);
 
-        DefaultGravityBehaviour defaultGravityBehaviour = new DefaultGravityBehaviour();
+        DefaultGravityBehaviour defaultGravityBehaviour = DefaultGravityBehaviour.getInstance();
 
         defaultGravityBehaviour.apply(mover, collisionComputer);
         assertEquals(0, motion.getY(), 0.001);
