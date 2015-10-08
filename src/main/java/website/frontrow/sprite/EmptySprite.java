@@ -47,28 +47,6 @@ public final class EmptySprite
         return 0;
     }
 
-    @Override
-    public boolean equals(Object other)
-    {
-        if(!(other instanceof EmptySprite))
-        {
-            return false;
-        }
-
-        EmptySprite otherSprite = (EmptySprite) other;
-        if(otherSprite.getWidth() != getWidth())
-        {
-            return false;
-        }
-
-        if(otherSprite.getHeight() != getHeight())
-        {
-            return false;
-        }
-
-        return true;
-    }
-
     /**
      * The hashcode for this object.
      * @return hashcode.

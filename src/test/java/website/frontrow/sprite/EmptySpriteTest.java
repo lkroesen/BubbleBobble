@@ -98,27 +98,4 @@ public class EmptySpriteTest
     {
         assertFalse(es.equals("Other"));
     }
-
-    /**
-     * Test not equal when width is different.
-     */
-    @Test
-    public void testEqualsDifferentWidth()
-    {
-        EmptySprite sprite = mock(EmptySprite.class);
-        when(sprite.getWidth()).thenReturn(1);
-        assertFalse(es.equals(sprite));
-    }
-
-    /**
-     * Test not equal when the height is different.
-     */
-    @Test
-    public void testEqualsDifferentHeight()
-    {
-        EmptySprite sprite = mock(EmptySprite.class);
-        when(sprite.getWidth()).thenReturn(0);
-        when(sprite.getHeight()).thenReturn(1);
-        assertFalse(es.equals(sprite));
-    }
 }
