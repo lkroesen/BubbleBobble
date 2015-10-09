@@ -31,8 +31,8 @@ public class Bubble
     
     private long timeEmpty = 0;
     
-    private final long TIME_FLOAT_UPWARDS = 50;
-    private final long TIME_KILL = 500;
+    private static final long TIME_FLOAT_UPWARDS = 50;
+    private static final long TIME_KILL = 500;
 
     /**
      * Did this bubble hit something?
@@ -82,28 +82,17 @@ public class Bubble
     {
         super.tick(level);
         
-        if(this.contains == null && hit == false)
+        if(this.contains == null)
         {
-        	timeEmpty++;
-        	
-        	if(timeEmpty >= TIME_FLOAT_UPWARDS)
+        	if(hit == false)
         	{
-        		this.hit();
-        		addToLog("[BUBBLE]\t is empty and floating upwards");
+        		floatUpwards();
         	}
-        }
-        
-        if(this.contains == null && hit == true)
-        {
-        	timeEmpty++;
-        	
-        	if(timeEmpty >= TIME_KILL)
+        	else
         	{
-        		this.kill();
-        		addToLog("[BUBBLE]\t was empty and popped");
+        		killBubble();
         	}
-        }
-        
+        }        
 
         if(this.contains != null)
         {
@@ -203,5 +192,33 @@ public class Bubble
     public void setTimeEmpty(long time)
     {
     	timeEmpty = time;
+    }
+    
+    /**
+     * Makes the bubble float upwards at the right time.
+     */
+    public void floatUpwards()
+    {
+    	timeEmpty++;
+    	
+    	if(timeEmpty >= TIME_FLOAT_UPWARDS)
+    	{
+    		this.hit();
+    		addToLog("[BUBBLE]\t is empty and floating upwards");
+    	}
+    }
+    
+    /**
+     * Kills the bubble at the right time.
+     */
+    public void killBubble()
+    {
+    	timeEmpty++;
+    	
+    	if(timeEmpty >= TIME_KILL)
+    	{
+    		this.kill();
+    		addToLog("[BUBBLE]\t was empty and popped");
+    	}
     }
 }

@@ -24,6 +24,10 @@ import static org.mockito.Mockito.verify;
 public class BubbleTest
         extends MoverTest
 {
+	private static final int TIME_FLOAT_UPWARDS = 50;
+	private static final int TIME_ALMOST_KILL = 499;
+	private static final Point FLOAT_UP_MOTION = new Point(0, -2);
+	
     /**
      * Test the constructor of Bubble.
      */
@@ -99,6 +103,9 @@ public class BubbleTest
         return bubble;
     }
     
+    /**
+     * Tests that the bubble floats upwards at 50 ticks.
+     */
     @Test
     public void testUpwardsFloating()
     {
@@ -111,9 +118,6 @@ public class BubbleTest
     	Grid<Cell> cells = new Grid<Cell>(items, 1, 1);
     	Level level = new Level(playerList, unitList, cells);
     	
-    	final int TIME_FLOAT_UPWARDS = 50;
-    	final Point FLOAT_UP_MOTION = new Point(0, -2);
-    	
     	for(int i = 0; i < TIME_FLOAT_UPWARDS; i++)
     	{
     		bubble.tick(level);
@@ -123,6 +127,9 @@ public class BubbleTest
     	assertEquals(bubble.getMotion(), FLOAT_UP_MOTION);
     }
     
+    /**
+     * Tests that the bubble pops at 500 ticks.
+     */
     @Test
     public void testKillEmpty()
     {
@@ -134,8 +141,6 @@ public class BubbleTest
     	items.add(Cell.EMPTY);
     	Grid<Cell> cells = new Grid<Cell>(items, 1, 1);
     	Level level = new Level(playerList, unitList, cells);
-    	
-    	final int TIME_ALMOST_KILL = 498;
     	
     	assertTrue(bubble.isAlive());
     	
@@ -152,6 +157,10 @@ public class BubbleTest
     	assertFalse(bubble.isAlive());
     }
     
+	/**
+	 * Tests that an upwards floating bubble doesn't interact with an enemy when
+	 * colliding.
+	 */
     @Test
     public void testFloatingUpwardsEnemyCollision()
     {
@@ -163,9 +172,6 @@ public class BubbleTest
     	items.add(Cell.EMPTY);
     	Grid<Cell> cells = new Grid<Cell>(items, 1, 1);
     	Level level = new Level(playerList, unitList, cells);
-    	
-    	final int TIME_FLOAT_UPWARDS = 50;
-    	final Point FLOAT_UP_MOTION = new Point(0, -2);
     	
     	for(int i = 0; i < TIME_FLOAT_UPWARDS; i++)
     	{
