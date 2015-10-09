@@ -32,7 +32,7 @@ public class Bubble
     private long timeEmpty = 0;
     
     private static final long TIME_FLOAT_UPWARDS = 50;
-    private static final long TIME_KILL = 500;
+    private static final long TIME_KILL = 450 + TIME_FLOAT_UPWARDS;
 
     /**
      * Did this bubble hit something?
@@ -84,6 +84,8 @@ public class Bubble
         
         if(this.contains == null)
         {
+        	timeEmpty++;
+        	
         	if(!hit)
         	{
         		floatUpwards();
@@ -198,9 +200,7 @@ public class Bubble
      */
     public void floatUpwards()
     {
-    	timeEmpty++;
-    	
-    	if(timeEmpty >= TIME_FLOAT_UPWARDS)
+        if(timeEmpty >= TIME_FLOAT_UPWARDS)
     	{
     		this.hit();
     		addToLog("[BUBBLE]\t is empty and floating upwards");
@@ -212,8 +212,6 @@ public class Bubble
      */
     public void killBubble()
     {
-    	timeEmpty++;
-    	
     	if(timeEmpty >= TIME_KILL)
     	{
     		this.kill();
