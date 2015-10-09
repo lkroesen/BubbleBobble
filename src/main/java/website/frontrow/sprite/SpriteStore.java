@@ -32,6 +32,7 @@ public class SpriteStore
 			sprite = loadSpriteFromResource(resource);
 			spriteMap.put(resource, sprite);
 		}
+
 		return sprite;
 	}
 

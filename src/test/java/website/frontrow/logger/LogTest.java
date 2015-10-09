@@ -102,18 +102,4 @@ public class LogTest
         Log.setCounter(oldCounter);
         assertEquals(Log.getCounter(), (long) oldCounter);
     }
-
-    /**
-     * Test millis time setter.
-     */
-    @Test
-    public void testSetMillis()
-    {
-        long old = Log.getStartOfLoggingMillis();
-        Log.setStartOfLoggingMillis(0L);
-        assertNotEquals(Log.getStartOfLoggingMillis(), old);
-
-        Log.setStartOfLoggingMillis(old);
-        assertEquals(Log.getStartOfLoggingMillis(), old);
-    }
 }

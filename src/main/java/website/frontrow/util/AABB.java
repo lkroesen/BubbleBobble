@@ -70,19 +70,9 @@ public class AABB
      * @param other The other AABB
      * @return Whether the two AABBs overlap
      */
-    public boolean overlaps(AABB other)
-    {
-        return  this.getXRange().overlaps(other.getXRange())
-                &&
+    public boolean overlaps(AABB other) {
+        return this.getXRange().overlaps(other.getXRange()) &&
                 this.getYRange().overlaps(other.getYRange());
     }
 
-    /**
-     * Get the center of the AABB.
-     * @return The center of the AABB.
-     */
-    public Point center()
-    {
-        return start.add(end).divide(2);
-    }
 }

@@ -2,6 +2,7 @@ package website.frontrow.ui;
 
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+
 import java.util.HashMap;
 import java.util.Collections;
 import java.util.Map;
@@ -10,8 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The key listener makes sure that when certain keys are pressed,
- *      the corresponding action is performed in the game.
- * Created by Remi Flinterman on 2-9-2015.
+ * the corresponding action is performed in the game.
  */
 public class JBubbleKeyListener implements KeyListener
 {
@@ -35,39 +35,41 @@ public class JBubbleKeyListener implements KeyListener
 
     /**
      * Performs the corresponding action when the key is pressed.
-     * @param ke The event a key is pressed.
+     * @param keyEvent The event a key is pressed.
      */
-    public void keyPressed(KeyEvent ke)
+    public void keyPressed(KeyEvent keyEvent)
     {
-    	if (mapping.get(ke.getKeyCode()) != null)
-    	{
-    		if (pressed.get(ke.getKeyCode()) == null || !pressed.get(ke.getKeyCode()))    		
-	    	{            
-	    		pressed.put(ke.getKeyCode(), true);
-	    		pressedKeys.add(ke.getKeyCode());       	
-	        }
-    	}
+        if (mapping.get(keyEvent.getKeyCode()) == null)
+        {
+            return;
+        }
+
+        if(pressed.get(keyEvent.getKeyCode()) == null || !pressed.get(keyEvent.getKeyCode()))
+        {
+            pressed.put(keyEvent.getKeyCode(), true);
+            pressedKeys.add(keyEvent.getKeyCode());
+        }
     }
 
     /**
      * keyTyped won't interrupt the game in any way.
-     * @param ke The event a key is typed.
+     * @param keyEvent The event a key is typed.
      */
     @Override
-    public void keyTyped(KeyEvent ke)
+    public void keyTyped(KeyEvent keyEvent)
     {
 
     }
 
     /**
      * keyReleased doesn't interrupt the game in any way.
-     * @param ke The event a key is released.
+     * @param keyEvent The event a key is released.
      */
     @Override
-    public void keyReleased(KeyEvent ke)
+    public void keyReleased(KeyEvent keyEvent)
     {
-        pressed.put(ke.getKeyCode(), false);
-    	pressedKeys.remove(ke.getKeyCode());
+    	pressed.put(keyEvent.getKeyCode(), false);
+    	pressedKeys.remove(keyEvent.getKeyCode());
     }
 
     /**

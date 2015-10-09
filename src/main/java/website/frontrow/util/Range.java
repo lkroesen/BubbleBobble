@@ -1,7 +1,7 @@
 package website.frontrow.util;
 
 /**
- * Detones a continuous range.
+ * Denotes a continuous range.
  */
 public class Range
 {
@@ -78,14 +78,4 @@ public class Range
         return this.getStart() <= other.getEnd() && other.getStart() <= this.getEnd();
     }
 
-    /**
-     * Checks whether a double is inside the range.
-     *
-     * @param number Double to check in range.
-     * @return Whether the double is inside.
-     */
-    public boolean in(double number)
-    {
-        return start <= number && number <= end;
-    }
 }

@@ -1,5 +1,6 @@
 package website.frontrow.logger;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +16,6 @@ public class Log
 {
     private static Map<Long, String> logMap = new HashMap<>();
     private static long counter = 0;
-    private static long startOfLoggingMillis = System.currentTimeMillis();
     private static boolean togglePrinting = false;
 
     /**
@@ -25,7 +25,7 @@ public class Log
      */
     public static void add(String action)
     {
-        String timestamp = "[" + (System.currentTimeMillis() - startOfLoggingMillis) + " ms]\t";
+        String timestamp = "[" + (new Date()).toString() + "]\t";
         logMap.put(counter++, timestamp + action);
 
         if (togglePrinting)
@@ -41,7 +41,6 @@ public class Log
     {
         logMap.clear();
         counter = 0;
-        startOfLoggingMillis = System.currentTimeMillis();
         togglePrinting = false;
     }
 
@@ -91,26 +90,6 @@ public class Log
     public static void setCounter(long counter)
     {
         Log.counter = counter;
-    }
-
-    /**
-     * Get the start of logging millis.
-     * @return
-     * Returns a long.
-     */
-    public static long getStartOfLoggingMillis()
-    {
-        return startOfLoggingMillis;
-    }
-
-    /**
-     * set the StartOfLoggingMillis.
-     * @param startOfLoggingMillis
-     * Input the moment in time in millis of the start of the program.
-     */
-    public static void setStartOfLoggingMillis(long startOfLoggingMillis)
-    {
-        Log.startOfLoggingMillis = startOfLoggingMillis;
     }
 
     /**

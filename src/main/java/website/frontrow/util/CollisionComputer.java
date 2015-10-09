@@ -117,15 +117,15 @@ public class CollisionComputer
 	 * @param level Recursion loop cap.
 	 * @return Collision after sweep
 	 */
-	private Collision sweep(Mover mover, Point start, Point lastCell,
-							Point delta, Point widthHeight, Point motion, int steps,
-							int level)
+	private Collision sweep(Point start, Point lastCell, Point delta, Point widthHeight,
+							Point motion, int steps, int level)
 	{
 		Point lastCollision = start.add(delta.multiply(steps));
 		if(level >= MAX_DEPTH)
 		{
 			return new Collision(start, lastCollision, true, lastCell);
 		}
+
 		Point found = start;
 		for(int i = 0; i <= steps; i++)
 		{
@@ -134,7 +134,7 @@ public class CollisionComputer
 					checkLevelAABB(new AABB(current, current.add(widthHeight)), motion);
 			if(cell.getType() != Cell.EMPTY)
 			{
-				return sweep(mover, found, cell.getLocation(),
+				return sweep(found, cell.getLocation(),
 						delta.divide(steps), widthHeight, motion, steps, level + 1);
 			}
 
@@ -170,6 +170,11 @@ public class CollisionComputer
 	@SuppressWarnings("checkstyle:magicnumber")
 	private static final int CAP = 15;
 
+	// Thanks to the braces, comments and whitespace,
+	// this method is a bit longer than it really is.
+	// Splitting the method may be possible,
+	// but needs to be looked into rather than being fixed quickly.
+	@SuppressWarnings("checkstyle:methodlength")
 	/**
 	 * Find the next position of the given mover.
 	 * @param mover The mover to find the next position for.
@@ -225,8 +230,8 @@ public class CollisionComputer
 	 */
 	public Collision findWithMotion(Mover mover, Point start, Point motion, double part)
 	{
-		Point wh = mover.getAABBDimensions();
-		int steps = getSteps(mover, part, wh);
+		Point widthHeight = mover.getAABBDimensions();
+		int steps = getSteps(mover, part, widthHeight);
 
 		if(steps == 0)
 		{
@@ -234,7 +239,7 @@ public class CollisionComputer
 		}
 		Point delta = motion.multiply(part).divide(steps);
 
-		Collision collision = sweep(mover, start, null, delta, mover.getAABBDimensions(),
+		Collision collision = sweep(start, null, delta, mover.getAABBDimensions(),
 				mover.getMotion(), steps, 0);
 
 		double newXLocation
@@ -252,13 +257,13 @@ public class CollisionComputer
 	/**
 	 * Get the amount of steps for a mover.
 	 * @param mover Mover to compute for.
-	 * @param wh Width and height of movers AABB.
+	 * @param widthHeight Width and height of movers AABB.
 	 * @return amount of steps.
 	 */
-	private int getSteps(Mover mover, double delta, Point wh)
+	private int getSteps(Mover mover, double delta, Point widthHeight)
 	{
-		double stepsX = Math.abs(mover.getMotion().getX() * delta) / wh.getX();
-		double stepsY = Math.abs(mover.getMotion().getY() * delta) / wh.getY();
+		double stepsX = Math.abs(mover.getMotion().getX() * delta) / widthHeight.getX();
+		double stepsY = Math.abs(mover.getMotion().getY() * delta) / widthHeight.getY();
 
 		return (int) Math.ceil(Math.max(stepsX, stepsY) * SAMPLING);
 	}

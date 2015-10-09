@@ -71,12 +71,16 @@ public class CollisionHandler
      */
     public void bubbleCollision(Bubble bubble, Unit other)
     {
-        if(other instanceof Enemy && bubble.getContains() == null)
+        if(other instanceof Enemy && bubble.getContains() == null && !bubble.isHit())
         {
             bubble.setLocation(other.getLocation());
             bubble.capture((Enemy) other);
         }
 
+        if(other instanceof Bubble && !(bubble.getContains() != null) && bubble.isHit())
+        {
+            bubble.kill();
+        }
     }
 
     @Override
