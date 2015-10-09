@@ -84,7 +84,7 @@ public class Bubble
         
         if(this.contains == null)
         {
-        	if(hit == false)
+        	if(!hit)
         	{
         		floatUpwards();
         	}
