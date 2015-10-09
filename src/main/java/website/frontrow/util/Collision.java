@@ -6,18 +6,24 @@ package website.frontrow.util;
  */
 public class Collision
 {
-    private Point point;
+    private Point last;
+    private Point current;
     private boolean collided;
+    private Point cell;
 
     /**
      * Create a collision with a point point and collision state collided.
-     * @param point New position
+     * @param last Position before collision
+     * @param current Position doing collision.
      * @param collided Was there a collision.
+     * @param cell The cell that has collided.
      */
-    public Collision(Point point, boolean collided)
+    public Collision(Point last, Point current, boolean collided, Point cell)
     {
-        this.point = point;
+        this.last = last;
+        this.current = current;
         this.collided = collided;
+        this.cell = cell;
     }
 
     /**
@@ -35,6 +41,24 @@ public class Collision
      */
     public Point getPoint()
     {
-        return point;
+        return last;
+    }
+
+    /**
+     * Point of collision.
+     * @return Point at which the object collided.
+     */
+    public Point getCurrent()
+    {
+        return current;
+    }
+
+    /**
+     * Get the cell that caused this collision.
+     * @return The cell that caused this collision.
+     */
+    public Point getCell()
+    {
+        return cell;
     }
 }

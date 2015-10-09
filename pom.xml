@@ -4,7 +4,7 @@
     <groupId>website.frontrow</groupId>
     <artifactId>jbubble-bobble</artifactId>
     <packaging>jar</packaging>
-    <version>0.3</version>
+    <version>0.4</version>
     <name>jbubble-bobble</name>
     <url>https://github.com/lkroesen/BubbleBobble</url>
     <dependencies>
@@ -19,21 +19,6 @@
             <artifactId>mockito-core</artifactId>
             <version>1.10.19</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.soundlibs</groupId>
-            <artifactId>tritonus-share</artifactId>
-            <version>0.3.7-2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.soundlibs</groupId>
-            <artifactId>mp3spi</artifactId>
-            <version>1.9.5-1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.soundlibs</groupId>
-            <artifactId>vorbisspi</artifactId>
-            <version>1.0.3-1</version>
         </dependency>
     </dependencies>
     <reporting>
@@ -70,6 +55,7 @@
                 <version>3.2</version>
                 <configuration>
                     <format>xml</format>
+                    <skipEmptyReport>false</skipEmptyReport>
                 </configuration>
             </plugin>
             <plugin>

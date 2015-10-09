@@ -3,8 +3,6 @@ package website.frontrow.ui;
 import org.junit.Rule;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.List;
 import java.util.LinkedHashMap;
 import java.util.ArrayList;
@@ -15,6 +13,8 @@ import website.frontrow.board.Player;
 import website.frontrow.util.Point;
 
 import javax.swing.JLabel;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * A test for the score panel.
@@ -33,8 +33,7 @@ public class ScorePanelTest
     public void scorePanelNoPlayerTest()
     {
         ee.expect(AssertionError.class);
-        List<Player> players = null;
-        new ScorePanel(players);
+        new ScorePanel(null);
     }
 
     /**
@@ -42,7 +41,7 @@ public class ScorePanelTest
      * The Map labels should contain the correct keySet.
      * It tests the function getLabels() as well.
      */
-   @Test
+    @Test
     public void scorePanelOnePlayerTest()
     {
 
@@ -60,7 +59,6 @@ public class ScorePanelTest
 
         Map<Player, JLabel> labels = test.getLabels();
         assertEquals(labels.toString(), l.toString());
-
     }
 
     /**
@@ -89,7 +87,6 @@ public class ScorePanelTest
 
         Map<Player, JLabel> labels = test.getLabels();
         assertEquals(labels.toString(), l.toString());
-
     }
 
 }

@@ -19,11 +19,8 @@ import java.util.ArrayList;
  * Parses a text file into level.
  */
 public class MapParser
-    implements Logable
+        implements  Logable
 {
-
-    private JBubbleBobbleSprites spriteStore = new JBubbleBobbleSprites();
-
     /**
      * Check whether a level formed by these strings would create a validly shaped level.
      * It fails whenever:
@@ -40,16 +37,17 @@ public class MapParser
             return false;
         }
 
-        int len = lines[0].length();
-        if(len < 1)
+        int lineLength = lines[0].length();
+
+        if(lineLength < 1)
         {
             addToLog("[ERROR]\t[MAP PARSER]\t2 - Line length too small.");
             return false;
         }
 
-        for (String line: lines)
+        for (String line : lines)
         {
-            if (line.length() != len)
+            if (line.length() != lineLength)
             {
                 addToLog("[ERROR]\t[MAP PARSER]\t"
                          + "3 - One of the lines in the file is not as long as the other.");
@@ -74,10 +72,11 @@ public class MapParser
     public Level parseMap(InputStream stream) throws IOException
     {
         addToLog("[MAP PARSER]\tparseMap() called.");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        String line;
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
         ArrayList<String> lines = new ArrayList<>();
 
+        String line;
         while ((line = reader.readLine()) != null)
         {
             lines.add(line);
@@ -98,11 +97,13 @@ public class MapParser
     public Level parseMap(String[] lines)
     {
         addToLog("[MAP PARSER]\tparseMap() called.");
+
         if (!validateLevelShape(lines))
         {
             addToLog("[ERROR]\t[MAP PARSER]\t4 - RuntimeException.");
             throw new RuntimeException("The given lines are invalidly shaped or zero size.");
         }
+
         Grid<Cell> grid = new Grid<>(lines[0].length(), lines.length);
         ArrayList<Unit> units = new ArrayList<>();
         ArrayList<Player> players = new ArrayList<>();
@@ -127,33 +128,32 @@ public class MapParser
      * Handle behaviour of a certain character.
      * @param character The character to parse.
      * @param x x position of the character according to the grid.
-     * @param y y position of the character according to the grid,
+     * @param y y position of the character according to the grid.
      * @param units List of where to place units in.
      * @param grid Grid to place the map in.
      */
     private void handleCharacter(char character, int x, int y,
                                  ArrayList<Unit> units, ArrayList<Player> players, Grid<Cell> grid)
     {
+        /* X means a Wall, _ is a platform, p is a Player, e is an enemy, and ' ' is empty */
         grid.set(x, y, Cell.EMPTY);
         switch (character)
         {
             case 'X':
-                // A wall
                 grid.set(x, y, Cell.WALL);
                 break;
             case '_':
-                // A platform
                 grid.set(x, y, Cell.PLATFORM);
                 break;
             case 'p':
-                // The player
-                Player player = new Player(new Point(x, y), spriteStore.getPlayerSprite());
+                Player player = new Player(new Point(x, y),
+                        JBubbleBobbleSprites.getInstance().getPlayerSprite());
                 units.add(player);
                 players.add(player);
                 break;
             case 'e':
-                // The enemy.
-                units.add(new Enemy(new Point(x, y), spriteStore.getEnemySprite()));
+                units.add(new Enemy(new Point(x, y),
+                        JBubbleBobbleSprites.getInstance().getEnemySprite()));
                 break;
             case ' ':
                 // Empty area. Keep it empty.

@@ -2,17 +2,11 @@ package website.frontrow.artificial.intelligence;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-
 import org.junit.Test;
 import org.mockito.Mock;
 
 import website.frontrow.board.Enemy;
 import website.frontrow.board.Player;
-import website.frontrow.board.Unit;
-import website.frontrow.level.Cell;
-import website.frontrow.level.Level;
-import website.frontrow.util.Grid;
 import website.frontrow.util.Point;
 
 /**
@@ -26,11 +20,6 @@ public class PathCalculationTest
 	
     @Mock Player player;
     @Mock Enemy enemy;
-	
-    private ArrayList<Player> emptyPlayer = new ArrayList<>();
-    private ArrayList<Unit> emptyUnit = new ArrayList<>();
-    private Grid<Cell> emptyGrid = new Grid<>(0, 0);
-    private Level simpleLevel = new Level(emptyPlayer, emptyUnit, emptyGrid);
     
     /**
      * Test the enemy movement to the right.
@@ -102,7 +91,7 @@ public class PathCalculationTest
     	Enemy enemy = new Enemy(new Point(2, 2), null);
     	Player player = new Player(new Point(1, 1), null);
     	
-    	int move = PathCalculation.calculateXPath(player, enemy, simpleLevel);
+    	int move = PathCalculation.calculateXPath(player, enemy);
     	assertTrue(move == -1);
     }
     
@@ -115,7 +104,7 @@ public class PathCalculationTest
     	Enemy enemy = new Enemy(new Point(0, 0), null);
     	Player player = new Player(new Point(1, 1), null);
     	
-    	int move = PathCalculation.calculateXPath(player, enemy, simpleLevel);
+    	int move = PathCalculation.calculateXPath(player, enemy);
     	assertTrue(move == 1);
     }
     
@@ -128,7 +117,7 @@ public class PathCalculationTest
     	Enemy enemy = new Enemy(new Point(1, 1), null);
     	Player player = new Player(new Point(1, 1), null);
     	
-    	int move = PathCalculation.calculateXPath(player, enemy, simpleLevel);
+    	int move = PathCalculation.calculateXPath(player, enemy);
     	assertTrue(move == 0);
     }
     
@@ -141,7 +130,7 @@ public class PathCalculationTest
     	Enemy enemy = new Enemy(new Point(2, 2), null);
     	Player player = new Player(new Point(1, 1), null);
     	
-    	int move = PathCalculation.calculateYPath(player, enemy, simpleLevel);
+    	int move = PathCalculation.calculateYPath(player, enemy);
     	assertTrue(move == -1);
     }
     
@@ -154,7 +143,7 @@ public class PathCalculationTest
     	Enemy enemy = new Enemy(new Point(0, 0), null);
     	Player player = new Player(new Point(1, 1), null);
     	
-    	int move = PathCalculation.calculateYPath(player, enemy, simpleLevel);
+    	int move = PathCalculation.calculateYPath(player, enemy);
     	assertTrue(move == 1);
     }
     
@@ -167,7 +156,7 @@ public class PathCalculationTest
     	Enemy enemy = new Enemy(new Point(1, 1), null);
     	Player player = new Player(new Point(1, 1), null);
     	
-    	int move = PathCalculation.calculateYPath(player, enemy, simpleLevel);
+    	int move = PathCalculation.calculateYPath(player, enemy);
     	assertTrue(move == 0);
     }
     

@@ -1,7 +1,7 @@
 package website.frontrow.ui;
 
 /**
- * Created by Remi Flinterman on 2-9-2015.
+ * An action can be performed, by for instance a ui button.
  */
 public interface Action
 {

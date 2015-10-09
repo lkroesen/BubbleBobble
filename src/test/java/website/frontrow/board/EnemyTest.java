@@ -30,7 +30,7 @@ public class EnemyTest
     {
         Enemy e = new Enemy(super.p, null);
 
-        assertEquals(Enemy.TIME_TO_ESCPAPE, e.getChaughtTime());
+        assertEquals(Enemy.TIME_TO_ESCPAPE, e.getCaughtTime());
     }
 
     @Override
@@ -42,6 +42,7 @@ public class EnemyTest
         {
             e.kill();
         }
+
         return e;
     }
     
