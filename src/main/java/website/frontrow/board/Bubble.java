@@ -28,6 +28,11 @@ public class Bubble
     private Enemy contains;
 
     private long timeContained = 0;
+    
+    private long timeEmpty = 0;
+    
+    private static final long TIME_FLOAT_UPWARDS = 50;
+    private static final long TIME_KILL = 450 + TIME_FLOAT_UPWARDS;
 
     /**
      * Did this bubble hit something?
@@ -65,18 +70,32 @@ public class Bubble
         addToLog("[BUBBLE]\t" + other.toString() + " captured by bubble.");
         this.contains = other;
 
-        this.hit();
-        // Kill the enemy for good measure.
-        // (Do not forget to revive and re-add to the level when he escapes.)
-        other.kill();
+		this.hit();
+		// Kill the enemy for good measure.
+		// (Do not forget to revive and re-add to the level when he
+		// escapes.)
+		other.kill();
     }
 
     @Override
     public void tick(Level level)
     {
         super.tick(level);
-
-        if(this.contains != null)
+        
+        if(this.contains == null)
+        {
+        	timeEmpty++;
+        	
+        	if(!hit)
+        	{
+        		floatUpwards();
+        	}
+        	else
+        	{
+        		killBubble();
+        	}
+        }        
+        else
         {
             timeContained++;
 
@@ -156,5 +175,47 @@ public class Bubble
     public void addToLog(String action)
     {
         Log.add(action);
+    }
+    
+    /**
+     * Getter for timeEmpty.
+     * @return timeEmpty long
+     */
+    public long getTimeEmpty()
+    {
+    	return timeEmpty;
+    }
+    
+    /**
+     * Setter for timeEmpty.
+     * @param time long
+     */
+    public void setTimeEmpty(long time)
+    {
+    	timeEmpty = time;
+    }
+    
+    /**
+     * Makes the bubble float upwards at the right time.
+     */
+    public void floatUpwards()
+    {
+        if(timeEmpty >= TIME_FLOAT_UPWARDS)
+    	{
+    		this.hit();
+    		addToLog("[BUBBLE]\t is empty and floating upwards");
+    	}
+    }
+    
+    /**
+     * Kills the bubble at the right time.
+     */
+    public void killBubble()
+    {
+    	if(timeEmpty >= TIME_KILL)
+    	{
+    		this.kill();
+    		addToLog("[BUBBLE]\t was empty and popped");
+    	}
     }
 }
