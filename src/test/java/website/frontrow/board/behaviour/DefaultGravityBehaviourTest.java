@@ -5,8 +5,8 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import website.frontrow.board.Mover;
 import website.frontrow.game.GameConstants;
-import website.frontrow.util.Collision;
 import website.frontrow.util.CollisionComputer;
+import website.frontrow.util.CollisionSummary;
 import website.frontrow.util.Point;
 
 import static org.mockito.Mockito.mock;
@@ -30,7 +30,7 @@ public class DefaultGravityBehaviourTest
     {
         Mover mover = mock(Mover.class);
         CollisionComputer collisionComputer = mock(CollisionComputer.class);
-        Collision collision = mock(Collision.class);
+        CollisionSummary collision = mock(CollisionSummary.class);
         Point motion = new Point(0, 0);
 
         when(collision.isCollided()).thenReturn(false);
@@ -51,7 +51,7 @@ public class DefaultGravityBehaviourTest
     {
         Mover mover = mock(Mover.class);
         CollisionComputer collisionComputer = mock(CollisionComputer.class);
-        Collision collision = mock(Collision.class);
+        CollisionSummary collision = mock(CollisionSummary.class);
         Point motion = new Point(0, -5);
 
         when(collision.isCollided()).thenReturn(true);

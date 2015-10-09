@@ -2,8 +2,8 @@ package website.frontrow.board.behaviour;
 
 import website.frontrow.board.Mover;
 import website.frontrow.game.GameConstants;
-import website.frontrow.util.Collision;
 import website.frontrow.util.CollisionComputer;
+import website.frontrow.util.CollisionSummary;
 
 /**
  * The default behaviour for movers affected by gravity.
@@ -40,10 +40,11 @@ public final class DefaultGravityBehaviour
     {
         mover.getMotion().setY(mover.getMotion().getY() - GameConstants.GRAVITY);
 
-        Collision collision = collisionComputer.findNextPosition(mover);
+        CollisionSummary collision = collisionComputer.findNextPosition(mover);
         if(collision.isCollided())
         {
             mover.getMotion().setY(0.0);
         }
+
     }
 }

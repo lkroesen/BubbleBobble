@@ -1,7 +1,10 @@
 package website.frontrow.board;
 
+import website.frontrow.level.Cell;
+
 import website.frontrow.board.behaviour.DefaultGravityBehaviour;
 import website.frontrow.board.behaviour.GravityBehaviour;
+
 import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
@@ -9,6 +12,7 @@ import website.frontrow.sprite.Sprite;
 import website.frontrow.util.CollisionComputer;
 import website.frontrow.artificial.intelligence.ArtificialIntelligence;
 import website.frontrow.game.GameConstants;
+import website.frontrow.util.CollisionSummary;
 import website.frontrow.util.Point;
 
 import java.util.Map;
@@ -161,6 +165,18 @@ public abstract class Mover
     }
 
     /**
+     * Redirects a collision to the proper method.
+     * @param type Cell type that was collided with.
+     */
+    public void onCollision(Cell type)
+    {
+        if(type == Cell.WALL)
+        {
+            onWallCollision();
+        }
+    }
+
+    /**
      * Called when this unit collides with a wall.
      */
     public void onWallCollision()
@@ -186,7 +202,11 @@ public abstract class Mover
         CollisionComputer handler = level.getCollisionComputer();
         handler.checkUnitsAABB(this, level.getCollisionHandler());
 
-        this.location = handler.findNextPosition(this).getPoint();
+        CollisionSummary collision = handler.findNextPosition(this);
+        this.location = collision.getLocation();
+        this.setMotion(collision.getMotion());
+
+        collision.runCollisionEvents(this);
 
         this.gravity.apply(this, handler);
         
