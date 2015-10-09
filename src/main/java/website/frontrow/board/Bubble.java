@@ -93,8 +93,7 @@ public class Bubble
         		killBubble();
         	}
         }        
-
-        if(this.contains != null)
+        else
         {
             timeContained++;
 
