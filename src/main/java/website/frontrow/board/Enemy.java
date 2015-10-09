@@ -15,10 +15,10 @@ public class Enemy
         extends Mover
         implements Logable
 {
-	private int tickCounter;
-	private float random;
-	private Boolean lastWall;
-	private Boolean wallCollision;
+	private int tickCounter = 0;
+	private float random = 1.00f;
+	private Boolean lastWall = false;
+	private Boolean wallCollision = false;
 
     /**
      * The amount of ticks needed to escape.
@@ -34,11 +34,6 @@ public class Enemy
     public Enemy(Point position, Map<Direction, Sprite> sprites)
     {
         super(true, position, new Point(0, 0), sprites);
-        this.tickCounter = 0;
-        this.random = 1.00f;
-        this.lastWall = false;
-        this.wallCollision = false;
-        new Log();
         addToLog("[BUBBLE]\t[SPAWN]\tEnemy created.");
     }
 
@@ -155,7 +150,7 @@ public class Enemy
      * The amount of time it costs for this enemy to escape.
      * @return Amount of time it costs for this enemy to escape.
      */
-    public long getChaughtTime()
+    public long getCaughtTime()
     {
         return TIME_TO_ESCPAPE;
     }

@@ -1,13 +1,18 @@
 package website.frontrow.board;
 
+import website.frontrow.level.Cell;
+
+import website.frontrow.board.behaviour.DefaultGravityBehaviour;
+import website.frontrow.board.behaviour.GravityBehaviour;
+
 import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.sprite.Sprite;
-import website.frontrow.util.Collision;
 import website.frontrow.util.CollisionComputer;
 import website.frontrow.artificial.intelligence.ArtificialIntelligence;
 import website.frontrow.game.GameConstants;
+import website.frontrow.util.CollisionSummary;
 import website.frontrow.util.Point;
 
 import java.util.Map;
@@ -29,19 +34,12 @@ public abstract class Mover
     /**
      * Current direction of motion.
      */
-    @SuppressWarnings("visibilitymodifier") // subclasses have to have access to this variable
-    protected Point motion;
+    private Point motion;
 
     /**
      * The direction that is to be added on the next tick.
      */
-    @SuppressWarnings("visibilitymodifier") // subclasses have to have access to this variable
-    protected Point newMotion;
-
-    /**
-     * The collision handler to handle the collisions.
-     */
-    private CollisionComputer handler;
+    private Point newMotion = new Point(0, 0);
 
     /**
      * The sprites for each direction.
@@ -49,6 +47,11 @@ public abstract class Mover
     private Map<Direction, Sprite> sprites;
 
     private Direction previousDirection = Direction.RIGHT;
+
+    /**
+     * The gravity behaviour for this mover.
+     */
+    private GravityBehaviour gravity;
 
     /**
      * Creates a mover.
@@ -59,10 +62,24 @@ public abstract class Mover
      */
     public Mover(boolean alive, Point location, Point motion, Map<Direction, Sprite> sprites)
     {
+        this(alive, location, motion, sprites, DefaultGravityBehaviour.getInstance());
+    }
+
+    /**
+     * Creates a mover with the specified gravity behaviour.
+     * @param alive Whether the mover is alive.
+     * @param location The current location of the mover.
+     * @param motion The current motion of the mover.
+     * @param sprites The sprites for this mover.
+     * @param gravity The gravity behaviour for this mover.
+     */
+    public Mover(boolean alive, Point location, Point motion, Map<Direction, Sprite> sprites,
+                 GravityBehaviour gravity)
+    {
         super(alive, location);
         this.motion = motion;
-        this.newMotion = new Point(0, 0);
         this.sprites = sprites;
+        this.gravity = gravity;
     }
 
     /**
@@ -103,8 +120,7 @@ public abstract class Mover
 
     /**
      * Get the direction the Unit is facing.
-     * @return
-     * Returns a Direction value.
+     * @return The current direction value.
      */
     public Direction getDirection()
     {
@@ -149,6 +165,18 @@ public abstract class Mover
     }
 
     /**
+     * Redirects a collision to the proper method.
+     * @param type Cell type that was collided with.
+     */
+    public void onCollision(Cell type)
+    {
+        if(type == Cell.WALL)
+        {
+            onWallCollision();
+        }
+    }
+
+    /**
      * Called when this unit collides with a wall.
      */
     public void onWallCollision()
@@ -171,29 +199,19 @@ public abstract class Mover
     		Math.max(Math.min(x, GameConstants.MAX_X_SPEED),
     			-GameConstants.MAX_X_SPEED) * this.getSpeedMultiplier());
 
-        this.handler = level.getCollisionComputer();
-        this.handler.checkUnitsAABB(this, level.getCollisionHandler());
+        CollisionComputer handler = level.getCollisionComputer();
+        handler.checkUnitsAABB(this, level.getCollisionHandler());
 
-        this.location = handler.findNextPosition(this).getPoint();
+        CollisionSummary collision = handler.findNextPosition(this);
+        this.location = collision.getLocation();
+        this.setMotion(collision.getMotion());
 
-        applyGravity();
+        collision.runCollisionEvents(this);
+
+        this.gravity.apply(this, handler);
         
         ArtificialIntelligence artificialintelligence = new ArtificialIntelligence(level);
         artificialintelligence.aiMover();
-    }
-
-    /**
-     * Applies the gravity to the unit.
-     */
-    protected void applyGravity()
-    {
-        this.motion.setY(this.motion.getY() - GameConstants.GRAVITY);
-
-        Collision c = this.handler.findNextPosition(this);
-        if(c.isCollided())
-        {
-            this.motion.setY(0);
-        }
     }
 
     @Override
@@ -202,9 +220,7 @@ public abstract class Mover
         if(other instanceof Mover)
         {
             Mover that = (Mover) other;
-            return  super.equals(other)
-                    &&
-                    this.motion.equals(that.motion);
+            return super.equals(other) && this.motion.equals(that.motion);
         }
         return false;
     }

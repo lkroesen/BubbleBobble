@@ -15,7 +15,6 @@ public class Grid<E>
 
     private ArrayList<E> items;
 
-
     /**
      * Create an empty width x height grid.
      * @param width     The width of the grid.
@@ -23,11 +22,13 @@ public class Grid<E>
      */
     public Grid(int width, int height)
     {
-        ArrayList<E> list = new ArrayList<E>(width * height);
+        ArrayList<E> list = new ArrayList<>(width * height);
+
         for (int i = 0; i < width * height; i++)
         {
             list.add(null);
         }
+
         this.setup(list, width, height);
     }
 
@@ -43,7 +44,8 @@ public class Grid<E>
         {
             throw new IllegalArgumentException("ArrayList is of invalid items");
         }
-        this.setup(new ArrayList<E>(items), width, height);
+
+        this.setup(new ArrayList<>(items), width, height);
     }
 
     /**
@@ -54,8 +56,7 @@ public class Grid<E>
     {
         this.width = grid.getWidth();
         this.height = grid.getHeight();
-
-        this.items = new ArrayList<E>(grid.items);
+        this.items = new ArrayList<>(grid.items);
     }
 
     /**
@@ -97,11 +98,11 @@ public class Grid<E>
      */
     public E get(int x, int y)
     {
-
         if (x >= width || x < 0)
         {
             throw new ArrayIndexOutOfBoundsException("Horizontal position is out of bounds.");
         }
+
         if (y >= height || y < 0)
         {
             throw new ArrayIndexOutOfBoundsException("Vertical position is out of bounds.");
@@ -143,6 +144,7 @@ public class Grid<E>
                     &&
                     this.items.equals(that.items);
         }
+
         return false;
     }
 

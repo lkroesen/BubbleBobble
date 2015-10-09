@@ -19,7 +19,7 @@ import website.frontrow.logger.Logable;
  */
 public class ScorePanel
         extends JPanel
-            implements Logable
+        implements Logable
 {
     /**
      * The map of players and their labels with their scores.
@@ -30,7 +30,6 @@ public class ScorePanel
      * Creates a new score panel for the player.
      * When playing multiplayer, a score panel is created for each player.
      * @param players The list of players (max. 2 players).
-     * @throws IllegalArgumentException Throws Exception when triggered.
      */
     ScorePanel(List<Player> players)
     {
@@ -41,18 +40,18 @@ public class ScorePanel
 
         for(int c = 0; c < players.size(); c++)
         {
-            int i = c + 1;
-            add(new JLabel("Player" + i, JLabel.CENTER));
+            add(new JLabel("Player" + c + 1, JLabel.CENTER));
         }
 
-        labels = new LinkedHashMap();
+        labels = new LinkedHashMap<>();
 
-        for (Player pl : players)
+        for (Player player : players)
         {
-            JLabel sl = new JLabel("0", JLabel.CENTER);
-            labels.put(pl, sl);
-            add(sl);
+            JLabel jLabel = new JLabel("0", JLabel.CENTER);
+            labels.put(player, jLabel);
+            add(jLabel);
         }
+
         addToLog("[ScP]\tScore Panel Created Successfully.");
     }
 
@@ -74,8 +73,4 @@ public class ScorePanel
     {
         Log.add(action);
     }
-
-    // Scores can't be reset yet, because we don't have a state for
-    //      being alive or dead for the player yet.
-
 }
