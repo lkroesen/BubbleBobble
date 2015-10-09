@@ -170,16 +170,17 @@ public class CollisionComputer
 	@SuppressWarnings("checkstyle:magicnumber")
 	private static final int CAP = 15;
 
-	// Thanks to the braces, comments and whitespace,
-	// this method is a bit longer than it really is.
-	// Splitting the method may be possible,
-	// but needs to be looked into rather than being fixed quickly.
-	@SuppressWarnings("checkstyle:methodlength")
+
 	/**
 	 * Find the next position of the given mover.
 	 * @param mover The mover to find the next position for.
 	 * @return The next position of the given mover.
 	 */
+	// Thanks to the braces, comments and whitespace,
+	// this method is a bit longer than it really is.
+	// Splitting the method may be possible,
+	// but needs to be looked into rather than being fixed quickly.
+	@SuppressWarnings("checkstyle:methodlength")
 	public CollisionSummary findNextPosition(Mover mover)
 	{
 		double part = 1d;
