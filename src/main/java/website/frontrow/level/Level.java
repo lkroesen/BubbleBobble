@@ -351,7 +351,7 @@ public class Level
      */
     public void registerPlayer(Player player, int spawnIndex)
     {
-        if(player.isAlive())
+        if(player.isAlive() && playerPositions.size() > 0)
         {
             player.setLocation(playerPositions.get(spawnIndex));
             players.add(player);
