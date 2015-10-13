@@ -107,6 +107,7 @@ public class PlayerTest
     {
         Player p1 = new Player(super.p, null);
         Player p2 = new Player(super.p, null);
+        
         p1.addScore(42);
         assertEquals(p1.getScore(), 42);
         assertEquals(p2.getScore(), 0);
@@ -116,4 +117,21 @@ public class PlayerTest
         assertEquals(p1.getScore(), 42);
     }
 
+    @Test
+    public void testAddLife2P()
+    {
+        Player p1 = new Player(super.p, null);
+        Player p2 = new Player(super.p, null);
+
+        assertEquals(p1.getLives(), 3);
+        assertEquals(p2.getLives(), 3);
+        
+        p1.addLife();
+        assertEquals(p1.getLives(), 4);
+        assertEquals(p2.getLives(), 3);
+        
+        p2.addLife();
+        assertEquals(p1.getLives(), 4);
+        assertEquals(p2.getLives(), 4);
+    }
 }
