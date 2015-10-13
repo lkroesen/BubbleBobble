@@ -7,8 +7,11 @@ import website.frontrow.logger.Logable;
 import website.frontrow.level.Level.LevelObserver;
 import website.frontrow.music.MusicPlayer;
 import website.frontrow.music.Songs;
+import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.ui.JBubbleKeyListener;
+import website.frontrow.util.Point;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -20,6 +23,7 @@ public class Game
 {
     private ArrayList<GameObserver> observers = new ArrayList<>();
     private ArrayList<Level> levelPack = new ArrayList<>();
+    private ArrayList<Player> players = new ArrayList<>();
 
     private boolean running = false;
 
@@ -38,7 +42,22 @@ public class Game
      */
     public Game(ArrayList<Level> levels)
     {
+        this(levels, 1);
+    }
+
+    /**
+     * Constructor of Game.
+     * @param levels All the levels of the game.
+     * @param playerCount The player count.
+     */
+    public Game(ArrayList<Level> levels, int playerCount)
+    {
         this.levelPack = levels;
+        for(int i = 0; i < playerCount; i++)
+        {
+            players.add(new Player(new Point(0, 0),
+                    JBubbleBobbleSprites.getInstance().getPlayerSprite()));
+        }
         loadCurrentLevel();
         addToLog("[GAME]\tGame Object Created");
     }
@@ -71,6 +90,10 @@ public class Game
         if(currentLevel != null)
         {
             currentLevel.addObserver(this);
+        }
+        for(int i = 0; i < players.size(); ++i)
+        {
+            this.currentLevel.registerPlayer(players.get(i), 0);
         }
     }
 
@@ -134,7 +157,7 @@ public class Game
      */
     public ArrayList<Player> getPlayers()
     {
-        return this.currentLevel.getPlayers();
+        return this.players;
     }
 
     /**

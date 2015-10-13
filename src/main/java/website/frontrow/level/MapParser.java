@@ -104,9 +104,7 @@ public class MapParser
             throw new RuntimeException("The given lines are invalidly shaped or zero size.");
         }
 
-        Grid<Cell> grid = new Grid<>(lines[0].length(), lines.length);
-        ArrayList<Unit> units = new ArrayList<>();
-        ArrayList<Player> players = new ArrayList<>();
+        LevelBuilder levelBuilder = new LevelBuilder(lines[0].length(), lines.length);
 
         int y = 0;
         for (String line: lines)
@@ -114,14 +112,14 @@ public class MapParser
             int x = 0;
             for(char character: line.toCharArray())
             {
-                handleCharacter(character, x, y, units, players, grid);
+                handleCharacter(character, x, y, levelBuilder);
                 x++;
             }
             ++y;
         }
 
         addToLog("[MAP PARSER]\tparseMap() completed successfully.");
-        return new Level(players, units, grid);
+        return levelBuilder.build();
     }
 
     /**
@@ -129,30 +127,26 @@ public class MapParser
      * @param character The character to parse.
      * @param x x position of the character according to the grid.
      * @param y y position of the character according to the grid.
-     * @param units List of where to place units in.
-     * @param grid Grid to place the map in.
+     * @param levelBuilder The LevelBuilder which prepares the level.
      */
     private void handleCharacter(char character, int x, int y,
-                                 ArrayList<Unit> units, ArrayList<Player> players, Grid<Cell> grid)
+                                LevelBuilder levelBuilder)
     {
         /* X means a Wall, _ is a platform, p is a Player, e is an enemy, and ' ' is empty */
-        grid.set(x, y, Cell.EMPTY);
+        levelBuilder.setGridCell(x, y, Cell.EMPTY);
         switch (character)
         {
             case 'X':
-                grid.set(x, y, Cell.WALL);
+                levelBuilder.setGridCell(x, y, Cell.WALL);
                 break;
             case '_':
-                grid.set(x, y, Cell.PLATFORM);
+                levelBuilder.setGridCell(x, y, Cell.PLATFORM);
                 break;
             case 'p':
-                Player player = new Player(new Point(x, y),
-                        JBubbleBobbleSprites.getInstance().getPlayerSprite());
-                units.add(player);
-                players.add(player);
+                levelBuilder.addPlayerSpawnPoint(new Point(x, y));
                 break;
             case 'e':
-                units.add(new Enemy(new Point(x, y),
+                levelBuilder.addUnit(new Enemy(new Point(x, y),
                         JBubbleBobbleSprites.getInstance().getEnemySprite()));
                 break;
             case ' ':

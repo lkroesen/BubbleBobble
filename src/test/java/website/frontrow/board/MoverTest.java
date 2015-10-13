@@ -124,46 +124,6 @@ public abstract class MoverTest
     }
 
     /**
-     * Test whether the unit moves left.
-     * @throws IOException The test file might not be found.
-     */
-    @Test
-    public void testGoLeft() throws IOException
-    {
-
-        MapParser mp = new MapParser();
-        InputStream map = getClass().getResourceAsStream("/testMove.txt");
-        Level level = mp.parseMap(map);
-
-        Player u = level.getPlayers().get(0);
-        Point location = u.getLocation();
-
-        u.goLeft();
-        u.tick(level);
-
-        assertTrue(u.getLocation().getX() < location.getX());
-    }
-
-    /**
-     * Test whether the unit moves right.
-     * @throws IOException The test file might not be found.
-     */
-    @Test
-    public void testGoRight() throws IOException
-    {
-        MapParser mp = new MapParser();
-        InputStream map = getClass().getResourceAsStream("/testMove.txt");
-        Level level = mp.parseMap(map);
-
-        Player u = level.getPlayers().get(0);
-        Point location = u.getLocation();
-
-        u.goRight();
-        u.tick(level);
-        assertTrue(u.getLocation().getX() > location.getX());
-    }
-
-    /**
      * Tests whether the unit does not move when not speed is given.
      * Except there is gravity. So we need to keep that in mind.
      */
