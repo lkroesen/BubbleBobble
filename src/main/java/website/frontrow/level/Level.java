@@ -9,6 +9,7 @@ import website.frontrow.logger.Logable;
 import website.frontrow.util.CollisionComputer;
 import website.frontrow.util.CollisionHandler;
 import website.frontrow.util.Grid;
+import website.frontrow.util.Point;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class Level
     private final CollisionHandler collisionHandler = new CollisionHandler();
 
     private ArrayList<Player> players = new ArrayList<>();
+    private ArrayList<Point> playerPositions = new ArrayList<>();
     private ArrayList<Unit> units = new ArrayList<>();
 
     private boolean playersAlive = true;
@@ -45,27 +47,44 @@ public class Level
     public Level duplicate()
     {
         ArrayList<Unit> units = new ArrayList<>(this.getUnits().size());
-        ArrayList<Player> players = new ArrayList<>(this.getPlayers().size());
+        ArrayList<Point> playerPositions = new ArrayList<>(this.getPlayers().size());
 
         for (Unit unit: this.units)
         {
             Unit clone = unit.duplicate();
             units.add(clone);
-            if(clone instanceof Player)
-            {
-                players.add((Player) clone);
-            }
+        }
+        for(Point spawnPoint: this.playerPositions)
+        {
+            playerPositions.add(new Point(spawnPoint));
         }
 
         addToLog("[LEVEL]\tCloning succeeded.");
-        return new Level(players, units, this.getCells());
+        return new Level(units, this.getCells(), playerPositions);
     }
 
     /**
      * Constructor of Level.
      * @param units Input an ArrayList of Unit.
      * @param cells Input a Grid with E of Cell.
-     * @param players   The players in the game.
+     * @param playerPositions Spawning positions of players.
+     */
+    public Level(ArrayList<Unit> units, Grid<Cell> cells, ArrayList<Point> playerPositions)
+    {
+        this.playerPositions = new ArrayList<>(playerPositions);
+        this.units = new ArrayList<>(units);
+        this.cells = new Grid<>(cells);
+
+        //Abbreviated u because of lambda expression.
+        units.stream().filter(this::isEnemy).forEach(u -> numberOfEnemies++);
+        addToLog("[LEVEL]\tLevel Object created");
+    }
+
+    /**
+     * Constructor of Level.
+     * @param players Starting players.
+     * @param units Input an ArrayList of Unit.
+     * @param cells Input a Grid with E of Cell.
      */
     public Level(ArrayList<Player> players, ArrayList<Unit> units, Grid<Cell> cells)
     {
@@ -323,6 +342,31 @@ public class Level
     public boolean enemiesAlive()
     {
         return numberOfEnemies != 0;
+    }
+
+    /**
+     * Add a player to a certain position.
+     * @param player Player to add to this level.
+     * @param spawnIndex Index to add him at.
+     */
+    public void registerPlayer(Player player, int spawnIndex)
+    {
+        if(player.isAlive())
+        {
+            player.setLocation(playerPositions.get(spawnIndex));
+            players.add(player);
+            units.add(player);
+            addToLog("[LEVEL]\tPlayer registered.");
+        }
+    }
+
+    /**
+     * Get the spawning positions for a level.
+     * @return The spawning positions.
+     */
+    public ArrayList<Point> getPlayerPositions()
+    {
+        return playerPositions;
     }
 
     /**
