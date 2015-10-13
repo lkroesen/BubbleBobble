@@ -134,4 +134,22 @@ public class PlayerTest
         assertEquals(p1.getLives(), 4);
         assertEquals(p2.getLives(), 4);
     }
+    
+    @Test
+    public void testSetLife2P()
+    {
+        Player p1 = new Player(super.p, null);
+        Player p2 = new Player(super.p, null);
+
+        assertEquals(p1.getLives(), 3);
+        assertEquals(p2.getLives(), 3);
+        
+        p1.setLives(1);
+        assertEquals(p1.getLives(), 1);
+        assertEquals(p2.getLives(), 3);
+        
+        p2.setLives(5);
+        assertEquals(p1.getLives(), 1);
+        assertEquals(p2.getLives(), 5);
+    }
 }
