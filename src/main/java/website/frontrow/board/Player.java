@@ -39,6 +39,8 @@ public class Player
      */
     private int ticksLeft = 0;
 
+    private final long ID = System.currentTimeMillis();
+
     /**
      * The observers for this player.
      */
@@ -217,5 +219,9 @@ public class Player
     public void removeObserver(PlayerObserver playerObserver)
     {
         this.observers.remove(playerObserver);
+    }
+
+    public long getId() {
+        return ID;
     }
 }

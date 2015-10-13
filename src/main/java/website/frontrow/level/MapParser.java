@@ -1,12 +1,9 @@
 package website.frontrow.level;
 
 import website.frontrow.board.Enemy;
-import website.frontrow.board.Player;
-import website.frontrow.board.Unit;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.sprite.JBubbleBobbleSprites;
-import website.frontrow.util.Grid;
 import website.frontrow.util.Point;
 
 import java.io.BufferedReader;

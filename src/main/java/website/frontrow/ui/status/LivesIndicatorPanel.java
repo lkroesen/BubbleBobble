@@ -8,9 +8,7 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
 
-import java.util.Map;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Indicates the remaining lives of the players.
@@ -19,8 +17,8 @@ public class LivesIndicatorPanel
     extends JPanel
     implements PlayerObserver
 {
-
-    private Map<Player, PlayerLivesIndicator> lives;
+    private Player[] playerList;
+    private PlayerLivesIndicator[] playerLivesIndicatorList;
 
     /**
      * Creates a panel which contains indicators of the number of lives remaining for the players.
@@ -29,15 +27,20 @@ public class LivesIndicatorPanel
     public LivesIndicatorPanel(ArrayList<Player> players)
     {
         super(new BorderLayout());
-        this.lives = new HashMap<>();
 
         players.forEach(p -> p.addObserver(this));
+
+        playerList = new Player[players.size()];
+        playerLivesIndicatorList = new PlayerLivesIndicator[players.size()];
 
         for(int i = 0; i < players.size(); i++)
         {
             PlayerLivesIndicator livesPanel
                     = new PlayerLivesIndicator(i + 1, players.get(i).getLives());
-            lives.put(players.get(i), livesPanel);
+
+            playerList[i] = players.get(i);
+            playerLivesIndicatorList[i] = livesPanel;
+
             add(new JSeparator(SwingConstants.HORIZONTAL), BorderLayout.NORTH);
             add(livesPanel, BorderLayout.NORTH);
         }
@@ -46,8 +49,15 @@ public class LivesIndicatorPanel
     @Override
     public void livesChanged(Player player)
     {
-        assert lives.containsKey(player);
-        lives.get(player).setRemainingLives(player.getLives());
+        for (int c = 0; c < playerList.length; c++)
+        {
+            if (playerList[c].getId() == player.getId())
+            {
+                playerLivesIndicatorList[c].setRemainingLives(player.getLives());
+                super.revalidate();
+                super.repaint();
+            }
+        }
     }
 
     @Override

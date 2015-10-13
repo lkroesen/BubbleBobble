@@ -3,7 +3,11 @@ package website.frontrow.board;
 import org.junit.Test;
 import website.frontrow.util.Point;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Player test.
