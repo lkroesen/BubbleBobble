@@ -229,7 +229,7 @@ public class Launcher implements Logable
             map.put(KeyEvent.VK_UP, () ->
             {
                 addToLog("[KEY]\t< \' \' > Pressed.");
-                game.getPlayers().get(0).jump();
+                game.getPlayers().get(1).jump();
             });
             
             map.put(KeyEvent.VK_CONTROL, () ->

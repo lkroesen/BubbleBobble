@@ -14,5 +14,5 @@ XX              XX
 XX              XX
 XX___  ____  ___XX
 XX              XX
-XX p            XX
+XX p          p XX
 XXXXXX__XX__XXXXXX
