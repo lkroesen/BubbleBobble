@@ -143,6 +143,18 @@ public class PointTest
     }
 
     /**
+     * Test dividing numbers by a divisor.
+     */
+    @Test
+    public void subtractTest()
+    {
+        Point a = new Point(2, 0);
+        Point expected = new Point(1, 0);
+
+        assertEquals(expected, a.subtract(new Point(1, 0)));
+    }
+
+    /**
      * Test length.
      */
     @Test
@@ -160,5 +172,25 @@ public class PointTest
     {
         Point a = new Point(0, 2);
         assertEquals(2, a.length(), 0);
+    }
+
+    /**
+     * Test angle.
+     */
+    @Test
+    public void angleTest1()
+    {
+        Point a = new Point(1, 0);
+        assertEquals(0, a.angle(), 0.0001);
+    }
+
+    /**
+     * Test angle.
+     */
+    @Test
+    public void angleTest2()
+    {
+        Point a = new Point(0, 2);
+        assertEquals(Math.PI / 2, a.angle(), 0.0001);
     }
 }

@@ -72,16 +72,9 @@ public class AABB
      */
     public boolean overlaps(AABB other)
     {
-        if(!this.getXRange().overlaps(other.getXRange()))
-        {
-            return false;
-        }
-
-        if(!this.getYRange().overlaps(other.getYRange()))
-        {
-            return false;
-        }
-
-        return true;
+        return this.getXRange().overlaps(other.getXRange())
+                &&
+                this.getYRange().overlaps(other.getYRange());
     }
+
 }
