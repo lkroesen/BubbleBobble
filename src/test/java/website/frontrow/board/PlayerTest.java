@@ -101,5 +101,19 @@ public class PlayerTest
         assertEquals(p1.getLives(), 2);
         assertEquals(p2.getLives(), 2);
     }
+    
+    @Test
+    public void testScore2P()
+    {
+        Player p1 = new Player(super.p, null);
+        Player p2 = new Player(super.p, null);
+        p1.addScore(42);
+        assertEquals(p1.getScore(), 42);
+        assertEquals(p2.getScore(), 0);
+        
+        p2.addScore(29);
+        assertEquals(p2.getScore(), 29);
+        assertEquals(p1.getScore(), 42);
+    }
 
 }
