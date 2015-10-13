@@ -18,9 +18,39 @@ import javax.swing.ImageIcon;
 /**
  * A store to get all the images.
  */
-public class ImageStore
+public final class ImageStore
     implements Logable
 {
+    /**
+     * The instance.
+     */
+    public static final ImageStore INSTANCE = new ImageStore();
+
+    /**
+     * A private constructor for Singleton.
+     */
+    private ImageStore()
+    {
+
+    }
+
+    /**
+     * Gives the instance.
+     * @return the instance.
+     */
+    public static ImageStore getInstance()
+    {
+        return INSTANCE;
+    }
+
+    /**
+     * Creates an icon to indicate the number of lives left.
+     * @return The Icon.
+     */
+    public ImageIcon getHeartIcon()
+    {
+        return getImageIcon("/sprites/heart.png");
+    }
 
     /**
      * Loads an image icon.

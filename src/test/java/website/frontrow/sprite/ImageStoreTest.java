@@ -28,7 +28,7 @@ public class ImageStoreTest
     @Before
     public void setUp()
     {
-        is = new ImageStore();
+        is = ImageStore.getInstance();
     }
 
     /**

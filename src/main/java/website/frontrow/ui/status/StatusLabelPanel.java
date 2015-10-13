@@ -1,4 +1,4 @@
-package website.frontrow.ui;
+package website.frontrow.ui.status;
 
 import website.frontrow.game.Game;
 import website.frontrow.game.GameObserver;

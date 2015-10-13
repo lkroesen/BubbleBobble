@@ -1,4 +1,4 @@
-package website.frontrow.ui;
+package website.frontrow.ui.status;
 
 import org.junit.Before;
 import org.junit.Test;

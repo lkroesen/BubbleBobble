@@ -76,8 +76,6 @@ public class Launcher implements Logable
 
         try
         {
-
-
             MapParser mp = new MapParser();
             ArrayList<Level> levelList = new ArrayList<>();
             for(String levelFileName : filename)

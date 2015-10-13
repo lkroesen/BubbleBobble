@@ -1,4 +1,4 @@
-package website.frontrow.ui;
+package website.frontrow.ui.status;
 
 import java.awt.GridLayout;
 import java.util.LinkedHashMap;
