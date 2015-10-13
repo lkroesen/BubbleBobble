@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class Launcher implements Logable
-{
+{	
     /**
      * Construct a launcher, currently not doing anything.
      */
@@ -56,7 +56,7 @@ public class Launcher implements Logable
 
         try
         {
-            new Launcher().start(new FileNameCollector().obtain("level/"));
+        	new Launcher().start(new FileNameCollector().obtain("level/"));
         }
         catch (URISyntaxException e)
         {
@@ -174,6 +174,71 @@ public class Launcher implements Logable
                 if(game.isRunning())
                 {
                     Player p = game.getPlayers().get(0);
+                    game.getLevel().addUnit(
+                            new Bubble(p.getLocation(),
+                                    new Point(p.getDirection().getDeltaX() * 4, 0),
+                                    JBubbleBobbleSprites.getInstance().getBubbleSprite()));
+                }
+            });
+        }
+        else{
+        	map.put(KeyEvent.VK_A, () ->
+            {
+                addToLog("[KEY]\t< \'<-\' > Pressed.");
+                game.getPlayers().get(0).goLeft();
+            });
+
+            map.put(KeyEvent.VK_D, () ->
+            {
+                addToLog("[KEY]\t< \'->\' > Pressed.");
+                game.getPlayers().get(0).goRight();
+            });
+
+            map.put(KeyEvent.VK_W, () ->
+            {
+                addToLog("[KEY]\t< \' \' > Pressed.");
+                game.getPlayers().get(0).jump();
+            });
+
+            map.put(KeyEvent.VK_SPACE, () ->
+            {
+                addToLog("[KEY]\t< \'Z\' > Pressed.");
+
+                if(game.isRunning())
+                {
+                    Player p = game.getPlayers().get(0);
+                    game.getLevel().addUnit(
+                            new Bubble(p.getLocation(),
+                                    new Point(p.getDirection().getDeltaX() * 4, 0),
+                                    JBubbleBobbleSprites.getInstance().getBubbleSprite()));
+                }
+            });
+            
+            map.put(KeyEvent.VK_LEFT, () ->
+            {
+                addToLog("[KEY]\t< \'<-\' > Pressed.");
+                game.getPlayers().get(1).goLeft();
+            });
+            
+            map.put(KeyEvent.VK_RIGHT, () ->
+            {
+                addToLog("[KEY]\t< \'->\' > Pressed.");
+                game.getPlayers().get(1).goRight();
+            });
+            
+            map.put(KeyEvent.VK_UP, () ->
+            {
+                addToLog("[KEY]\t< \' \' > Pressed.");
+                game.getPlayers().get(0).jump();
+            });
+            
+            map.put(KeyEvent.VK_CONTROL, () ->
+            {
+                addToLog("[KEY]\t< \'Z\' > Pressed.");
+
+                if(game.isRunning())
+                {
+                    Player p = game.getPlayers().get(1);
                     game.getLevel().addUnit(
                             new Bubble(p.getLocation(),
                                     new Point(p.getDirection().getDeltaX() * 4, 0),
