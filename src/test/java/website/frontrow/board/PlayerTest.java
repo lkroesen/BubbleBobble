@@ -83,4 +83,23 @@ public class PlayerTest
 
         return player;
     }
+    
+    @Test
+    public void testLoseLife2P()
+    {
+    	Player p1 = new Player(super.p, null);
+    	Player p2 = new Player(super.p, null);
+
+        assertEquals(p1.getLives(), 3);
+        assertEquals(p2.getLives(), 3);
+        
+        p1.loseLife();
+        assertEquals(p1.getLives(), 2);
+        assertEquals(p2.getLives(), 3);
+        
+        p2.loseLife();
+        assertEquals(p1.getLives(), 2);
+        assertEquals(p2.getLives(), 2);
+    }
+
 }
