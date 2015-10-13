@@ -87,6 +87,8 @@ public class Launcher implements Logable
                 levelList.add(level);
             }
 
+            addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + " succeeded.");
+
             Game game = new Game(levelList);
             Map<Integer, Action> keyMappings = createSinglePlayerKeyMappings(game);
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
@@ -103,7 +105,7 @@ public class Launcher implements Logable
 
             ui.start();
             startScheduler(game);
-            addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + " succeeded.");
+
         }
         catch (IOException e)
         {

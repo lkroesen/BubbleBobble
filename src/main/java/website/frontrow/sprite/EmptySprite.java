@@ -18,6 +18,10 @@ public final class EmptySprite
 
     }
 
+    /**
+     * Returns an instance of this sprite.
+     * @return The instance.
+     */
     public static EmptySprite getInstance()
     {
         return INSTANCE;
