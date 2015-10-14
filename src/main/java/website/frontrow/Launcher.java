@@ -11,6 +11,7 @@ import website.frontrow.music.Songs;
 import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.ui.Action;
 import website.frontrow.ui.JBubbleBobbleUI;
+import website.frontrow.ui.ModeMenu;
 import website.frontrow.game.GameConstants;
 import website.frontrow.util.FileNameCollector;
 import website.frontrow.util.Point;
@@ -54,14 +55,7 @@ public class Launcher implements Logable
         MusicPlayer.getInstance().init();
         MusicPlayer.getInstance().selectSong(Songs.TITLE_SCREEN);
 
-        try
-        {
-        	new Launcher().start(new FileNameCollector().obtain("level/"));
-        }
-        catch (URISyntaxException e)
-        {
-            e.printStackTrace();
-        }
+        new ModeMenu();
 
     }
 
@@ -70,7 +64,7 @@ public class Launcher implements Logable
      * @param filename The file name of the level to load.
      */
     @SuppressWarnings("methodlength") // We need to make a GameFactory and UIBuilder
-    public void start(String[] filename)
+    public void start(String[] filename, int playerCount)
     {
         addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + ".");
 
@@ -87,8 +81,8 @@ public class Launcher implements Logable
                 levelList.add(level);
             }
 
-            Game game = new Game(levelList);
-            Map<Integer, Action> keyMappings = createSinglePlayerKeyMappings(game);
+            Game game = new Game(levelList, playerCount);
+            Map<Integer, Action> keyMappings = createKeyMappings(game);
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
             
             InputStream map = getClass().getResourceAsStream("/game_over.txt");
@@ -143,7 +137,7 @@ public class Launcher implements Logable
      * @return The mapping.
      */
     @SuppressWarnings("checkstyle:methodlength")
-    private Map<Integer, Action> createSinglePlayerKeyMappings(Game game)
+    private Map<Integer, Action> createKeyMappings(Game game)
     {
         Map<Integer, Action> map = new HashMap<>();
 
