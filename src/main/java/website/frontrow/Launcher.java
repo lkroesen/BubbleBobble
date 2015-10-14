@@ -3,6 +3,7 @@ package website.frontrow;
 import website.frontrow.board.Bubble;
 import website.frontrow.board.Player;
 import website.frontrow.game.Game;
+import website.frontrow.keybindings.BindActions;
 import website.frontrow.level.Level;
 import website.frontrow.level.MapParser;
 import website.frontrow.logger.DumpLog;
@@ -69,7 +70,7 @@ public class Launcher implements Logable
      * Starts the game.
      * @param filename The file name of the level to load.
      */
-    @SuppressWarnings("methodlength") // We need to make a GameFactory and UIBuilder
+    @SuppressWarnings("methodlength") // TODO: We need to make a GameFactory and UIBuilder
     public void start(String[] filename)
     {
         addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + ".");
@@ -88,7 +89,9 @@ public class Launcher implements Logable
             }
 
             Game game = new Game(levelList);
-            Map<Integer, Action> keyMappings = createSinglePlayerKeyMappings(game);
+
+            //createSinglePlayerKeyMappings(game);
+            Map<Integer, Action> keyMappings = BindActions.getInstance().createSinglePlayerKeyMappings(game);
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
             
             InputStream map = getClass().getResourceAsStream("/game_over.txt");
@@ -142,6 +145,7 @@ public class Launcher implements Logable
      * @param game The game to control with the keys.
      * @return The mapping.
      */
+    @Deprecated
     @SuppressWarnings("checkstyle:methodlength")
     private Map<Integer, Action> createSinglePlayerKeyMappings(Game game)
     {
