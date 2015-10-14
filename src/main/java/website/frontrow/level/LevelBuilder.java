@@ -9,8 +9,8 @@ import java.util.ArrayList;
 /**
  * A tool for creating level objects.
  */
-public class LevelBuilder {
-
+public class LevelBuilder
+{
     Grid<Cell> grid;
     ArrayList<Unit> units = new ArrayList<>();
     ArrayList<Point> players = new ArrayList<>();

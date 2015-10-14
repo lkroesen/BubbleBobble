@@ -9,6 +9,8 @@ import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Indicates the remaining lives of the players.
@@ -17,8 +19,7 @@ public class LivesIndicatorPanel
     extends JPanel
     implements PlayerObserver
 {
-    private Player[] playerList;
-    private PlayerLivesIndicator[] playerLivesIndicatorList;
+    private Map<Long, PlayerLivesIndicator> mapPlayerIdIndicator;
 
     /**
      * Creates a panel which contains indicators of the number of lives remaining for the players.
@@ -27,19 +28,16 @@ public class LivesIndicatorPanel
     public LivesIndicatorPanel(ArrayList<Player> players)
     {
         super(new BorderLayout());
+        mapPlayerIdIndicator = new HashMap<>();
 
         players.forEach(p -> p.addObserver(this));
-
-        playerList = new Player[players.size()];
-        playerLivesIndicatorList = new PlayerLivesIndicator[players.size()];
 
         for(int i = 0; i < players.size(); i++)
         {
             PlayerLivesIndicator livesPanel
                     = new PlayerLivesIndicator(i + 1, players.get(i).getLives());
 
-            playerList[i] = players.get(i);
-            playerLivesIndicatorList[i] = livesPanel;
+            mapPlayerIdIndicator.put(players.get(i).getId(), livesPanel);
 
             add(new JSeparator(SwingConstants.HORIZONTAL), BorderLayout.NORTH);
             add(livesPanel, BorderLayout.NORTH);
@@ -49,14 +47,11 @@ public class LivesIndicatorPanel
     @Override
     public void livesChanged(Player player)
     {
-        for (int c = 0; c < playerList.length; c++)
+        if (mapPlayerIdIndicator.containsKey(player.getId()))
         {
-            if (playerList[c].getId() == player.getId())
-            {
-                playerLivesIndicatorList[c].setRemainingLives(player.getLives());
-                super.revalidate();
-                super.repaint();
-            }
+            mapPlayerIdIndicator.get(player.getId()).setRemainingLives(player.getLives());
+            super.revalidate();
+            super.repaint();
         }
     }
 

@@ -23,6 +23,16 @@ public abstract class Unit
     private boolean alive;
 
     /**
+     * A unique id for the unit.
+     */
+    private final long id;
+
+    /**
+     * Count the amount of instantiations.
+     */
+    private static long count = 0;
+
+    /**
      * Current location of an entity.
      */
     @SuppressWarnings("visibilitymodifier") // subclasses have to have access to this variable
@@ -37,6 +47,7 @@ public abstract class Unit
     {
         this.alive = alive;
         this.location = location;
+        this.id = this.count++;
     }
 
     /**
@@ -178,4 +189,12 @@ public abstract class Unit
     	return 1.0;
     }
 
+    /**
+     * Get the id of the instantiation.
+     * @return Return a long with the id.
+     */
+    public long getId()
+    {
+        return id;
+    }
 }

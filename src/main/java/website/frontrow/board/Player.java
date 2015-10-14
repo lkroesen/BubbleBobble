@@ -39,8 +39,6 @@ public class Player
      */
     private int ticksLeft = 0;
 
-    private final long ID = System.currentTimeMillis();
-
     /**
      * The observers for this player.
      */
@@ -54,7 +52,7 @@ public class Player
     public Player(Point position, Map<Direction, Sprite> sprites)
     {
         super(true, position, new Point(0, 0), sprites);
-        addToLog("[PLAYER]\t[SPAWN]\tPlayer created.");
+        addToLog("[PLAYER]\t[SPAWN]\tPlayer created with ID: " + super.getId() + ".");
     }
 
     /**
@@ -219,9 +217,5 @@ public class Player
     public void removeObserver(PlayerObserver playerObserver)
     {
         this.observers.remove(playerObserver);
-    }
-
-    public long getId() {
-        return ID;
     }
 }

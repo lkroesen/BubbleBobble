@@ -34,7 +34,7 @@ public class Enemy
     public Enemy(Point position, Map<Direction, Sprite> sprites)
     {
         super(true, position, new Point(0, 0), sprites);
-        addToLog("[BUBBLE]\t[SPAWN]\tEnemy created.");
+        addToLog("[BUBBLE]\t[SPAWN]\tEnemy created with ID: " + super.getId() + ".");
     }
 
     @Override
