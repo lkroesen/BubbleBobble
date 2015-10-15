@@ -48,7 +48,6 @@ public class PlayerLivesIndicator
     private void updateLives()
     {
         this.removeAll();
-        System.out.println("Removed all things!");
 
         this.add(new JLabel("Player " + playerNumber, SwingConstants.CENTER), BorderLayout.NORTH);
 
@@ -58,7 +57,6 @@ public class PlayerLivesIndicator
         for(int i = 0; i < remainingLives; i++)
         {
             JLabel label = new JLabel(ImageStore.getInstance().getHeartIcon());
-            label.setVisible(true);
             label.setPreferredSize(new Dimension(16, 16));
 
             livesPanel.add(label);
