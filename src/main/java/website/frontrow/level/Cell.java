@@ -110,11 +110,9 @@ public enum Cell
      * @param graphics The graphics context to draw in.
      * @param x The x coordinate to draw the cell at.
      * @param y The y coordinate to draw the cell at.
-     * @param width The width to draw the cell with.
-     * @param height The height to draw the cell with.
      */
-    public void draw(Graphics graphics, int x, int y, int width, int height)
+    public void draw(Graphics graphics, int x, int y)
     {
-        getSprite().draw(graphics, x, y, width, height);
+        getSprite().draw(graphics, x, y);
     }
 }

@@ -2,6 +2,7 @@ package website.frontrow.board;
 
 import java.awt.Graphics;
 
+import website.frontrow.game.GameConstants;
 import website.frontrow.level.Level;
 import website.frontrow.sprite.Sprite;
 import website.frontrow.util.AABB;
@@ -94,15 +95,13 @@ public abstract class Unit
      * @param g The graphics context to draw in.
      * @param x The x coordinate to draw the unit at.
      * @param y The y coordinate to draw the unit at.
-     * @param width The width to draw the unit with.
-     * @param height The height to draw the unit with.
      */
-    public void draw(Graphics g, int x, int y, int width, int height)
+    public void draw(Graphics g, int x, int y)
     {
     	Point location = this.getLocation();
-    	int xCoordinate = (int) (location.getX() * width + x);
-    	int yCoordinate = (int) (location.getY() * height + y);
-    	getSprite().draw(g, xCoordinate, yCoordinate, width, height);
+    	int xCoordinate = (int) (location.getX() *  GameConstants.CELL_WIDTH + x);
+    	int yCoordinate = (int) (location.getY() *  GameConstants.CELL_HEIGHT + y);
+    	getSprite().draw(g, xCoordinate, yCoordinate);
     }
 
     /**
