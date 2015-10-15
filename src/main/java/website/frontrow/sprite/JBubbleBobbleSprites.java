@@ -96,12 +96,6 @@ public final class JBubbleBobbleSprites
         return getDirectionalSprite("/sprites/Bubble_Containing_Zen.png");
     }
 
-    @Override
-    public Sprite loadSprite(String resource)
-    {
-        return super.loadSprite(resource);
-    }
-
     /**
      * Creates a map with sprites for all directions.
      * @param resource The resource to cut the sprites from.

@@ -23,17 +23,6 @@ public class PlayerTest
     }
 
     /**
-     * Test the score adder of Player.
-     */
-    @Test
-    public void testScore()
-    {
-        Player pl = new Player(super.p, null);
-        pl.addScore(42);
-        assertEquals(pl.getScore(), 42);
-    }
-
-    /**
      * Tests the addLife function.
      */
     @Test

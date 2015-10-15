@@ -4,8 +4,6 @@ import website.frontrow.board.Player;
 import website.frontrow.board.observer.PlayerObserver;
 
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
 
 import java.util.ArrayList;
@@ -15,17 +13,17 @@ import java.util.Map;
 /**
  * Indicates the remaining lives of the players.
  */
-public class LivesIndicatorPanel
+public class StatusPanel
     extends JPanel
     implements PlayerObserver
 {
-    private Map<Long, PlayerLivesIndicator> mapPlayerIdIndicator;
+    private Map<Long, PlayerStatusPanel> mapPlayerIdIndicator;
 
     /**
      * Creates a panel which contains indicators of the number of lives remaining for the players.
      * @param players The players.
      */
-    public LivesIndicatorPanel(ArrayList<Player> players)
+    public StatusPanel(ArrayList<Player> players)
     {
         super(new BorderLayout());
         mapPlayerIdIndicator = new HashMap<>();
@@ -34,12 +32,13 @@ public class LivesIndicatorPanel
 
         for(int i = 0; i < players.size(); i++)
         {
-            PlayerLivesIndicator livesPanel
-                    = new PlayerLivesIndicator(i + 1, players.get(i).getLives());
+            Player player = players.get(i);
+            PlayerStatusPanel livesPanel
+                    = new PlayerStatusPanel(i + 1, player.getLives(), player.getScore());
 
-            mapPlayerIdIndicator.put(players.get(i).getId(), livesPanel);
+            mapPlayerIdIndicator.put(player.getId(), livesPanel);
 
-            add(new JSeparator(SwingConstants.HORIZONTAL), BorderLayout.NORTH);
+
             add(livesPanel, BorderLayout.NORTH);
         }
     }
@@ -50,8 +49,7 @@ public class LivesIndicatorPanel
         if (mapPlayerIdIndicator.containsKey(player.getId()))
         {
             mapPlayerIdIndicator.get(player.getId()).setRemainingLives(player.getLives());
-            super.revalidate();
-            super.repaint();
+            update();
         }
     }
 
@@ -59,6 +57,11 @@ public class LivesIndicatorPanel
     public void scoreChanged(Player player)
     {
         //Nothing yet
+        if(mapPlayerIdIndicator.containsKey(player.getId()))
+        {
+            mapPlayerIdIndicator.get(player.getId()).setScore(player.getScore());
+            update();
+        }
     }
 
     @Override
@@ -77,5 +80,14 @@ public class LivesIndicatorPanel
     public void notInvincible(Player player)
     {
         //Nothing yet
+    }
+
+    /**
+     * Updates all the components!
+     */
+    public void update()
+    {
+        super.revalidate();
+        super.repaint();
     }
 }

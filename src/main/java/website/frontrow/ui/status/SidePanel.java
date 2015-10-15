@@ -52,7 +52,7 @@ public class SidePanel
         add(new ButtonPanel(buttonMappings));
         add(new StatusLabelPanel(game));
 
-        add(new LivesIndicatorPanel(game.getPlayers()));
+        add(new StatusPanel(game.getPlayers()));
         addToLog("[SiP]\tSide Panel Created Successfully.");
     }
 

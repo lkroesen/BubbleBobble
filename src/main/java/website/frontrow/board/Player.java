@@ -1,6 +1,7 @@
 package website.frontrow.board;
 
 import website.frontrow.board.observer.PlayerObserver;
+import website.frontrow.board.observer.ScoreReceiver;
 import website.frontrow.game.GameConstants;
 import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
@@ -17,7 +18,8 @@ import java.util.Set;
  */
 public class Player
         extends Mover
-        implements Logable
+        implements Logable,
+                   ScoreReceiver
 {
     /**
      * The points accumulated by the player.
@@ -64,17 +66,6 @@ public class Player
         return score;
     }
 
-    /**
-     * Adds p (points) to the score of the player, when it gets a pickup.
-     * @param p integer
-     */
-    public void addScore(int p)
-    {
-        addToLog("[PLAYER]\t[SCORE]\tScore increased by " + p);
-        score += p;
-        observers.forEach((o) -> o.scoreChanged(this));
-    }
-
     @Override
     public void tick(Level level)
     {
@@ -89,7 +80,7 @@ public class Player
         {
             ticksLeft--;
         }
-        if(!invinsible())
+        if(!invincible())
         {
             observers.forEach(o -> o.notInvincible(this));
         }
@@ -129,7 +120,7 @@ public class Player
         if(ticksLeft <= 0)
         {
             loseLife();
-            if(lives < 0)
+            if(lives <= 0)
             {
                 this.kill();
                 observers.forEach(o -> o.playerDied(this));
@@ -146,7 +137,7 @@ public class Player
      * Whether the player is invincible.
      * @return invincible.
      */
-    public boolean invinsible()
+    public boolean invincible()
     {
         return ticksLeft > 0;
     }
@@ -217,5 +208,13 @@ public class Player
     public void removeObserver(PlayerObserver playerObserver)
     {
         this.observers.remove(playerObserver);
+    }
+
+    @Override
+    public void increaseScoreWith(int value)
+    {
+        addToLog("[PLAYER]\t[SCORE]\tScore increased by " + value);
+        this.score += value;
+        observers.forEach(o -> o.scoreChanged(this));
     }
 }

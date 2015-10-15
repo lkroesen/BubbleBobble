@@ -1,5 +1,6 @@
 package website.frontrow.board;
 
+import website.frontrow.board.observer.ScoreProvider;
 import website.frontrow.game.GameConstants;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
@@ -13,7 +14,8 @@ import java.util.Map;
  */
 public class Enemy
         extends Mover
-        implements Logable
+        implements Logable,
+                   ScoreProvider
 {
 	private int tickCounter = 0;
 	private float random = 1.00f;
@@ -153,5 +155,11 @@ public class Enemy
     public long getCaughtTime()
     {
         return TIME_TO_ESCPAPE;
+    }
+
+    @Override
+    public int getWorth()
+    {
+        return GameConstants.DEFAULT_ENEMY_VALUE;
     }
 }

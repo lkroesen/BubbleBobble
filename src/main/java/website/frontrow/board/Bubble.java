@@ -1,6 +1,7 @@
 package website.frontrow.board;
 
 import website.frontrow.board.behaviour.BubbleGravityBehaviour;
+import website.frontrow.board.observer.ScoreReceiver;
 import website.frontrow.game.GameConstants;
 import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
@@ -43,6 +44,11 @@ public class Bubble
     private boolean hit = false;
 
     /**
+     * The receiver of the score when the bubble kills something.
+     */
+    private ScoreReceiver scoreReceiver;
+
+    /**
      * Constructor of the Bubble Unit.
      * @param position The starting position of the bubble.
      * @param motion The starting motion of the bubble.
@@ -50,7 +56,20 @@ public class Bubble
      */
     public Bubble(Point position, Point motion, Map<Direction, Sprite> sprites)
     {
+        this(position, motion, sprites, null);
+    }
+
+    /**
+     * Constructor of the Bubble Unit.
+     * @param position The starting position of the bubble.
+     * @param motion The starting motion of the bubble.
+     * @param sprites The sprites for this bubble.
+     * @param creator The creator of this bubble
+     */
+    public Bubble(Point position, Point motion, Map<Direction, Sprite> sprites, Player creator)
+    {
         super(true, position, motion, sprites, BubbleGravityBehaviour.getInstance());
+        this.scoreReceiver = creator;
         addToLog("[BUBBLE]\t[SPAWN]\tBubble created with ID: " + super.getId() + ".");
     }
 
@@ -109,6 +128,16 @@ public class Bubble
                 level.addUnit(this.contains);
                 this.kill();
             }
+        }
+    }
+
+    @Override
+    public void kill()
+    {
+        super.kill();
+        if(this.scoreReceiver != null && this.contains != null)
+        {
+            this.scoreReceiver.increaseScoreWith(this.contains.getWorth());
         }
     }
 

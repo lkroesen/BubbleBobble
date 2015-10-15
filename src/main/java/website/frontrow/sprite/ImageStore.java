@@ -53,6 +53,14 @@ public final class ImageStore
     }
 
     /**
+     * Creates an icon to indicate the number of lost lives.
+     * @return The requested icon.
+     */
+    public ImageIcon getGreyHeartIcon()
+    {
+        return getImageIcon("/sprites/heartDark.png");
+    }
+    /**
      * Loads an image icon.
      * @param filename The file you want to load.
      * @return The requested icon.
