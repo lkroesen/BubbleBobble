@@ -64,7 +64,6 @@ public class ModeMenu
         add(panel, BorderLayout.CENTER);
 
         addToLog("[MODEMENU]\t created successfully.");
-        setVisible(true);
     }
 
     /**

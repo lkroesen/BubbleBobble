@@ -52,10 +52,9 @@ public class Launcher implements Logable
     {
         Log.togglePrinting();
 
-        MusicPlayer.getInstance().init();
         MusicPlayer.getInstance().selectSong(Songs.TITLE_SCREEN);
 
-        new ModeMenu();
+        new ModeMenu().setVisible(true);
 
     }
 
