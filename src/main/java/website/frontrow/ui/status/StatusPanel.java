@@ -56,7 +56,6 @@ public class StatusPanel
     @Override
     public void scoreChanged(Player player)
     {
-        //Nothing yet
         if(mapPlayerIdIndicator.containsKey(player.getId()))
         {
             mapPlayerIdIndicator.get(player.getId()).setScore(player.getScore());
@@ -74,6 +73,7 @@ public class StatusPanel
     public void invincible(Player player)
     {
         //Nothing yet
+        //Maybe flash the hearts in the player panel.
     }
 
     @Override

@@ -93,7 +93,7 @@ public class Player
     @Override
     public double getSpeedMultiplier()
     {
-    	return GameConstants.PLAYER_SPEED_MULTIPLIER;
+        return GameConstants.PLAYER_SPEED_MULTIPLIER;
     }
 
     @Override
@@ -148,7 +148,7 @@ public class Player
      */
     public int getLives() 
     {
-    	return lives;
+        return lives;
     }
     
     /**
@@ -157,7 +157,7 @@ public class Player
      */
     public void setLives(int l)
     {
-    	lives = l;
+        lives = l;
         observers.forEach(o -> o.livesChanged(this));
         addToLog("[PLAYER]\t Player's current amount of lives is now: " + lives);
     }
@@ -167,7 +167,7 @@ public class Player
      */
     public void loseLife()
     {
-    	lives--;
+        lives--;
         observers.forEach(o -> o.livesChanged(this));
         addToLog("[PLAYER]\t Player lost a life, total lives is now: " + lives);
     }
@@ -177,7 +177,7 @@ public class Player
      */
     public void addLife()
     {
-    	lives++;
+        lives++;
         observers.forEach((o) -> o.livesChanged(this));
         addToLog("[PLAYER]\t Player earned a life, total lives is now: " + lives);
     }
@@ -188,7 +188,7 @@ public class Player
      */
     public boolean hasLives()
     {
-    	return lives > 0;
+        return lives > 0;
     }
 
 

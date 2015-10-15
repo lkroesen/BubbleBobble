@@ -2,10 +2,7 @@ package website.frontrow.ui.status;
 
 import website.frontrow.sprite.ImageStore;
 
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -63,7 +60,6 @@ public class PlayerStatusPanel
     /**
      * Updates the lives of the players.
      */
-    @SuppressWarnings({"magicnumber", "methodlength"})
     private void update()
     {
         this.removeAll();
@@ -71,12 +67,12 @@ public class PlayerStatusPanel
         this.add(new JLabel("Player " + playerNumber, SwingConstants.CENTER));
         this.add(new JLabel("Score: " + score, SwingConstants.CENTER));
         JPanel livesPanel = new JPanel();
-        livesPanel.setPreferredSize(new Dimension(remainingLives * 20, 30));
 
         for(int i = 0; i < remainingLives; i++)
         {
-            JLabel label = new JLabel(ImageStore.getInstance().getHeartIcon());
-            label.setPreferredSize(new Dimension(16, 16));
+            ImageIcon heart = ImageStore.getInstance().getHeartIcon();
+            JLabel label = new JLabel(heart);
+            label.setPreferredSize(new Dimension(heart.getIconWidth(), heart.getIconHeight()));
             livesPanel.add(label);
         }
 
@@ -87,9 +83,9 @@ public class PlayerStatusPanel
             {
                 break;
             }
-
-            JLabel label = new JLabel(ImageStore.getInstance().getGreyHeartIcon());
-            label.setPreferredSize(new Dimension(16, 16));
+            ImageIcon heart = ImageStore.getInstance().getGreyHeartIcon();
+            JLabel label = new JLabel(heart);
+            label.setPreferredSize(new Dimension(heart.getIconWidth(), heart.getIconHeight()));
             livesPanel.add(label);
         }
         this.add(livesPanel);
