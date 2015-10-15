@@ -1,5 +1,7 @@
 package website.frontrow.board;
 
+import website.frontrow.board.observer.PlayerObserver;
+import website.frontrow.board.observer.ScoreReceiver;
 import website.frontrow.game.GameConstants;
 import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
@@ -7,14 +9,17 @@ import website.frontrow.logger.Logable;
 import website.frontrow.sprite.Sprite;
 import website.frontrow.util.Point;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * The player as part of a game.
  */
 public class Player
         extends Mover
-        implements Logable
+        implements Logable,
+                   ScoreReceiver
 {
     /**
      * The points accumulated by the player.
@@ -37,6 +42,11 @@ public class Player
     private int ticksLeft = 0;
 
     /**
+     * The observers for this player.
+     */
+    private Set<PlayerObserver> observers = new HashSet<>();
+
+    /**
      * The constructor of the Player Unit.
      * @param position A players starting position.
      * @param sprites The sprite for this player.
@@ -44,7 +54,7 @@ public class Player
     public Player(Point position, Map<Direction, Sprite> sprites)
     {
         super(true, position, new Point(0, 0), sprites);
-        addToLog("[PLAYER]\t[SPAWN]\tPlayer created.");
+        addToLog("[PLAYER]\t[SPAWN]\tPlayer created with ID: " + super.getId() + ".");
     }
 
     /**
@@ -54,16 +64,6 @@ public class Player
     public int getScore()
     {
         return score;
-    }
-
-    /**
-     * Adds p (points) to the score of the player, when it gets a pickup.
-     * @param p integer
-     */
-    public void addScore(int p)
-    {
-        addToLog("[PLAYER]\t[SCORE]\tScore increased by " + p);
-        score += p;
     }
 
     @Override
@@ -80,6 +80,10 @@ public class Player
         {
             ticksLeft--;
         }
+        if(!invincible())
+        {
+            observers.forEach(o -> o.notInvincible(this));
+        }
     }
     
     /**
@@ -89,7 +93,7 @@ public class Player
     @Override
     public double getSpeedMultiplier()
     {
-    	return GameConstants.PLAYER_SPEED_MULTIPLIER;
+        return GameConstants.PLAYER_SPEED_MULTIPLIER;
     }
 
     @Override
@@ -115,13 +119,27 @@ public class Player
     {
         if(ticksLeft <= 0)
         {
-            ticksLeft = INVINCIBILITY_TICKS;
             loseLife();
-            if(lives < 0)
+            if(lives <= 0)
             {
                 this.kill();
+                observers.forEach(o -> o.playerDied(this));
+            }
+            else
+            {
+                ticksLeft = INVINCIBILITY_TICKS;
+                observers.forEach(o -> o.invincible(this));
             }
         }
+    }
+
+    /**
+     * Whether the player is invincible.
+     * @return invincible.
+     */
+    public boolean invincible()
+    {
+        return ticksLeft > 0;
     }
 
     /**
@@ -130,7 +148,7 @@ public class Player
      */
     public int getLives() 
     {
-    	return lives;
+        return lives;
     }
     
     /**
@@ -139,8 +157,9 @@ public class Player
      */
     public void setLives(int l)
     {
-    	lives = l;
-    	addToLog("[PLAYER]\t Player's current amount of lives is now: " + lives);
+        lives = l;
+        observers.forEach(o -> o.livesChanged(this));
+        addToLog("[PLAYER]\t Player's current amount of lives is now: " + lives);
     }
     
     /**
@@ -148,8 +167,9 @@ public class Player
      */
     public void loseLife()
     {
-    	lives--;
-    	addToLog("[PLAYER]\t Player lost a life, total lives is now: " + lives);
+        lives--;
+        observers.forEach(o -> o.livesChanged(this));
+        addToLog("[PLAYER]\t Player lost a life, total lives is now: " + lives);
     }
     
     /**
@@ -157,8 +177,9 @@ public class Player
      */
     public void addLife()
     {
-    	lives++;
-    	addToLog("[PLAYER]\t Player earned a life, total lives is now: " + lives);
+        lives++;
+        observers.forEach((o) -> o.livesChanged(this));
+        addToLog("[PLAYER]\t Player earned a life, total lives is now: " + lives);
     }
     
     /**
@@ -167,6 +188,33 @@ public class Player
      */
     public boolean hasLives()
     {
-    	return lives > 0;
+        return lives > 0;
+    }
+
+
+    /**
+     * Add an observer to this player. Observers get notified of changes in the player state.
+     * @param playerObserver The observer.
+     */
+    public void addObserver(PlayerObserver playerObserver)
+    {
+        this.observers.add(playerObserver);
+    }
+
+    /**
+     * Removes an observer from this player. Observers will no longer be notified of changes
+     * @param playerObserver The observer.
+     */
+    public void removeObserver(PlayerObserver playerObserver)
+    {
+        this.observers.remove(playerObserver);
+    }
+
+    @Override
+    public void increaseScoreWith(int value)
+    {
+        addToLog("[PLAYER]\t[SCORE]\tScore increased by " + value);
+        this.score += value;
+        observers.forEach(o -> o.scoreChanged(this));
     }
 }

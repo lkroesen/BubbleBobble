@@ -76,8 +76,6 @@ public class Launcher implements Logable
 
         try
         {
-
-
             MapParser mp = new MapParser();
             ArrayList<Level> levelList = new ArrayList<>();
             for(String levelFileName : filename)
@@ -173,11 +171,13 @@ public class Launcher implements Logable
 
                 if(game.isRunning())
                 {
-                    Player p = game.getPlayers().get(0);
-                    game.getLevel().addUnit(
-                            new Bubble(p.getLocation(),
-                                    new Point(p.getDirection().getDeltaX() * 4, 0),
-                                    JBubbleBobbleSprites.getInstance().getBubbleSprite()));
+                    Player player = game.getPlayers().get(0);
+                    Bubble bubble = new Bubble(player.getLocation(),
+                            new Point(player.getDirection().getDeltaX() * 4, 0),
+                            JBubbleBobbleSprites.getInstance().getBubbleSprite(),
+                            player);
+
+                    game.getLevel().addUnit(bubble);
                 }
             });
         }

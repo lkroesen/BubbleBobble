@@ -1,10 +1,12 @@
-package website.frontrow.ui;
+package website.frontrow.ui.status;
 
 import website.frontrow.game.Game;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.music.MusicPlayer;
 import website.frontrow.music.Songs;
+import website.frontrow.ui.Action;
+import website.frontrow.ui.ButtonPanel;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -22,8 +24,6 @@ public class SidePanel
      * Creates a sidepanel to contain the score, buttons and other statistics.
      * @param game The game to display the statistics of.
      */
-    @SuppressWarnings("checkstyle:methodlength")
-    /* The music caused this method to be longer. */
     public SidePanel(Game game)
     {
         super();
@@ -51,6 +51,8 @@ public class SidePanel
 
         add(new ButtonPanel(buttonMappings));
         add(new StatusLabelPanel(game));
+
+        add(new StatusPanel(game.getPlayers()));
         addToLog("[SiP]\tSide Panel Created Successfully.");
     }
 
