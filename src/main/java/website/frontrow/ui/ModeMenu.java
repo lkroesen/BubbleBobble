@@ -23,8 +23,8 @@ public class ModeMenu
         implements Logable
 {
 
-    private final static int width = 170;
-    private final static int height = 150;
+    private static final int WIDTH = 170;
+    private static final int HEIGHT = 150;
 
     /**
      * Create a Mode Menu.
@@ -36,7 +36,7 @@ public class ModeMenu
         setResizable(false);
         setFocusable(true);
 
-        Dimension size = new Dimension(width, height);
+        Dimension size = new Dimension(WIDTH, HEIGHT);
         this.setSize(size);
 
         JLabel label1 = new JLabel("Choose A Mode:");
