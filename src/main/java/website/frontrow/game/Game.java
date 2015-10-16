@@ -11,7 +11,6 @@ import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.ui.JBubbleKeyListener;
 import website.frontrow.util.Point;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**

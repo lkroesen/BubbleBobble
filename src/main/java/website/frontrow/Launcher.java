@@ -13,7 +13,6 @@ import website.frontrow.ui.Action;
 import website.frontrow.ui.JBubbleBobbleUI;
 import website.frontrow.ui.ModeMenu;
 import website.frontrow.game.GameConstants;
-import website.frontrow.util.FileNameCollector;
 import website.frontrow.util.Point;
 import website.frontrow.logger.Logable;
 import website.frontrow.music.MusicPlayer;
@@ -21,7 +20,6 @@ import website.frontrow.music.MusicPlayer;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,7 +33,7 @@ import java.util.concurrent.TimeUnit;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class Launcher implements Logable
-{	
+{
     /**
      * Construct a launcher, currently not doing anything.
      */
@@ -61,6 +59,7 @@ public class Launcher implements Logable
     /**
      * Starts the game.
      * @param filename The file name of the level to load.
+     * @param playerCount The amount of players in this game.
      */
     @SuppressWarnings("methodlength") // We need to make a GameFactory and UIBuilder
     public void start(String[] filename, int playerCount)
@@ -83,7 +82,7 @@ public class Launcher implements Logable
             Game game = new Game(levelList, playerCount);
             Map<Integer, Action> keyMappings = createKeyMappings(game);
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
-            
+
             InputStream map = getClass().getResourceAsStream("/game_over.txt");
     		Level gameOverLevel = mp.parseMap(map);
     		game.setGameOver(gameOverLevel);
@@ -135,6 +134,7 @@ public class Launcher implements Logable
      * @param game The game to control with the keys.
      * @return The mapping.
      */
+    // This method creates keymappings, causing it to be rather long.
     @SuppressWarnings("checkstyle:methodlength")
     private Map<Integer, Action> createKeyMappings(Game game)
     {
@@ -174,7 +174,8 @@ public class Launcher implements Logable
                 }
             });
         }
-        else{
+        else
+        {
         	map.put(KeyEvent.VK_A, () ->
             {
                 addToLog("[KEY]\t< \'<-\' > Pressed.");
@@ -206,25 +207,25 @@ public class Launcher implements Logable
                                     JBubbleBobbleSprites.getInstance().getBubbleSprite()));
                 }
             });
-            
+
             map.put(KeyEvent.VK_LEFT, () ->
             {
                 addToLog("[KEY]\t< \'<-\' > Pressed.");
                 game.getPlayers().get(1).goLeft();
             });
-            
+
             map.put(KeyEvent.VK_RIGHT, () ->
             {
                 addToLog("[KEY]\t< \'->\' > Pressed.");
                 game.getPlayers().get(1).goRight();
             });
-            
+
             map.put(KeyEvent.VK_UP, () ->
             {
                 addToLog("[KEY]\t< \' \' > Pressed.");
                 game.getPlayers().get(1).jump();
             });
-            
+
             map.put(KeyEvent.VK_CONTROL, () ->
             {
                 addToLog("[KEY]\t< \'Z\' > Pressed.");

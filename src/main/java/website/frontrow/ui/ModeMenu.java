@@ -14,14 +14,21 @@ import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.util.FileNameCollector;
 
+/**
+ * A menu allowing the user to choose between a
+ * singleplayer and a multiplayer game.
+ */
 public class ModeMenu
         extends JFrame
         implements Logable
 {
 
-    private final int width = 170;
-    private final int height = 150;
+    private final static int width = 170;
+    private final static int height = 150;
 
+    /**
+     * Create a Mode Menu.
+     */
     public ModeMenu()
     {
         super("Bubble Bobble");
@@ -35,6 +42,18 @@ public class ModeMenu
         JLabel label1 = new JLabel("Choose A Mode:");
         add(label1, BorderLayout.PAGE_START);
 
+        ButtonPanel panel = new ButtonPanel(createButtonMappings());
+        add(panel, BorderLayout.CENTER);
+
+        addToLog("[MODEMENU]\t created successfully.");
+    }
+
+    /**
+     * Create button mappings for the gamemodes.
+     * @return The button mappings.
+     */
+    private Map<String, Action> createButtonMappings()
+    {
         Map<String, Action> buttonMappings = new HashMap<>();
         buttonMappings.put("Single Player Mode", () ->
         {
@@ -59,11 +78,7 @@ public class ModeMenu
                 e.printStackTrace();
             }
         });
-
-        ButtonPanel panel = new ButtonPanel(buttonMappings);
-        add(panel, BorderLayout.CENTER);
-
-        addToLog("[MODEMENU]\t created successfully.");
+        return buttonMappings;
     }
 
     /**

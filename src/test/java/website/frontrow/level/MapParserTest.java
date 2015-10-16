@@ -1,14 +1,11 @@
 package website.frontrow.level;
 
-import org.junit.Test;
-import website.frontrow.board.Enemy;
-import website.frontrow.board.Player;
-import website.frontrow.util.Grid;
-import website.frontrow.util.Point;
-
 import java.io.IOException;
 import java.util.Arrays;
-
+import org.junit.Test;
+import website.frontrow.board.Enemy;
+import website.frontrow.util.Grid;
+import website.frontrow.util.Point;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
