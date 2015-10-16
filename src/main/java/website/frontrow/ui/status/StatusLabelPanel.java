@@ -17,7 +17,7 @@ public class StatusLabelPanel extends JPanel
 
     // MAX Height is a measured number.
     @SuppressWarnings("checkstyle:magicnumber")
-    private final int MAX_HEIGHT = 100;
+    private static final int MAX_HEIGHT = 100;
     /**
      * Creates a status label panel.
      * @param game The game to report on.

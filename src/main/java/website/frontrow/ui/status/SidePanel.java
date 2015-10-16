@@ -28,10 +28,7 @@ public class SidePanel
     public SidePanel(Game game)
     {
         super();
-
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        //Add the score counter
-
         Map<String, Action> buttonMappings = new HashMap<>();
 
         buttonMappings.put("Pause/Start", () ->

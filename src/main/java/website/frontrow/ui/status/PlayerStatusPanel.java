@@ -27,7 +27,7 @@ public class PlayerStatusPanel
 
     // Max Height is a manually measured height.
     @SuppressWarnings("checkstyle:magicnumber")
-    private final int MAX_HEIGHT = 350;
+    private static final int MAX_HEIGHT = 350;
 
     /**
      * Creates a panel which displays the player number and the corresponding lives.

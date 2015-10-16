@@ -47,6 +47,7 @@ public abstract class Unit
     {
         this.alive = alive;
         this.location = location;
+        // This currently causes a write to a static variable fro an instance method.
         this.id = this.count++;
     }
 
