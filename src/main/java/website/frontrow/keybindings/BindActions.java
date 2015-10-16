@@ -1,5 +1,6 @@
 package website.frontrow.keybindings;
 
+import java.awt.event.KeyEvent;
 import website.frontrow.board.Bubble;
 import website.frontrow.board.Player;
 import website.frontrow.game.Game;
@@ -9,6 +10,7 @@ import website.frontrow.logger.Logable;
 import website.frontrow.music.MusicPlayer;
 import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.ui.Action;
+import website.frontrow.ui.PlayerAction;
 import website.frontrow.util.Point;
 
 import java.util.HashMap;
@@ -21,8 +23,7 @@ public final class BindActions
         implements Logable
 {
     private static final BindActions INSTANCE = new BindActions();
-    private static Map<Integer, Action> mapIntActions = new HashMap<>();
-    private static Map<Integer, JBubbleBobbleKeyAction> keyActionMap = new HashMap<>();
+    private Map<Integer, PlayerAction> mapIntActions = new HashMap<>();
 
     /**
      * Private constructor, because Singleton.
@@ -42,123 +43,54 @@ public final class BindActions
     }
 
     /**
-     * Create a Map<Integer, Action> with the relevant binds for the game.
-     * @param game Input the game object.
-     * @return Returns a map with the relevant binds and their actions.
+     * Creates the key bindings for a single player.
+     * @param game Input the game object to influence.
+     * @return Returns the object to allow daisy chaining.
      */
-    public Map<Integer, Action> createSinglePlayerKeyMappings(Game game)
+    public BindActions createSinglePlayerKeyMappings(Game game)
     {
-        if(game.getPlayers().size() == 1)
-        {
-            player1GoLeftBind(game);
-            player1GoRightBind(game);
-            player1JumpBind(game);
-            player1ShootBind(game);
-        }
+        assert game.getPlayers().size() >= 1;
 
-        utilCreateLog();
-        utilVolumeDown();
-        utilVolumeUp();
+        mapIntActions.put(KeyEvent.VK_SPACE, JBubbleBobbleKeyAction.JUMP);
 
+        return this;
+    }
+
+    /**
+     * Creates the key bindings for the second player.
+     * @param game The game to influence.
+     * @return The object to allow daisy chaining.
+     */
+    public BindActions createSecondPlayerKeyMappings(Game game)
+    {
+        assert game.getPlayers().size() >= 2;
+
+        return this;
+    }
+
+    /**
+     * Creates the util bindings.
+     * @param game The game to influence.
+     * @return The object to allow daisy chaining.
+     */
+    public BindActions createUtilMappings(Game game)
+    {
+        return this;
+    }
+
+    /**
+     * Returns the created mapping.
+     * @return The mapping
+     */
+    public Map<Integer, PlayerAction> getMapping()
+    {
         return mapIntActions;
     }
 
-    /**
-     * Define what happens when player 1 goes Left.
-     * @param game
-     */
-    private void player1GoLeftBind(Game game)
+    public void clearMappings()
     {
-        mapIntActions.put(KeyBinds.player1GoLeft, () ->
-        {
-            addToLog("[KEY]\t< \'<-\' > Pressed.");
-            game.getPlayers().get(0).goLeft();
-        });
+        this.mapIntActions = new HashMap<>();
     }
-
-    /**
-     * Define what happens when player 1 goes Right.
-     * @param game Input the game object.
-     */
-    private void player1GoRightBind(Game game)
-    {
-        mapIntActions.put(KeyBinds.player1GoRight, () ->
-        {
-            addToLog("[KEY]\t< \'->\' > Pressed.");
-            game.getPlayers().get(0).goRight();
-        });
-    }
-
-    /**
-     * Define what happens when player 1 jumps.
-     * @param game Input the game object.
-     */
-    private void player1JumpBind(Game game)
-    {
-        mapIntActions.put(KeyBinds.player1Jump, () ->
-        {
-            addToLog("[KEY]\t< \' \' > Pressed.");
-            game.getPlayers().get(0).jump();
-        });
-    }
-
-    /**
-     * Define what happens when a player shoots.
-     * @param game Input the game object.
-     */
-    private void player1ShootBind(Game game)
-    {
-        mapIntActions.put(KeyBinds.player1Shoot, () ->
-        {
-            addToLog("[KEY]\t< \'Z\' > Pressed.");
-
-            if(game.isRunning())
-            {
-                Player p = game.getPlayers().get(0);
-                game.getLevel().addUnit(
-                        new Bubble(p.getLocation(),
-                                new Point(p.getDirection().getDeltaX() * 4, 0),
-                                JBubbleBobbleSprites.getInstance().getBubbleSprite()));
-            }
-        });
-    }
-
-    /**
-     * Control the volume to go up.
-     */
-    private void utilVolumeUp()
-    {
-        mapIntActions.put(KeyBinds.utilVolumeUp, () ->
-        {
-            addToLog("[KEY]\t< \'=\' > Pressed.");
-            MusicPlayer.getInstance().volumeAdjust(1.0d);
-        });
-    }
-
-    /**
-     * Control the volume to go down.
-     */
-    private void utilVolumeDown()
-    {
-        mapIntActions.put(KeyBinds.utilVolumeDown, () ->
-        {
-            addToLog("[KEY]\t< \'-\' > Pressed.");
-            MusicPlayer.getInstance().volumeAdjust(-1.0d);
-        });
-    }
-
-    /**
-     * Creates a log in Temp of actions during the game.
-     */
-    private void utilCreateLog()
-    {
-        mapIntActions.put(KeyBinds.utilCreateLog, () ->
-        {
-            addToLog("[KEY]\t< F1 > Pressed.");
-            new DumpLog();
-        });
-    }
-
 
     /**
      * Every class that implements Logable, must add actions to the log.
