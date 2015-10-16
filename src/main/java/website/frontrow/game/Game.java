@@ -92,7 +92,7 @@ public class Game
         }
         for(int i = 0; i < players.size(); ++i)
         {
-            this.currentLevel.registerPlayer(players.get(i), 0);
+            this.currentLevel.registerPlayer(players.get(i), i);
         }
     }
 

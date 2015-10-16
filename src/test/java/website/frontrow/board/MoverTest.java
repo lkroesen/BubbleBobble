@@ -8,8 +8,9 @@ import website.frontrow.game.GameConstants;
 import website.frontrow.level.Level;
 import website.frontrow.util.Grid;
 import website.frontrow.util.Point;
-import static org.junit.Assert.assertEquals;
+
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Tests the mover class.

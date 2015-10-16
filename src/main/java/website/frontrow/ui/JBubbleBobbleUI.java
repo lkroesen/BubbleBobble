@@ -4,6 +4,7 @@ import website.frontrow.game.Game;
 import website.frontrow.game.GameConstants;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
+import website.frontrow.ui.status.SidePanel;
 
 import java.util.Map;
 

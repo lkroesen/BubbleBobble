@@ -353,7 +353,8 @@ public class Level
     {
         if(player.isAlive() && playerPositions.size() > 0)
         {
-            player.setLocation(playerPositions.get(spawnIndex));
+            int wrappedIndex = spawnIndex % playerPositions.size();
+            player.setLocation(playerPositions.get(wrappedIndex));
             players.add(player);
             units.add(player);
             addToLog("[LEVEL]\tPlayer registered.");
