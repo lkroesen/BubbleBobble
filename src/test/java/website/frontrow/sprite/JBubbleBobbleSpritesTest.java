@@ -15,9 +15,9 @@ import static org.junit.Assert.assertNotNull;
  */
 public class JBubbleBobbleSpritesTest
 {
-    private Sprite s;
+    private Sprite sprite;
     private Map<Direction, Sprite> directionalSprite;
-    private JBubbleBobbleSprites sp;
+    private JBubbleBobbleSprites jBubbleBobbleSprites;
 
     /**
      * Setup the sprite store for the test.
@@ -25,7 +25,7 @@ public class JBubbleBobbleSpritesTest
     @Before
     public void setUp()
     {
-        sp = JBubbleBobbleSprites.getInstance();
+        jBubbleBobbleSprites = JBubbleBobbleSprites.getInstance();
     }
 
     /**
@@ -34,8 +34,8 @@ public class JBubbleBobbleSpritesTest
     @After
     public void teardown()
     {
-        s = null;
-        sp = null;
+        sprite = null;
+        jBubbleBobbleSprites = null;
         directionalSprite = null;
     }
 
@@ -45,7 +45,7 @@ public class JBubbleBobbleSpritesTest
     @Test
     public void testSingleTonGetter()
     {
-        assertEquals(sp, JBubbleBobbleSprites.getInstance());
+        assertEquals(jBubbleBobbleSprites, JBubbleBobbleSprites.getInstance());
     }
 
     /**
@@ -54,8 +54,8 @@ public class JBubbleBobbleSpritesTest
     @Test
     public void testGetWallSprite()
     {
-        s = sp.getWallSprite();
-        assertNotNull(s);
+        sprite = jBubbleBobbleSprites.getWallSprite();
+        assertNotNull(sprite);
     }
 
     /**
@@ -64,7 +64,7 @@ public class JBubbleBobbleSpritesTest
     @Test
     public void testGetDirectionalPlayerSprite()
     {
-        directionalSprite = sp.getPlayerSprite();
+        directionalSprite = jBubbleBobbleSprites.getPlayerSprite();
         assertEquals(directionalSprite.size(), 4);
     }
 
@@ -74,7 +74,7 @@ public class JBubbleBobbleSpritesTest
     @Test
     public void testGetEnemySpriteDirection()
     {
-        directionalSprite = sp.getEnemySprite();
+        directionalSprite = jBubbleBobbleSprites.getEnemySprite();
         assertEquals(directionalSprite.size(), 4);
     }
 
@@ -84,7 +84,7 @@ public class JBubbleBobbleSpritesTest
     @Test
     public void testGetBubbleSpriteDirection()
     {
-        directionalSprite = sp.getBubbleSprite();
+        directionalSprite = jBubbleBobbleSprites.getBubbleSprite();
         assertEquals(directionalSprite.size(), 4);
     }
 
@@ -94,7 +94,7 @@ public class JBubbleBobbleSpritesTest
     @Test(expected = RuntimeException.class)
     public void testLoadSpriteFakefile()
     {
-        s = sp.loadSprite("/youwillneverfindme!.txt");
+        sprite = jBubbleBobbleSprites.loadSprite("/youwillneverfindme!.txt");
     }
 
 
@@ -104,7 +104,7 @@ public class JBubbleBobbleSpritesTest
     @Test
     public void testGetPlatformSprite()
     {
-        s = sp.getPlatformSprite();
-        assertNotNull(s);
+        sprite = jBubbleBobbleSprites.getPlatformSprite();
+        assertNotNull(sprite);
     }
 }

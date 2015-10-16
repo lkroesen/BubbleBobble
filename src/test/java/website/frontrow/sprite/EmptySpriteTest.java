@@ -22,7 +22,7 @@ import static org.junit.Assert.assertFalse;
 public class EmptySpriteTest
 {
 
-    private EmptySprite es;
+    private EmptySprite emptySprite;
 
     /**
      * Set things up for the tests.
@@ -30,7 +30,7 @@ public class EmptySpriteTest
     @Before
     public void setUp()
     {
-        es = EmptySprite.getInstance();
+        emptySprite = EmptySprite.getInstance();
     }
 
     /**
@@ -39,7 +39,7 @@ public class EmptySpriteTest
     @After
     public void tearDown()
     {
-        es = null;
+        emptySprite = null;
     }
 
     /**
@@ -49,7 +49,7 @@ public class EmptySpriteTest
     public void testDraw()
     {
         Graphics g = mock(Graphics.class);
-        es.draw(g, 0, 0, 10, 10);
+        emptySprite.draw(g, 0, 0, 10, 10);
         verifyZeroInteractions(g);
     }
 
@@ -59,7 +59,7 @@ public class EmptySpriteTest
     @Test
     public void testGetWidth()
     {
-        assertEquals(es.getWidth(), 0);
+        assertEquals(emptySprite.getWidth(), 0);
     }
 
     /**
@@ -68,7 +68,7 @@ public class EmptySpriteTest
     @Test
     public void testGetHeight()
     {
-        assertEquals(es.getHeight(), 0);
+        assertEquals(emptySprite.getHeight(), 0);
     }
 
     /**
@@ -77,7 +77,7 @@ public class EmptySpriteTest
     @Test
     public void testSlice()
     {
-        assertEquals(es.slice(0, 0, 10, 10), EmptySprite.getInstance());
+        assertEquals(emptySprite.slice(0, 0, 10, 10), EmptySprite.getInstance());
     }
 
     /**
@@ -86,7 +86,7 @@ public class EmptySpriteTest
     @Test
     public void testEqualsEqual()
     {
-        assertTrue(es.equals(EmptySprite.getInstance()));
+        assertTrue(emptySprite.equals(EmptySprite.getInstance()));
     }
 
     /**
@@ -95,6 +95,6 @@ public class EmptySpriteTest
     @Test
     public void testEqualsOther()
     {
-        assertFalse(es.equals("Other"));
+        assertFalse(emptySprite.equals("Other"));
     }
 }

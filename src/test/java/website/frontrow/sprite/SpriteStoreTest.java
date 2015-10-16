@@ -16,11 +16,11 @@ import static org.junit.Assert.assertNotNull;
 public class SpriteStoreTest
 {
 
-    private SpriteStore ss;
+    private SpriteStore spriteStore;
 
     @SuppressWarnings("visibilitymodifier")
     @Rule
-    public ExpectedException ee = ExpectedException.none();
+    public ExpectedException none = ExpectedException.none();
 
     /**
      * Set the things up for the tests.
@@ -28,7 +28,7 @@ public class SpriteStoreTest
     @Before
     public void setUp()
     {
-        ss = new SpriteStore();
+        spriteStore = new SpriteStore();
     }
 
     /**
@@ -37,7 +37,7 @@ public class SpriteStoreTest
     @After
     public void tearDown()
     {
-        ss = null;
+        spriteStore = null;
     }
 
     /**
@@ -47,7 +47,7 @@ public class SpriteStoreTest
     @Test
     public void testLoadSpriteSuccess() throws IOException
     {
-        Sprite sprite = ss.loadSprite("/testImage100x100.png");
+        Sprite sprite = spriteStore.loadSprite("/testImage100x100.png");
         assertNotNull(sprite);
     }
 
@@ -58,7 +58,7 @@ public class SpriteStoreTest
     @Test
     public void testLoadSpriteUnknownFile() throws IOException
     {
-        ee.expect(RuntimeException.class);
-        ss.loadSprite("/cantfindthisone.png");
+        none.expect(RuntimeException.class);
+        spriteStore.loadSprite("/cantfindthisone.png");
     }
 }
