@@ -1,4 +1,4 @@
-package website.frontrow;
+package website.frontrow.game;
 
 import org.junit.Before;
 import website.frontrow.game.Game;
