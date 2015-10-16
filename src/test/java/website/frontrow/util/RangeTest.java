@@ -18,10 +18,10 @@ public class RangeTest
     @Test
     public void testConstruction1()
     {
-        Range x = new Range(0, 1);
+        Range range = new Range(0, 1);
 
-        assertEquals(0, x.getStart(), 0);
-        assertEquals(1, x.getEnd(), 0);
+        assertEquals(0, range.getStart(), 0);
+        assertEquals(1, range.getEnd(), 0);
     }
 
     /**
@@ -30,10 +30,10 @@ public class RangeTest
     @Test
     public void testConstruction2()
     {
-        Range x = new Range(1, 0);
+        Range range = new Range(1, 0);
 
-        assertEquals(0, x.getStart(), 0);
-        assertEquals(1, x.getEnd(), 0);
+        assertEquals(0, range.getStart(), 0);
+        assertEquals(1, range.getEnd(), 0);
     }
 
     /**
@@ -42,9 +42,9 @@ public class RangeTest
     @Test
     public void testLength()
     {
-        Range x = new Range(2, 5);
+        Range range = new Range(2, 5);
 
-        assertEquals(3, x.length(), 0);
+        assertEquals(3, range.length(), 0);
     }
 
     /**
@@ -54,11 +54,11 @@ public class RangeTest
     @Test
     public void noOverlap()
     {
-        Range x = new Range(0, 1);
-        Range y = new Range(2, 3);
+        Range range = new Range(0, 1);
+        Range range1 = new Range(2, 3);
 
-        assertFalse(x.overlaps(y));
-        assertFalse(y.overlaps(x));
+        assertFalse(range.overlaps(range1));
+        assertFalse(range1.overlaps(range));
     }
 
     /**
@@ -68,11 +68,11 @@ public class RangeTest
     @Test
     public void fullOverlap()
     {
-        Range x = new Range(0, 4);
-        Range y = new Range(2, 3);
+        Range range = new Range(0, 4);
+        Range range1 = new Range(2, 3);
 
-        assertTrue(x.overlaps(y));
-        assertTrue(y.overlaps(x));
+        assertTrue(range.overlaps(range1));
+        assertTrue(range1.overlaps(range));
     }
 
     /**
@@ -82,11 +82,11 @@ public class RangeTest
     @Test
     public void partialOverlap()
     {
-        Range x = new Range(0, 3);
-        Range y = new Range(2, 4);
+        Range range = new Range(0, 3);
+        Range range1 = new Range(2, 4);
 
-        assertTrue(x.overlaps(y));
-        assertTrue(y.overlaps(x));
+        assertTrue(range.overlaps(range1));
+        assertTrue(range1.overlaps(range));
     }
 
     /**
@@ -96,11 +96,11 @@ public class RangeTest
     @Test
     public void pointOverlap()
     {
-        Range x = new Range(0, 2);
-        Range y = new Range(2, 4);
+        Range range = new Range(0, 2);
+        Range range1 = new Range(2, 4);
 
-        assertTrue(x.overlaps(y));
-        assertTrue(y.overlaps(x));
+        assertTrue(range.overlaps(range1));
+        assertTrue(range1.overlaps(range));
     }
 
     /**
@@ -110,11 +110,11 @@ public class RangeTest
     @Test
     public void zeroLengthOverlap()
     {
-        Range x = new Range(3, 3);
-        Range y = new Range(2, 4);
+        Range range = new Range(3, 3);
+        Range range1 = new Range(2, 4);
 
-        assertTrue(x.overlaps(y));
-        assertTrue(y.overlaps(x));
+        assertTrue(range.overlaps(range1));
+        assertTrue(range1.overlaps(range));
     }
 
     /**
@@ -124,11 +124,11 @@ public class RangeTest
     @Test
     public void zeroLengthNoOverlap()
     {
-        Range x = new Range(3, 3);
-        Range y = new Range(1, 2);
+        Range range = new Range(3, 3);
+        Range range1 = new Range(1, 2);
 
-        assertFalse(x.overlaps(y));
-        assertFalse(y.overlaps(x));
+        assertFalse(range.overlaps(range1));
+        assertFalse(range1.overlaps(range));
     }
 
 

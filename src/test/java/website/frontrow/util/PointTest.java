@@ -22,8 +22,8 @@ public class PointTest
     @Test
     public void constructorXTest()
     {
-        Point p = new Point(DEFAULT_X, DEFAULT_Y);
-        assertEquals(p.getX(), DEFAULT_X, DEFAULT_X);
+        Point point = new Point(DEFAULT_X, DEFAULT_Y);
+        assertEquals(point.getX(), DEFAULT_X, DEFAULT_X);
     }
 
     /**
@@ -32,8 +32,8 @@ public class PointTest
     @Test
     public void constructorYTest()
     {
-        Point p = new Point(DEFAULT_X, DEFAULT_Y);
-        assertEquals(p.getY(), DEFAULT_Y, DEFAULT_Y);
+        Point point = new Point(DEFAULT_X, DEFAULT_Y);
+        assertEquals(point.getY(), DEFAULT_Y, DEFAULT_Y);
     }
 
     /**
@@ -42,10 +42,10 @@ public class PointTest
     @Test
     public void equalsDifferentPointsTest()
     {
-        Point p1 = new Point(ONE, ONE);
-        Point p2 = new Point(DEFAULT_X, DEFAULT_Y);
+        Point point = new Point(ONE, ONE);
+        Point point1 = new Point(DEFAULT_X, DEFAULT_Y);
 
-        assertFalse(p1.equals(p2));
+        assertFalse(point.equals(point1));
     }
 
     /**
@@ -54,13 +54,13 @@ public class PointTest
     @Test
     public void equalsWithSettersTest()
     {
-        Point p1 = new Point(ONE, ONE);
-        Point p2 = new Point(DEFAULT_X, DEFAULT_Y);
+        Point point = new Point(ONE, ONE);
+        Point point1 = new Point(DEFAULT_X, DEFAULT_Y);
 
-        p1.setX(DEFAULT_X);
-        p1.setY(DEFAULT_Y);
+        point.setX(DEFAULT_X);
+        point.setY(DEFAULT_Y);
 
-        assertTrue(p1.equals(p2));
+        assertTrue(point.equals(point1));
     }
 
     /**
@@ -69,10 +69,10 @@ public class PointTest
     @Test
     public void equalsNullTest()
     {
-        Point p1 = null;
-        Point p2 = new Point(DEFAULT_X, DEFAULT_Y);
+        Point point = null;
+        Point point1 = new Point(DEFAULT_X, DEFAULT_Y);
 
-        assertFalse(p2.equals(p1));
+        assertFalse(point1.equals(point));
     }
 
     /**
@@ -81,10 +81,10 @@ public class PointTest
     @Test
     public void hashCodeTest()
     {
-        Point p = new Point(DEFAULT_X, DEFAULT_Y);
+        Point point = new Point(DEFAULT_X, DEFAULT_Y);
         int hash = PRIME
                 * (PRIME + new Double(DEFAULT_X).hashCode()) + new Double(DEFAULT_Y).hashCode();
-        assertEquals(p.hashCode(), hash);
+        assertEquals(point.hashCode(), hash);
     }
 
     /**
@@ -93,13 +93,13 @@ public class PointTest
     @Test
     public void equalsWithDiffXTest()
     {
-        Point p1 = new Point(ONE, DEFAULT_Y);
-        Point p2 = new Point(DEFAULT_X, DEFAULT_Y);
+        Point point = new Point(ONE, DEFAULT_Y);
+        Point point1 = new Point(DEFAULT_X, DEFAULT_Y);
 
-        p1.setX(DEFAULT_X);
-        p1.setY(DEFAULT_Y);
+        point.setX(DEFAULT_X);
+        point.setY(DEFAULT_Y);
 
-        assertTrue(p1.equals(p2));
+        assertTrue(point.equals(point1));
     }
 
     /**
@@ -108,13 +108,13 @@ public class PointTest
     @Test
     public void equalsWithDiffYTest()
     {
-        Point p1 = new Point(DEFAULT_X, ONE);
-        Point p2 = new Point(DEFAULT_X, DEFAULT_Y);
+        Point point = new Point(DEFAULT_X, ONE);
+        Point point1 = new Point(DEFAULT_X, DEFAULT_Y);
 
-        p1.setX(DEFAULT_X);
-        p1.setY(DEFAULT_Y);
+        point.setX(DEFAULT_X);
+        point.setY(DEFAULT_Y);
 
-        assertTrue(p1.equals(p2));
+        assertTrue(point.equals(point1));
     }
 
     /**
@@ -123,11 +123,11 @@ public class PointTest
     @Test
     public void addTest()
     {
-        Point a = new Point(1, 0);
-        Point b = new Point(2, 4);
+        Point point = new Point(1, 0);
+        Point point1 = new Point(2, 4);
         Point expected = new Point(3, 4);
 
-        assertEquals(expected, a.add(b));
+        assertEquals(expected, point.add(point1));
     }
 
     /**
@@ -136,10 +136,10 @@ public class PointTest
     @Test
     public void divideTest()
     {
-        Point a = new Point(2, 0);
+        Point point = new Point(2, 0);
         Point expected = new Point(1, 0);
 
-        assertEquals(expected, a.divide(2));
+        assertEquals(expected, point.divide(2));
     }
 
     /**
@@ -148,10 +148,10 @@ public class PointTest
     @Test
     public void subtractTest()
     {
-        Point a = new Point(2, 0);
+        Point point = new Point(2, 0);
         Point expected = new Point(1, 0);
 
-        assertEquals(expected, a.subtract(new Point(1, 0)));
+        assertEquals(expected, point.subtract(new Point(1, 0)));
     }
 
     /**
@@ -160,8 +160,8 @@ public class PointTest
     @Test
     public void lengthTest1()
     {
-        Point a = new Point(2, 0);
-        assertEquals(2, a.length(), 0);
+        Point point = new Point(2, 0);
+        assertEquals(2, point.length(), 0);
     }
 
     /**
@@ -170,8 +170,8 @@ public class PointTest
     @Test
     public void lengthTest2()
     {
-        Point a = new Point(0, 2);
-        assertEquals(2, a.length(), 0);
+        Point point = new Point(0, 2);
+        assertEquals(2, point.length(), 0);
     }
 
     /**
@@ -180,8 +180,8 @@ public class PointTest
     @Test
     public void angleTest1()
     {
-        Point a = new Point(1, 0);
-        assertEquals(0, a.angle(), 0.0001);
+        Point point = new Point(1, 0);
+        assertEquals(0, point.angle(), 0.0001);
     }
 
     /**
@@ -190,7 +190,7 @@ public class PointTest
     @Test
     public void angleTest2()
     {
-        Point a = new Point(0, 2);
-        assertEquals(Math.PI / 2, a.angle(), 0.0001);
+        Point point = new Point(0, 2);
+        assertEquals(Math.PI / 2, point.angle(), 0.0001);
     }
 }
