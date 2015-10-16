@@ -390,4 +390,12 @@ public class Level
 
     }
 
+    /**
+     * Return a Set with the current Observers.
+     * @return Returns a Set with PlayerObserver.
+     */
+    public List<LevelObserver> getObservers()
+    {
+        return observers;
+    }
 }

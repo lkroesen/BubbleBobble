@@ -9,7 +9,6 @@ import website.frontrow.util.Point;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-
 /**
  * Test the cells.
  */
