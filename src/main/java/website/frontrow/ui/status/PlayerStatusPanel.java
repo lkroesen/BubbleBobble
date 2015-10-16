@@ -1,5 +1,8 @@
 package website.frontrow.ui.status;
 
+import java.util.logging.Logger;
+import website.frontrow.board.Player;
+import website.frontrow.board.observer.PlayerObserver;
 import website.frontrow.sprite.ImageStore;
 
 import javax.swing.Box;
@@ -16,6 +19,7 @@ import java.awt.GridLayout;
  */
 public class PlayerStatusPanel
     extends JPanel
+    implements PlayerObserver
 {
     private int playerNumber;
 
@@ -32,18 +36,19 @@ public class PlayerStatusPanel
     /**
      * Creates a panel which displays the player number and the corresponding lives.
      * @param playerNumber The number of the player.
-     * @param remainingLives The number of remaining lives.
-     * @param score The score of the player.
+     * @param player The player to watch.
      */
-    public PlayerStatusPanel(int playerNumber, int remainingLives,  int score)
+    public PlayerStatusPanel(int playerNumber, Player player)
     {
         super(new GridLayout(0, 1));
         this.playerNumber = playerNumber;
-        this.remainingLives = remainingLives;
+        this.remainingLives = player.getLives();
         this.maxLives = remainingLives;
-        this.score = score;
+        this.score = player.getScore();
         this.setMaximumSize(new Dimension(Integer.MAX_VALUE, MAX_HEIGHT));
         update();
+
+        player.addObserver(this);
     }
 
     /**
@@ -54,6 +59,7 @@ public class PlayerStatusPanel
     {
         this.remainingLives = lives;
         update();
+        revalidate();
     }
 
     /**
@@ -64,6 +70,7 @@ public class PlayerStatusPanel
     {
         this.score = score;
         update();
+        revalidate();
     }
 
     /**
@@ -98,5 +105,37 @@ public class PlayerStatusPanel
         }
         this.add(livesPanel);
         add(Box.createVerticalGlue());
+    }
+
+    @Override
+    public void livesChanged(Player player)
+    {
+        setRemainingLives(player.getLives());
+    }
+
+    @Override
+    public void scoreChanged(Player player)
+    {
+        setScore(player.getScore());
+    }
+
+    @Override
+    public void playerDied(Player player)
+    {
+        // Nothing yet.
+    }
+
+    @Override
+    public void invincible(Player player)
+    {
+        // Nothing yet.
+        // Maybe start flashing hearts.
+    }
+
+    @Override
+    public void notInvincible(Player player)
+    {
+        // Nothing yet.
+        // Maybe stop flashing hearts.
     }
 }

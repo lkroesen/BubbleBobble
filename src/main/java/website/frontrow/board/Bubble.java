@@ -70,7 +70,7 @@ public class Bubble
     {
         super(true, position, motion, sprites, BubbleGravityBehaviour.getInstance());
         this.scoreReceiver = creator;
-        addToLog("[BUBBLE]\t[SPAWN]\tBubble created with ID: " + super.getId() + ".");
+        addToLog("[BUBBLE]\t[SPAWN]\tBubble created.");
     }
 
     /**
