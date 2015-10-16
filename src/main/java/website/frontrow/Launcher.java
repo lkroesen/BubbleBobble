@@ -75,6 +75,8 @@ public class Launcher implements Logable
                 Level level = mp.parseMap(map);
                 levelList.add(level);
             }
+            
+            addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + " succeeded.");
 
             Game game = new Game(levelList, playerCount);
             Map<Integer, Action> keyMappings = createKeyMappings(game);
@@ -92,7 +94,7 @@ public class Launcher implements Logable
 
             ui.start();
             startScheduler(game);
-            addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + " succeeded.");
+
         }
         catch (IOException e)
         {
