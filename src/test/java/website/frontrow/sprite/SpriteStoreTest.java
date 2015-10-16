@@ -58,7 +58,7 @@ public class SpriteStoreTest
     @Test
     public void testLoadSpriteUnknownFile() throws IOException
     {
-        ee.expect(IOException.class);
+        ee.expect(RuntimeException.class);
         ss.loadSprite("/cantfindthisone.png");
     }
 }

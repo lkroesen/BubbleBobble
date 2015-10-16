@@ -1,9 +1,7 @@
 package website.frontrow.sprite;
 
 import website.frontrow.board.Direction;
-import website.frontrow.logger.Log;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -100,20 +98,6 @@ public final class JBubbleBobbleSprites
     public Map<Direction, Sprite> getCapturedEnemySprite()
     {
         return getDirectionalSprite("/sprites/Bubble_Containing_Zen.png");
-    }
-
-    @Override
-    public Sprite loadSprite(String resource)
-    {
-        try
-        {
-            return super.loadSprite(resource);
-        }
-        catch (IOException exception)
-        {
-            Log.add("[SS]\tThe sprite could not be loaded from " + resource);
-            throw new RuntimeException("Could not load sprite.", exception);
-        }
     }
 
     /**

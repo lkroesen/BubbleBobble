@@ -64,7 +64,7 @@ public class PlayingFieldPanel
      */
     private Border createBorder()
     {
-        ImageIcon borderImage = new ImageStore().getImageIcon("/sprites/block.jpg");
+        ImageIcon borderImage = ImageStore.getInstance().getImageIcon("/sprites/block.jpg");
         return BorderFactory.createMatteBorder(BORDER_WIDTH, BORDER_WIDTH,
                 BORDER_WIDTH, BORDER_WIDTH, borderImage);
     }
