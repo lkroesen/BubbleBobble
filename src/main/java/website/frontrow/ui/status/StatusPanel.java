@@ -1,13 +1,10 @@
 package website.frontrow.ui.status;
 
 import website.frontrow.board.Player;
-import website.frontrow.board.observer.PlayerObserver;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Indicates the remaining lives of the players.
@@ -32,5 +29,5 @@ public class StatusPanel
             add(livesPanel);
         }
     }
-    
+
 }

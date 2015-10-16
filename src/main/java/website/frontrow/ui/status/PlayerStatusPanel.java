@@ -1,6 +1,5 @@
 package website.frontrow.ui.status;
 
-import java.util.logging.Logger;
 import website.frontrow.board.Player;
 import website.frontrow.board.observer.PlayerObserver;
 import website.frontrow.sprite.ImageStore;
