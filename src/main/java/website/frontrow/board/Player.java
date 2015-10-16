@@ -6,6 +6,7 @@ import website.frontrow.game.GameConstants;
 import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
+import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.sprite.Sprite;
 import website.frontrow.util.Point;
 
@@ -40,6 +41,12 @@ public class Player
      * The amount of ticks the player is still immune to losing lives.
      */
     private int ticksLeft = 0;
+
+
+    /**
+     * Does the player have to shoot in the next tick.
+     */
+    private boolean shoot = false;
 
     /**
      * The observers for this player.
@@ -76,6 +83,16 @@ public class Player
             getMotion().setX(0);
         }
 
+        if(this.shoot)
+        {
+            Bubble bubble = new Bubble(getLocation(),
+                    new Point(getDirection().getDeltaX() * 4, 0),
+                    JBubbleBobbleSprites.getInstance().getBubbleSprite(),
+                    this);
+            level.addUnit(bubble);
+            this.shoot = false;
+        }
+
         if(ticksLeft > 0)
         {
             ticksLeft--;
@@ -85,7 +102,15 @@ public class Player
             observers.forEach(o -> o.notInvincible(this));
         }
     }
-    
+
+    /**
+     * Makes the player shoot a bubble.
+     */
+    public void shoot()
+    {
+        this.shoot = true;
+    }
+
     /**
      * Return the player speed multiplier.
      * @return the player speed multiplier.

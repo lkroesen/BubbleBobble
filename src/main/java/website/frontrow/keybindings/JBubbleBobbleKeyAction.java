@@ -15,10 +15,7 @@ public enum JBubbleBobbleKeyAction
     JUMP(p -> p.jump()),
     RIGHT(p -> p.goRight()),
     LEFT(p -> p.goLeft()),
-    SHOOT(p ->
-    {
-
-    }),
+    SHOOT(p -> p.shoot()),
     PRINT_LOG(p -> Log.togglePrinting()),
     DUMP_LOG(p -> new DumpLog()),
     VOLUME_UP(p -> MusicPlayer.getInstance().volumeAdjust(1.0d)),
