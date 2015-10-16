@@ -22,6 +22,7 @@ public final class BindActions
 {
     private static final BindActions INSTANCE = new BindActions();
     private static Map<Integer, Action> mapIntActions = new HashMap<>();
+    private static Map<Integer, JBubbleBobbleKeyAction> keyActionMap = new HashMap<>();
 
     /**
      * Private constructor, because Singleton.

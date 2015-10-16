@@ -89,5 +89,5 @@ public class JBubbleKeyListener implements KeyListener
         pressedKeys.remove(KeyEvent.VK_SPACE);
         pressedKeys.remove(KeyEvent.VK_Z);
     }
-
 }
+
