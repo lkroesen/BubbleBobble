@@ -53,7 +53,6 @@ public class Launcher implements Logable
         MusicPlayer.getInstance().selectSong(Songs.TITLE_SCREEN);
 
         new ModeMenu().setVisible(true);
-
     }
 
     /**
@@ -165,6 +164,10 @@ public class Launcher implements Logable
                 if(game.isRunning())
                 {
                     Player player = game.getPlayers().get(0);
+                    if(!player.isAlive())
+                    {
+                        return;
+                    }
                     Bubble bubble = new Bubble(player.getLocation(),
                             new Point(player.getDirection().getDeltaX() * 4, 0),
                             JBubbleBobbleSprites.getInstance().getBubbleSprite(),
@@ -200,10 +203,14 @@ public class Launcher implements Logable
 
                 if(game.isRunning())
                 {
-                    Player p = game.getPlayers().get(0);
+                    Player player = game.getPlayers().get(0);
+                    if(!player.isAlive())
+                    {
+                        return;
+                    }
                     game.getLevel().addUnit(
-                            new Bubble(p.getLocation(),
-                                    new Point(p.getDirection().getDeltaX() * 4, 0),
+                            new Bubble(player.getLocation(),
+                                    new Point(player.getDirection().getDeltaX() * 4, 0),
                                     JBubbleBobbleSprites.getInstance().getBubbleSprite()));
                 }
             });
@@ -232,10 +239,14 @@ public class Launcher implements Logable
 
                 if(game.isRunning())
                 {
-                    Player p = game.getPlayers().get(1);
+                    Player player = game.getPlayers().get(1);
+                    if(!player.isAlive())
+                    {
+                        return;
+                    }
                     game.getLevel().addUnit(
-                            new Bubble(p.getLocation(),
-                                    new Point(p.getDirection().getDeltaX() * 4, 0),
+                            new Bubble(player.getLocation(),
+                                    new Point(player.getDirection().getDeltaX() * 4, 0),
                                     JBubbleBobbleSprites.getInstance().getBubbleSprite()));
                 }
             });

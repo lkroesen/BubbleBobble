@@ -22,7 +22,6 @@ public class ModeMenu
         extends JFrame
         implements Logable
 {
-
     private static final int WIDTH = 170;
     private static final int HEIGHT = 150;
 
