@@ -3,6 +3,7 @@ package website.frontrow.board;
 import org.junit.Test;
 import website.frontrow.util.Point;
 
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -19,17 +20,6 @@ public class PlayerTest
     {
         Player pl = new Player(super.p, null);
         assertEquals(pl.getLocation(), super.p);
-    }
-
-    /**
-     * Test the score adder of Player.
-     */
-    @Test
-    public void testScore()
-    {
-        Player pl = new Player(super.p, null);
-        pl.addScore(42);
-        assertEquals(pl.getScore(), 42);
     }
 
     /**
