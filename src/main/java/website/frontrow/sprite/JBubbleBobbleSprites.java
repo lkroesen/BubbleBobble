@@ -60,7 +60,7 @@ public final class JBubbleBobbleSprites
 
     public Map<Direction, Sprite> getBubbleSprite()
     {
-        return getDirectionalSprite("/sprites/bubble.png");
+        return getDirectionalAnimatedSprite("/sprites/animated_projectile.png", 12);
     }
 
     /**
@@ -88,7 +88,7 @@ public final class JBubbleBobbleSprites
      */
     public Map<Direction, Sprite> getEnemySprite()
     {
-        return getDirectionalSprite("/sprites/enemy.png");
+        return getDirectionalAnimatedSprite("/sprites/animated_zen.png", 4);
     }
 
     /**
@@ -97,7 +97,8 @@ public final class JBubbleBobbleSprites
      */
     public Map<Direction, Sprite> getCapturedEnemySprite()
     {
-        return getDirectionalSprite("/sprites/Bubble_Containing_Zen.png");
+        // TODO: Fix Frames for an animation of bubble.
+        return getDirectionalAnimatedSprite("/sprites/animated_zen_captured.png", 12);
     }
 
     /**

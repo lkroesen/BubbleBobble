@@ -1,11 +1,11 @@
 XX______________XX
 XX              XX
 XX              XX
-XX        XX    XX
-XX X      X  X  XX
-XX X  XXX XX XX XX
-XX X  X X  X X  XX
-XX XXXXXXXXX XX XX
+XX e  eee ee ee XX
+XX e  e e e  e  XX
+XX e  e e ee ee XX
+XX e  e e  e e  XX
+XX ee eee ee ee XX
 XX              XX
 XX              XX
 XX              XX
