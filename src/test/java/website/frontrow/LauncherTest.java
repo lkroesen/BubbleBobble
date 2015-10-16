@@ -17,7 +17,7 @@ public class LauncherTest
     {
         Launcher l = new Launcher();
         String[] files = {"/1.txt"};
-        l.start(files);
+        l.start(files, 1);
         assertNotNull(l);
     }
 
@@ -29,6 +29,6 @@ public class LauncherTest
     {
         Launcher l = new Launcher();
         String[] files = {""};
-        l.start(files);
+        l.start(files, 1);
     }
 }

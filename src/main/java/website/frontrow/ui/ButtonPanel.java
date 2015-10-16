@@ -5,6 +5,7 @@ import website.frontrow.logger.Logable;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import java.awt.Dimension;
 import java.util.Map;
 
 /**
@@ -20,6 +21,8 @@ public class ButtonPanel
      */
     public ButtonPanel(Map<String, Action> buttonMapping)
     {
+        this.setMaximumSize(new Dimension(Integer.MAX_VALUE, this.getPreferredSize().height));
+
         for(Map.Entry<String, Action> entry : buttonMapping.entrySet())
         {
             JButton button = new JButton();

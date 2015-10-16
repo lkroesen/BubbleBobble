@@ -1,14 +1,11 @@
 package website.frontrow.level;
 
-import org.junit.Test;
-import website.frontrow.board.Enemy;
-import website.frontrow.board.Player;
-import website.frontrow.util.Grid;
-import website.frontrow.util.Point;
-
 import java.io.IOException;
 import java.util.Arrays;
-
+import org.junit.Test;
+import website.frontrow.board.Enemy;
+import website.frontrow.util.Grid;
+import website.frontrow.util.Point;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -48,10 +45,10 @@ public class MapParserTest
         MapParser parser = new MapParser();
         Level res = parser.parseMap(map);
 
-        // There is a single unit (the player) on the map.
-        assertEquals(res.getUnits().size(), 1);
-        assertTrue(res.getUnits().get(0) instanceof Player);
-        assertEquals(new Point(1, 1), res.getUnits().get(0).getLocation());
+        // There are no units on this map, just a position.
+        assertEquals(res.getUnits().size(), 0);
+        // However, it did add a spawning point.
+        assertEquals(new Point(1, 1), res.getPlayerPositions().get(0));
     }
 
     /**
