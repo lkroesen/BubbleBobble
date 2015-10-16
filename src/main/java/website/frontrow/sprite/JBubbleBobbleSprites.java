@@ -1,9 +1,7 @@
 package website.frontrow.sprite;
 
 import website.frontrow.board.Direction;
-import website.frontrow.logger.Log;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +41,8 @@ public final class JBubbleBobbleSprites
      */
     private static final int SPRITE_SIZE = 16; //pixels;
 
+    private static final int FRAMES_DELAY = 300;
+
 
     /**
      * The wall sprite.
@@ -57,6 +57,7 @@ public final class JBubbleBobbleSprites
      * The bubble sprite.
      * @return The sprite.
      */
+
     public Map<Direction, Sprite> getBubbleSprite()
     {
         return getDirectionalSprite("/sprites/bubble.png");
@@ -75,9 +76,10 @@ public final class JBubbleBobbleSprites
      * Creates a map with a sprite for each direction for the player.
      * @return The map.
      */
+    @SuppressWarnings("magicnumber")
     public Map<Direction, Sprite> getPlayerSprite()
     {
-        return getDirectionalSprite("/sprites/player.png");
+        return getDirectionalAnimatedSprite("/sprites/animated_player.png", 7);
     }
 
     /**
@@ -98,20 +100,6 @@ public final class JBubbleBobbleSprites
         return getDirectionalSprite("/sprites/Bubble_Containing_Zen.png");
     }
 
-    @Override
-    public Sprite loadSprite(String resource)
-    {
-        try
-        {
-            return super.loadSprite(resource);
-        }
-        catch (IOException exception)
-        {
-            Log.add("[SS]\tThe sprite could not be loaded from " + resource);
-            throw new RuntimeException("Could not load sprite.", exception);
-        }
-    }
-
     /**
      * Creates a map with sprites for all directions.
      * @param resource The resource to cut the sprites from.
@@ -127,6 +115,35 @@ public final class JBubbleBobbleSprites
             Sprite directionSprite
                     = compoundSprites.slice(i * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE);
             sprites.put(DIRECTIONS[i], directionSprite);
+        }
+
+        return sprites;
+    }
+
+    /**
+     * Creates an animated sprite for multiple directions.
+     * @param resource The source image.
+     * @param numberOfFrames The number of frames for the animation.
+     * @return The sprites.
+     */
+    private Map<Direction, Sprite> getDirectionalAnimatedSprite(String resource, int numberOfFrames)
+    {
+        Sprite allSprites = loadSprite(resource);
+
+        Map<Direction, Sprite> sprites = new HashMap<>();
+        for(int dirIndex = 0; dirIndex < DIRECTIONS.length; dirIndex++)
+        {
+            Sprite uncutFrames
+                    = allSprites.slice(dirIndex * SPRITE_SIZE, 0,
+                        SPRITE_SIZE, SPRITE_SIZE * numberOfFrames);
+            Sprite[] frames = new Sprite[numberOfFrames];
+            for(int frameIndex = 0; frameIndex < numberOfFrames; frameIndex++)
+            {
+                frames[frameIndex]
+                        = uncutFrames.slice(0, frameIndex * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE);
+            }
+            Sprite sprite = new SpriteAnimation(frames, true, true, FRAMES_DELAY);
+            sprites.put(DIRECTIONS[dirIndex], sprite);
         }
 
         return sprites;

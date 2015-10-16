@@ -74,7 +74,7 @@ public enum Cell
      */
     public Sprite getSprite()
     {
-        return new EmptySprite();
+        return EmptySprite.getInstance();
     }
 
     /**

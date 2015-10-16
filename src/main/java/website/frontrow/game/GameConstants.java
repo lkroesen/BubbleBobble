@@ -72,4 +72,9 @@ public abstract class GameConstants
      * The default amount of lives the player has.
      */
     public static final int DEFAULT_AMOUNT_OF_LIVES = 3;
+
+    /**
+     * The default amount of points a player gets when it kills an enemy.
+     */
+    public static final int DEFAULT_ENEMY_VALUE = 50;
 }

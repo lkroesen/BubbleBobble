@@ -1,17 +1,13 @@
 package website.frontrow.board;
 
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import website.frontrow.level.Level;
 import website.frontrow.game.GameConstants;
-import website.frontrow.level.MapParser;
+import website.frontrow.level.Level;
 import website.frontrow.util.Grid;
 import website.frontrow.util.Point;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -121,46 +117,6 @@ public abstract class MoverTest
         // TODO When collisions are implemented, some calls to those checks need to be checked here.
 
         assertEquals(-1, u.getLocation().getX(), 0.0004);
-    }
-
-    /**
-     * Test whether the unit moves left.
-     * @throws IOException The test file might not be found.
-     */
-    @Test
-    public void testGoLeft() throws IOException
-    {
-
-        MapParser mp = new MapParser();
-        InputStream map = getClass().getResourceAsStream("/testMove.txt");
-        Level level = mp.parseMap(map);
-
-        Player u = level.getPlayers().get(0);
-        Point location = u.getLocation();
-
-        u.goLeft();
-        u.tick(level);
-
-        assertTrue(u.getLocation().getX() < location.getX());
-    }
-
-    /**
-     * Test whether the unit moves right.
-     * @throws IOException The test file might not be found.
-     */
-    @Test
-    public void testGoRight() throws IOException
-    {
-        MapParser mp = new MapParser();
-        InputStream map = getClass().getResourceAsStream("/testMove.txt");
-        Level level = mp.parseMap(map);
-
-        Player u = level.getPlayers().get(0);
-        Point location = u.getLocation();
-
-        u.goRight();
-        u.tick(level);
-        assertTrue(u.getLocation().getX() > location.getX());
     }
 
     /**
