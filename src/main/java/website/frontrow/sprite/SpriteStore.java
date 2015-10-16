@@ -1,5 +1,6 @@
 package website.frontrow.sprite;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,9 +23,8 @@ public class SpriteStore
 	 * Loads a sprite.
 	 * @param resource The location of the file.
 	 * @return The sprite.
-	 * @throws IOException The file might not be found.
 	 */
-	public Sprite loadSprite(String resource) throws IOException
+	public Sprite loadSprite(String resource)
 	{
 		Sprite sprite = spriteMap.get(resource);
 		if(sprite == null)
@@ -40,9 +40,18 @@ public class SpriteStore
 	 * Returns a sprite based on the specified resource.
 	 * @param resource The location of the file.
 	 * @return The sprite.
-	 * @throws IOException Is thrown when the specified file is cannot be found.
 	 */
-	private Sprite loadSpriteFromResource(String resource) throws IOException
+	private Sprite loadSpriteFromResource(String resource)
+	{
+		return new StaticImageSprite(loadImage(resource));
+	}
+
+	/**
+	 * Loads an image.
+	 * @param resource The location of the image.
+	 * @return The image
+	 */
+	public Image loadImage(String resource)
 	{
 		try (InputStream input = SpriteStore.class.getResourceAsStream(resource))
 		{
@@ -52,7 +61,11 @@ public class SpriteStore
 			}
 
 			BufferedImage image = ImageIO.read(input);
-			return new StaticImageSprite(image);
+			return image;
+		}
+		catch (IOException e)
+		{
+			throw new RuntimeException("Could not load image.", e);
 		}
 	}
 }

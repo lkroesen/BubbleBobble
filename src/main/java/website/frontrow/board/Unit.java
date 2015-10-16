@@ -177,5 +177,4 @@ public abstract class Unit
     {
     	return 1.0;
     }
-
 }

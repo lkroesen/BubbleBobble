@@ -10,7 +10,6 @@ import java.awt.Graphics;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -31,7 +30,7 @@ public class EmptySpriteTest
     @Before
     public void setUp()
     {
-        es = new EmptySprite();
+        es = EmptySprite.getInstance();
     }
 
     /**
@@ -78,7 +77,7 @@ public class EmptySpriteTest
     @Test
     public void testSlice()
     {
-        assertEquals(es.slice(0, 0, 10, 10), new EmptySprite());
+        assertEquals(es.slice(0, 0, 10, 10), EmptySprite.getInstance());
     }
 
     /**
@@ -87,7 +86,7 @@ public class EmptySpriteTest
     @Test
     public void testEqualsEqual()
     {
-        assertTrue(es.equals(new EmptySprite()));
+        assertTrue(es.equals(EmptySprite.getInstance()));
     }
 
     /**
@@ -97,28 +96,5 @@ public class EmptySpriteTest
     public void testEqualsOther()
     {
         assertFalse(es.equals("Other"));
-    }
-
-    /**
-     * Test not equal when width is different.
-     */
-    @Test
-    public void testEqualsDifferentWidth()
-    {
-        EmptySprite sprite = mock(EmptySprite.class);
-        when(sprite.getWidth()).thenReturn(1);
-        assertFalse(es.equals(sprite));
-    }
-
-    /**
-     * Test not equal when the height is different.
-     */
-    @Test
-    public void testEqualsDifferentHeight()
-    {
-        EmptySprite sprite = mock(EmptySprite.class);
-        when(sprite.getWidth()).thenReturn(0);
-        when(sprite.getHeight()).thenReturn(1);
-        assertFalse(es.equals(sprite));
     }
 }

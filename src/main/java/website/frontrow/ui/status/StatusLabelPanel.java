@@ -1,10 +1,11 @@
-package website.frontrow.ui;
+package website.frontrow.ui.status;
 
 import website.frontrow.game.Game;
 import website.frontrow.game.GameObserver;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.Dimension;
 
 /**
  * A panel which contains stats on the game.
@@ -14,6 +15,9 @@ public class StatusLabelPanel extends JPanel
 {
     private JLabel runningLabel;
 
+    // MAX Height is a measured number.
+    @SuppressWarnings("checkstyle:magicnumber")
+    private static final int MAX_HEIGHT = 100;
     /**
      * Creates a status label panel.
      * @param game The game to report on.
@@ -22,7 +26,7 @@ public class StatusLabelPanel extends JPanel
     {
         game.registerObserver(this);
         this.runningLabel = new JLabel("Paused");
-
+        this.setMaximumSize(new Dimension(Integer.MAX_VALUE, MAX_HEIGHT));
         add(this.runningLabel);
     }
 
