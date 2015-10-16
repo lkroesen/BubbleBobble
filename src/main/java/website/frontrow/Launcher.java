@@ -99,7 +99,7 @@ public class Launcher implements Logable
         catch (IOException e)
         {
             addToLog("[ERROR]\tLoading file: " + Arrays.toString(filename) + " failed.");
-            new DumpLog();
+            DumpLog.getInstance().createDump();
             throw new RuntimeException();
         }
     }
@@ -271,7 +271,7 @@ public class Launcher implements Logable
         map.put(KeyEvent.VK_F1, () ->
         {
             addToLog("[KEY]\t< F1 > Pressed.");
-            new DumpLog();
+            DumpLog.getInstance().createDump();
         });
         return map;
     }
