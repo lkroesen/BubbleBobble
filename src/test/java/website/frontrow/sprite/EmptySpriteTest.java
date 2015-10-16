@@ -50,7 +50,7 @@ public class EmptySpriteTest
     public void testDraw()
     {
         Graphics g = mock(Graphics.class);
-        es.draw(g, 0, 0, 10, 10);
+        es.draw(g, 0, 0);
         verifyZeroInteractions(g);
     }
 

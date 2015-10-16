@@ -7,7 +7,19 @@ package website.frontrow.game;
 // These constants have to be accessible everywhere.
 public abstract class GameConstants
 {
+    	
     /**
+     * The default cell width.
+     */
+    public static final int CELL_WIDTH = 32;
+
+    /**
+     * The default cell height.
+     */
+    public static final int CELL_HEIGHT = 32;	
+	
+	
+	/**
      * The constant for the gravity in the game.
      */
     public static final double GRAVITY = -1.5;

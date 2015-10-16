@@ -13,10 +13,8 @@ public interface Sprite
      * @param graphics The graphics context in which is being drawn.
      * @param x The x location to draw at.
      * @param y The y location to draw at.
-     * @param width The width to draw the image.
-     * @param height The height to draw the image.
      */
-    void draw(Graphics graphics, int x, int y, int width, int height);
+    void draw(Graphics graphics, int x, int y);
 
     /**
      * Slices the image and returns the portion of the image, which is specified.

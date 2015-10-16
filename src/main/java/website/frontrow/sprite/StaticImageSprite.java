@@ -4,6 +4,8 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 
+import website.frontrow.game.GameConstants;
+
 
 /**
  * Created by larsstegman on 02-09-15.
@@ -28,12 +30,10 @@ public class StaticImageSprite
      * @param graphics The graphics context in which is being drawn.
      * @param x The x location to draw at.
      * @param y The y location to draw at.
-     * @param width The width to draw the image.
-     * @param height The height to draw the image.
      */
-    public void draw(Graphics graphics, int x, int y, int width, int height)
+    public void draw(Graphics graphics, int x, int y)
     {
-        graphics.drawImage(image, x, y, width, height, null);
+        graphics.drawImage(image, x, y, GameConstants.CELL_WIDTH, GameConstants.CELL_HEIGHT, null);
     }
 
     /**

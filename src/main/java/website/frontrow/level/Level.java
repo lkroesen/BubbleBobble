@@ -4,6 +4,7 @@ import website.frontrow.board.Bubble;
 import website.frontrow.board.Enemy;
 import website.frontrow.board.Player;
 import website.frontrow.board.Unit;
+import website.frontrow.game.GameConstants;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.util.CollisionComputer;
@@ -203,23 +204,19 @@ public class Level
         int numberOfCellsInWidth = cells.getWidth();
         int numberOfCellsInHeight = cells.getHeight();
 
-        int cellWidth = width / numberOfCellsInWidth;
-        int cellHeight = height / numberOfCellsInHeight;
-
         for(int i = 0; i < numberOfCellsInWidth; i++)
         {
             for(int v = 0; v < numberOfCellsInHeight; v++)
             {
                 Cell cellToDraw = cells.get(i, v);
                 cellToDraw.draw(graphics,
-                        x + i * cellWidth, y + v * cellHeight,
-                        cellWidth, cellHeight);
+                        x + i * GameConstants.CELL_WIDTH, y + v * GameConstants.CELL_HEIGHT);
             }
         }
 
         for (Unit unit : units)
         {
-            unit.draw(graphics, x, y, cellWidth, cellHeight);
+            unit.draw(graphics, x, y);
         }
     }
 

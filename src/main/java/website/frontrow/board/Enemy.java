@@ -100,8 +100,7 @@ public class Enemy
     {
     	this.wallCollision = collision;
     }
-    
-    
+       
     /**
      * Return the random float.
      * @return the random float.
