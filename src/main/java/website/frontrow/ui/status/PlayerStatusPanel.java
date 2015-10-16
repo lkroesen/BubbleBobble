@@ -59,7 +59,6 @@ public class PlayerStatusPanel
     {
         this.remainingLives = lives;
         update();
-        revalidate();
     }
 
     /**
@@ -70,7 +69,6 @@ public class PlayerStatusPanel
     {
         this.score = score;
         update();
-        revalidate();
     }
 
     /**
@@ -105,6 +103,7 @@ public class PlayerStatusPanel
         }
         this.add(livesPanel);
         add(Box.createVerticalGlue());
+        revalidate();
     }
 
     @Override

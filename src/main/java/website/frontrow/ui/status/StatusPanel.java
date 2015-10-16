@@ -32,14 +32,5 @@ public class StatusPanel
             add(livesPanel);
         }
     }
-
-
-    /**
-     * Updates all the components!
-     */
-    public void update()
-    {
-        super.revalidate();
-        super.repaint();
-    }
+    
 }
