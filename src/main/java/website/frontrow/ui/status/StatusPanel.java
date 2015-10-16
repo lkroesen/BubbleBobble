@@ -1,11 +1,12 @@
 package website.frontrow.ui.status;
 
+import java.awt.Dimension;
 import website.frontrow.board.Player;
 import website.frontrow.board.observer.PlayerObserver;
 
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
 
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class StatusPanel
      */
     public StatusPanel(ArrayList<Player> players)
     {
-        super(new BorderLayout());
+        super(new GridLayout(0, 1));
         mapPlayerIdIndicator = new HashMap<>();
 
         players.forEach(p -> p.addObserver(this));
@@ -39,7 +40,7 @@ public class StatusPanel
             mapPlayerIdIndicator.put(player.getId(), livesPanel);
 
 
-            add(livesPanel, BorderLayout.NORTH);
+            add(livesPanel);
         }
     }
 

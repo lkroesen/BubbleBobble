@@ -2,7 +2,11 @@ package website.frontrow.ui.status;
 
 import website.frontrow.sprite.ImageStore;
 
-import javax.swing.*;
+import javax.swing.JSeparator;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
