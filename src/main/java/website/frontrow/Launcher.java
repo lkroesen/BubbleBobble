@@ -11,8 +11,8 @@ import website.frontrow.music.Songs;
 import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.ui.Action;
 import website.frontrow.ui.JBubbleBobbleUI;
+import website.frontrow.ui.ModeMenu;
 import website.frontrow.game.GameConstants;
-import website.frontrow.util.FileNameCollector;
 import website.frontrow.util.Point;
 import website.frontrow.logger.Logable;
 import website.frontrow.music.MusicPlayer;
@@ -20,7 +20,6 @@ import website.frontrow.music.MusicPlayer;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -51,26 +50,18 @@ public class Launcher implements Logable
     {
         Log.togglePrinting();
 
-        MusicPlayer.getInstance().init();
         MusicPlayer.getInstance().selectSong(Songs.TITLE_SCREEN);
 
-        try
-        {
-            new Launcher().start(new FileNameCollector().obtain("level/"));
-        }
-        catch (URISyntaxException e)
-        {
-            e.printStackTrace();
-        }
-
+        new ModeMenu().setVisible(true);
     }
 
     /**
      * Starts the game.
      * @param filename The file name of the level to load.
+     * @param playerCount The amount of players in this game.
      */
     @SuppressWarnings("methodlength") // We need to make a GameFactory and UIBuilder
-    public void start(String[] filename)
+    public void start(String[] filename, int playerCount)
     {
         addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + ".");
 
@@ -85,10 +76,10 @@ public class Launcher implements Logable
                 levelList.add(level);
             }
 
-            Game game = new Game(levelList);
-            Map<Integer, Action> keyMappings = createSinglePlayerKeyMappings(game);
+            Game game = new Game(levelList, playerCount);
+            Map<Integer, Action> keyMappings = createKeyMappings(game);
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
-            
+
             InputStream map = getClass().getResourceAsStream("/game_over.txt");
     		Level gameOverLevel = mp.parseMap(map);
     		game.setGameOver(gameOverLevel);
@@ -140,8 +131,9 @@ public class Launcher implements Logable
      * @param game The game to control with the keys.
      * @return The mapping.
      */
+    // This method creates keymappings, causing it to be rather long.
     @SuppressWarnings("checkstyle:methodlength")
-    private Map<Integer, Action> createSinglePlayerKeyMappings(Game game)
+    private Map<Integer, Action> createKeyMappings(Game game)
     {
         Map<Integer, Action> map = new HashMap<>();
 
@@ -172,12 +164,90 @@ public class Launcher implements Logable
                 if(game.isRunning())
                 {
                     Player player = game.getPlayers().get(0);
+                    if(!player.isAlive())
+                    {
+                        return;
+                    }
                     Bubble bubble = new Bubble(player.getLocation(),
                             new Point(player.getDirection().getDeltaX() * 4, 0),
                             JBubbleBobbleSprites.getInstance().getBubbleSprite(),
                             player);
 
                     game.getLevel().addUnit(bubble);
+                }
+            });
+        }
+        else
+        {
+        	map.put(KeyEvent.VK_A, () ->
+            {
+                addToLog("[KEY]\t< \'<-\' > Pressed.");
+                game.getPlayers().get(0).goLeft();
+            });
+
+            map.put(KeyEvent.VK_D, () ->
+            {
+                addToLog("[KEY]\t< \'->\' > Pressed.");
+                game.getPlayers().get(0).goRight();
+            });
+
+            map.put(KeyEvent.VK_W, () ->
+            {
+                addToLog("[KEY]\t< \' \' > Pressed.");
+                game.getPlayers().get(0).jump();
+            });
+
+            map.put(KeyEvent.VK_SPACE, () ->
+            {
+                addToLog("[KEY]\t< \'Z\' > Pressed.");
+
+                if(game.isRunning())
+                {
+                    Player player = game.getPlayers().get(0);
+                    if(!player.isAlive())
+                    {
+                        return;
+                    }
+                    game.getLevel().addUnit(
+                            new Bubble(player.getLocation(),
+                                    new Point(player.getDirection().getDeltaX() * 4, 0),
+                                    JBubbleBobbleSprites.getInstance().getBubbleSprite()));
+                }
+            });
+
+            map.put(KeyEvent.VK_LEFT, () ->
+            {
+                addToLog("[KEY]\t< \'<-\' > Pressed.");
+                game.getPlayers().get(1).goLeft();
+            });
+
+            map.put(KeyEvent.VK_RIGHT, () ->
+            {
+                addToLog("[KEY]\t< \'->\' > Pressed.");
+                game.getPlayers().get(1).goRight();
+            });
+
+            map.put(KeyEvent.VK_UP, () ->
+            {
+                addToLog("[KEY]\t< \' \' > Pressed.");
+                game.getPlayers().get(1).jump();
+            });
+
+            map.put(KeyEvent.VK_CONTROL, () ->
+            {
+                addToLog("[KEY]\t< \'Z\' > Pressed.");
+
+                if(game.isRunning())
+                {
+                    Player player = game.getPlayers().get(1);
+                    if(!player.isAlive())
+                    {
+                        return;
+                    }
+                    game.getLevel().addUnit(
+                            new Bubble(player.getLocation(),
+                                    new Point(player.getDirection().getDeltaX() * 4, 0),
+                                    JBubbleBobbleSprites.getInstance().getBubbleSprite()));
                 }
             });
         }

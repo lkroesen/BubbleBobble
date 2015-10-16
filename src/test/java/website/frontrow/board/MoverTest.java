@@ -1,14 +1,13 @@
 package website.frontrow.board;
 
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import website.frontrow.level.Level;
 import website.frontrow.game.GameConstants;
+import website.frontrow.level.Level;
 import website.frontrow.util.Grid;
 import website.frontrow.util.Point;
-
-import java.util.ArrayList;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;

@@ -11,9 +11,9 @@ import java.util.ArrayList;
  */
 public class LevelBuilder
 {
-    Grid<Cell> grid;
-    ArrayList<Unit> units = new ArrayList<>();
-    ArrayList<Point> players = new ArrayList<>();
+    private Grid<Cell> grid;
+    private ArrayList<Unit> units = new ArrayList<>();
+    private ArrayList<Point> players = new ArrayList<>();
 
     /**
      * Prepare a levelbuilder for a certain width and height.
