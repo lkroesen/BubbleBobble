@@ -2,12 +2,12 @@ package website.frontrow.ui.status;
 
 import website.frontrow.sprite.ImageStore;
 
-import javax.swing.JSeparator;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.JLabel;
+import javax.swing.Box;
 import javax.swing.ImageIcon;
-
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
@@ -25,6 +25,10 @@ public class PlayerStatusPanel
 
     private int score;
 
+    // Max Height is a manually measured height.
+    @SuppressWarnings("checkstyle:magicnumber")
+    private final int MAX_HEIGHT = 350;
+
     /**
      * Creates a panel which displays the player number and the corresponding lives.
      * @param playerNumber The number of the player.
@@ -38,6 +42,7 @@ public class PlayerStatusPanel
         this.remainingLives = remainingLives;
         this.maxLives = remainingLives;
         this.score = score;
+        this.setMaximumSize(new Dimension(Integer.MAX_VALUE, MAX_HEIGHT));
         update();
     }
 
@@ -71,7 +76,6 @@ public class PlayerStatusPanel
         this.add(new JLabel("Player " + playerNumber, SwingConstants.CENTER));
         this.add(new JLabel("Score: " + score, SwingConstants.CENTER));
         JPanel livesPanel = new JPanel();
-
         for(int i = 0; i < remainingLives; i++)
         {
             ImageIcon heart = ImageStore.getInstance().getHeartIcon();
@@ -93,5 +97,6 @@ public class PlayerStatusPanel
             livesPanel.add(label);
         }
         this.add(livesPanel);
+        add(Box.createVerticalGlue());
     }
 }

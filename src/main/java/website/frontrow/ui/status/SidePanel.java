@@ -8,6 +8,7 @@ import website.frontrow.music.Songs;
 import website.frontrow.ui.Action;
 import website.frontrow.ui.ButtonPanel;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import java.util.HashMap;
@@ -53,6 +54,8 @@ public class SidePanel
         add(new StatusLabelPanel(game));
 
         add(new StatusPanel(game.getPlayers()));
+        add(Box.createVerticalGlue());
+
         addToLog("[SiP]\tSide Panel Created Successfully.");
     }
 
