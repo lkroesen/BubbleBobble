@@ -37,7 +37,7 @@ public class PointTest
     }
 
     /**
-     * Test equals with a different point.
+     * Test equals with a different FIRST_TEST_POINT.
      */
     @Test
     public void equalsDifferentPointsTest()

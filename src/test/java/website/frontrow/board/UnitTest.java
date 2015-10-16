@@ -15,7 +15,7 @@ public abstract class UnitTest
 {
 
     @SuppressWarnings("checkstyle:visibilitymodifier")
-    protected Point p = new Point(1.0, 1.0);
+    protected static final Point FIRST_TEST_POINT = new Point(1.0, 1.0);
 
     /**
      * Test the duplicate method.
@@ -23,13 +23,13 @@ public abstract class UnitTest
     @Test
     public void duplicateTest()
     {
-        Unit u = getTestUnit(true, p);
-        Unit duplicate = u.duplicate();
+        Unit testUnit = getTestUnit(true, FIRST_TEST_POINT);
+        Unit duplicate = testUnit.duplicate();
 
         // Same object.
-        assertEquals(u, duplicate);
+        assertEquals(testUnit, duplicate);
         // Memory location differs.
-        assertFalse(u == duplicate);
+        assertFalse(testUnit == duplicate);
     }
 
     /**
@@ -39,10 +39,10 @@ public abstract class UnitTest
     @Test
     public void hashCodeTest()
     {
-        Unit u = getTestUnit(true, p);
-        Unit duplicate = u.duplicate();
+        Unit testUnit = getTestUnit(true, FIRST_TEST_POINT);
+        Unit duplicate = testUnit.duplicate();
 
-        assertEquals(u.hashCode(), duplicate.hashCode());
+        assertEquals(testUnit.hashCode(), duplicate.hashCode());
     }
 
     /**
@@ -52,10 +52,10 @@ public abstract class UnitTest
     @Test
     public void inequalHashCodeTest()
     {
-        Unit u = getTestUnit(true, p);
-        Unit other = getTestUnit(false, p);
+        Unit testUnit = getTestUnit(true, FIRST_TEST_POINT);
+        Unit other = getTestUnit(false, FIRST_TEST_POINT);
 
-        assertNotEquals(u.hashCode(), other.hashCode());
+        assertNotEquals(testUnit.hashCode(), other.hashCode());
     }
 
     /**
@@ -64,8 +64,8 @@ public abstract class UnitTest
     @Test
     public void equalsTest()
     {
-        Unit u = getTestUnit(true, p);
-        assertEquals(u, u);
+        Unit testUnit = getTestUnit(true, FIRST_TEST_POINT);
+        assertEquals(testUnit, testUnit);
     }
 
     /**
@@ -74,9 +74,9 @@ public abstract class UnitTest
     @Test
     public void notEqualsTest()
     {
-        Unit u = getTestUnit(true, p);
+        Unit testUnit = getTestUnit(true, FIRST_TEST_POINT);
         Unit other = getTestUnit(true, new Point(15, 15));
-        assertNotEquals(other, u);
+        assertNotEquals(other, testUnit);
     }
 
     /**
@@ -85,9 +85,9 @@ public abstract class UnitTest
     @Test
     public void absolutelyNotEqualsTest()
     {
-        Unit u = getTestUnit(true, p);
+        Unit testUnit = getTestUnit(true, FIRST_TEST_POINT);
         String other = ":3";
-        assertNotEquals(u, other);
+        assertNotEquals(testUnit, other);
     }
 
     /**
@@ -96,9 +96,9 @@ public abstract class UnitTest
     @Test
     public void reviveTest()
     {
-        Unit u = getTestUnit(true, p);
-        u.revive();
-        assertTrue(u.isAlive());
+        Unit testUnit = getTestUnit(true, FIRST_TEST_POINT);
+        testUnit.revive();
+        assertTrue(testUnit.isAlive());
     }
 
     /**
@@ -115,8 +115,8 @@ public abstract class UnitTest
     @Test
     public void isAlivePositiveTest()
     {
-        Unit u = getTestUnit(true, p);
-        assertTrue(u.isAlive());
+        Unit testUnit = getTestUnit(true, FIRST_TEST_POINT);
+        assertTrue(testUnit.isAlive());
     }
 
     /**
@@ -125,8 +125,18 @@ public abstract class UnitTest
     @Test
     public void isAliveNegativeTest()
     {
-        Unit u = getTestUnit(false, p);
-        u.kill();
-        assertFalse(u.isAlive());
+        Unit testUnit = getTestUnit(false, FIRST_TEST_POINT);
+        testUnit.kill();
+        assertFalse(testUnit.isAlive());
+    }
+
+    /**
+     * Test if the speed modifier is returned properly.
+     */
+    @Test
+    public void getSpeedModifierTest()
+    {
+        Unit testUnit = getTestUnit(false, FIRST_TEST_POINT);
+        assertEquals(testUnit.getSpeedMultiplier(), 1.0d, 0.75);
     }
 }

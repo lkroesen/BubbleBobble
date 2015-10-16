@@ -47,7 +47,7 @@ public class MapParserTest
 
         // There are no units on this map, just a position.
         assertEquals(res.getUnits().size(), 0);
-        // However, it did add a spawning point.
+        // However, it did add a spawning FIRST_TEST_POINT.
         assertEquals(new Point(1, 1), res.getPlayerPositions().get(0));
     }
 

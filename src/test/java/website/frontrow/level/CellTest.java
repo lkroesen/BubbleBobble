@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
 public class CellTest
 {
     /**
-     * Test collide with point 0,0.
+     * Test collide with FIRST_TEST_POINT 0,0.
      */
     @Test
     public void testEmptyCollision()

@@ -60,7 +60,7 @@ public class GridTest
      * HORIZONTAL
      */
     /**
-     * Test left in point.
+     * Test left in FIRST_TEST_POINT.
      */
     @Test
      public void horizontalInsideSetTest1()
@@ -70,7 +70,7 @@ public class GridTest
     }
 
     /**
-     * Test left out point.
+     * Test left out FIRST_TEST_POINT.
      */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void horizontalOutsideSetTest1()
@@ -80,7 +80,7 @@ public class GridTest
     }
 
     /**
-     * Test right in point.
+     * Test right in FIRST_TEST_POINT.
      */
     @Test
     public void horizontalInsideSetTest2()
@@ -90,7 +90,7 @@ public class GridTest
     }
 
     /**
-     * Test right out point.
+     * Test right out FIRST_TEST_POINT.
      */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void horizontalOutsideSetTest2()
@@ -102,7 +102,7 @@ public class GridTest
      * VERTICAL
      */
     /**
-     * Test top in point.
+     * Test top in FIRST_TEST_POINT.
      */
     @Test
     public void verticalInsideSetTest1()
@@ -112,7 +112,7 @@ public class GridTest
     }
 
     /**
-     * Test top out point.
+     * Test top out FIRST_TEST_POINT.
      */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void verticalOutsideSetTest1()
@@ -122,7 +122,7 @@ public class GridTest
     }
 
     /**
-     * Test bottom in point.
+     * Test bottom in FIRST_TEST_POINT.
      */
     @Test
     public void verticalInsideSetTest2()
@@ -132,7 +132,7 @@ public class GridTest
     }
 
     /**
-     * Test right out point.
+     * Test right out FIRST_TEST_POINT.
      */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void verticalOutsideSetTest2()
@@ -150,7 +150,7 @@ public class GridTest
      * HORIZONTAL
      */
     /**
-     * Test left in point.
+     * Test left in FIRST_TEST_POINT.
      */
     @Test
     public void horizontalInsideGetTest1()
@@ -160,7 +160,7 @@ public class GridTest
     }
 
     /**
-     * Test left out point.
+     * Test left out FIRST_TEST_POINT.
      */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void horizontalOutsideGetTest1()
@@ -170,7 +170,7 @@ public class GridTest
     }
 
     /**
-     * Test right in point.
+     * Test right in FIRST_TEST_POINT.
      */
     @Test
     public void horizontalInsideGetTest2()
@@ -180,7 +180,7 @@ public class GridTest
     }
 
     /**
-     * Test right out point.
+     * Test right out FIRST_TEST_POINT.
      */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void horizontalOutsideGetTest2()
@@ -192,7 +192,7 @@ public class GridTest
      * VERTICAL
      */
     /**
-     * Test top in point.
+     * Test top in FIRST_TEST_POINT.
      */
     @Test
     public void verticalInsideGetTest1()
@@ -202,7 +202,7 @@ public class GridTest
     }
 
     /**
-     * Test top out point.
+     * Test top out FIRST_TEST_POINT.
      */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void verticalOutsideGetTest1()
@@ -212,7 +212,7 @@ public class GridTest
     }
 
     /**
-     * Test bottom in point.
+     * Test bottom in FIRST_TEST_POINT.
      */
     @Test
     public void verticalInsideGetTest2()
@@ -222,7 +222,7 @@ public class GridTest
     }
 
     /**
-     * Test right out point.
+     * Test right out FIRST_TEST_POINT.
      */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void verticalOutsideGetTest2()
