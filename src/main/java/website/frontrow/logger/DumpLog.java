@@ -7,22 +7,37 @@ import java.io.PrintWriter;
 /**
  * Create a file out of the current log.
  */
-@SuppressWarnings("checkstyle:hideutilityclassconstructor")
-/* Due to the way DumpLog is intended, this checkstyle warning will be ignored. */
-public class DumpLog
+public final class DumpLog
 {
-    private File fTemp;
+    private File temporaryFile;
+    private static final DumpLog INSTANCE = new DumpLog();
+
+    /**
+     * Private Constructor because, Singleton.
+     */
+    private DumpLog()
+    {
+    }
+
+    /**
+     * Returns the DumpLog Instance.
+     * @return Returns the Instance.
+     */
+    public static DumpLog getInstance()
+    {
+        return INSTANCE;
+    }
 
     /**
      * Dumps the entire Log of what happened in the program.
      */
-    public DumpLog()
+    public void createDump()
     {
         try
         {
-            fTemp = File.createTempFile("DumpLog", ".txt");
+            temporaryFile = File.createTempFile("DumpLog", ".txt");
 
-            PrintWriter printWriter = new PrintWriter(fTemp, "UTF-8");
+            PrintWriter printWriter = new PrintWriter(temporaryFile, "UTF-8");
             for (long c = 0; c < Log.getLogMap().size(); c++)
             {
                 printWriter.println(Log.getLogMap().get(c));
@@ -32,7 +47,6 @@ public class DumpLog
         catch (IOException exception)
         {
             Log.add("[DUMP LOG]\tDump Log failed to make a DumpLog.");
-            new DumpLog();
             exception.printStackTrace();
         }
     }
@@ -41,8 +55,8 @@ public class DumpLog
      * Get the file made.
      * @return  Returns the file.
      */
-    public File getfTemp()
+    public File getTemporaryFile()
     {
-        return fTemp;
+        return temporaryFile;
     }
 }
