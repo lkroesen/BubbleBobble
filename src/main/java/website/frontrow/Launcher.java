@@ -213,7 +213,8 @@ public class Launcher implements Logable
                     game.getLevel().addUnit(
                             new Bubble(player.getLocation(),
                                     new Point(player.getDirection().getDeltaX() * 4, 0),
-                                    JBubbleBobbleSprites.getInstance().getBubbleSprite()));
+                                    JBubbleBobbleSprites.getInstance().getBubbleSprite(),
+                                    player));
                 }
             });
 
@@ -249,7 +250,8 @@ public class Launcher implements Logable
                     game.getLevel().addUnit(
                             new Bubble(player.getLocation(),
                                     new Point(player.getDirection().getDeltaX() * 4, 0),
-                                    JBubbleBobbleSprites.getInstance().getBubbleSprite()));
+                                    JBubbleBobbleSprites.getInstance().getBubbleSprite(),
+                                    player));
                 }
             });
         }
