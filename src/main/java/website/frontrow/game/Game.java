@@ -49,6 +49,7 @@ public class Game
     /**
      * Constructor of Game.
      * @param levels All the levels of the game.
+     * @param unitFactory The fectory to create units with.
      * @param playerCount The player count.
      */
     public Game(ArrayList<Level> levels, UnitFactory unitFactory, int playerCount)

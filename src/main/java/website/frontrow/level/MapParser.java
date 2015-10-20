@@ -5,11 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import website.frontrow.board.Enemy;
 import website.frontrow.board.UnitFactory;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
-import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.util.Point;
 
 /**
