@@ -182,6 +182,6 @@ public class ArtificialIntelligence
     @Override
     public void addToLog(String action)
     {
-		Log.add(action);
+        Log.add(action);
     }
 }
