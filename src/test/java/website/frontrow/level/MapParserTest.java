@@ -3,6 +3,7 @@ package website.frontrow.level;
 import java.io.IOException;
 import java.util.Arrays;
 import org.junit.Test;
+import website.frontrow.board.BasicUnitFactory;
 import website.frontrow.board.Enemy;
 import website.frontrow.util.Grid;
 import website.frontrow.util.Point;
@@ -22,7 +23,7 @@ public class MapParserTest
     public void testSimpleMap()
     {
         String[] map = new String[]{"X_X", "X X", "XXX"};
-        MapParser parser = new MapParser();
+        MapParser parser = new MapParser(new BasicUnitFactory());
         Level res = parser.parseMap(map);
 
         // There are no units on the map.
@@ -42,7 +43,7 @@ public class MapParserTest
     public void testPlayerMap()
     {
         String[] map = new String[]{"XXX", "XpX", "XXX"};
-        MapParser parser = new MapParser();
+        MapParser parser = new MapParser(new BasicUnitFactory());
         Level res = parser.parseMap(map);
 
         // There are no units on this map, just a position.
@@ -58,7 +59,7 @@ public class MapParserTest
     public void testEnemyMap()
     {
         String[] map = new String[]{"XXX", "XeX", "XXX"};
-        MapParser parser = new MapParser();
+        MapParser parser = new MapParser(new BasicUnitFactory());
         Level res = parser.parseMap(map);
 
         // There is a single unit (the player) on the map.
@@ -75,7 +76,7 @@ public class MapParserTest
     public void testFailOnInvalidCharacter()
     {
         String[] map = new String[]{"XXX", "XzX", "XXX"};
-        MapParser parser = new MapParser();
+        MapParser parser = new MapParser(new BasicUnitFactory());
         parser.parseMap(map);
     }
 
@@ -86,7 +87,7 @@ public class MapParserTest
     public void testFailOnInvalidShape1()
     {
         String[] map = new String[]{"XXX", "XXXX", "XXX"};
-        MapParser parser = new MapParser();
+        MapParser parser = new MapParser(new BasicUnitFactory());
         parser.parseMap(map);
     }
 
@@ -97,7 +98,7 @@ public class MapParserTest
     public void testFailOnInvalidShape2()
     {
         String[] map = new String[]{"XXX", "", "XXX"};
-        MapParser parser = new MapParser();
+        MapParser parser = new MapParser(new BasicUnitFactory());
         parser.parseMap(map);
     }
 
@@ -108,7 +109,7 @@ public class MapParserTest
     public void testFailOnInvalidShape3()
     {
         String[] map = new String[]{};
-        MapParser parser = new MapParser();
+        MapParser parser = new MapParser(new BasicUnitFactory());
         parser.parseMap(map);
     }
 
@@ -119,7 +120,7 @@ public class MapParserTest
     public void testFailOnInvalidShape4()
     {
         String[] map = new String[]{"", "", ""};
-        MapParser parser = new MapParser();
+        MapParser parser = new MapParser(new BasicUnitFactory());
         parser.parseMap(map);
     }
 
@@ -130,7 +131,7 @@ public class MapParserTest
     @Test
     public void testFileLoader() throws IOException
     {
-        MapParser parser = new MapParser();
+        MapParser parser = new MapParser(new BasicUnitFactory());
         Level level = parser.parseMap(getClass().getResourceAsStream("/testLevelLoader.txt"));
         Grid<Cell> expected = new Grid<Cell>(Arrays.asList(
                 Cell.WALL, Cell.WALL, Cell.WALL,

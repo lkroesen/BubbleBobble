@@ -1,7 +1,9 @@
 package website.frontrow;
 
+import website.frontrow.board.BasicUnitFactory;
 import website.frontrow.board.Bubble;
 import website.frontrow.board.Player;
+import website.frontrow.board.UnitFactory;
 import website.frontrow.game.Game;
 import website.frontrow.level.Level;
 import website.frontrow.level.MapParser;
@@ -67,8 +69,9 @@ public class Launcher implements Logable
 
         try
         {
-            MapParser mp = new MapParser();
+            MapParser mp = new MapParser(new BasicUnitFactory());
             ArrayList<Level> levelList = new ArrayList<>();
+            UnitFactory unitFactory = new BasicUnitFactory();
             for(String levelFileName : filename)
             {
                 InputStream map = getClass().getResourceAsStream(levelFileName);
@@ -78,7 +81,7 @@ public class Launcher implements Logable
             
             addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + " succeeded.");
 
-            Game game = new Game(levelList, playerCount);
+            Game game = new Game(levelList, unitFactory, playerCount);
             Map<Integer, Action> keyMappings = createKeyMappings(game);
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
 

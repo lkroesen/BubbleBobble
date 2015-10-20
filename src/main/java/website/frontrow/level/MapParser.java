@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import website.frontrow.board.Enemy;
+import website.frontrow.board.UnitFactory;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.sprite.JBubbleBobbleSprites;
@@ -17,6 +18,18 @@ import website.frontrow.util.Point;
 public class MapParser
         implements  Logable
 {
+
+    private UnitFactory unitFactory;
+
+    /**
+     * Construct a MapParser with a given unit factory.
+     * @param unitFactory The unit factory to generate
+     */
+    public MapParser(UnitFactory unitFactory)
+    {
+        this.unitFactory = unitFactory;
+    }
+
     /**
      * Check whether a level formed by these strings would create a validly shaped level.
      * It fails whenever:
@@ -142,8 +155,7 @@ public class MapParser
                 levelBuilder.addPlayerSpawnPoint(new Point(x, y));
                 break;
             case 'e':
-                levelBuilder.addUnit(new Enemy(new Point(x, y),
-                        JBubbleBobbleSprites.getInstance().getEnemySprite()));
+                levelBuilder.addUnit(unitFactory.createEnemy(new Point(x, y)));
                 break;
             case ' ':
                 // Empty area. Keep it empty.
