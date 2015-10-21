@@ -12,6 +12,7 @@ import java.util.Map;
 import website.frontrow.Launcher;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
+import website.frontrow.ui.keybinds.KeyBindFrame;
 import website.frontrow.util.FileNameCollector;
 
 /**
@@ -77,6 +78,12 @@ public class ModeMenu
                 e.printStackTrace();
             }
         });
+
+        buttonMappings.put("Key Bindings", () ->
+        {
+            new KeyBindFrame();
+        });
+
         return buttonMappings;
     }
 
