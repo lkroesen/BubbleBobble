@@ -236,4 +236,11 @@ public abstract class Mover
     {
         Log.add(action);
     }
+
+    public void reset()
+    {
+        super.reset();
+        motion = new Point(0, 0);
+        newMotion = new Point(0, 0);
+    }
 }

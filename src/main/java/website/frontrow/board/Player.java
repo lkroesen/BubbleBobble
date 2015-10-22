@@ -51,6 +51,7 @@ public class Player
      */
     public void reset()
     {
+        super.reset();
         ticksLeft = 0;
         lives = GameConstants.DEFAULT_AMOUNT_OF_LIVES;
         score = 0;

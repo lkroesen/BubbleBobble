@@ -122,6 +122,7 @@ public class Game
         running = false;
         currentIndex = 0;
         players.forEach((player) -> player.reset());
+        loadCurrentLevel();
     }
 
     /**

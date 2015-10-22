@@ -177,4 +177,10 @@ public abstract class Unit
     {
     	return 1.0;
     }
+
+    public void reset()
+    {
+        location = new Point(0, 0);
+        alive = true;
+    }
 }

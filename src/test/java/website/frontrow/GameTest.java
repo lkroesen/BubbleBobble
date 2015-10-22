@@ -158,7 +158,7 @@ public class GameTest
 
         game.restart();
 
-        verify(level, times(1)).duplicate();
+        verify(level, times(2)).duplicate();
         assertFalse(game.isRunning());
         assertEquals(game.getPlayers().get(0).getScore(), 0);
     }
