@@ -145,4 +145,22 @@ public class GameTest
         verify(level2, never()).duplicate();
     }
 
+    /**
+     * Test if restart works as expected.
+     */
+    @Test
+    public void testRestart()
+    {
+        game.nextLevel();
+        game.getPlayers().get(0).increaseScoreWith(100);
+        verify(level, times(1)).duplicate();
+        verify(level2, times(1)).duplicate();
+
+        game.restart();
+
+        verify(level, times(1)).duplicate();
+        assertFalse(game.isRunning());
+        assertEquals(game.getPlayers().get(0).getScore(), 0);
+    }
+
 }
