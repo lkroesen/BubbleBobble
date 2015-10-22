@@ -49,7 +49,7 @@ public abstract class KeyBinds
         leftMapping.put(1, KeyEvent.VK_A);
 
         Map<Integer, Integer> shootMapping = new HashMap<>();
-        shootMapping.put(0, KeyEvent.VK_ALT);
+        shootMapping.put(0, KeyEvent.VK_Z);
         shootMapping.put(1, KeyEvent.VK_SHIFT);
 
         Map<Integer, Integer> printToggleMapping = new HashMap<>();

@@ -47,10 +47,10 @@ public final class BindActions
         assert game.getPlayers().size() >= 1;
         Player player1 = game.getPlayers().get(0);
 
-        mapping.put(KeyBinds.player1Jump, () -> player1.jump());
-        mapping.put(KeyBinds.player1GoLeft, () -> player1.goLeft());
-        mapping.put(KeyBinds.player1GoRight, () -> player1.goRight());
-        mapping.put(KeyBinds.player1Shoot, () -> player1.shoot());
+        mapping.put(KeyBinds.getKeyCodeFor(ActionType.JUMP, 0), () -> player1.jump());
+        mapping.put(KeyBinds.getKeyCodeFor(ActionType.LEFT, 0), () -> player1.goLeft());
+        mapping.put(KeyBinds.getKeyCodeFor(ActionType.RIGHT, 0), () -> player1.goRight());
+        mapping.put(KeyBinds.getKeyCodeFor(ActionType.SHOOT, 0), () -> player1.shoot());
 
         return this;
     }
@@ -65,10 +65,10 @@ public final class BindActions
         assert game.getPlayers().size() >= 2;
         Player player2 = game.getPlayers().get(1);
 
-        mapping.put(KeyBinds.player2Jump, () -> player2.jump());
-        mapping.put(KeyBinds.player2GoRight, () -> player2.goRight());
-        mapping.put(KeyBinds.player2GoLeft, () -> player2.goLeft());
-        mapping.put(KeyBinds.player2Shoot, () -> player2.shoot());
+        mapping.put(KeyBinds.getKeyCodeFor(ActionType.JUMP, 1), () -> player2.jump());
+        mapping.put(KeyBinds.getKeyCodeFor(ActionType.LEFT, 1), () -> player2.goLeft());
+        mapping.put(KeyBinds.getKeyCodeFor(ActionType.RIGHT, 1), () -> player2.goRight());
+        mapping.put(KeyBinds.getKeyCodeFor(ActionType.SHOOT, 1), () -> player2.shoot());
 
         return this;
     }
@@ -79,10 +79,14 @@ public final class BindActions
      */
     public BindActions createUtilMappings()
     {
-        mapping.put(KeyBinds.utilVolumeDown, () -> MusicPlayer.getInstance().volumeAdjust(-1.0d));
-        mapping.put(KeyBinds.utilVolumeUp, () -> MusicPlayer.getInstance().volumeAdjust(1.0d));
-        mapping.put(KeyBinds.utilToggleLog, () -> Log.togglePrinting());
-        mapping.put(KeyBinds.utilDumpLog, () -> new DumpLog());
+        mapping.put(KeyBinds.getKeyCodeForUtil(ActionType.VOLUME_DOWN),
+                () -> MusicPlayer.getInstance().volumeAdjust(-1.0d));
+        mapping.put(KeyBinds.getKeyCodeForUtil(ActionType.VOLUME_UP),
+                () -> MusicPlayer.getInstance().volumeAdjust(1.0d));
+        mapping.put(KeyBinds.getKeyCodeForUtil(ActionType.TOGGLE_PRINT_LOG),
+                () -> Log.togglePrinting());
+        mapping.put(KeyBinds.getKeyCodeForUtil(ActionType.STORE_LOG),
+                () -> new DumpLog());
 
         return this;
     }
