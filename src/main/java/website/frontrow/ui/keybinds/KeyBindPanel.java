@@ -4,13 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.security.Key;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import website.frontrow.keybindings.ActionType;
 import website.frontrow.keybindings.KeyBinds;
 
 /**
@@ -28,6 +29,8 @@ public class KeyBindPanel
     private JButton leftButton;
     private JButton rightButton;
     private JButton shootButton;
+
+    private int playerIndex;
 
     public KeyBindPanel(int playerIndex)
     {
@@ -67,6 +70,8 @@ public class KeyBindPanel
         this.setFocusable(true);
         this.addKeyListener(this);
         this.setVisible(true);
+
+        this.playerIndex = playerIndex;
     }
 
     /**
@@ -109,16 +114,16 @@ public class KeyBindPanel
             switch (actionListenedTo)
             {
                 case "BIND_JUMP":
-                    KeyBinds.player1Jump = e.getKeyCode();
+                    KeyBinds.setKeyCodeFor(ActionType.JUMP, playerIndex, e.getKeyCode());
                     break;
                 case "BIND_LEFT":
-                    KeyBinds.player1GoLeft = e.getKeyCode();
+                    KeyBinds.setKeyCodeFor(ActionType.LEFT, playerIndex, e.getKeyCode());
                     break;
                 case "BIND_RIGHT":
-                    KeyBinds.player1GoRight = e.getKeyCode();
+                    KeyBinds.setKeyCodeFor(ActionType.RIGHT, playerIndex, e.getKeyCode());
                     break;
                 case "BIND_SHOOT":
-                    KeyBinds.player1Shoot = e.getKeyCode();
+                    KeyBinds.setKeyCodeFor(ActionType.SHOOT, playerIndex, e.getKeyCode());
                     break;
                 default:
                     break;
@@ -145,9 +150,9 @@ public class KeyBindPanel
 
     private void update()
     {
-        jumpButton.setText(KeyEvent.getKeyText(KeyBinds.player1Jump));
-        rightButton.setText(KeyEvent.getKeyText(KeyBinds.player1GoRight));
-        leftButton.setText(KeyEvent.getKeyText(KeyBinds.player1GoLeft));
-        shootButton.setText(KeyEvent.getKeyText(KeyBinds.player1Shoot));
+        jumpButton.setText(KeyEvent.getKeyText(KeyBinds.getKeyCodeFor(ActionType.JUMP, playerIndex)));
+        rightButton.setText(KeyEvent.getKeyText(KeyBinds.getKeyCodeFor(ActionType.RIGHT, playerIndex)));
+        leftButton.setText(KeyEvent.getKeyText(KeyBinds.getKeyCodeFor(ActionType.LEFT, playerIndex)));
+        shootButton.setText(KeyEvent.getKeyText(KeyBinds.getKeyCodeFor(ActionType.SHOOT, playerIndex)));
     }
 }
