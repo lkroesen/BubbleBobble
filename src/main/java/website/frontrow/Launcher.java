@@ -13,13 +13,10 @@ import website.frontrow.game.GameConstants;
 import website.frontrow.logger.Logable;
 import website.frontrow.music.MusicPlayer;
 
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
