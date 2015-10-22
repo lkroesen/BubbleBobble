@@ -173,8 +173,8 @@ public class Enemy
     	player = mover;
     }
     
-    public Mover getPlayer(Mover mover)
+    public Mover getPlayer()
     {
-    	return mover;
+    	return player;
     }
 }
