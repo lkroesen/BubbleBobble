@@ -46,6 +46,10 @@ public class SidePanel
                 MusicPlayer.getInstance().selectSong(Songs.QUEST_BEGINS);
             }
         });
+        buttonMappings.put("Restart", () ->
+        {
+           game.restart();
+        });
 
         add(new ButtonPanel(buttonMappings));
         add(new StatusLabelPanel(game));
