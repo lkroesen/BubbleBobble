@@ -36,43 +36,30 @@ public abstract class KeyBinds
     // Static initializer, look it up.
     static
     {
-        Map<Integer, Integer> jumpMapping = new HashMap<>();
-        jumpMapping.put(0, KeyEvent.VK_UP);
-        jumpMapping.put(1, KeyEvent.VK_W);
-
-        Map<Integer, Integer> rightMapping = new HashMap<>();
-        rightMapping.put(0, KeyEvent.VK_RIGHT);
-        rightMapping.put(1, KeyEvent.VK_D);
-
-        Map<Integer, Integer> leftMapping = new HashMap<>();
-        leftMapping.put(0, KeyEvent.VK_LEFT);
-        leftMapping.put(1, KeyEvent.VK_A);
-
-        Map<Integer, Integer> shootMapping = new HashMap<>();
-        shootMapping.put(0, KeyEvent.VK_Z);
-        shootMapping.put(1, KeyEvent.VK_SHIFT);
-
-        Map<Integer, Integer> printToggleMapping = new HashMap<>();
-        printToggleMapping.put(-1, KeyEvent.VK_F1);
-
-        Map<Integer, Integer> dumpLogMapping = new HashMap<>();
-        dumpLogMapping.put(-1, KeyEvent.VK_F2);
-
-        Map<Integer, Integer> volumeUpMapping = new HashMap<>();
-        volumeUpMapping.put(-1, KeyEvent.VK_EQUALS);
-
-        Map<Integer, Integer> volumeDownMapping = new HashMap<>();
-        volumeDownMapping.put(-1, KeyEvent.VK_MINUS);
-
         mapping = new HashMap<>();
-        mapping.put(ActionType.JUMP, jumpMapping);
-        mapping.put(ActionType.RIGHT, rightMapping);
-        mapping.put(ActionType.LEFT, leftMapping);
-        mapping.put(ActionType.SHOOT, shootMapping);
-        mapping.put(ActionType.TOGGLE_PRINT_LOG, printToggleMapping);
-        mapping.put(ActionType.STORE_LOG, dumpLogMapping);
-        mapping.put(ActionType.VOLUME_UP, volumeUpMapping);
-        mapping.put(ActionType.VOLUME_DOWN, volumeDownMapping);
+        mapping.put(ActionType.JUMP, new HashMap<>());
+        mapping.put(ActionType.RIGHT, new HashMap<>());
+        mapping.put(ActionType.LEFT, new HashMap<>());
+        mapping.put(ActionType.SHOOT, new HashMap<>());
+        mapping.put(ActionType.TOGGLE_PRINT_LOG, new HashMap<>());
+        mapping.put(ActionType.STORE_LOG, new HashMap<>());
+        mapping.put(ActionType.VOLUME_UP, new HashMap<>());
+        mapping.put(ActionType.VOLUME_DOWN, new HashMap<>());
+
+        setKeyCodeFor(ActionType.LEFT,  0, KeyEvent.VK_LEFT);
+        setKeyCodeFor(ActionType.RIGHT, 0, KeyEvent.VK_RIGHT);
+        setKeyCodeFor(ActionType.JUMP,  0, KeyEvent.VK_UP);
+        setKeyCodeFor(ActionType.SHOOT, 0, KeyEvent.VK_Z);
+
+        setKeyCodeFor(ActionType.LEFT,  1, KeyEvent.VK_A);
+        setKeyCodeFor(ActionType.RIGHT, 1, KeyEvent.VK_D);
+        setKeyCodeFor(ActionType.JUMP,  1, KeyEvent.VK_W);
+        setKeyCodeFor(ActionType.SHOOT, 1, KeyEvent.VK_SHIFT);
+
+        setKeyCodeForUtil(ActionType.TOGGLE_PRINT_LOG, KeyEvent.VK_F1);
+        setKeyCodeForUtil(ActionType.STORE_LOG, KeyEvent.VK_F2);
+        setKeyCodeForUtil(ActionType.VOLUME_UP, KeyEvent.VK_EQUALS);
+        setKeyCodeForUtil(ActionType.VOLUME_DOWN, KeyEvent.VK_MINUS);
     }
 
     /**
