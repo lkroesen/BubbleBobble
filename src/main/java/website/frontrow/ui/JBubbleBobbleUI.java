@@ -33,16 +33,16 @@ public class JBubbleBobbleUI
     /**
      * Creates a JBubble Bobble UI.
      * @param game The game to display in the ui.
-     * @param integerActionMap The key listener mapping.
+     * @param keyMapping The key listener mapping.
      */
-    public JBubbleBobbleUI(Game game, Map<Integer, Action> integerActionMap)
+    public JBubbleBobbleUI(Game game, Map<Integer, Action> keyMapping)
     {
         super("Bubble Bobble");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setFocusable(true);
 
-        this.keyListener = new JBubbleKeyListener(integerActionMap);
+        this.keyListener = new JBubbleKeyListener(keyMapping);
         addKeyListener(this.keyListener);
 
         Container contentPanel = getContentPane();

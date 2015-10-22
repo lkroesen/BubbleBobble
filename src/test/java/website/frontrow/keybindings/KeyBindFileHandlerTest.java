@@ -50,7 +50,7 @@ public class KeyBindFileHandlerTest
      * Test if the FileChecker throws an exception when null is inputed.
      * @throws IOException Throws exception when triggered.
      */
-    @Test(expected = IOException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testFileChecker() throws IOException
     {
         File fileTest = KeyBindFileHandler.getInstance().fileChecker(null, true);
@@ -62,7 +62,9 @@ public class KeyBindFileHandlerTest
     @Test
     public void testSetFilename()
     {
-        KeyBindFileHandler.setFilename("binds.txt");
-        assertEquals(KeyBindFileHandler.getFilename(), "binds.txt");
+        KeyBindFileHandler.setFilename("testfile.txt");
+        assertEquals(KeyBindFileHandler.getFilename(), "testfile.txt");
+        File testFile = new File("testfile.txt");
+        testFile.delete(); // Clean up after yourself!
     }
 }
