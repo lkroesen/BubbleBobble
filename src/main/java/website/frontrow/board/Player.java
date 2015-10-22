@@ -47,6 +47,16 @@ public class Player
     private Set<PlayerObserver> observers = new HashSet<>();
 
     /**
+     * Reset the player to the default state.
+     */
+    public void reset()
+    {
+        ticksLeft = 0;
+        lives = GameConstants.DEFAULT_AMOUNT_OF_LIVES;
+        score = 0;
+    }
+
+    /**
      * The constructor of the Player Unit.
      * @param position A players starting position.
      * @param sprites The sprite for this player.

@@ -115,6 +115,16 @@ public class Game
     }
 
     /**
+     * Restart the game.
+     */
+    public void restart()
+    {
+        running = false;
+        currentIndex = 0;
+        players.forEach((player) -> player.reset());
+    }
+
+    /**
      * Whether the game is currently running.
      * @return Current running state of the game.
      */
