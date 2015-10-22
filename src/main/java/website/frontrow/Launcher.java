@@ -2,6 +2,7 @@ package website.frontrow;
 
 import website.frontrow.game.Game;
 import website.frontrow.keybindings.BindActions;
+import website.frontrow.keybindings.KeyBindFileHandler;
 import website.frontrow.level.Level;
 import website.frontrow.level.MapParser;
 import website.frontrow.logger.DumpLog;
@@ -44,6 +45,9 @@ public class Launcher implements Logable
         Log.togglePrinting();
 
         MusicPlayer.getInstance().selectSong(Songs.TITLE_SCREEN);
+
+        KeyBindFileHandler.getInstance().saveBindings();
+        KeyBindFileHandler.getInstance().loadBindings();
 
         new ModeMenu().setVisible(true);
     }

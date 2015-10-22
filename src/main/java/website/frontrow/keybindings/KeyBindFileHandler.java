@@ -89,6 +89,8 @@ public final class KeyBindFileHandler implements Logable
     /**
      * Write current keybindings to file.
      * @param file Input a file to write to.
+     * @throws FileNotFoundException Throws when triggered.
+     * @throws UnsupportedEncodingException Throws when triggered.
      */
     private void fileWrite(File file) throws FileNotFoundException, UnsupportedEncodingException
     {
@@ -116,6 +118,8 @@ public final class KeyBindFileHandler implements Logable
 
     /**
      * Read keybindings from file.
+     * @param file Input a file to be parsed.
+     * @throws FileNotFoundException Throws when triggered.
      */
     private void fileParse(File file) throws FileNotFoundException
     {
