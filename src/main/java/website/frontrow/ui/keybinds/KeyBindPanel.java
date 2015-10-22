@@ -35,40 +35,34 @@ public class KeyBindPanel
 
     private int playerIndex;
 
+    /**
+     * Creates a panel which displays buttons to rebind keys for a player.
+     * @param playerIndex The index for this player. Zero-indexed.
+     */
     public KeyBindPanel(int playerIndex)
     {
         super();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(new JLabel("Player " + (playerIndex + 1) ));
+        this.add(new JLabel("Player " + (playerIndex + 1)));
         this.add(new JSeparator(SwingConstants.HORIZONTAL));
-        //TODO: Make this better. This is a bit meh.
+
         this.add(new JLabel("Jump"));
-        jumpButton = new JButton(KeyEvent.getKeyText(KeyBinds.getKeyCodeFor(ActionType.JUMP, playerIndex)));
-        jumpButton.addActionListener(this);
-        jumpButton.setActionCommand("BIND_JUMP");
-        jumpButton.setFocusable(false);
+        jumpButton = createButton(ActionType.JUMP, playerIndex, "BIND_JUMP");
         this.add(jumpButton);
 
         this.add(new JLabel("Left"));
-        leftButton = new JButton(KeyEvent.getKeyText(KeyBinds.getKeyCodeFor(ActionType.LEFT, playerIndex)));
-        leftButton.addActionListener(this);
-        leftButton.setActionCommand("BIND_LEFT");
-        leftButton.setFocusable(false);
+        leftButton = createButton(ActionType.LEFT, playerIndex, "BIND_LEFT");
         this.add(leftButton);
 
         this.add(new JLabel("Right"));
-        rightButton = new JButton(KeyEvent.getKeyText(KeyBinds.getKeyCodeFor(ActionType.RIGHT, playerIndex)));
-        rightButton.addActionListener(this);
-        rightButton.setActionCommand("BIND_RIGHT");
-        rightButton.setFocusable(false);
+        rightButton = createButton(ActionType.RIGHT, playerIndex, "BIND_RIGHT");
         this.add(rightButton);
 
         this.add(new JLabel("Shoot"));
-        shootButton = new JButton(KeyEvent.getKeyText(KeyBinds.getKeyCodeFor(ActionType.SHOOT, playerIndex)));
-        shootButton.addActionListener(this);
-        shootButton.setActionCommand("BIND_SHOOT");
-        shootButton.setFocusable(false);
+        shootButton = createButton(ActionType.SHOOT, playerIndex, "BIND_SHOOT");
         this.add(shootButton);
+
+        this.add(new JSeparator(SwingConstants.HORIZONTAL));
 
         this.setFocusable(true);
         this.addKeyListener(this);
@@ -113,7 +107,7 @@ public class KeyBindPanel
     @Override
     public void keyPressed(KeyEvent e)
     {
-        if(e.getKeyCode() != KeyEvent.VK_ESCAPE)
+        if(e.getKeyCode() != KeyEvent.VK_ESCAPE && !actionListenedTo.equals(""))
         {
             switch (actionListenedTo)
             {
@@ -132,8 +126,8 @@ public class KeyBindPanel
                 default:
                     break;
             }
-            Log.add("[KBP]\tChanged binding for " + actionListenedTo + " to "
-                    + KeyEvent.getKeyText(e.getKeyCode()));
+            Log.add("[KBP]\tChanged binding for " + actionListenedTo + ", player" + playerIndex
+                    + " to " + KeyEvent.getKeyText(e.getKeyCode()));
         }
         actionListenedTo = "";
     }
@@ -156,10 +150,14 @@ public class KeyBindPanel
      */
     private void update()
     {
-        jumpButton.setText(KeyEvent.getKeyText(KeyBinds.getKeyCodeFor(ActionType.JUMP, playerIndex)));
-        rightButton.setText(KeyEvent.getKeyText(KeyBinds.getKeyCodeFor(ActionType.RIGHT, playerIndex)));
-        leftButton.setText(KeyEvent.getKeyText(KeyBinds.getKeyCodeFor(ActionType.LEFT, playerIndex)));
-        shootButton.setText(KeyEvent.getKeyText(KeyBinds.getKeyCodeFor(ActionType.SHOOT, playerIndex)));
+        jumpButton.setText(
+                KeyEvent.getKeyText(KeyBinds.getKeyCodeFor(ActionType.JUMP, playerIndex)));
+        rightButton.setText(
+                KeyEvent.getKeyText(KeyBinds.getKeyCodeFor(ActionType.RIGHT, playerIndex)));
+        leftButton.setText(
+                KeyEvent.getKeyText(KeyBinds.getKeyCodeFor(ActionType.LEFT, playerIndex)));
+        shootButton.setText(
+                KeyEvent.getKeyText(KeyBinds.getKeyCodeFor(ActionType.SHOOT, playerIndex)));
     }
 
     /**
@@ -169,5 +167,16 @@ public class KeyBindPanel
     public void keyBindingChanged()
     {
         update();
+    }
+
+    private JButton createButton(ActionType action, int playerIndex, String command)
+    {
+        JButton button = new JButton(
+                KeyEvent.getKeyText(KeyBinds.getKeyCodeFor(action, playerIndex)));
+        button.addActionListener(this);
+        button.setActionCommand(command);
+        button.setFocusable(false);
+
+        return button;
     }
 }

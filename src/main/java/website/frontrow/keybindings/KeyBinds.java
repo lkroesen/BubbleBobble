@@ -53,7 +53,7 @@ public abstract class KeyBinds
      * @param playerIndex The player to perform the action with.
      * @param keyCode The key code.
      */
-    public synchronized static void setKeyCodeFor(ActionType action, int playerIndex, int keyCode)
+    public static synchronized void setKeyCodeFor(ActionType action, int playerIndex, int keyCode)
     {
         Map<Integer, Integer> actionMap = mapping.get(action);
         actionMap.put(playerIndex, keyCode);
@@ -75,12 +75,15 @@ public abstract class KeyBinds
      * @param action The action.
      * @param keyCode The new key code.
      */
-    public synchronized static void setKeyCodeForUtil(ActionType action, int keyCode)
+    public static synchronized void setKeyCodeForUtil(ActionType action, int keyCode)
     {
         setKeyCodeFor(action, -1, keyCode);
     }
 
-    public synchronized static void createDefaultKeyMapping()
+    /**
+     * Creates the default key mappings.
+     */
+    public static synchronized void createDefaultKeyMapping()
     {
         setKeyCodeFor(ActionType.LEFT,  0, KeyEvent.VK_LEFT);
         setKeyCodeFor(ActionType.RIGHT, 0, KeyEvent.VK_RIGHT);
@@ -103,7 +106,7 @@ public abstract class KeyBinds
      * Prints the key bindings to a print writer.
      * @param writer The print writer to write the bindings to.
      */
-    public synchronized static void printTo(PrintWriter writer)
+    public static synchronized void printTo(PrintWriter writer)
     {
         for(ActionType action : ActionType.values())
         {
@@ -119,7 +122,8 @@ public abstract class KeyBinds
      * Sets the key bindings from the information in the scanner.
      * @param scanner The scanner which provides the information.
      */
-    public synchronized static void readFrom(Scanner scanner)
+    @SuppressWarnings("magicnumber") //It's just the number of parameters in the file.
+    public static synchronized void readFrom(Scanner scanner)
     {
         while(scanner.hasNextLine())
         {
@@ -141,6 +145,7 @@ public abstract class KeyBinds
 
     /**
      * Adds observer. It will be notified when a key binding changes.
+     * @param observer The observer to add.
      */
     public static void addObserver(KeyBindsObserver observer)
     {
@@ -149,6 +154,7 @@ public abstract class KeyBinds
 
     /**
      * Removes observer.
+     * @param observer The observer to remove.
      */
     public static void removeObserver(KeyBindsObserver observer)
     {

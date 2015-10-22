@@ -12,16 +12,19 @@ import javax.swing.JPanel;
 public class KeyBindFrame
     extends JFrame
 {
-    JPanel panel;
+    private JPanel panel;
 
+    /**
+     * Creates a key binding window.
+     */
     public KeyBindFrame()
     {
         super();
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation((int) dimension.getWidth()/2 - getSize().width,
-                (int) dimension.getHeight()/2 - getSize().height);
+        this.setLocation((int) dimension.getWidth() / 2 - getSize().width,
+                (int) dimension.getHeight() / 2 - getSize().height);
 
-        panel = new JPanel(new GridLayout(3,1));
+        panel = new JPanel(new GridLayout(0, 1));
         panel.add(new KeyBindPanel(0));
         add(panel);
         pack();

@@ -27,8 +27,9 @@ public enum ActionType
             case TOGGLE_PRINT_LOG: return "TOGGLE_PRINT_LOG";
             case VOLUME_UP: return "VOLUME_UP";
             case VOLUME_DOWN: return "VOLUME_DOWN";
+
+            default: return "";
         }
-        return "";
     }
 
     /**

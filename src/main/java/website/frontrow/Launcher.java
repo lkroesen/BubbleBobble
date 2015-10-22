@@ -1,19 +1,23 @@
 package website.frontrow;
 
 import website.frontrow.game.Game;
+import website.frontrow.game.GameConstants;
+
 import website.frontrow.keybindings.BindActions;
 import website.frontrow.keybindings.KeyBindFileHandler;
-import website.frontrow.keybindings.KeyBinds;
+
 import website.frontrow.level.Level;
 import website.frontrow.level.MapParser;
+
 import website.frontrow.logger.DumpLog;
 import website.frontrow.logger.Log;
+import website.frontrow.logger.Logable;
+
 import website.frontrow.music.Songs;
+import website.frontrow.music.MusicPlayer;
+
 import website.frontrow.ui.JBubbleBobbleUI;
 import website.frontrow.ui.ModeMenu;
-import website.frontrow.game.GameConstants;
-import website.frontrow.logger.Logable;
-import website.frontrow.music.MusicPlayer;
 
 import java.io.IOException;
 import java.io.InputStream;

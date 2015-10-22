@@ -74,6 +74,7 @@ public class Player
     }
 
     @Override
+    @SuppressWarnings("magicnumber")
     public void tick(Level level)
     {
         super.tick(level);

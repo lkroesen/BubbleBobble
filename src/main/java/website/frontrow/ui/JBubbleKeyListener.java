@@ -19,7 +19,7 @@ public class JBubbleKeyListener implements KeyListener
     /**
      * The mappings of keyCode to action.
      */
-    private final Map<Integer, Action> mapping;
+    private  Map<Integer, Action> mapping;
 
     private Map<Integer, Boolean> pressed = new HashMap<>();
     private Set<Integer> pressedKeys = Collections.newSetFromMap(new ConcurrentHashMap<>());
@@ -70,6 +70,15 @@ public class JBubbleKeyListener implements KeyListener
     {
     	pressed.put(keyEvent.getKeyCode(), false);
     	pressedKeys.remove(keyEvent.getKeyCode());
+    }
+
+    /**
+     * Changes the key mapping for this keylistener.
+     * @param mapping The key mapping.
+     */
+    public void setMapping(Map<Integer, Action> mapping)
+    {
+        this.mapping = mapping;
     }
 
     /**
