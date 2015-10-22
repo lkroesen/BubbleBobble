@@ -49,10 +49,6 @@ public class Launcher implements Logable
     {
         Log.togglePrinting();
 
-        MusicPlayer.getInstance().selectSong(Songs.TITLE_SCREEN);
-
-        KeyBindFileHandler.getInstance().loadBindings();
-
         new ModeMenu().setVisible(true);
     }
 
@@ -68,6 +64,9 @@ public class Launcher implements Logable
 
         try
         {
+            MusicPlayer.getInstance().selectSong(Songs.TITLE_SCREEN);
+            KeyBindFileHandler.getInstance().loadBindings();
+
             MapParser mp = new MapParser();
             ArrayList<Level> levelList = new ArrayList<>();
             for(String levelFileName : filename)

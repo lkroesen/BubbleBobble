@@ -63,7 +63,5 @@ public class KeyBindFileHandlerTest
     {
         KeyBindFileHandler.setFilename("testfile.txt");
         assertEquals(KeyBindFileHandler.getFilename(), "testfile.txt");
-        File testFile = new File("testfile.txt");
-        testFile.delete(); // Clean up after yourself!
     }
 }
