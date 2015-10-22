@@ -49,6 +49,7 @@ public class Player
     /**
      * Reset the player to the default state.
      */
+    @Override
     public void reset()
     {
         super.reset();

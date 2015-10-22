@@ -178,6 +178,9 @@ public abstract class Unit
     	return 1.0;
     }
 
+    /**
+     * Reset this unit to its original state.
+     */
     public void reset()
     {
         location = new Point(0, 0);

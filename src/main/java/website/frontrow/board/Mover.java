@@ -237,6 +237,7 @@ public abstract class Mover
         Log.add(action);
     }
 
+    @Override
     public void reset()
     {
         super.reset();
