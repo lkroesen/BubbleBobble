@@ -26,7 +26,7 @@ public class LauncherTest
         KeyBindFileHandler.setFilename("src/test/resources/binds.txt");
         KeyBindFileHandler.getInstance().loadBindings();
         String[] files = FileNameCollector.getInstance().obtain("level/");
-        launcher.start(files, 1);
+        launcher.start(files, 2);
         assertNotNull(launcher);
     }
 
