@@ -1,6 +1,11 @@
 package website.frontrow;
 
 import org.junit.Test;
+import website.frontrow.keybindings.KeyBindFileHandler;
+import website.frontrow.util.FileNameCollector;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -11,14 +16,17 @@ public class LauncherTest
 {
     /**
      * Test if the launcher is able to launch.
+     * @throws IOException Throws when triggered.
+     * @throws URISyntaxException Throws when triggered.
      */
     @Test
-    public void testLaunch()
+    public void testLaunch() throws IOException, URISyntaxException
     {
-        Launcher l = new Launcher();
-        String[] files = {"/1.txt"};
-        l.start(files, 1);
-        assertNotNull(l);
+        Launcher launcher = new Launcher();
+        KeyBindFileHandler.getInstance().loadBindings();
+        String[] files = FileNameCollector.getInstance().obtain("level/");
+        launcher.start(files, 1);
+        assertNotNull(launcher);
     }
 
     /**
@@ -27,8 +35,8 @@ public class LauncherTest
     @Test(expected = RuntimeException.class)
     public void testStartEmptyFileName()
     {
-        Launcher l = new Launcher();
+        Launcher launcher = new Launcher();
         String[] files = {""};
-        l.start(files, 1);
+        launcher.start(files, 1);
     }
 }

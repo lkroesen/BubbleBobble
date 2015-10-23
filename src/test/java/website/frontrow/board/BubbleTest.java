@@ -27,15 +27,15 @@ public class BubbleTest
 	private static final int TIME_FLOAT_UPWARDS = 50;
 	private static final int TIME_ALMOST_KILL = 499;
 	private static final Point FLOAT_UP_MOTION = new Point(0, -2);
-	
+
     /**
      * Test the constructor of Bubble.
      */
     @Test
     public void constructorLocationTest()
     {
-        Bubble b = new Bubble(super.p, super.m, null);
-        assertEquals(super.p, b.getLocation());
+        Bubble bubble = new Bubble(super.FIRST_TEST_POINT, super.secondTestPoint, null);
+        assertEquals(super.FIRST_TEST_POINT, bubble.getLocation());
     }
 
     /**
@@ -44,8 +44,8 @@ public class BubbleTest
     @Test
     public void constructorMotionTest()
     {
-        Bubble b = new Bubble(super.p, super.m, null);
-        assertEquals(super.m, b.getMotion());
+        Bubble bubble = new Bubble(super.FIRST_TEST_POINT, super.secondTestPoint, null);
+        assertEquals(super.secondTestPoint, bubble.getMotion());
     }
 
     /**
@@ -55,7 +55,7 @@ public class BubbleTest
     public void captureTest()
     {
         Enemy enemy = mock(Enemy.class);
-        Bubble bubble = new Bubble(new Point(0, 0), new Point(0, 0), null);
+        Bubble bubble = new Bubble(super.FIRST_TEST_POINT, super.FIRST_TEST_POINT, null);
         bubble.capture(enemy);
 
         verify(enemy, times(1)).kill();
@@ -68,7 +68,7 @@ public class BubbleTest
     @Test
     public void onHitTest()
     {
-        Bubble bubble = new Bubble(new Point(0, 0), new Point(0, 0), null);
+        Bubble bubble = new Bubble(super.FIRST_TEST_POINT, super.FIRST_TEST_POINT, null);
         bubble.onWallCollision();
 
         assertTrue(bubble.isHit());
@@ -80,7 +80,7 @@ public class BubbleTest
     @Test
     public void testEscapeFromBubble()
     {
-        Bubble bubble = new Bubble(new Point(0, 0), new Point(0, 0), null);
+        Bubble bubble = new Bubble(super.FIRST_TEST_POINT, super.FIRST_TEST_POINT, null);
         Enemy enemy = mock(Enemy.class);
 
         when(enemy.getCaughtTime()).thenReturn(0L);
@@ -109,13 +109,13 @@ public class BubbleTest
     @Test
     public void testUpwardsFloating()
     {
-        Bubble bubble = new Bubble(new Point(0, 0), new Point(0, 0), null);
+        Bubble bubble = new Bubble(super.FIRST_TEST_POINT, super.FIRST_TEST_POINT, null);
     	
-        ArrayList<Player> playerList = new ArrayList<Player>();
-        ArrayList<Unit> unitList = new ArrayList<Unit>();
-        List<Cell> items = new ArrayList<Cell>();
+        ArrayList<Player> playerList = new ArrayList<>();
+        ArrayList<Unit> unitList = new ArrayList<>();
+        List<Cell> items = new ArrayList<>();
         items.add(Cell.EMPTY);
-        Grid<Cell> cells = new Grid<Cell>(items, 1, 1);
+        Grid<Cell> cells = new Grid<>(items, 1, 1);
         Level level = new Level(playerList, unitList, cells);
     	
         for(int i = 0; i < TIME_FLOAT_UPWARDS; i++)
@@ -133,13 +133,13 @@ public class BubbleTest
 	@Test
 	public void testKillEmpty() 
 	{
-	    Bubble bubble = new Bubble(new Point(0, 0), new Point(0, 0), null);
+	    Bubble bubble = new Bubble(super.FIRST_TEST_POINT, super.FIRST_TEST_POINT, null);
 
-	    ArrayList<Player> playerList = new ArrayList<Player>();
-	    ArrayList<Unit> unitList = new ArrayList<Unit>();
-	    List<Cell> items = new ArrayList<Cell>();
+	    ArrayList<Player> playerList = new ArrayList<>();
+	    ArrayList<Unit> unitList = new ArrayList<>();
+	    List<Cell> items = new ArrayList<>();
 	    items.add(Cell.EMPTY);
-	    Grid<Cell> cells = new Grid<Cell>(items, 1, 1);
+	    Grid<Cell> cells = new Grid<>(items, 1, 1);
 	    Level level = new Level(playerList, unitList, cells);
 
 	    assertTrue(bubble.isAlive());
@@ -164,13 +164,13 @@ public class BubbleTest
     @Test
     public void testFloatingUpwardsEnemyCollision()
     {
-        Bubble bubble = new Bubble(new Point(0, 0), new Point(0, 0), null);
+        Bubble bubble = new Bubble(super.FIRST_TEST_POINT, super.FIRST_TEST_POINT, null);
     	
-        ArrayList<Player> playerList = new ArrayList<Player>();
-        ArrayList<Unit> unitList = new ArrayList<Unit>();
-        List<Cell> items = new ArrayList<Cell>();
+        ArrayList<Player> playerList = new ArrayList<>();
+        ArrayList<Unit> unitList = new ArrayList<>();
+        List<Cell> items = new ArrayList<>();
         items.add(Cell.EMPTY);
-        Grid<Cell> cells = new Grid<Cell>(items, 1, 1);
+        Grid<Cell> cells = new Grid<>(items, 1, 1);
         Level level = new Level(playerList, unitList, cells);
     	
         for(int i = 0; i < TIME_FLOAT_UPWARDS; i++)
@@ -186,5 +186,16 @@ public class BubbleTest
     	
         // The bubble does NOT capture the enemy.
         assertEquals(bubble.getContains(), null);
+    }
+
+    /**
+     * Test that setTimeEmpty works properly.
+     */
+    @Test
+    public void testSetTimeEmpty()
+    {
+        Bubble bubble = new Bubble(super.FIRST_TEST_POINT, null, null);
+        bubble.setTimeEmpty(TIME_FLOAT_UPWARDS);
+        assertEquals(bubble.getTimeEmpty(), TIME_FLOAT_UPWARDS);
     }
 }

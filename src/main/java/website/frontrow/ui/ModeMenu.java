@@ -59,7 +59,7 @@ public class ModeMenu
         {
             try
             {
-                new Launcher().start(new FileNameCollector().obtain("level/"), 1);
+                new Launcher().start(FileNameCollector.getInstance().obtain("level/"), 1);
                 setVisible(false);
             } catch (Exception e)
             {
@@ -70,7 +70,7 @@ public class ModeMenu
         {
             try
             {
-                new Launcher().start(new FileNameCollector().obtain("level/"), 2);
+                new Launcher().start(FileNameCollector.getInstance().obtain("level/"), 2);
                 setVisible(false);
             } catch (Exception e)
             {

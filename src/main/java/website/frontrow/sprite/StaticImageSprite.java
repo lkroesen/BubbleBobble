@@ -56,7 +56,7 @@ public class StaticImageSprite
             return new StaticImageSprite(newImage);
         }
 
-        return new EmptySprite();
+        return EmptySprite.getInstance();
     }
 
     /**

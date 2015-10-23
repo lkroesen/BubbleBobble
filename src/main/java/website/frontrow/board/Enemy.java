@@ -21,6 +21,7 @@ public class Enemy
 	private float random = 1.00f;
 	private Boolean lastWall = false;
 	private Boolean wallCollision = false;
+	private Player player;
 
     /**
      * The amount of ticks needed to escape.
@@ -161,5 +162,23 @@ public class Enemy
     public int getWorth()
     {
         return GameConstants.DEFAULT_ENEMY_VALUE;
+    }
+    
+    /**
+     * The setter for player.
+     * @param goal Player
+     */
+    public void setPlayer(Player goal)
+    {
+    	player = goal;
+    }
+    
+    /**
+     * The getter for player.
+     * @return player Player
+     */
+    public Mover getPlayer()
+    {
+    	return player;
     }
 }

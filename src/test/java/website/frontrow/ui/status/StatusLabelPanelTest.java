@@ -45,12 +45,12 @@ public class StatusLabelPanelTest
     @Test
     public void runningLabelTest()
     {
-        StatusLabelPanel slp = new StatusLabelPanel(game);
+        StatusLabelPanel statusLabelPanel = new StatusLabelPanel(game);
 
-        JLabel rl = slp.getRunningLabel();
+        JLabel runningLabel = statusLabelPanel.getRunningLabel();
         JLabel label = new JLabel("Paused");
 
-        assertEquals(rl.toString(), label.toString());
+        assertEquals(runningLabel.toString(), label.toString());
     }
 
     /**
@@ -59,12 +59,12 @@ public class StatusLabelPanelTest
     @Test
     public void setRunningLabelTest()
     {
-        StatusLabelPanel slp = new StatusLabelPanel(game);
+        StatusLabelPanel statusLabelPanel = new StatusLabelPanel(game);
 
-        JLabel label = new JLabel("Test");
-        slp.setRunningLabel(label);
+        JLabel jLabel = new JLabel("Test");
+        statusLabelPanel.setRunningLabel(jLabel);
 
-        assertEquals(slp.getRunningLabel().toString(), label.toString());
+        assertEquals(statusLabelPanel.getRunningLabel().toString(), jLabel.toString());
     }
 
     /**
@@ -73,11 +73,11 @@ public class StatusLabelPanelTest
     @Test
     public void getRunningLabelTest()
     {
-        StatusLabelPanel slp = new StatusLabelPanel(game);
+        StatusLabelPanel statusLabelPanel = new StatusLabelPanel(game);
 
-        JLabel label = new JLabel("Paused");
-        JLabel l = slp.getRunningLabel();
+        JLabel jLabel = new JLabel("Paused");
+        JLabel runningLabel = statusLabelPanel.getRunningLabel();
 
-        assertEquals(l.toString(), label.toString());
+        assertEquals(runningLabel.toString(), jLabel.toString());
     }
 }

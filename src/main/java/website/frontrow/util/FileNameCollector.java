@@ -17,9 +17,27 @@ import java.util.jar.JarFile;
 /**
  * A method for indexing the levels in the resources and returning them.
  */
-public class FileNameCollector
+public final class FileNameCollector
     implements Logable
 {
+    private static final FileNameCollector INSTANCE = new FileNameCollector();
+
+    /**
+     * Private constructor because Singleton.
+     */
+    private FileNameCollector()
+    {
+    }
+
+    /**
+     * Get the Instance of FileNameCollector.
+     * @return Returns the Instance.
+     */
+    public static FileNameCollector getInstance()
+    {
+        return INSTANCE;
+    }
+
     /**
      * This method is used for obtaining the files names in a directory.
      * @param dir Input a string of the directory, levels are in: /level/.
@@ -62,6 +80,12 @@ public class FileNameCollector
         Log.add(action);
     }
 
+    /**
+     * Method for loading files in a JAR.
+     * @param jar Input the Jar file.
+     * @param folder Input the folder URI.
+     * @return Returns the levels in an ArrayList.
+     */
     private ArrayList<String> loadFilesFromJar(JarFile jar, String folder)
     {
         ArrayList<String> stringList = new ArrayList<>();
@@ -78,6 +102,12 @@ public class FileNameCollector
         return stringList;
     }
 
+    /**
+     * Method for loading files in the IDE.
+     * @param folder Input the folder URI.
+     * @return Returns the levels in an ArrayList.
+     * @throws URISyntaxException Throws exception when triggered.
+     */
     private ArrayList<String> loadFilesForIDE(String folder) throws URISyntaxException
     {
         if (folder == null)
