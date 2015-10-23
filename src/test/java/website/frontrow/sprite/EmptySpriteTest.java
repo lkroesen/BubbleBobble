@@ -10,7 +10,6 @@ import java.awt.Graphics;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -23,7 +22,7 @@ import static org.junit.Assert.assertFalse;
 public class EmptySpriteTest
 {
 
-    private EmptySprite es;
+    private EmptySprite emptySprite;
 
     /**
      * Set things up for the tests.
@@ -31,7 +30,7 @@ public class EmptySpriteTest
     @Before
     public void setUp()
     {
-        es = new EmptySprite();
+        emptySprite = EmptySprite.getInstance();
     }
 
     /**
@@ -40,7 +39,7 @@ public class EmptySpriteTest
     @After
     public void tearDown()
     {
-        es = null;
+        emptySprite = null;
     }
 
     /**
@@ -50,7 +49,7 @@ public class EmptySpriteTest
     public void testDraw()
     {
         Graphics g = mock(Graphics.class);
-        es.draw(g, 0, 0, 10, 10);
+        emptySprite.draw(g, 0, 0, 10, 10);
         verifyZeroInteractions(g);
     }
 
@@ -60,7 +59,7 @@ public class EmptySpriteTest
     @Test
     public void testGetWidth()
     {
-        assertEquals(es.getWidth(), 0);
+        assertEquals(emptySprite.getWidth(), 0);
     }
 
     /**
@@ -69,7 +68,7 @@ public class EmptySpriteTest
     @Test
     public void testGetHeight()
     {
-        assertEquals(es.getHeight(), 0);
+        assertEquals(emptySprite.getHeight(), 0);
     }
 
     /**
@@ -78,7 +77,7 @@ public class EmptySpriteTest
     @Test
     public void testSlice()
     {
-        assertEquals(es.slice(0, 0, 10, 10), new EmptySprite());
+        assertEquals(emptySprite.slice(0, 0, 10, 10), EmptySprite.getInstance());
     }
 
     /**
@@ -87,7 +86,7 @@ public class EmptySpriteTest
     @Test
     public void testEqualsEqual()
     {
-        assertTrue(es.equals(new EmptySprite()));
+        assertTrue(emptySprite.equals(EmptySprite.getInstance()));
     }
 
     /**
@@ -96,29 +95,6 @@ public class EmptySpriteTest
     @Test
     public void testEqualsOther()
     {
-        assertFalse(es.equals("Other"));
-    }
-
-    /**
-     * Test not equal when width is different.
-     */
-    @Test
-    public void testEqualsDifferentWidth()
-    {
-        EmptySprite sprite = mock(EmptySprite.class);
-        when(sprite.getWidth()).thenReturn(1);
-        assertFalse(es.equals(sprite));
-    }
-
-    /**
-     * Test not equal when the height is different.
-     */
-    @Test
-    public void testEqualsDifferentHeight()
-    {
-        EmptySprite sprite = mock(EmptySprite.class);
-        when(sprite.getWidth()).thenReturn(0);
-        when(sprite.getHeight()).thenReturn(1);
-        assertFalse(es.equals(sprite));
+        assertFalse(emptySprite.equals("Other"));
     }
 }

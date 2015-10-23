@@ -7,16 +7,28 @@ import java.util.Map;
 /**
  * Base Log Class, keeps track of all happenings using a map.
  */
-@SuppressWarnings("checkstyle:hideutilityclassconstructor")
-/*
-I've decided that a constructor is unnecessary for the intended use of the logger,
-As the logger is only using static elements, a constructor is not needed.
- */
-public class Log
+public final class Log
 {
     private static Map<Long, String> logMap = new HashMap<>();
     private static long counter = 0;
     private static boolean togglePrinting = false;
+    private static final Log INSTANCE = new Log();
+
+    /**
+     * Private Constructor because Singleton.
+     */
+    private Log()
+    {
+    }
+
+    /**
+     * Returns the DumpLog Instance.
+     * @return Returns the Instance.
+     */
+    public static Log getInstance()
+    {
+        return INSTANCE;
+    }
 
     /**
      * Add an action that occured to the current Map.

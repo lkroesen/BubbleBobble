@@ -1,5 +1,7 @@
 package website.frontrow;
 
+import website.frontrow.board.BasicUnitFactory;
+import website.frontrow.board.UnitFactory;
 import website.frontrow.game.Game;
 import website.frontrow.game.GameConstants;
 
@@ -66,17 +68,20 @@ public class Launcher implements Logable
         {
             MusicPlayer.getInstance().selectSong(Songs.TITLE_SCREEN);
 
+            MapParser parser = new MapParser(new BasicUnitFactory());
 
-            MapParser mp = new MapParser();
             ArrayList<Level> levelList = new ArrayList<>();
+            UnitFactory unitFactory = new BasicUnitFactory();
             for(String levelFileName : filename)
             {
                 InputStream map = getClass().getResourceAsStream(levelFileName);
-                Level level = mp.parseMap(map);
+                Level level = parser.parseMap(map);
                 levelList.add(level);
             }
+            
+            addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + " succeeded.");
 
-            Game game = new Game(levelList, playerCount);
+            Game game = new Game(levelList, unitFactory, playerCount);
             BindActions actionBinder = BindActions.getInstance();
 
             actionBinder.createUtilMappings().createFirstPlayerKeyMappings(game);
@@ -89,23 +94,23 @@ public class Launcher implements Logable
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, actionBinder.getMapping());
 
             InputStream map = getClass().getResourceAsStream("/game_over.txt");
-    		Level gameOverLevel = mp.parseMap(map);
+    		Level gameOverLevel = parser.parseMap(map);
     		game.setGameOver(gameOverLevel);
 
             InputStream winMap = getClass().getResourceAsStream("/game_won.txt");
-            Level gameWonLevel = mp.parseMap(winMap);
+            Level gameWonLevel = parser.parseMap(winMap);
             game.setGameWon(gameWonLevel);
 
             game.setKeyListener(ui.getKeyListener());
 
             ui.start();
             startScheduler(game);
-            addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + " succeeded.");
+
         }
         catch (IOException e)
         {
             addToLog("[ERROR]\tLoading file: " + Arrays.toString(filename) + " failed.");
-            new DumpLog();
+            DumpLog.getInstance().createDump();
             throw new RuntimeException();
         }
     }

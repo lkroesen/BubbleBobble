@@ -86,7 +86,7 @@ public final class BindActions
         mapping.put(KeyBinds.getKeyCodeForUtil(ActionType.TOGGLE_PRINT_LOG),
                 () -> Log.togglePrinting());
         mapping.put(KeyBinds.getKeyCodeForUtil(ActionType.STORE_LOG),
-                () -> new DumpLog());
+                () -> DumpLog.getInstance().createDump());
 
         return this;
     }
