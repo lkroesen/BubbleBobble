@@ -81,6 +81,7 @@ public class KeyBindPanel
     {
         this.actionListenedTo = e.getActionCommand();
         Log.add("[KBP]\tListening to: " + this.actionListenedTo);
+        this.grabFocus();
     }
 
     /**
@@ -108,6 +109,7 @@ public class KeyBindPanel
     {
         if(e.getKeyCode() != KeyEvent.VK_ESCAPE && !actionListenedTo.equals(""))
         {
+            System.out.println("I'm here!");
             switch (actionListenedTo)
             {
                 case "BIND_JUMP":
@@ -125,7 +127,7 @@ public class KeyBindPanel
                 default:
                     break;
             }
-            Log.add("[KBP]\tChanged binding for " + actionListenedTo + ", player" + playerIndex
+            Log.add("[KBP]\tChanged binding for " + actionListenedTo + ", player " + playerIndex
                     + " to " + KeyEvent.getKeyText(e.getKeyCode()));
         }
         actionListenedTo = "";

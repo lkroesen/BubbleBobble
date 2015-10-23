@@ -26,6 +26,7 @@ public class KeyBindFrame
 
         panel = new JPanel(new GridLayout(0, 1));
         panel.add(new KeyBindPanel(0));
+        panel.add(new KeyBindPanel(1));
         add(panel);
         pack();
         setVisible(true);
