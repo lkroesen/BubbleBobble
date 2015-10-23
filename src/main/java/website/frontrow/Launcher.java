@@ -48,7 +48,7 @@ public class Launcher implements Logable
     public static void main(String[] args) throws IOException
     {
         Log.togglePrinting();
-
+        KeyBindFileHandler.getInstance().loadBindings();
         new ModeMenu().setVisible(true);
     }
 
@@ -65,7 +65,7 @@ public class Launcher implements Logable
         try
         {
             MusicPlayer.getInstance().selectSong(Songs.TITLE_SCREEN);
-            KeyBindFileHandler.getInstance().loadBindings();
+
 
             MapParser mp = new MapParser();
             ArrayList<Level> levelList = new ArrayList<>();

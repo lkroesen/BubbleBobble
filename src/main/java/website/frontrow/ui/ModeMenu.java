@@ -66,7 +66,6 @@ public class ModeMenu
                 e.printStackTrace();
             }
         });
-
         buttonMappings.put("Multi Player Mode", () ->
         {
             try
@@ -78,12 +77,10 @@ public class ModeMenu
                 e.printStackTrace();
             }
         });
-
         buttonMappings.put("Key Bindings", () ->
         {
             new KeyBindFrame();
         });
-
         return buttonMappings;
     }
 

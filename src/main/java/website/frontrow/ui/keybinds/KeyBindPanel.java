@@ -67,7 +67,6 @@ public class KeyBindPanel
         this.setFocusable(true);
         this.addKeyListener(this);
         this.setVisible(true);
-
         this.playerIndex = playerIndex;
         KeyBinds.addObserver(this);
     }

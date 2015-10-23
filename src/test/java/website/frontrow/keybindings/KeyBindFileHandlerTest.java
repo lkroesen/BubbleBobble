@@ -3,9 +3,9 @@ package website.frontrow.keybindings;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
+//import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
+//import java.util.Scanner;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
