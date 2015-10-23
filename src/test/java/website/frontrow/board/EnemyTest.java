@@ -174,7 +174,7 @@ public class EnemyTest
     }
     
     /**
-     * Tests the getter for Mover player in enemy
+     * Tests the getter for Mover player in enemy.
      */
     @Test
     public void testGetPlayer()
@@ -184,7 +184,7 @@ public class EnemyTest
     }
     
     /**
-     * Tests the setter for Mover player in enemy
+     * Tests the setter for Mover player in enemy.
      */
     @Test
     public void testSetPlayer()

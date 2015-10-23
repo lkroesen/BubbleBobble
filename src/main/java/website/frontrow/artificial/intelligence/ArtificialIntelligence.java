@@ -103,23 +103,19 @@ public class ArtificialIntelligence
 			doRandomMove(enemy);
 			return;
 		}
-
 		if(y == 1)
 		{
 			fallOffPlatform(enemy);
 			return;
 		}
-
 		if(x == 1)
 		{
 			enemy.goRight();
 		}
-		
 		if(x == -1)
 		{
 			enemy.goLeft();
 		}
-		
 		if(y == -1)
 		{
 			enemy.jump();			

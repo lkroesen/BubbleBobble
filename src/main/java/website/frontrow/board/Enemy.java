@@ -165,14 +165,18 @@ public class Enemy
     }
     
     /**
-     * The setter for player
-     * @param mover, Mover
+     * The setter for player.
+     * @param p, Player
      */
     public void setPlayer(Player p)
     {
     	player = p;
     }
     
+    /**
+     * The getter for player
+     * @return player, Player
+     */
     public Mover getPlayer()
     {
     	return player;
