@@ -1,7 +1,9 @@
 package website.frontrow;
 
+import website.frontrow.board.BasicUnitFactory;
 import website.frontrow.board.Bubble;
 import website.frontrow.board.Player;
+import website.frontrow.board.UnitFactory;
 import website.frontrow.game.Game;
 import website.frontrow.level.Level;
 import website.frontrow.level.MapParser;
@@ -67,27 +69,28 @@ public class Launcher implements Logable
 
         try
         {
-            MapParser mp = new MapParser();
+            MapParser parser = new MapParser(new BasicUnitFactory());
             ArrayList<Level> levelList = new ArrayList<>();
+            UnitFactory unitFactory = new BasicUnitFactory();
             for(String levelFileName : filename)
             {
                 InputStream map = getClass().getResourceAsStream(levelFileName);
-                Level level = mp.parseMap(map);
+                Level level = parser.parseMap(map);
                 levelList.add(level);
             }
             
             addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + " succeeded.");
 
-            Game game = new Game(levelList, playerCount);
+            Game game = new Game(levelList, unitFactory, playerCount);
             Map<Integer, Action> keyMappings = createKeyMappings(game);
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
 
             InputStream map = getClass().getResourceAsStream("/game_over.txt");
-    		Level gameOverLevel = mp.parseMap(map);
+    		Level gameOverLevel = parser.parseMap(map);
     		game.setGameOver(gameOverLevel);
 
             InputStream winMap = getClass().getResourceAsStream("/game_won.txt");
-            Level gameWonLevel = mp.parseMap(winMap);
+            Level gameWonLevel = parser.parseMap(winMap);
             game.setGameWon(gameWonLevel);
 
             game.setKeyListener(ui.getKeyListener());

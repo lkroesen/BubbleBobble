@@ -1,13 +1,14 @@
 package website.frontrow.game;
 
+import website.frontrow.board.BasicUnitFactory;
 import website.frontrow.board.Player;
+import website.frontrow.board.UnitFactory;
 import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.level.Level.LevelObserver;
 import website.frontrow.music.MusicPlayer;
 import website.frontrow.music.Songs;
-import website.frontrow.sprite.JBubbleBobbleSprites;
 import website.frontrow.ui.JBubbleKeyListener;
 import website.frontrow.util.Point;
 
@@ -39,25 +40,27 @@ public class Game
      * Constructor of Game.
      * @param levels All the levels of the game.
      */
+    @Deprecated
     public Game(ArrayList<Level> levels)
     {
-        this(levels, 1);
+        this(levels, new BasicUnitFactory(), 1);
     }
 
     /**
      * Constructor of Game.
      * @param levels All the levels of the game.
+     * @param unitFactory The fectory to create units with.
      * @param playerCount The player count.
      */
-    public Game(ArrayList<Level> levels, int playerCount)
+    public Game(ArrayList<Level> levels, UnitFactory unitFactory, int playerCount)
     {
         this.levelPack = levels;
         for(int i = 0; i < playerCount; i++)
         {
-            players.add(new Player(new Point(0, 0),
-                    JBubbleBobbleSprites.getInstance().getPlayerSprite()));
+            players.add(unitFactory.createPlayer(new Point(0, 0)));
         }
         loadCurrentLevel();
+
         addToLog("[GAME]\tGame Object Created");
     }
 
