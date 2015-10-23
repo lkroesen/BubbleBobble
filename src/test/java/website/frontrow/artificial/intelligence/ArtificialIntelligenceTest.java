@@ -3,6 +3,7 @@ package website.frontrow.artificial.intelligence;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -52,12 +53,12 @@ public class ArtificialIntelligenceTest
         simpleLevel = new Level(players, units, emptyGrid);
         simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
         simpleArtificialIntelligence.aiMover();
-	        
+
         for(int i = 0; i <= GameConstants.TICKS_PER_MOVE + 1; i++)
         {
             simpleLevel.tick();
         }
-	        
+
         assertTrue(enemy.getRandom() < 1);
     }
     
@@ -67,14 +68,13 @@ public class ArtificialIntelligenceTest
     @Test
     public void doMovesLeftTest()
     {
-      
         Enemy enemy = new Enemy(point, null);
         units.add(enemy);
         simpleLevel = new Level(players, units, emptyGrid);
         simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
         simpleArtificialIntelligence.aiMover();
         simpleLevel.tick();
-        
+
         assertTrue(enemy.getLocation().getX() < point.getX());
     }
     
@@ -91,7 +91,7 @@ public class ArtificialIntelligenceTest
         simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
         simpleArtificialIntelligence.aiMover();
         simpleLevel.tick();
-        
+
         assertTrue(enemy.getLocation().getX() > point.getX());
     }
     
@@ -101,13 +101,13 @@ public class ArtificialIntelligenceTest
     @Test
     public void doMovesDownTest()
     {           
-    	Enemy enemy = new Enemy(point, null);
-    	units.add(enemy);
-    	simpleLevel = new Level(players, units, emptyGrid);
-    	simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
-    	simpleArtificialIntelligence.aiMover();
-    	simpleLevel.tick();
-        
-    	assertTrue(enemy.getLocation().getY() < point.getY());
+        Enemy enemy = new Enemy(point, null);
+        units.add(enemy);
+        simpleLevel = new Level(players, units, emptyGrid);
+        simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
+        simpleArtificialIntelligence.aiMover();
+        simpleLevel.tick();
+
+        assertTrue(enemy.getLocation().getY() < point.getY());
     }
 }
