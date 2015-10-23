@@ -16,7 +16,7 @@ import java.util.Scanner;
 public final class KeyBindFileHandler implements Logable
 {
     private static final KeyBindFileHandler INSTANCE = new KeyBindFileHandler();
-    private static String filename = "bindings.txt";
+    private static String filename = "binds.txt";
 
     /**
      * Private constructor, Singleton.
@@ -75,7 +75,7 @@ public final class KeyBindFileHandler implements Logable
             throw new IOException("Filename is null");
         }
 
-        File bindingFile = new File("binds.txt");
+        File bindingFile = new File(filename);
 
         if (!bindingFile.exists() & createFile)
         {
