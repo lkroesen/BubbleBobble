@@ -61,7 +61,7 @@ public class ArtificialIntelligence
 			for(int i = 0; i < enemies.size(); i++)
 			{
 				Enemy enemy = enemies.get(i);
-				enemy.setPlayer((Mover) player);
+				enemy.setPlayer((Player) player);
 				int moveToX = PathCalculation.calculateXPath((Mover) player, enemy);
 				int moveToY = PathCalculation.calculateYPath((Mover) player, enemy);
 					
@@ -204,7 +204,7 @@ public class ArtificialIntelligence
 				Enemy enemy = enemies.get(i);
 				if(enemy.isAlive())
 				{
-					enemy.setPlayer((Mover) player);
+					enemy.setPlayer((Player) player);
 					int moveToX = PathCalculation.calculateXPath((Mover) player, enemy);
 					int moveToY = PathCalculation.calculateYPath((Mover) player, enemy);
 				

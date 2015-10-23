@@ -21,7 +21,7 @@ public class Enemy
 	private float random = 1.00f;
 	private Boolean lastWall = false;
 	private Boolean wallCollision = false;
-	private Mover player;
+	private Player player;
 
     /**
      * The amount of ticks needed to escape.
@@ -168,9 +168,9 @@ public class Enemy
      * The setter for player
      * @param mover, Mover
      */
-    public void setPlayer(Mover mover)
+    public void setPlayer(Player p)
     {
-    	player = mover;
+    	player = p;
     }
     
     public Mover getPlayer()

@@ -193,7 +193,7 @@ public class EnemyTest
     	assertNull(enemy.getPlayer());
     	
     	Player player = new Player(new Point(0, 0), null);
-    	enemy.setPlayer((Mover) player);
+    	enemy.setPlayer((Player) player);
     	assertEquals(enemy.getPlayer(), (Mover) player);
     }
 }
