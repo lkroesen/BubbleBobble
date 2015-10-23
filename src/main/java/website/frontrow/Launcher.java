@@ -69,13 +69,13 @@ public class Launcher implements Logable
 
         try
         {
-            MapParser mp = new MapParser(new BasicUnitFactory());
+            MapParser parser = new MapParser(new BasicUnitFactory());
             ArrayList<Level> levelList = new ArrayList<>();
             UnitFactory unitFactory = new BasicUnitFactory();
             for(String levelFileName : filename)
             {
                 InputStream map = getClass().getResourceAsStream(levelFileName);
-                Level level = mp.parseMap(map);
+                Level level = parser.parseMap(map);
                 levelList.add(level);
             }
             
@@ -86,11 +86,11 @@ public class Launcher implements Logable
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
 
             InputStream map = getClass().getResourceAsStream("/game_over.txt");
-    		Level gameOverLevel = mp.parseMap(map);
+    		Level gameOverLevel = parser.parseMap(map);
     		game.setGameOver(gameOverLevel);
 
             InputStream winMap = getClass().getResourceAsStream("/game_won.txt");
-            Level gameWonLevel = mp.parseMap(winMap);
+            Level gameWonLevel = parser.parseMap(winMap);
             game.setGameWon(gameWonLevel);
 
             game.setKeyListener(ui.getKeyListener());
