@@ -18,7 +18,7 @@ public final class KeyBindFileHandler
                    KeyBindsObserver
 {
     private static final KeyBindFileHandler INSTANCE = new KeyBindFileHandler();
-    private static String filename = "bindings.txt";
+    private static String filename = "binds.txt";
 
     /**
      * Private constructor, Singleton.
@@ -79,7 +79,6 @@ public final class KeyBindFileHandler
             addToLog("[KBFH]\t[ERROR] Filename is null");
             throw new IllegalArgumentException("Filename is null");
         }
-
         File bindingFile = new File(fileToCheck);
 
         if (!bindingFile.exists() & createFile)
