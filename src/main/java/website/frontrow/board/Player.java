@@ -217,4 +217,13 @@ public class Player
         this.score += value;
         observers.forEach(o -> o.scoreChanged(this));
     }
+
+    /**
+     * Return a Set with the current Observers.
+     * @return Returns a Set with PlayerObserver.
+     */
+    public Set<PlayerObserver> getObservers()
+    {
+        return observers;
+    }
 }

@@ -27,7 +27,7 @@ public class JBubbleBobbleUITest
     private Map<Integer, Action> mockedMap;
 
     private Level level;
-    private Game g;
+    private Game game;
 
     /**
      * Setup, run before tests.
@@ -35,18 +35,18 @@ public class JBubbleBobbleUITest
     @Before
     public void setup()
     {
-        ArrayList<Player> pl = new ArrayList<>();
-        ArrayList<Unit> ul = new ArrayList<>();
-        ArrayList<Level> le = new ArrayList<>();
+        ArrayList<Player> players = new ArrayList<>();
+        ArrayList<Unit> units = new ArrayList<>();
+        ArrayList<Level> levels = new ArrayList<>();
         Grid<Cell> grid = new Grid<>(2, 2);
 
-        pl.add(new Player(new Point(0, 0), null));
-        ul.add(new Enemy(new Point(1, 1), null));
+        players.add(new Player(new Point(0, 0), null));
+        units.add(new Enemy(new Point(1, 1), null));
 
-        level = new Level(pl, ul, grid);
-        le.add(level);
+        level = new Level(players, units, grid);
+        levels.add(level);
 
-        g = new Game(le);
+        game = new Game(levels);
     }
 
     /**
@@ -56,7 +56,7 @@ public class JBubbleBobbleUITest
     public void teardown()
     {
         level = null;
-        g = null;
+        game = null;
     }
 
     /**
@@ -65,7 +65,7 @@ public class JBubbleBobbleUITest
     @Test
     public void testConstructor()
     {
-        JBubbleBobbleUI ui = new JBubbleBobbleUI(g, mockedMap);
-        assertNotNull(ui);
+        JBubbleBobbleUI jBubbleBobbleUI = new JBubbleBobbleUI(game, mockedMap);
+        assertNotNull(jBubbleBobbleUI);
     }
 }
