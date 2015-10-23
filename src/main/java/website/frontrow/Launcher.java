@@ -111,7 +111,7 @@ public class Launcher implements Logable
     }
 
     /**
-     * Starts the schedular for a game object.
+     * Starts the scheduler for a game object.
      * @param game Game to start a scheduler for.
      */
     private void startScheduler(Game game)
