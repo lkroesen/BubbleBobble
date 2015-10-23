@@ -1,6 +1,5 @@
 package website.frontrow.logger;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Map;
@@ -15,16 +14,6 @@ import static org.junit.Assert.assertNotEquals;
  */
 public class LogTest
 {
-    /**
-     * Run before tests.
-     */
-    @Before
-    public void setup()
-    {
-        new Log();
-    }
-
-
     /**
      * Test if adding an element works properly.
      */

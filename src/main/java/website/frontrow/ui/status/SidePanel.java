@@ -29,11 +29,28 @@ public class SidePanel
     {
         super();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        add(new ButtonPanel(createButtonMappings(game)));
+        add(new StatusLabelPanel(game));
+
+        add(new StatusPanel(game.getPlayers()));
+        add(Box.createVerticalGlue());
+
+        addToLog("[SiP]\tSide Panel Created Successfully.");
+    }
+
+    /**
+     * Create the button mappings for this sidepanel.
+     * @param game The current game
+     * @return The button mappings.
+     */
+    public Map<String, Action> createButtonMappings(Game game)
+    {
         Map<String, Action> buttonMappings = new HashMap<>();
 
         buttonMappings.put("Pause/Start", () ->
         {
-            if(game.isRunning())
+            if (game.isRunning())
             {
                 game.stop();
                 MusicPlayer.getInstance().stop();
@@ -46,14 +63,12 @@ public class SidePanel
                 MusicPlayer.getInstance().selectSong(Songs.QUEST_BEGINS);
             }
         });
+        buttonMappings.put("Restart", () ->
+        {
+            game.restart();
+        });
 
-        add(new ButtonPanel(buttonMappings));
-        add(new StatusLabelPanel(game));
-
-        add(new StatusPanel(game.getPlayers()));
-        add(Box.createVerticalGlue());
-
-        addToLog("[SiP]\tSide Panel Created Successfully.");
+        return buttonMappings;
     }
 
     /**

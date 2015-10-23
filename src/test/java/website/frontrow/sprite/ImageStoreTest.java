@@ -16,11 +16,11 @@ import static org.junit.Assert.assertEquals;
  */
 public class ImageStoreTest
 {
-    private ImageStore is;
+    private ImageStore imageStore;
 
     @SuppressWarnings("visibilitymodifier") //Needs to be public for @Rule
     @Rule
-    public ExpectedException ee = ExpectedException.none();
+    public ExpectedException expectedException = ExpectedException.none();
 
     /**
      * Setup before running tests.
@@ -28,7 +28,7 @@ public class ImageStoreTest
     @Before
     public void setUp()
     {
-        is = ImageStore.getInstance();
+        imageStore = ImageStore.getInstance();
     }
 
     /**
@@ -37,7 +37,7 @@ public class ImageStoreTest
     @After
     public void tearDown()
     {
-        is = null;
+        imageStore = null;
     }
 
     /**
@@ -47,7 +47,7 @@ public class ImageStoreTest
     @Test
     public void testGetImageExistingFile() throws IOException
     {
-        is.getImage("/testImage100x100.png");
+        imageStore.getImage("/testImage100x100.png");
     }
 
     /**
@@ -57,8 +57,8 @@ public class ImageStoreTest
     @Test
     public void testGetImageBadFileName() throws IOException
     {
-        ee.expect(IOException.class);
-        is.getImage("/nananananananbatmaaaan.png");
+        expectedException.expect(IOException.class);
+        imageStore.getImage("/nananananananbatmaaaan.png");
     }
 
     /**
@@ -67,19 +67,19 @@ public class ImageStoreTest
     @Test
     public void testCreateTranslucentImage()
     {
-        Image image = is.createTranslucentImage(50, 50);
+        Image image = imageStore.createTranslucentImage(50, 50);
         assertEquals(image.getWidth(null), 50);
         assertEquals(image.getHeight(null), 50);
     }
 
     /**
-     * Test the correct exception is thrown when a nonexistent file is given.
+     * Test the correct exception imageStore thrown when a nonexistent file imageStore given.
      */
     @Test
     public void testGetImageIconFakeFile()
     {
-        ee.expect(RuntimeException.class);
-        is.getImageIcon("/nanananananfindme!.png");
+        expectedException.expect(RuntimeException.class);
+        imageStore.getImageIcon("/nanananananfindme!.png");
     }
 
 }

@@ -15,7 +15,7 @@ public class DumpLogTest
     @Test
     public void testDumping()
     {
-        DumpLog d = new DumpLog();
-        assertTrue(d.getfTemp().exists());
+        DumpLog.getInstance().createDump();
+        assertTrue(DumpLog.getInstance().getTemporaryFile().exists());
     }
 }
