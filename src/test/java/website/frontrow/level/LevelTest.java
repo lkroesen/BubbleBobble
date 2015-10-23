@@ -22,14 +22,12 @@ import static org.mockito.Mockito.mock;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-
 /**
  * Test for level methods.
  */
 @RunWith(MockitoJUnitRunner.class)
 public class LevelTest
 {
-
     private ArrayList<Unit> units = new ArrayList<>();
     private Grid<Cell> grid = new Grid<>(1, 1);
 
@@ -101,5 +99,31 @@ public class LevelTest
 
         level.tick();
         assertTrue(level.getUnits().contains(mockedUnit));
+    }
+
+    /**
+     * Test if we can set the number of enemies in the level.
+     */
+    @Test
+    public void testSetEnemyNumber()
+    {
+        Level level = new Level(mockplayer, mockunits, grid);
+        level.setNumberOfEnemies(1);
+        assertEquals(level.getNumberOfEnemies(), 1);
+    }
+
+    /**
+     * Test RemoveObserver.
+     */
+    @Test
+    public void testRemoveObserver()
+    {
+        Level level = new Level(mockplayer, mockunits, grid);
+        level.addObserver(null);
+
+        assertTrue(level.getObservers().contains(null));
+
+        level.removeObserver(null);
+        assertFalse(level.getObservers().contains(null));
     }
 }

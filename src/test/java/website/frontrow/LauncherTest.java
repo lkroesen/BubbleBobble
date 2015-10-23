@@ -15,10 +15,10 @@ public class LauncherTest
     @Test
     public void testLaunch()
     {
-        Launcher l = new Launcher();
+        Launcher launcher = new Launcher();
         String[] files = {"/1.txt"};
-        l.start(files, 1);
-        assertNotNull(l);
+        launcher.start(files, 1);
+        assertNotNull(launcher);
     }
 
     /**
@@ -27,8 +27,8 @@ public class LauncherTest
     @Test(expected = RuntimeException.class)
     public void testStartEmptyFileName()
     {
-        Launcher l = new Launcher();
+        Launcher launcher = new Launcher();
         String[] files = {""};
-        l.start(files, 1);
+        launcher.start(files, 1);
     }
 }

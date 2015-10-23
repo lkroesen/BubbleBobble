@@ -1,7 +1,6 @@
-package website.frontrow;
+package website.frontrow.game;
 
 import org.junit.Before;
-import website.frontrow.game.Game;
 import website.frontrow.level.Level;
 import website.frontrow.util.Point;
 
@@ -143,6 +142,24 @@ public class GameTest
         assertFalse(game.isRunning());
         verify(level, times(1)).duplicate();
         verify(level2, never()).duplicate();
+    }
+
+    /**
+     * Test if restart works as expected.
+     */
+    @Test
+    public void testRestart()
+    {
+        game.nextLevel();
+        game.getPlayers().get(0).increaseScoreWith(100);
+        verify(level, times(1)).duplicate();
+        verify(level2, times(1)).duplicate();
+
+        game.restart();
+
+        verify(level, times(2)).duplicate();
+        assertFalse(game.isRunning());
+        assertEquals(game.getPlayers().get(0).getScore(), 0);
     }
 
 }

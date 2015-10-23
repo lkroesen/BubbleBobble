@@ -18,10 +18,10 @@ public class AABBTest
     @Test
     public void constructorTest1()
     {
-        AABB a = new AABB(new Point(0, 0), new Point(1, 1));
+        AABB aabb = new AABB(new Point(0, 0), new Point(1, 1));
 
-        assertEquals(a.getStart(), new Point(0, 0));
-        assertEquals(a.getEnd(), new Point(1, 1));
+        assertEquals(aabb.getStart(), new Point(0, 0));
+        assertEquals(aabb.getEnd(), new Point(1, 1));
     }
 
     /**
@@ -30,10 +30,10 @@ public class AABBTest
     @Test
     public void constructorTest2()
     {
-        AABB a = new AABB(new Point(1, 0), new Point(0, 1));
+        AABB aabb = new AABB(new Point(1, 0), new Point(0, 1));
 
-        assertEquals(a.getStart(), new Point(0, 0));
-        assertEquals(a.getEnd(), new Point(1, 1));
+        assertEquals(aabb.getStart(), new Point(0, 0));
+        assertEquals(aabb.getEnd(), new Point(1, 1));
     }
 
     /**

@@ -5,12 +5,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import website.frontrow.game.GameConstants;
+import website.frontrow.level.Cell;
 import website.frontrow.level.Level;
 import website.frontrow.util.Grid;
 import website.frontrow.util.Point;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Tests the mover class.
@@ -19,16 +21,16 @@ import static org.junit.Assert.assertEquals;
 public abstract class MoverTest
     extends UnitTest
 {
-	//subclasses need to be able to acces this information.
+	//subclasses need to be able to access this information.
     @SuppressWarnings("checkstyle:visibilitymodifier")
-    protected Point m;
+    protected Point secondTestPoint;
     @SuppressWarnings("checkstyle:visibilitymodifier")
     protected Level emptyLevel = new Level(new ArrayList<>(), new ArrayList<>(), new Grid<>(0, 0));
 
     /**
      * Create the mover for the tests.
      * @param alive Whether the mover is alive.
-     * @param location The starting point.
+     * @param location The starting FIRST_TEST_POINT.
      * @param motion The ending poing.
      * @return A unit to test.
      */
@@ -51,7 +53,7 @@ public abstract class MoverTest
     @Before
     public void setUp()
     {
-        m = new Point(0.0, 0.0);
+        secondTestPoint = new Point(0.0, 0.0);
     }
 
     /**
@@ -60,7 +62,7 @@ public abstract class MoverTest
     @After
     public void tearDown()
     {
-        m = null;
+        secondTestPoint = null;
     }
 
     /**
@@ -69,8 +71,8 @@ public abstract class MoverTest
     @Test
     public void getDirectionTest()
     {
-        Mover u = getTestMover(true, p, m);
-        assertEquals(u.getLocation(), p);
+        Mover testMover = getTestMover(true, FIRST_TEST_POINT, secondTestPoint);
+        assertEquals(testMover.getLocation(), FIRST_TEST_POINT);
     }
 
     /**
@@ -79,8 +81,8 @@ public abstract class MoverTest
     @Test
     public void getMotionTest()
     {
-        Mover u = getTestMover(true, p, m);
-        assertEquals(u.getMotion(), m);
+        Mover testMover = getTestMover(true, FIRST_TEST_POINT, secondTestPoint);
+        assertEquals(testMover.getMotion(), secondTestPoint);
     }
 
     /**
@@ -89,9 +91,9 @@ public abstract class MoverTest
     @Test
     public void setLocationTest()
     {
-        Mover u = getTestMover(true, null, null);
-        u.setLocation(m);
-        assertEquals(u.getLocation(), m);
+        Mover testMover = getTestMover(true, null, null);
+        testMover.setLocation(secondTestPoint);
+        assertEquals(testMover.getLocation(), secondTestPoint);
     }
 
     /**
@@ -100,9 +102,9 @@ public abstract class MoverTest
     @Test
     public void setMotionTest()
     {
-        Mover u = getTestMover(true, null, null);
-        u.setMotion(p);
-        assertEquals(u.getMotion(), p);
+        Mover testMover = getTestMover(true, null, null);
+        testMover.setMotion(FIRST_TEST_POINT);
+        assertEquals(testMover.getMotion(), FIRST_TEST_POINT);
     }
 
     /**
@@ -111,12 +113,13 @@ public abstract class MoverTest
     @Test
     public void testTick()
     {
-        Mover u = getTestMover(true, new Point(0, 0), new Point(GameConstants.TICKS_PER_SEC, 0));
+        Mover testMover = getTestMover(true, new Point(0, 0),
+                new Point(GameConstants.TICKS_PER_SEC, 0));
 
-        u.tick(emptyLevel);
+        testMover.tick(emptyLevel);
         // TODO When collisions are implemented, some calls to those checks need to be checked here.
 
-        assertEquals(-1, u.getLocation().getX(), 0.0004);
+        assertEquals(-1, testMover.getLocation().getX(), 0.0004);
     }
 
     /**
@@ -127,11 +130,11 @@ public abstract class MoverTest
     public void testDontMove() // There's a wasp in your hair.
     {
         Point start = new Point(0, 0);
-        Mover u = getTestMover(true, start, new Point(0, 0));
+        Mover testMover = getTestMover(true, start, new Point(0, 0));
 
-        u.tick(emptyLevel);
+        testMover.tick(emptyLevel);
 
-        assertEquals(0, u.getLocation().getX(), 0.00001);
+        assertEquals(0, testMover.getLocation().getX(), 0.00001);
     }
 
     /**
@@ -140,13 +143,23 @@ public abstract class MoverTest
     @Test
     public void testReallyGoLeft()
     {
-        Mover u = getTestMover(true, new Point(0, 0), new Point(0, 0));
+        Mover testMover = getTestMover(true, new Point(0, 0), new Point(0, 0));
 
-        u.goRight();
-        u.goLeft();
-        u.tick(emptyLevel);
+        testMover.goRight();
+        testMover.goLeft();
+        testMover.tick(emptyLevel);
 
-        assertTrue(u.getLocation().getX() < 0);
+        assertTrue(testMover.getLocation().getX() < 0);
     }
 
+    /**
+     * Test onCollision.
+     */
+    @Test
+    public void testOnCollision()
+    {
+        Mover mover = getTestMover(true, FIRST_TEST_POINT, secondTestPoint);
+        mover.onCollision(Cell.WALL);
+        assertNotNull(mover);
+    }
 }

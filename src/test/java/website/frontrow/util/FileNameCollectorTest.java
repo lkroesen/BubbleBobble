@@ -20,7 +20,7 @@ public class FileNameCollectorTest
     @Test(expected = NullPointerException.class)
     public void testObtainNonExisting() throws URISyntaxException, IOException
     {
-        new FileNameCollector().obtain("foo/");
+        FileNameCollector.getInstance().obtain("foo/");
     }
 
     /**
@@ -31,7 +31,7 @@ public class FileNameCollectorTest
     @Test
     public void testObtainSoundDir() throws URISyntaxException, IOException
     {
-        assertEquals(new FileNameCollector().obtain("sound/").length, 13);
+        assertEquals(FileNameCollector.getInstance().obtain("sound/").length, 13);
     }
 
     /**
@@ -42,6 +42,6 @@ public class FileNameCollectorTest
     @Test(expected = URISyntaxException.class)
     public void testObtainNullDir() throws URISyntaxException, IOException
     {
-        new FileNameCollector().obtain(null);
+        FileNameCollector.getInstance().obtain(null);
     }
 }

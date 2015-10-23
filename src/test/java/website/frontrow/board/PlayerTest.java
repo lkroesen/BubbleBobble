@@ -3,8 +3,9 @@ package website.frontrow.board;
 import org.junit.Test;
 import website.frontrow.util.Point;
 
-
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Player test.
@@ -12,14 +13,16 @@ import static org.junit.Assert.assertEquals;
 public class PlayerTest
         extends MoverTest
 {
+    private static final int DEFAULT_ENEMY_WORTH = 50;
+
     /**
      * Test the constructor of Player.
      */
     @Test
     public void testConstructor()
     {
-        Player pl = new Player(super.p, null);
-        assertEquals(pl.getLocation(), super.p);
+        Player player = new Player(super.FIRST_TEST_POINT, null);
+        assertEquals(player.getLocation(), super.FIRST_TEST_POINT);
     }
 
     /**
@@ -28,11 +31,11 @@ public class PlayerTest
     @Test
     public void testAddLife()
     {
-        Player p = new Player(super.p, null);
+        Player player = new Player(super.FIRST_TEST_POINT, null);
 
-        assertEquals(p.getLives(), 3);
-        p.addLife();
-        assertEquals(p.getLives(), 4);
+        assertEquals(player.getLives(), 3);
+        player.addLife();
+        assertEquals(player.getLives(), 4);
     }
 
     /**
@@ -41,11 +44,11 @@ public class PlayerTest
     @Test
     public void testSetLife()
     {
-        Player p = new Player(super.p, null);
+        Player player = new Player(super.FIRST_TEST_POINT, null);
 
-        assertEquals(p.getLives(), 3);
-        p.setLives(1);
-        assertEquals(p.getLives(), 1);
+        assertEquals(player.getLives(), 3);
+        player.setLives(1);
+        assertEquals(player.getLives(), 1);
     }
 
     /**
@@ -54,11 +57,11 @@ public class PlayerTest
     @Test
     public void testLoseLife()
     {
-        Player p = new Player(super.p, null);
+        Player player = new Player(super.FIRST_TEST_POINT, null);
 
-        assertEquals(p.getLives(), 3);
-        p.loseLife();
-        assertEquals(p.getLives(), 2);
+        assertEquals(player.getLives(), 3);
+        player.loseLife();
+        assertEquals(player.getLives(), 2);
     }
 
     @Override
@@ -72,5 +75,31 @@ public class PlayerTest
         player.setMotion(motion);
 
         return player;
+    }
+
+    /**
+     * Test RemoveObserver.
+     */
+    @Test
+    public void testRemoveObserver()
+    {
+        Player player = new Player(super.FIRST_TEST_POINT, null);
+        player.addObserver(null);
+
+        assertTrue(player.getObservers().contains(null));
+
+        player.removeObserver(null);
+        assertFalse(player.getObservers().contains(null));
+    }
+
+    /**
+     * Test that increase score works.
+     */
+    @Test
+    public void testIncreaseScore()
+    {
+        Player player = new Player(super.FIRST_TEST_POINT, null);
+        player.increaseScoreWith(DEFAULT_ENEMY_WORTH);
+        assertEquals(player.getScore(), DEFAULT_ENEMY_WORTH);
     }
 }

@@ -18,35 +18,90 @@ public class EnemyTest
     /**
      * Test the constructor of the Enemy class.
      */
-    @Test
+    @SuppressWarnings("static-access")
+	@Test
     public void constructorTest()
     {
-        Enemy e = new Enemy(super.p, null);
-        assertEquals(e.getLocation(), super.p);
+        Enemy enemy = new Enemy(super.FIRST_TEST_POINT, null);
+        assertEquals(enemy.getLocation(), super.FIRST_TEST_POINT);
+    }
+
+    /**
+     * Test that an enemy is worth 50 points.
+     */
+    @SuppressWarnings("static-access")
+	@Test
+    public void enemyWorthTest()
+    {
+        Enemy enemy = new Enemy(super.FIRST_TEST_POINT, null);
+        assertEquals(enemy.getWorth(), 50);
+    }
+
+    /**
+     * Test that we can set the last wall.
+     */
+    @SuppressWarnings("static-access")
+	@Test
+    public void enemySetLastWallTest()
+    {
+        Enemy enemy = new Enemy(super.FIRST_TEST_POINT, null);
+        assertFalse(enemy.getLastWall());
+
+        enemy.setLastWall(true);
+        assertTrue(enemy.getLastWall());
+    }
+
+    /**
+     * Test if we can set WallCollision.
+     */
+    @SuppressWarnings("static-access")
+	@Test
+    public void enemySetWallCollisionTest()
+    {
+        Enemy enemy = new Enemy(super.FIRST_TEST_POINT, null);
+        assertFalse(enemy.getWallCollision());
+
+        enemy.setWallCollision(true);
+        assertTrue(enemy.getWallCollision());
+    }
+
+    /**
+     * Test that onWallCollision works.
+     */
+    @SuppressWarnings("static-access")
+	@Test
+    public void enemyOnWallCollisionTest()
+    {
+        Enemy enemy = new Enemy(super.FIRST_TEST_POINT, null);
+        assertFalse(enemy.getWallCollision());
+
+        enemy.onWallCollision();
+        assertTrue(enemy.getWallCollision());
     }
 
     /**
      * Test whether the caught time is returned properly.
      */
-    @Test
+    @SuppressWarnings("static-access")
+	@Test
     public void getChaughtTimeTest()
     {
-        Enemy e = new Enemy(super.p, null);
+        Enemy enemy = new Enemy(super.FIRST_TEST_POINT, null);
 
-        assertEquals(Enemy.TIME_TO_ESCPAPE, e.getCaughtTime());
+        assertEquals(Enemy.TIME_TO_ESCPAPE, enemy.getCaughtTime());
     }
 
     @Override
     public Mover getTestMover(boolean alive, Point start, Point end)
     {
-        Enemy e = new Enemy(start, null);
-        e.setMotion(end);
+        Enemy enemy = new Enemy(start, null);
+        enemy.setMotion(end);
         if(!alive)
         {
-            e.kill();
+            enemy.kill();
         }
 
-        return e;
+        return enemy;
     }
     
     /**
@@ -55,21 +110,23 @@ public class EnemyTest
     @Override
     public void testTick()
     {
-        Mover u = getTestMover(true, new Point(0, 0), new Point(GameConstants.TICKS_PER_SEC, 0));
+        Mover testMover = getTestMover(true, new Point(0, 0),
+                new Point(GameConstants.TICKS_PER_SEC, 0));
 
-        u.tick(emptyLevel);
+        testMover.tick(emptyLevel);
         
         //An enemy might move
-        assertEquals(0.25, u.getLocation().getX(), 2);
+        assertEquals(0.25, testMover.getLocation().getX(), 2);
     }
     
     /**
      * Tests the setter for wallCollision.
      */
-    @Test
+    @SuppressWarnings("static-access")
+	@Test
     public void testSetWallColision()
     {
-        Enemy enemy = new Enemy(super.p, null);
+        Enemy enemy = new Enemy(super.FIRST_TEST_POINT, null);
         assertFalse(enemy.getWallCollision());
 
         enemy.setWallCollision(true);
@@ -79,10 +136,11 @@ public class EnemyTest
     /**
      * Tests the function onWallCollision.
      */
-    @Test
+    @SuppressWarnings("static-access")
+	@Test
     public void testOnWallColision()
     {
-        Enemy enemy = new Enemy(super.p, null);
+        Enemy enemy = new Enemy(super.FIRST_TEST_POINT, null);
         assertFalse(enemy.getWallCollision());
 
         enemy.onWallCollision();
@@ -92,20 +150,22 @@ public class EnemyTest
     /**
      * Tests the getter for tickCounter.
      */
-    @Test
+    @SuppressWarnings("static-access")
+	@Test
     public void testGetTickCounter()
     {
-        Enemy enemy = new Enemy(super.p, null);
+        Enemy enemy = new Enemy(super.FIRST_TEST_POINT, null);
         assertEquals(enemy.getTickCounter(), 0);
     }
     
     /**
      * Tests the setter for tickCounter.
      */
-    @Test
+    @SuppressWarnings("static-access")
+	@Test
     public void testSetTickCounter()
     {
-        Enemy enemy = new Enemy(super.p, null);
+        Enemy enemy = new Enemy(super.FIRST_TEST_POINT, null);
         assertEquals(enemy.getTickCounter(), 0);
 
         enemy.setTickCounter(10);
@@ -115,10 +175,11 @@ public class EnemyTest
     /**
      * Tests the getter for random.
      */
+	@SuppressWarnings("static-access")
 	@Test
     public void testGetRandom()
     {
-        Enemy enemy = new Enemy(super.p, null);
+        Enemy enemy = new Enemy(super.FIRST_TEST_POINT, null);
         // Not assertEquals, because that apparently doesn't 
         // accept two floats.
         assertTrue(enemy.getRandom() == 1.00f);
@@ -127,10 +188,11 @@ public class EnemyTest
 	/**
      * Tests the setter for random.
      */
+	@SuppressWarnings("static-access")
 	@Test
     public void testSetRandom()
     {
-        Enemy enemy = new Enemy(super.p, null);
+        Enemy enemy = new Enemy(super.FIRST_TEST_POINT, null);
         // Not assertEquals, because that apparently doesn't 
         // accept two floats.
         assertTrue(enemy.getRandom() == 1.00f);
@@ -142,20 +204,22 @@ public class EnemyTest
 	/**
      * Tests the getter for lastWall.
      */
-    @Test
+    @SuppressWarnings("static-access")
+	@Test
     public void testGetLastWall()
     {
-        Enemy enemy = new Enemy(super.p, null);
+        Enemy enemy = new Enemy(super.FIRST_TEST_POINT, null);
         assertFalse(enemy.getLastWall());
     }
 	
 	/**
      * Tests the setter for lastWall.
      */
-    @Test
+    @SuppressWarnings("static-access")
+	@Test
     public void testSetLastWall()
     {
-        Enemy enemy = new Enemy(super.p, null);
+        Enemy enemy = new Enemy(super.FIRST_TEST_POINT, null);
         assertFalse(enemy.getLastWall());
 
         enemy.setLastWall(true);
@@ -165,10 +229,11 @@ public class EnemyTest
     /**
      * Tests the function getWorth().
      */
-    @Test
+    @SuppressWarnings("static-access")
+	@Test
     public void testGetWorth()
     {
-        Enemy enemy = new Enemy(super.p, null);
+        Enemy enemy = new Enemy(super.FIRST_TEST_POINT, null);
         // DEFAULT_ENEMY_VALUE = 50.
         assertEquals(enemy.getWorth(), 50);
     }
@@ -176,20 +241,22 @@ public class EnemyTest
     /**
      * Tests the getter for Mover player in enemy.
      */
-    @Test
+    @SuppressWarnings("static-access")
+	@Test
     public void testGetPlayer()
     {
-        Enemy enemy = new Enemy(super.p, null);
+        Enemy enemy = new Enemy(super.FIRST_TEST_POINT, null);
         assertNull(enemy.getPlayer());
     }
     
     /**
      * Tests the setter for Mover player in enemy.
      */
-    @Test
+    @SuppressWarnings("static-access")
+	@Test
     public void testSetPlayer()
     {
-        Enemy enemy = new Enemy(super.p, null);
+        Enemy enemy = new Enemy(super.FIRST_TEST_POINT, null);
         assertNull(enemy.getPlayer());
 
         Player player = new Player(new Point(0, 0), null);

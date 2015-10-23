@@ -110,5 +110,4 @@ public class JBubbleKeyListenerTest
 
         verifyZeroInteractions(action);
     }
-
 }

@@ -28,7 +28,7 @@ public class ArtificialIntelligenceTest
 	private Grid<Cell> emptyGrid = new Grid<>(0, 0);
 	private Level simpleLevel;
 	private ArtificialIntelligence simpleArtificialIntelligence;
-	private Point p;
+	private Point point;
 
     /**
      * Setup the lists with one player at a default position.
@@ -38,7 +38,7 @@ public class ArtificialIntelligenceTest
     {
     	players.add(player);
         units.add(player);
-        p = new Point(3.0, 3.0);
+        point = new Point(3.0, 3.0);
     }
     
     /**
@@ -46,20 +46,20 @@ public class ArtificialIntelligenceTest
      */
     @Test
     public void doMovesRandomizerTest()
-    {
-	    Enemy enemy = new Enemy(p, null);
-	    units.add(enemy);
-	    enemy.setRandom(0);
-	    simpleLevel = new Level(players, units, emptyGrid);
-	    simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
-	    simpleArtificialIntelligence.aiMover();
-	    
-	    for(int i = 0; i <= GameConstants.TICKS_PER_MOVE + 1; i++)
-	    {
-	    	simpleLevel.tick();	
-	    }
+    {      
+        Enemy enemy = new Enemy(point, null);
+        units.add(enemy);
+        enemy.setRandom(0);
+        simpleLevel = new Level(players, units, emptyGrid);
+        simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
+        simpleArtificialIntelligence.aiMover();
 
-	    assertTrue(enemy.getRandom() < 1);
+        for(int i = 0; i <= GameConstants.TICKS_PER_MOVE + 1; i++)
+        {
+            simpleLevel.tick();
+        }
+
+        assertTrue(enemy.getRandom() < 1);
     }
     
     /**
@@ -68,14 +68,14 @@ public class ArtificialIntelligenceTest
     @Test
     public void doMovesLeftTest()
     {
-        Enemy enemy = new Enemy(p, null);
+        Enemy enemy = new Enemy(point, null);
         units.add(enemy);
         simpleLevel = new Level(players, units, emptyGrid);
         simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
         simpleArtificialIntelligence.aiMover();
         simpleLevel.tick();
-        
-        assertTrue(enemy.getLocation().getX() < p.getX());
+
+        assertTrue(enemy.getLocation().getX() < point.getX());
     }
     
     /**
@@ -84,15 +84,15 @@ public class ArtificialIntelligenceTest
     @Test
     public void doMovesRightTest()
     {
-    	Point q = new Point(-3.0, -3.0);
-    	Enemy enemy = new Enemy(q, null);
+        point = new Point(-3.0, -3.0);
+    	Enemy enemy = new Enemy(point, null);
         units.add(enemy);
         simpleLevel = new Level(players, units, emptyGrid);
         simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
         simpleArtificialIntelligence.aiMover();
         simpleLevel.tick();
-        
-        assertTrue(enemy.getLocation().getX() > q.getX());
+
+        assertTrue(enemy.getLocation().getX() > point.getX());
     }
     
     /**
@@ -100,14 +100,14 @@ public class ArtificialIntelligenceTest
      */
     @Test
     public void doMovesDownTest()
-    {
-    	Enemy enemy = new Enemy(p, null);
-    	units.add(enemy);
-    	simpleLevel = new Level(players, units, emptyGrid);
-    	simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
-    	simpleArtificialIntelligence.aiMover();
-    	simpleLevel.tick();
-        
-    	assertTrue(enemy.getLocation().getY() < p.getY());
+    {           
+        Enemy enemy = new Enemy(point, null);
+        units.add(enemy);
+        simpleLevel = new Level(players, units, emptyGrid);
+        simpleArtificialIntelligence = new ArtificialIntelligence(simpleLevel);
+        simpleArtificialIntelligence.aiMover();
+        simpleLevel.tick();
+
+        assertTrue(enemy.getLocation().getY() < point.getY());
     }
 }

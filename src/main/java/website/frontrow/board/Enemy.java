@@ -166,16 +166,16 @@ public class Enemy
     
     /**
      * The setter for player.
-     * @param p, Player
+     * @param goal Player
      */
-    public void setPlayer(Player p)
+    public void setPlayer(Player goal)
     {
-    	player = p;
+    	player = goal;
     }
     
     /**
-     * The getter for player
-     * @return player, Player
+     * The getter for player.
+     * @return player Player
      */
     public Mover getPlayer()
     {
