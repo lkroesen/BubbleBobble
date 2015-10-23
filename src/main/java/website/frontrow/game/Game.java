@@ -160,6 +160,14 @@ public class Game
     }
 
     /**
+     * The number of players in this game.
+     * @return The number of players in this game.
+     */
+    public int numberOfPlayers()
+    {
+        return this.players.size();
+    }
+    /**
      * Loads the next level if there are next levels available.
      */
     public void nextLevel()

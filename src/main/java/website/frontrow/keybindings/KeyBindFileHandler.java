@@ -11,9 +11,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 /**
- * Load and Save keybind configurations.
+ * Load and Save key binding configurations.
  */
-public final class KeyBindFileHandler implements Logable
+public final class KeyBindFileHandler
+        implements Logable,
+                   KeyBindsObserver
 {
     private static final KeyBindFileHandler INSTANCE = new KeyBindFileHandler();
     private static String filename = "binds.txt";
@@ -23,6 +25,7 @@ public final class KeyBindFileHandler implements Logable
      */
     private KeyBindFileHandler()
     {
+        KeyBinds.addObserver(this);
     }
 
     /**
@@ -54,6 +57,7 @@ public final class KeyBindFileHandler implements Logable
 
         if (!bindingFile.exists())
         {
+            KeyBinds.createDefaultKeyMapping();
             return;
         }
 
@@ -62,20 +66,20 @@ public final class KeyBindFileHandler implements Logable
 
     /**
      * Check if the file exists and if so, return the File.
-     * @param filename Input the filename, default is "binds.txt"
-     * @param createFile True: wheter file has to be generated if it doesn't exist.
+     * @param fileToCheck Input the filename
+     * @param createFile True: whether file has to be generated if it doesn't exist.
      * @return returns the File.
      * @throws IOException Throws exception when triggered.
      */
-    public File fileChecker(String filename, boolean createFile) throws IOException
+    public File fileChecker(String fileToCheck, boolean createFile)
+            throws IOException
     {
-        if (filename == null)
+        if (fileToCheck == null)
         {
             addToLog("[KBFH]\t[ERROR] Filename is null");
-            throw new IOException("Filename is null");
+            throw new IllegalArgumentException("Filename is null");
         }
-
-        File bindingFile = new File(filename);
+        File bindingFile = new File(fileToCheck);
 
         if (!bindingFile.exists() & createFile)
         {
@@ -92,32 +96,18 @@ public final class KeyBindFileHandler implements Logable
      * @throws FileNotFoundException Throws when triggered.
      * @throws UnsupportedEncodingException Throws when triggered.
      */
-    private void fileWrite(File file) throws FileNotFoundException, UnsupportedEncodingException
+    private void fileWrite(File file)
+            throws FileNotFoundException,
+                   UnsupportedEncodingException
     {
         addToLog("[KBFH]\tWriting to: " + file.getName());
         PrintWriter printWriter = new PrintWriter(file, "UTF-8");
-
-        // Hardcoded
-        printWriter.println(KeyBinds.player1GoLeft);
-        printWriter.println(KeyBinds.player1GoRight);
-        printWriter.println(KeyBinds.player1Jump);
-        printWriter.println(KeyBinds.player1Shoot);
-
-        printWriter.println(KeyBinds.player2GoLeft);
-        printWriter.println(KeyBinds.player2GoRight);
-        printWriter.println(KeyBinds.player2Jump);
-        printWriter.println(KeyBinds.player2Shoot);
-
-        printWriter.println(KeyBinds.utilToggleLog);
-        printWriter.println(KeyBinds.utilDumpLog);
-        printWriter.println(KeyBinds.utilVolumeDown);
-        printWriter.println(KeyBinds.utilVolumeUp);
-
+        KeyBinds.printTo(printWriter);
         printWriter.close();
     }
 
     /**
-     * Read keybindings from file.
+     * Read key bindings from file.
      * @param file Input a file to be parsed.
      * @throws FileNotFoundException Throws when triggered.
      */
@@ -125,30 +115,7 @@ public final class KeyBindFileHandler implements Logable
     {
         addToLog("[KBFH]\tParsing from: " + file.getName());
         Scanner scanner = new Scanner(file, "UTF-8");
-        assert scanner.hasNextInt();
-        KeyBinds.player1GoLeft = scanner.nextInt();
-        assert scanner.hasNextInt();
-        KeyBinds.player1GoRight = scanner.nextInt();
-        assert scanner.hasNextInt();
-        KeyBinds.player1Jump = scanner.nextInt();
-        assert scanner.hasNextInt();
-        KeyBinds.player1Shoot = scanner.nextInt();
-        assert scanner.hasNextInt();
-        KeyBinds.player2GoLeft = scanner.nextInt();
-        assert scanner.hasNextInt();
-        KeyBinds.player2GoRight = scanner.nextInt();
-        assert scanner.hasNextInt();
-        KeyBinds.player2Jump = scanner.nextInt();
-        assert scanner.hasNextInt();
-        KeyBinds.player2Shoot = scanner.nextInt();
-        assert scanner.hasNextInt();
-        KeyBinds.utilToggleLog = scanner.nextInt();
-        assert scanner.hasNextInt();
-        KeyBinds.utilDumpLog = scanner.nextInt();
-        assert scanner.hasNextInt();
-        KeyBinds.utilVolumeDown = scanner.nextInt();
-        assert scanner.hasNextInt();
-        KeyBinds.utilVolumeUp = scanner.nextInt();
+        KeyBinds.readFrom(scanner);
         scanner.close();
     }
 
@@ -179,5 +146,21 @@ public final class KeyBindFileHandler implements Logable
     public void addToLog(String action)
     {
         Log.add(action);
+    }
+
+    /**
+     * Is called when a key binding has changed.
+     */
+    @Override
+    public void keyBindingChanged()
+    {
+        try
+        {
+            saveBindings();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

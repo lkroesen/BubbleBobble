@@ -2,6 +2,9 @@ package website.frontrow.ui;
 
 import website.frontrow.game.Game;
 import website.frontrow.game.GameConstants;
+import website.frontrow.keybindings.BindActions;
+import website.frontrow.keybindings.KeyBinds;
+import website.frontrow.keybindings.KeyBindsObserver;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.ui.status.SidePanel;
@@ -24,26 +27,31 @@ import java.util.concurrent.TimeUnit;
  */
 public class JBubbleBobbleUI
         extends JFrame
-        implements Logable
+        implements Logable,
+                   KeyBindsObserver
 {
     private PlayingFieldPanel playingFieldPanel;
 
     private JBubbleKeyListener keyListener;
 
+    private Game game;
+
     /**
      * Creates a JBubble Bobble UI.
      * @param game The game to display in the ui.
-     * @param integerActionMap The key listener mapping.
+     * @param keyMapping The key listener mapping.
      */
-    public JBubbleBobbleUI(Game game, Map<Integer, Action> integerActionMap)
+    public JBubbleBobbleUI(Game game, Map<Integer, Action> keyMapping)
     {
         super("Bubble Bobble");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setFocusable(true);
 
-        this.keyListener = new JBubbleKeyListener(integerActionMap);
+        this.keyListener = new JBubbleKeyListener(keyMapping);
         addKeyListener(this.keyListener);
+
+        this.game = game;
 
         Container contentPanel = getContentPane();
         contentPanel.setBackground(Color.white);
@@ -54,7 +62,7 @@ public class JBubbleBobbleUI
 
         contentPanel.add(playingFieldPanel, BorderLayout.LINE_START);
         contentPanel.add(sidePanel, BorderLayout.LINE_END);
-
+        KeyBinds.addObserver(this);
         pack();
         addToLog("[JBBUI]\tBubble Bobble UI created successfully.");
     }
@@ -101,5 +109,24 @@ public class JBubbleBobbleUI
     public JBubbleKeyListener getKeyListener()
     {
         return this.keyListener;
+    }
+
+    /**
+     * Is called when a key binding has changed.
+     *
+     * Updates the key listener mappings.
+     */
+    @Override
+    public void keyBindingChanged()
+    {
+        BindActions binder = BindActions.getInstance();
+        binder.clearMappings();
+        binder.createUtilMappings().createFirstPlayerKeyMappings(game);
+        if(game.numberOfPlayers() >= 2)
+        {
+            binder.createSecondPlayerKeyMappings(game);
+        }
+
+        this.keyListener.setMapping(binder.getMapping());
     }
 }

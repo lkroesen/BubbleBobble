@@ -1,8 +1,11 @@
 package website.frontrow.keybindings;
 
 import java.awt.event.KeyEvent;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 /**
  * Simple Class for keeping track of all keybindings.
@@ -11,27 +14,13 @@ import java.util.Map;
  */
 public abstract class KeyBinds
 {
-    // TODO: Load previous bindings set in the game.
-    public static int player1GoLeft = KeyEvent.VK_LEFT;
-    public static int player1GoRight = KeyEvent.VK_RIGHT;
-    public static int player1Jump = KeyEvent.VK_UP;
-    public static int player1Shoot = KeyEvent.VK_Z;
-
-    public static int player2GoLeft = KeyEvent.VK_A;
-    public static int player2GoRight = KeyEvent.VK_D;
-    public static int player2Jump = KeyEvent.VK_W;
-    public static int player2Shoot = KeyEvent.VK_SHIFT;
-
-    public static int utilToggleLog = KeyEvent.VK_F1;
-    public static int utilDumpLog = KeyEvent.VK_F2;
-    public static int utilVolumeUp = KeyEvent.VK_EQUALS;
-    public static int utilVolumeDown = KeyEvent.VK_MINUS;
-
     /**
      * The first key is the action type, the first integer is the player index,
      * the last is the key code.
      */
     private static Map<ActionType, Map<Integer, Integer>> mapping;
+
+    private static ArrayList<KeyBindsObserver> observers = new ArrayList<>();
 
     // Static initializer, look it up.
     static
@@ -45,21 +34,6 @@ public abstract class KeyBinds
         mapping.put(ActionType.STORE_LOG, new HashMap<>());
         mapping.put(ActionType.VOLUME_UP, new HashMap<>());
         mapping.put(ActionType.VOLUME_DOWN, new HashMap<>());
-
-        setKeyCodeFor(ActionType.LEFT,  0, KeyEvent.VK_LEFT);
-        setKeyCodeFor(ActionType.RIGHT, 0, KeyEvent.VK_RIGHT);
-        setKeyCodeFor(ActionType.JUMP,  0, KeyEvent.VK_UP);
-        setKeyCodeFor(ActionType.SHOOT, 0, KeyEvent.VK_Z);
-
-        setKeyCodeFor(ActionType.LEFT,  1, KeyEvent.VK_A);
-        setKeyCodeFor(ActionType.RIGHT, 1, KeyEvent.VK_D);
-        setKeyCodeFor(ActionType.JUMP,  1, KeyEvent.VK_W);
-        setKeyCodeFor(ActionType.SHOOT, 1, KeyEvent.VK_SHIFT);
-
-        setKeyCodeForUtil(ActionType.TOGGLE_PRINT_LOG, KeyEvent.VK_F1);
-        setKeyCodeForUtil(ActionType.STORE_LOG, KeyEvent.VK_F2);
-        setKeyCodeForUtil(ActionType.VOLUME_UP, KeyEvent.VK_EQUALS);
-        setKeyCodeForUtil(ActionType.VOLUME_DOWN, KeyEvent.VK_MINUS);
     }
 
     /**
@@ -79,10 +53,11 @@ public abstract class KeyBinds
      * @param playerIndex The player to perform the action with.
      * @param keyCode The key code.
      */
-    public static void setKeyCodeFor(ActionType action, int playerIndex, int keyCode)
+    public static synchronized void setKeyCodeFor(ActionType action, int playerIndex, int keyCode)
     {
         Map<Integer, Integer> actionMap = mapping.get(action);
         actionMap.put(playerIndex, keyCode);
+        notifyObservers();
     }
 
     /**
@@ -100,8 +75,97 @@ public abstract class KeyBinds
      * @param action The action.
      * @param keyCode The new key code.
      */
-    public static void setKeyCodeForUtil(ActionType action, int keyCode)
+    public static synchronized void setKeyCodeForUtil(ActionType action, int keyCode)
     {
         setKeyCodeFor(action, -1, keyCode);
+    }
+
+    /**
+     * Creates the default key mappings.
+     */
+    public static synchronized void createDefaultKeyMapping()
+    {
+        setKeyCodeFor(ActionType.LEFT,  0, KeyEvent.VK_LEFT);
+        setKeyCodeFor(ActionType.RIGHT, 0, KeyEvent.VK_RIGHT);
+        setKeyCodeFor(ActionType.JUMP,  0, KeyEvent.VK_UP);
+        setKeyCodeFor(ActionType.SHOOT, 0, KeyEvent.VK_Z);
+
+        setKeyCodeFor(ActionType.LEFT,  1, KeyEvent.VK_A);
+        setKeyCodeFor(ActionType.RIGHT, 1, KeyEvent.VK_D);
+        setKeyCodeFor(ActionType.JUMP,  1, KeyEvent.VK_W);
+        setKeyCodeFor(ActionType.SHOOT, 1, KeyEvent.VK_SHIFT);
+
+        setKeyCodeForUtil(ActionType.TOGGLE_PRINT_LOG, KeyEvent.VK_F1);
+        setKeyCodeForUtil(ActionType.STORE_LOG, KeyEvent.VK_F2);
+        setKeyCodeForUtil(ActionType.VOLUME_UP, KeyEvent.VK_EQUALS);
+        setKeyCodeForUtil(ActionType.VOLUME_DOWN, KeyEvent.VK_MINUS);
+    }
+
+
+    /**
+     * Prints the key bindings to a print writer.
+     * @param writer The print writer to write the bindings to.
+     */
+    public static synchronized void printTo(PrintWriter writer)
+    {
+        for(ActionType action : ActionType.values())
+        {
+            Map<Integer, Integer> actionMap = mapping.get(action);
+            for(Map.Entry<Integer, Integer> entry : actionMap.entrySet())
+            {
+                writer.println(action.toString() + " " + entry.getKey() + " " + entry.getValue());
+            }
+        }
+    }
+
+    /**
+     * Sets the key bindings from the information in the scanner.
+     * @param scanner The scanner which provides the information.
+     */
+    @SuppressWarnings("magicnumber") //It's just the number of parameters in the file.
+    public static synchronized void readFrom(Scanner scanner)
+    {
+        while(scanner.hasNextLine())
+        {
+            String[] entries = scanner.nextLine().split(" ");
+            assert entries.length == 3;
+            ActionType action = ActionType.fromString(entries[0]);
+            int playerIndex = Integer.parseInt(entries[1]);
+            int keyCode = Integer.parseInt(entries[2]);
+            switch(action)
+            {
+                case JUMP: case RIGHT: case LEFT: case SHOOT:
+                    setKeyCodeFor(action, playerIndex, keyCode); break;
+                case STORE_LOG: case TOGGLE_PRINT_LOG: case VOLUME_UP: case VOLUME_DOWN:
+                    setKeyCodeForUtil(action, keyCode); break;
+                default: break;
+            }
+        }
+    }
+
+    /**
+     * Adds observer. It will be notified when a key binding changes.
+     * @param observer The observer to add.
+     */
+    public static void addObserver(KeyBindsObserver observer)
+    {
+        observers.add(observer);
+    }
+
+    /**
+     * Removes observer.
+     * @param observer The observer to remove.
+     */
+    public static void removeObserver(KeyBindsObserver observer)
+    {
+        observers.remove(observer);
+    }
+
+    /**
+     * When the key binding has changed, notify the observers.
+     */
+    private static void notifyObservers()
+    {
+        observers.forEach(o -> o.keyBindingChanged());
     }
 }
