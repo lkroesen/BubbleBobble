@@ -23,6 +23,7 @@ public class LauncherTest
     public void testLaunch() throws IOException, URISyntaxException
     {
         Launcher launcher = new Launcher();
+        KeyBindFileHandler.setFilename("src/test/resources/binds.txt");
         KeyBindFileHandler.getInstance().loadBindings();
         String[] files = FileNameCollector.getInstance().obtain("level/");
         launcher.start(files, 1);
