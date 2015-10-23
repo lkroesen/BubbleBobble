@@ -227,4 +227,12 @@ public abstract class Mover
     {
         return super.hashCode() + PRIME * motion.hashCode();
     }
+
+    @Override
+    public void reset()
+    {
+        super.reset();
+        motion = new Point(0, 0);
+        newMotion = new Point(0, 0);
+    }
 }
