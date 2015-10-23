@@ -69,11 +69,11 @@ public class EnemyTest
     @Test
     public void testSetWallColision()
     {
-    	Enemy enemy = new Enemy(super.p, null);
-    	assertFalse(enemy.getWallCollision());
-    	
-    	enemy.setWallCollision(true);
-    	assertTrue(enemy.getWallCollision());
+        Enemy enemy = new Enemy(super.p, null);
+        assertFalse(enemy.getWallCollision());
+
+        enemy.setWallCollision(true);
+        assertTrue(enemy.getWallCollision());
     }
     
     /**
@@ -82,11 +82,11 @@ public class EnemyTest
     @Test
     public void testOnWallColision()
     {
-    	Enemy enemy = new Enemy(super.p, null);
-    	assertFalse(enemy.getWallCollision());
-    	
-    	enemy.onWallCollision();
-    	assertTrue(enemy.getWallCollision());
+        Enemy enemy = new Enemy(super.p, null);
+        assertFalse(enemy.getWallCollision());
+
+        enemy.onWallCollision();
+        assertTrue(enemy.getWallCollision());
     }
     
     /**
@@ -95,8 +95,8 @@ public class EnemyTest
     @Test
     public void testGetTickCounter()
     {
-    	Enemy enemy = new Enemy(super.p, null);
-    	assertEquals(enemy.getTickCounter(), 0);
+        Enemy enemy = new Enemy(super.p, null);
+        assertEquals(enemy.getTickCounter(), 0);
     }
     
     /**
@@ -105,11 +105,11 @@ public class EnemyTest
     @Test
     public void testSetTickCounter()
     {
-    	Enemy enemy = new Enemy(super.p, null);
-    	assertEquals(enemy.getTickCounter(), 0);
-    	
-    	enemy.setTickCounter(10);
-    	assertEquals(enemy.getTickCounter(), 10);
+        Enemy enemy = new Enemy(super.p, null);
+        assertEquals(enemy.getTickCounter(), 0);
+
+        enemy.setTickCounter(10);
+        assertEquals(enemy.getTickCounter(), 10);
     }
     
     /**
@@ -118,10 +118,10 @@ public class EnemyTest
 	@Test
     public void testGetRandom()
     {
-    	Enemy enemy = new Enemy(super.p, null);
-    	// Not assertEquals, because that apparently doesn't 
-    	// accept two floats.
-    	assertTrue(enemy.getRandom() == 1.00f);
+        Enemy enemy = new Enemy(super.p, null);
+        // Not assertEquals, because that apparently doesn't 
+        // accept two floats.
+        assertTrue(enemy.getRandom() == 1.00f);
     }
 	
 	/**
@@ -130,13 +130,13 @@ public class EnemyTest
 	@Test
     public void testSetRandom()
     {
-    	Enemy enemy = new Enemy(super.p, null);
-    	// Not assertEquals, because that apparently doesn't 
-    	// accept two floats.
-    	assertTrue(enemy.getRandom() == 1.00f);
-    	
-    	enemy.setRandom(2.00f);
-    	assertTrue(enemy.getRandom() == 2.00f);
+        Enemy enemy = new Enemy(super.p, null);
+        // Not assertEquals, because that apparently doesn't 
+        // accept two floats.
+        assertTrue(enemy.getRandom() == 1.00f);
+
+        enemy.setRandom(2.00f);
+        assertTrue(enemy.getRandom() == 2.00f);
     }
 	
 	/**
@@ -145,8 +145,8 @@ public class EnemyTest
     @Test
     public void testGetLastWall()
     {
-    	Enemy enemy = new Enemy(super.p, null);
-    	assertFalse(enemy.getLastWall());
+        Enemy enemy = new Enemy(super.p, null);
+        assertFalse(enemy.getLastWall());
     }
 	
 	/**
@@ -155,11 +155,11 @@ public class EnemyTest
     @Test
     public void testSetLastWall()
     {
-    	Enemy enemy = new Enemy(super.p, null);
-    	assertFalse(enemy.getLastWall());
-    	
-    	enemy.setLastWall(true);
-    	assertTrue(enemy.getLastWall());
+        Enemy enemy = new Enemy(super.p, null);
+        assertFalse(enemy.getLastWall());
+
+        enemy.setLastWall(true);
+        assertTrue(enemy.getLastWall());
     }
     
     /**
@@ -168,9 +168,9 @@ public class EnemyTest
     @Test
     public void testGetWorth()
     {
-    	Enemy enemy = new Enemy(super.p, null);
-    	// DEFAULT_ENEMY_VALUE = 50.
-    	assertEquals(enemy.getWorth(), 50);
+        Enemy enemy = new Enemy(super.p, null);
+        // DEFAULT_ENEMY_VALUE = 50.
+        assertEquals(enemy.getWorth(), 50);
     }
     
     /**
@@ -179,8 +179,8 @@ public class EnemyTest
     @Test
     public void testGetPlayer()
     {
-    	Enemy enemy = new Enemy(super.p, null);
-    	assertNull(enemy.getPlayer());
+        Enemy enemy = new Enemy(super.p, null);
+        assertNull(enemy.getPlayer());
     }
     
     /**
@@ -189,11 +189,11 @@ public class EnemyTest
     @Test
     public void testSetPlayer()
     {
-    	Enemy enemy = new Enemy(super.p, null);
-    	assertNull(enemy.getPlayer());
-    	
-    	Player player = new Player(new Point(0, 0), null);
-    	enemy.setPlayer((Player) player);
-    	assertEquals(enemy.getPlayer(), (Mover) player);
+        Enemy enemy = new Enemy(super.p, null);
+        assertNull(enemy.getPlayer());
+
+        Player player = new Player(new Point(0, 0), null);
+        enemy.setPlayer((Player) player);
+        assertEquals(enemy.getPlayer(), (Mover) player);
     }
 }
