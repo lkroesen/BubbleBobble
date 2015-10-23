@@ -50,7 +50,7 @@ public class SidePanel
 
         buttonMappings.put("Pause/Start", () ->
         {
-            if(game.isRunning())
+            if (game.isRunning())
             {
                 game.stop();
                 MusicPlayer.getInstance().stop();
