@@ -15,7 +15,6 @@ import static org.junit.Assert.assertTrue;
  */
 public class MapParserTest
 {
-
     /**
      * Test whether maps are correctly imported.
      */
@@ -23,17 +22,18 @@ public class MapParserTest
     public void testSimpleMap()
     {
         String[] map = new String[]{"X_X", "X X", "XXX"};
+
         MapParser parser = new MapParser(new BasicUnitFactory());
-        Level res = parser.parseMap(map);
+        Level parseResult = parser.parseMap(map);
 
         // There are no units on the map.
-        assertEquals(res.getUnits().size(), 0);
+        assertEquals(parseResult.getUnits().size(), 0);
         // Test the squares
-        Grid<Cell> expected = new Grid<Cell>(Arrays.asList(
+        Grid<Cell> expected = new Grid<>(Arrays.asList(
                 Cell.WALL, Cell.PLATFORM, Cell.WALL,
                 Cell.WALL, Cell.EMPTY, Cell.WALL,
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 3);
-        assertEquals(expected, res.getCells());
+        assertEquals(expected, parseResult.getCells());
     }
 
     /**
@@ -48,7 +48,7 @@ public class MapParserTest
 
         // There are no units on this map, just a position.
         assertEquals(res.getUnits().size(), 0);
-        // However, it did add a spawning point.
+        // However, it did add a spawning FIRST_TEST_POINT.
         assertEquals(new Point(1, 1), res.getPlayerPositions().get(0));
     }
 
@@ -59,14 +59,14 @@ public class MapParserTest
     public void testEnemyMap()
     {
         String[] map = new String[]{"XXX", "XeX", "XXX"};
+
         MapParser parser = new MapParser(new BasicUnitFactory());
-        Level res = parser.parseMap(map);
+        Level parseResult = parser.parseMap(map);
 
         // There is a single unit (the player) on the map.
-        assertEquals(res.getUnits().size(), 1);
-        assertTrue(res.getUnits().get(0) instanceof Enemy);
-        assertEquals(new Point(1, 1), res.getUnits().get(0).getLocation());
-
+        assertEquals(parseResult.getUnits().size(), 1);
+        assertTrue(parseResult.getUnits().get(0) instanceof Enemy);
+        assertEquals(new Point(1, 1), parseResult.getUnits().get(0).getLocation());
     }
 
     /**
@@ -133,12 +133,11 @@ public class MapParserTest
     {
         MapParser parser = new MapParser(new BasicUnitFactory());
         Level level = parser.parseMap(getClass().getResourceAsStream("/testLevelLoader.txt"));
-        Grid<Cell> expected = new Grid<Cell>(Arrays.asList(
+        Grid<Cell> expected = new Grid<>(Arrays.asList(
                 Cell.WALL, Cell.WALL, Cell.WALL,
                 Cell.WALL, Cell.EMPTY, Cell.WALL,
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 3);
         assertEquals(0, level.getUnits().size());
         assertEquals(expected, level.getCells());
     }
-
 }
