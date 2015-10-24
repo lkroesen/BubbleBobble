@@ -16,11 +16,14 @@ import static org.mockito.Mockito.verify;
 public class IntegrationTest
 {
 
-    KeyRegistry registry = new KeyRegistry();
+    private KeyRegistry registry = new KeyRegistry();
 
     @Mock
-    Runnable runnable;
+    private Runnable runnable;
 
+    /**
+     * Simple keypress test.
+     */
     @Test
     public void testKeyPress()
     {
@@ -32,6 +35,9 @@ public class IntegrationTest
         verify(runnable).run();
     }
 
+    /**
+     * Unregistration test.
+     */
     @Test
     public void testUnregister()
     {

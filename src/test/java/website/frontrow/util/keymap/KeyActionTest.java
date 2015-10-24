@@ -18,10 +18,13 @@ public abstract class KeyActionTest
 {
 
     @Mock
-    Runnable runnable;
+    private Runnable runnable;
 
-    KeyAction keyAction;
+    private KeyAction keyAction;
 
+    /**
+     * Prepares the keyAction for the tests.
+     */
     @Before
     public void before()
     {
@@ -73,6 +76,7 @@ public abstract class KeyActionTest
     /**
      * Create a keyaction.
      *
+     * @param runnable The action runnable.
      * @return A keyaction object.
      */
     public abstract KeyAction getKeyAction(Runnable runnable);

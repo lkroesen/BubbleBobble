@@ -16,16 +16,19 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class SingleKeyActionTest extends KeyActionTest
 {
-    Key key1 = new KeyCodeKey(1);
-    Key key2 = new KeyCodeKey(2);
+    private Key key1 = new KeyCodeKey(1);
+    private Key key2 = new KeyCodeKey(2);
 
     @Mock
-    Runnable runnable;
+    private Runnable runnable;
     @Mock
-    KeyRegistry keyRegistry;
+    private KeyRegistry keyRegistry;
 
-    KeyAction keyAction;
+    private KeyAction keyAction;
 
+    /**
+     * Prepares the keyAction for the other tests.
+     */
     @Before
     public void before()
     {

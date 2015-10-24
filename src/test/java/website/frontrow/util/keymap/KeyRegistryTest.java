@@ -17,26 +17,11 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 public class KeyRegistryTest
 {
     @Mock
-    KeyAction keyAction;
+    private KeyAction keyAction;
 
-    Key key = new Key()
-    {
-        @Override
-        public boolean equals(Object other)
-        {
-            return other != null
-                    &&
-                    this.getClass() == other.getClass();
-        }
+    private Key key = new KeyCodeKey(1);
 
-        @Override
-        public int hashCode()
-        {
-            return 0;
-        }
-    };
-
-    KeyRegistry registry = new KeyRegistry();
+    private KeyRegistry registry = new KeyRegistry();
 
     /**
      * Test the register method.

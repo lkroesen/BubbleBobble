@@ -24,13 +24,17 @@ public abstract class KeyAction
 
     /**
      * Called when a given KeyAction is being unbound from a key.
+     * @param key The key to unbind.
+     * @param registry The registry in which this happens.
      */
-    public abstract void unbind(Key key, KeyRegistry registery);
+    protected abstract void unbind(Key key, KeyRegistry registry);
 
     /**
      * Called when a given KeyAction is being bound from a key.
+     * @param key The key to unbind.
+     * @param registry The related registry.
      */
-    public abstract void bind(Key key, KeyRegistry registery);
+    protected abstract void bind(Key key, KeyRegistry registry);
 
     /**
      * Execute a KeyAction.
