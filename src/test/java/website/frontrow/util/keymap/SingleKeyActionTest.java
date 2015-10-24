@@ -61,9 +61,27 @@ public class SingleKeyActionTest extends KeyActionTest
         assertFalse(keyAction.isBound());
     }
 
+    /**
+     * Test the reset part.
+     */
+    @Test
+    public void testResetFalse()
+    {
+        assertFalse(keyAction.resetKey());
+    }
+
+    /**
+     * Test the reset part.
+     */
+    @Test
+    public void testResetTrue()
+    {
+        assertTrue(new SingleKeyAction(runnable, true).resetKey());
+    }
+
     @Override
     public KeyAction getKeyAction(Runnable runnable)
     {
-        return new SingleKeyAction(runnable);
+        return new SingleKeyAction(runnable, false);
     }
 }

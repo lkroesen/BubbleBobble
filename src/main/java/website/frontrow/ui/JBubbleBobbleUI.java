@@ -18,6 +18,7 @@ import java.awt.BorderLayout;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import website.frontrow.util.keymap.KeyRegistry;
 
 /**
  * The main ui for the game.
@@ -33,16 +34,16 @@ public class JBubbleBobbleUI
     /**
      * Creates a JBubble Bobble UI.
      * @param game The game to display in the ui.
-     * @param integerActionMap The key listener mapping.
+     * @param keyRegistry The key registry.
      */
-    public JBubbleBobbleUI(Game game, Map<Integer, Action> integerActionMap)
+    public JBubbleBobbleUI(Game game, KeyRegistry keyRegistry)
     {
         super("Bubble Bobble");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setFocusable(true);
 
-        this.keyListener = new JBubbleKeyListener(integerActionMap);
+        this.keyListener = new JBubbleKeyListener(keyRegistry);
         addKeyListener(this.keyListener);
 
         Container contentPanel = getContentPane();

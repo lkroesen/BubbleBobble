@@ -84,4 +84,10 @@ public abstract class KeyAction
      */
     public abstract boolean isBound();
 
+    /**
+     * Immediately reset the key, or keep it pressed?
+     * @return Reset y/n.
+     */
+    public abstract boolean resetKey();
+
 }

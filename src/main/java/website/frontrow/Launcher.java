@@ -1,10 +1,13 @@
 package website.frontrow;
 
+import java.util.List;
+import java.util.ListIterator;
 import website.frontrow.board.BasicUnitFactory;
 import website.frontrow.board.Bubble;
 import website.frontrow.board.Player;
 import website.frontrow.board.UnitFactory;
 import website.frontrow.game.Game;
+import website.frontrow.game.PlayerActions;
 import website.frontrow.level.Level;
 import website.frontrow.level.MapParser;
 import website.frontrow.logger.DumpLog;
@@ -29,6 +32,8 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import website.frontrow.util.keymap.KeyCodeKey;
+import website.frontrow.util.keymap.KeyRegistry;
 
 /**
  * Instantiates the game so it can be played.
@@ -82,8 +87,15 @@ public class Launcher implements Logable
             addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + " succeeded.");
 
             Game game = new Game(levelList, unitFactory, playerCount);
-            Map<Integer, Action> keyMappings = createKeyMappings(game);
-            JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
+            List<PlayerActions> playerActions = new ArrayList<>();
+
+            game.getPlayers().forEach(
+                    player -> playerActions.add(new PlayerActions(player, game, unitFactory)));
+
+            KeyRegistry keyRegistry = new KeyRegistry();
+            registerPlayerDefaults(keyRegistry, playerActions, playerCount);
+
+            JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyRegistry);
 
             InputStream map = getClass().getResourceAsStream("/game_over.txt");
     		Level gameOverLevel = parser.parseMap(map);
@@ -132,151 +144,60 @@ public class Launcher implements Logable
     }
 
     /**
-     * Creates the key mappings for a single player game.
-     * @param game The game to control with the keys.
-     * @return The mapping.
+     * Register the players into the registry.
      */
-    // This method creates keymappings, causing it to be rather long.
-    @SuppressWarnings("checkstyle:methodlength")
-    private Map<Integer, Action> createKeyMappings(Game game)
+    private void registerPlayerDefaults(KeyRegistry keyRegistry,
+                                        List<PlayerActions> playerActions,
+                                        int playerCount)
     {
-        Map<Integer, Action> map = new HashMap<>();
-
-        if(game.getPlayers().size() == 1)
+        ListIterator<PlayerActions> it = playerActions.listIterator();
+        while (it.hasNext())
         {
-            map.put(KeyEvent.VK_LEFT, () ->
+            int index = it.nextIndex();
+            PlayerActions actions = it.next();
+            if(playerCount == 1)
             {
-                addToLog("[KEY]\t< \'<-\' > Pressed.");
-                game.getPlayers().get(0).goLeft();
-            });
-
-            map.put(KeyEvent.VK_RIGHT, () ->
+                registerSinglePlayerDefaults(actions, keyRegistry);
+            }
+            else
             {
-                addToLog("[KEY]\t< \'->\' > Pressed.");
-                game.getPlayers().get(0).goRight();
-            });
-
-            map.put(KeyEvent.VK_SPACE, () ->
-            {
-                addToLog("[KEY]\t< \' \' > Pressed.");
-                game.getPlayers().get(0).jump();
-            });
-
-            map.put(KeyEvent.VK_Z, () ->
-            {
-                addToLog("[KEY]\t< \'Z\' > Pressed.");
-
-                if(game.isRunning())
-                {
-                    Player player = game.getPlayers().get(0);
-                    if(!player.isAlive())
-                    {
-                        return;
-                    }
-                    Bubble bubble = new Bubble(player.getLocation(),
-                            new Point(player.getDirection().getDeltaX() * 4, 0),
-                            JBubbleBobbleSprites.getInstance().getBubbleSprite(),
-                            player);
-
-                    game.getLevel().addUnit(bubble);
-                }
-            });
+                registerMultiPlayerDefaults(actions, keyRegistry, index);
+            }
         }
-        else
+    }
+
+    /**
+     * Register the player to the default controls.
+     * @param playerActions Player actions.
+     * @param registry The registry to register to.
+     */
+    private void registerSinglePlayerDefaults(PlayerActions playerActions, KeyRegistry registry)
+    {
+        registry.register(new KeyCodeKey(KeyEvent.VK_UP), playerActions.getJump());
+        registry.register(new KeyCodeKey(KeyEvent.VK_LEFT), playerActions.getLeft());
+        registry.register(new KeyCodeKey(KeyEvent.VK_RIGHT), playerActions.getRight());
+        registry.register(new KeyCodeKey(KeyEvent.VK_SPACE), playerActions.getShoot());
+    }
+
+    private void registerMultiPlayerDefaults(PlayerActions playerActions, KeyRegistry registry, int player)
+    {
+        switch (player)
         {
-        	map.put(KeyEvent.VK_A, () ->
-            {
-                addToLog("[KEY]\t< \'<-\' > Pressed.");
-                game.getPlayers().get(0).goLeft();
-            });
-
-            map.put(KeyEvent.VK_D, () ->
-            {
-                addToLog("[KEY]\t< \'->\' > Pressed.");
-                game.getPlayers().get(0).goRight();
-            });
-
-            map.put(KeyEvent.VK_W, () ->
-            {
-                addToLog("[KEY]\t< \' \' > Pressed.");
-                game.getPlayers().get(0).jump();
-            });
-
-            map.put(KeyEvent.VK_SPACE, () ->
-            {
-                addToLog("[KEY]\t< \'Z\' > Pressed.");
-
-                if(game.isRunning())
-                {
-                    Player player = game.getPlayers().get(0);
-                    if(!player.isAlive())
-                    {
-                        return;
-                    }
-                    game.getLevel().addUnit(
-                            new Bubble(player.getLocation(),
-                                    new Point(player.getDirection().getDeltaX() * 4, 0),
-                                    JBubbleBobbleSprites.getInstance().getBubbleSprite()));
-                }
-            });
-
-            map.put(KeyEvent.VK_LEFT, () ->
-            {
-                addToLog("[KEY]\t< \'<-\' > Pressed.");
-                game.getPlayers().get(1).goLeft();
-            });
-
-            map.put(KeyEvent.VK_RIGHT, () ->
-            {
-                addToLog("[KEY]\t< \'->\' > Pressed.");
-                game.getPlayers().get(1).goRight();
-            });
-
-            map.put(KeyEvent.VK_UP, () ->
-            {
-                addToLog("[KEY]\t< \' \' > Pressed.");
-                game.getPlayers().get(1).jump();
-            });
-
-            map.put(KeyEvent.VK_CONTROL, () ->
-            {
-                addToLog("[KEY]\t< \'Z\' > Pressed.");
-
-                if(game.isRunning())
-                {
-                    Player player = game.getPlayers().get(1);
-                    if(!player.isAlive())
-                    {
-                        return;
-                    }
-                    game.getLevel().addUnit(
-                            new Bubble(player.getLocation(),
-                                    new Point(player.getDirection().getDeltaX() * 4, 0),
-                                    JBubbleBobbleSprites.getInstance().getBubbleSprite()));
-                }
-            });
+            case 0:
+                registry.register(new KeyCodeKey(KeyEvent.VK_W), playerActions.getJump());
+                registry.register(new KeyCodeKey(KeyEvent.VK_A), playerActions.getLeft());
+                registry.register(new KeyCodeKey(KeyEvent.VK_D), playerActions.getRight());
+                registry.register(new KeyCodeKey(KeyEvent.VK_SPACE), playerActions.getShoot());
+                break;
+            case 1:
+                registry.register(new KeyCodeKey(KeyEvent.VK_UP), playerActions.getJump());
+                registry.register(new KeyCodeKey(KeyEvent.VK_LEFT), playerActions.getLeft());
+                registry.register(new KeyCodeKey(KeyEvent.VK_RIGHT), playerActions.getRight());
+                registry.register(new KeyCodeKey(KeyEvent.VK_CONTROL), playerActions.getShoot());
+                break;
+            default:
+                throw new UnsupportedOperationException("No defaults available for more than 2 players!");
         }
-
-        // Volume Control
-        map.put(KeyEvent.VK_MINUS, () ->
-        {
-            addToLog("[KEY]\t< \'-\' > Pressed.");
-            MusicPlayer.getInstance().volumeAdjust(-1.0d);
-        });
-
-        map.put(KeyEvent.VK_EQUALS, () ->
-        {
-            addToLog("[KEY]\t< \'=\' > Pressed.");
-            MusicPlayer.getInstance().volumeAdjust(1.0d);
-        });
-
-        // Create a DumpLog
-        map.put(KeyEvent.VK_F1, () ->
-        {
-            addToLog("[KEY]\t< F1 > Pressed.");
-            DumpLog.getInstance().createDump();
-        });
-        return map;
     }
 
     /**

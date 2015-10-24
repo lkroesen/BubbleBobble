@@ -58,16 +58,19 @@ public class KeyRegistry
      * Execute the action for a given key.
      *
      * @param key The pressed key.
+     * @return Whether to reset the key or not.
      */
-    public void handle(Key key)
+    public boolean handle(Key key)
     {
         KeyAction action = registry.get(key);
 
         if (action == null)
         {
-            return;
+            // No action, so release the key immediately.
+            return true;
         }
 
         action.execute();
+        return action.resetKey();
     }
 }

@@ -28,7 +28,7 @@ public class IntegrationTest
     public void testKeyPress()
     {
         registry.register(new KeyCodeKey(1),
-                new SingleKeyAction(runnable));
+                new SingleKeyAction(runnable, false));
 
         registry.handle(new KeyCodeKey(1));
 
@@ -41,7 +41,7 @@ public class IntegrationTest
     @Test
     public void testUnregister()
     {
-        KeyAction action = new SingleKeyAction(runnable);
+        KeyAction action = new SingleKeyAction(runnable, false);
         registry.register(new KeyCodeKey(1),
                 action);
 

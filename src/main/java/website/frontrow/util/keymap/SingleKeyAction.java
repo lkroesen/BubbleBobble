@@ -8,15 +8,17 @@ public class SingleKeyAction
 {
     private KeyRegistry currentRegistry = null;
     private Key currentKey = null;
+    private boolean reset;
 
     /**
      * Construct a keyAction.
      *
      * @param action The action to execute.
      */
-    public SingleKeyAction(Runnable action)
+    public SingleKeyAction(Runnable action, boolean reset)
     {
         super(action);
+        this.reset = reset;
     }
 
     @Override
@@ -48,6 +50,12 @@ public class SingleKeyAction
     public boolean isBound()
     {
         return currentKey != null;
+    }
+
+    @Override
+    public boolean resetKey()
+    {
+        return reset;
     }
 
 }
