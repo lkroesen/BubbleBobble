@@ -1,11 +1,8 @@
 package website.frontrow.game;
 
-import java.awt.event.KeyEvent;
 import website.frontrow.board.Player;
 import website.frontrow.board.UnitFactory;
 import website.frontrow.util.keymap.KeyAction;
-import website.frontrow.util.keymap.KeyCodeKey;
-import website.frontrow.util.keymap.KeyRegistry;
 import website.frontrow.util.keymap.SingleKeyAction;
 
 /**
@@ -72,16 +69,4 @@ public class PlayerActions
         return shoot;
     }
 
-    /**
-     * Bind using default bindings.
-     * This method may need a better spot than here.
-     * @param registry Registry to register to.
-     */
-    public void rebindDefaults(KeyRegistry registry)
-    {
-        registry.register(new KeyCodeKey(KeyEvent.VK_UP), jump);
-        registry.register(new KeyCodeKey(KeyEvent.VK_LEFT), left);
-        registry.register(new KeyCodeKey(KeyEvent.VK_RIGHT), right);
-        registry.register(new KeyCodeKey(KeyEvent.VK_SPACE), shoot);
-    }
 }

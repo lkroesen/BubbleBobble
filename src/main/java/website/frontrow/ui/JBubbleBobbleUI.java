@@ -6,8 +6,6 @@ import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
 import website.frontrow.ui.status.SidePanel;
 
-import java.util.Map;
-
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 

@@ -76,7 +76,8 @@ public class JBubbleKeyListener implements KeyListener
     public void update()
     {
         pressedKeys.forEach(keyCode -> {
-            if(keyRegistry.handle(new KeyCodeKey(keyCode))) {
+            if(keyRegistry.handle(new KeyCodeKey(keyCode)))
+            {
                 pressedKeys.remove(keyCode);
             }
         });

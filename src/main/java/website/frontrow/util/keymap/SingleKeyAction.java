@@ -14,6 +14,7 @@ public class SingleKeyAction
      * Construct a keyAction.
      *
      * @param action The action to execute.
+     * @param reset Whether to reset the key instantly after a key press.
      */
     public SingleKeyAction(Runnable action, boolean reset)
     {

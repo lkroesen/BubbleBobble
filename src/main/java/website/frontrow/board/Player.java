@@ -197,6 +197,8 @@ public class Player
 
     /**
      * Shoot a bubble.
+     * @param game The game in which to shoot.
+     * @param unitFactory The unit factory with which to generate a bubble.
      */
     public void shoot(Game game, UnitFactory unitFactory)
     {
@@ -208,7 +210,9 @@ public class Player
             }
             game.getLevel().addUnit(
                     unitFactory.createBubble(this.getLocation(),
-                            new Point(this.getDirection().getDeltaX() * 4, 0),
+                            new Point(this.getDirection().getDeltaX()
+                                      *
+                                      Bubble.BUBBLE_STARTING_SPEED, 0),
                             this));
         }
     }

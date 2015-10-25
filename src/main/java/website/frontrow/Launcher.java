@@ -3,8 +3,6 @@ package website.frontrow;
 import java.util.List;
 import java.util.ListIterator;
 import website.frontrow.board.BasicUnitFactory;
-import website.frontrow.board.Bubble;
-import website.frontrow.board.Player;
 import website.frontrow.board.UnitFactory;
 import website.frontrow.game.Game;
 import website.frontrow.game.PlayerActions;
@@ -13,12 +11,9 @@ import website.frontrow.level.MapParser;
 import website.frontrow.logger.DumpLog;
 import website.frontrow.logger.Log;
 import website.frontrow.music.Songs;
-import website.frontrow.sprite.JBubbleBobbleSprites;
-import website.frontrow.ui.Action;
 import website.frontrow.ui.JBubbleBobbleUI;
 import website.frontrow.ui.ModeMenu;
 import website.frontrow.game.GameConstants;
-import website.frontrow.util.Point;
 import website.frontrow.logger.Logable;
 import website.frontrow.music.MusicPlayer;
 
@@ -27,8 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -179,7 +172,15 @@ public class Launcher implements Logable
         registry.register(new KeyCodeKey(KeyEvent.VK_SPACE), playerActions.getShoot());
     }
 
-    private void registerMultiPlayerDefaults(PlayerActions playerActions, KeyRegistry registry, int player)
+    /**
+     * Register multiplayer default keybindings.
+     * @param playerActions The PlayerActions on which to register.
+     * @param registry The registry to register keys in.
+     * @param player The index of the current player.
+     */
+    private void registerMultiPlayerDefaults(PlayerActions playerActions,
+                                             KeyRegistry registry,
+                                             int player)
     {
         switch (player)
         {
@@ -196,7 +197,9 @@ public class Launcher implements Logable
                 registry.register(new KeyCodeKey(KeyEvent.VK_CONTROL), playerActions.getShoot());
                 break;
             default:
-                throw new UnsupportedOperationException("No defaults available for more than 2 players!");
+                throw new UnsupportedOperationException(
+                        "No defaults available for more than 2 players!"
+                );
         }
     }
 
