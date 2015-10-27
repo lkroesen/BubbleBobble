@@ -56,6 +56,11 @@ public class Player
         ticksLeft = 0;
         lives = GameConstants.DEFAULT_AMOUNT_OF_LIVES;
         score = 0;
+
+        observers.forEach((o) -> {
+            o.livesChanged(this);
+            o.scoreChanged(this);
+        });
     }
 
     /**
