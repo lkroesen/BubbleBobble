@@ -6,10 +6,10 @@ import website.frontrow.util.keymap.KeyAction;
 import website.frontrow.util.keymap.SingleKeyAction;
 
 /**
- * Utility Actions
+ * Utility Actions.
  */
-public class UtilActions {
-
+public class UtilActions
+{
     private KeyAction volumeUp;
     private KeyAction volumeDown;
     private KeyAction dumpLog;
