@@ -6,6 +6,7 @@ import website.frontrow.board.BasicUnitFactory;
 import website.frontrow.board.UnitFactory;
 import website.frontrow.game.Game;
 import website.frontrow.game.PlayerActions;
+import website.frontrow.game.UtilActions;
 import website.frontrow.level.Level;
 import website.frontrow.level.MapParser;
 import website.frontrow.logger.DumpLog;
@@ -84,10 +85,11 @@ public class Launcher implements Logable
 
             game.getPlayers().forEach(
                     player -> playerActions.add(new PlayerActions(player, game, unitFactory)));
+            UtilActions utilActions = new UtilActions();
 
             KeyRegistry keyRegistry = new KeyRegistry();
             registerPlayerDefaults(keyRegistry, playerActions, playerCount);
-
+            registerUtilityDefaults(utilActions, keyRegistry);
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyRegistry);
 
             InputStream map = getClass().getResourceAsStream("/game_over.txt");
@@ -201,6 +203,14 @@ public class Launcher implements Logable
                         "No defaults available for more than 2 players!"
                 );
         }
+    }
+
+    private void registerUtilityDefaults(UtilActions utilActions,
+                                         KeyRegistry registry)
+    {
+        registry.register(new KeyCodeKey(KeyEvent.VK_EQUALS), utilActions.getVolumeUp());
+        registry.register(new KeyCodeKey(KeyEvent.VK_MINUS), utilActions.getVolumeDown());
+        registry.register(new KeyCodeKey(KeyEvent.VK_F1), utilActions.getDumpLog());
     }
 
     /**
