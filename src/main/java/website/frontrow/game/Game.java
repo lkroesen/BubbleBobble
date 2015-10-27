@@ -179,6 +179,13 @@ public class Game
     public void nextLevel()
     {
         currentIndex = Math.min(currentIndex + 1, levelPack.size() - 1);
+        for(Player player : players)
+        {
+        	if(player.getLives() > 0 && player.getLives() < GameConstants.DEFAULT_AMOUNT_OF_LIVES)
+        	{
+        		player.addLife();
+        	}
+        }
         loadCurrentLevel();
     }
 

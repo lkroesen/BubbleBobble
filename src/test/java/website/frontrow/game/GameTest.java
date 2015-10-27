@@ -161,5 +161,27 @@ public class GameTest
         assertFalse(game.isRunning());
         assertEquals(game.getPlayers().get(0).getScore(), 0);
     }
+    
+	/**
+	 * Tests if nextLevel() only adds a life to a player when the right
+	 * conditions are met.
+	 */
+    @Test
+    public void testAddLifeAtNextLevel()
+    {
+    	assertEquals(game.getPlayers().get(0).getLives(), 3);
+    	
+    	game.getPlayers().get(0).setLives(2);
+    	game.nextLevel();
+    	assertEquals(game.getPlayers().get(0).getLives(), 3);
+    	
+    	game.getPlayers().get(0).setLives(1);
+    	game.nextLevel();
+    	assertEquals(game.getPlayers().get(0).getLives(), 2);
+    	
+    	game.getPlayers().get(0).setLives(0);
+    	game.nextLevel();
+    	assertEquals(game.getPlayers().get(0).getLives(), 0);
+    }
 
 }
