@@ -205,6 +205,11 @@ public class Launcher implements Logable
         }
     }
 
+    /**
+     * Register utility defaults.
+     * @param utilActions Which utility set to register.
+     * @param registry Registry to register at.
+     */
     private void registerUtilityDefaults(UtilActions utilActions,
                                          KeyRegistry registry)
     {
