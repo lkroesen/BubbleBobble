@@ -117,7 +117,6 @@ public abstract class MoverTest
                 new Point(GameConstants.TICKS_PER_SEC, 0));
 
         testMover.tick(emptyLevel);
-        // TODO When collisions are implemented, some calls to those checks need to be checked here.
 
         assertEquals(-1, testMover.getLocation().getX(), 0.0004);
     }
@@ -127,7 +126,7 @@ public abstract class MoverTest
      * Except there is gravity. So we need to keep that in mind.
      */
     @Test
-    public void testDontMove() // There's a wasp in your hair.
+    public void testDontMove()
     {
         Point start = new Point(0, 0);
         Mover testMover = getTestMover(true, start, new Point(0, 0));

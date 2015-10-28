@@ -26,9 +26,7 @@ public class MapParserTest
         MapParser parser = new MapParser(new BasicUnitFactory());
         Level parseResult = parser.parseMap(map);
 
-        // There are no units on the map.
         assertEquals(parseResult.getUnits().size(), 0);
-        // Test the squares
         Grid<Cell> expected = new Grid<>(Arrays.asList(
                 Cell.WALL, Cell.PLATFORM, Cell.WALL,
                 Cell.WALL, Cell.EMPTY, Cell.WALL,
@@ -46,9 +44,7 @@ public class MapParserTest
         MapParser parser = new MapParser(new BasicUnitFactory());
         Level res = parser.parseMap(map);
 
-        // There are no units on this map, just a position.
         assertEquals(res.getUnits().size(), 0);
-        // However, it did add a spawning FIRST_TEST_POINT.
         assertEquals(new Point(1, 1), res.getPlayerPositions().get(0));
     }
 
@@ -63,7 +59,6 @@ public class MapParserTest
         MapParser parser = new MapParser(new BasicUnitFactory());
         Level parseResult = parser.parseMap(map);
 
-        // There is a single unit (the player) on the map.
         assertEquals(parseResult.getUnits().size(), 1);
         assertTrue(parseResult.getUnits().get(0) instanceof Enemy);
         assertEquals(new Point(1, 1), parseResult.getUnits().get(0).getLocation());
