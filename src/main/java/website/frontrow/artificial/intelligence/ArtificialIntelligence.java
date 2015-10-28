@@ -49,6 +49,7 @@ public class ArtificialIntelligence
 		this.players = this.level.getPlayers();
 		this.units = this.level.getUnits();
 
+		// Abbreviation u here to adhere to lambda expressions.
 		this.enemies.addAll(units.stream().filter(
 				u -> u instanceof Enemy).map(
 				u -> (Enemy) u).collect(Collectors.toList()));

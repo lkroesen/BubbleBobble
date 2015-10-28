@@ -17,11 +17,13 @@ import website.frontrow.logger.Logable;
 public class CollisionComputer
 	implements Logable
 {
+	// Precision is a constant.
 	@SuppressWarnings("checkstyle:magicnumber")
 	private static final double PRECISION = 0.0001d;
 	private static final double ONE_DEV_PRECISION = 1 / PRECISION;
 	private static final int SAMPLING = 64;
 	private static final Point ZERO = new Point(0, 0);
+	//private static final Range Y_ANGLE_RANGE = new Range(Math.PI/4, Math.PI/4*2);
     private Level level;
 
     
@@ -76,11 +78,13 @@ public class CollisionComputer
 	 */
 	public CellCollision checkLevelAABB(AABB aabb, Point motion)
 	{
+		// Find the cells we need to check.
 		Grid<Cell> cells = level.getCells();
 		int minx = (int) Math.max(Math.floor(aabb.getStart().getX()), 0);
 		int miny = (int) Math.max(Math.floor(aabb.getStart().getY()), 0);
 		int maxx = (int) Math.min(Math.ceil(aabb.getEnd().getX()), cells.getWidth());
 		int maxy = (int) Math.min(Math.ceil(aabb.getEnd().getY()), cells.getHeight());
+		// Check the cells.
 		for(int y = miny; y < maxy; y++)
 		{
 			for(int x = minx; x < maxx; x++)
@@ -150,6 +154,7 @@ public class CollisionComputer
 	@SuppressWarnings("checkstyle:magicnumber")
 	private Point computeNewMotion(Point position, Point motion, Point cell)
 	{
+		// Compute the angle of the collision.
 		double diffangle = Math.abs(position.subtract(cell).angle());
 		if(Math.PI / 4 < diffangle && diffangle < Math.PI / 4 * 3)
 		{
@@ -189,10 +194,12 @@ public class CollisionComputer
 		while(part > 0 && !motion.equals(ZERO) && edgecase-- > 0)
 		{
 			Collision collision = findWithMotion(mover, location, motion, part);
+			// Compute new part.
 			double partused = collision.getPoint().subtract(location).length()
 					/ mover.getMotion().length();
 			part -= partused;
 			location = collision.getPoint();
+			// Change motion on collision.
 			if(collision.isCollided())
 			{
 				collided = true;
@@ -204,6 +211,8 @@ public class CollisionComputer
 			}
 			else
 			{
+				// No collision occurred. Collision value should be fine.
+				// However, due to bounds check the unit may have gotten warped.
 				break;
 			}
 		}

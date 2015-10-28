@@ -34,6 +34,7 @@ public class Bubble
     
     private static final long TIME_FLOAT_UPWARDS = 50;
 
+    // Time to kill the bubble is dependent on the time it has float upwards before.
     @SuppressWarnings("checkstyle:magicnumber")
     private static final long TIME_KILL = 450 + TIME_FLOAT_UPWARDS;
 
@@ -92,6 +93,9 @@ public class Bubble
         this.contains = other;
 
 		this.hit();
+		// Kill the enemy for good measure.
+		// (Do not forget to revive and re-add to the level when he
+		// escapes.)
 		other.kill();
     }
 

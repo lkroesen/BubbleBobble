@@ -37,5 +37,6 @@ public final class BubbleGravityBehaviour
      */
     public void apply(Mover mover, CollisionComputer cc)
     {
+        // Bubble is not affected by gravity.
     }
 }

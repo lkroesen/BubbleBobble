@@ -19,6 +19,7 @@ public class CollisionHandler
      * @param collider The mover that initiates the collision.
      * @param colidee The mover that is being collided with.
      */
+    // TODO: Swap this out for something fancy that uses reflection. But this works fine for now.
     public void applyCollision(Unit collider, Unit colidee)
     {
         if(collider instanceof Player)
@@ -50,11 +51,13 @@ public class CollisionHandler
      */
     public void playerCollision(Player player, Unit other)
     {
+        // Pop the bubble.
         if(other instanceof Bubble && ((Bubble) other).isHit())
         {
             other.kill();
         }
-        
+
+        // Kill the player.
         if(other instanceof Enemy)
         {
             player.onEnemyCollision();
