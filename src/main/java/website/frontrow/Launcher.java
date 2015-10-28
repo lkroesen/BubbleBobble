@@ -1,7 +1,6 @@
 package website.frontrow;
 
 import java.util.List;
-import java.util.ListIterator;
 import website.frontrow.board.BasicUnitFactory;
 import website.frontrow.board.UnitFactory;
 import website.frontrow.game.Game;
@@ -18,7 +17,6 @@ import website.frontrow.game.GameConstants;
 import website.frontrow.logger.Logable;
 import website.frontrow.music.MusicPlayer;
 
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -26,8 +24,8 @@ import java.util.Arrays;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import website.frontrow.util.keymap.KeyCodeKey;
 import website.frontrow.util.keymap.KeyRegistry;
+import website.frontrow.util.keymap.KeyRegistryHandler;
 
 /**
  * Instantiates the game so it can be played.
@@ -58,57 +56,37 @@ public class Launcher implements Logable
 
     /**
      * Starts the game.
+     *
      * @param filename The file name of the level to load.
      * @param playerCount The amount of players in this game.
      */
-    @SuppressWarnings("methodlength") // We need to make a GameFactory and UIBuilder
     public void start(String[] filename, int playerCount)
     {
-        addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + ".");
-
         try
         {
-            MapParser parser = new MapParser(new BasicUnitFactory());
-            ArrayList<Level> levelList = new ArrayList<>();
             UnitFactory unitFactory = new BasicUnitFactory();
+            MapParser parser = new MapParser(unitFactory);
+            ArrayList<Level> levelList = new ArrayList<>();
+            addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + ".");
             for(String levelFileName : filename)
             {
                 InputStream map = getClass().getResourceAsStream(levelFileName);
                 Level level = parser.parseMap(map);
                 levelList.add(level);
             }
-            
+
             addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + " succeeded.");
 
             Game game = new Game(levelList, unitFactory, playerCount);
-            List<PlayerActions> playerActions = new ArrayList<>();
-
-            game.getPlayers().forEach(
-                    player -> playerActions.add(new PlayerActions(player, game, unitFactory)));
-            UtilActions utilActions = new UtilActions();
-
-            KeyRegistry keyRegistry = new KeyRegistry();
-            registerPlayerDefaults(keyRegistry, playerActions, playerCount);
-            registerUtilityDefaults(utilActions, keyRegistry);
-            JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyRegistry);
-
-            InputStream map = getClass().getResourceAsStream("/game_over.txt");
-    		Level gameOverLevel = parser.parseMap(map);
-    		game.setGameOver(gameOverLevel);
-
-            InputStream winMap = getClass().getResourceAsStream("/game_won.txt");
-            Level gameWonLevel = parser.parseMap(winMap);
-            game.setGameWon(gameWonLevel);
-
-            game.setKeyListener(ui.getKeyListener());
+            JBubbleBobbleUI ui = setUpUI(game, unitFactory);
+            loadSpecialScreens(game, parser);
 
             ui.start();
             startScheduler(game);
-
         }
         catch (IOException e)
         {
-            addToLog("[ERROR]\tLoading file: " + Arrays.toString(filename) + " failed.");
+            addToLog("[ERROR]\tLaunching the game failed.");
             DumpLog.getInstance().createDump();
             throw new RuntimeException();
         }
@@ -138,84 +116,30 @@ public class Launcher implements Logable
                 TimeUnit.MILLISECONDS);
     }
 
-    /**
-     * Register the players into the registry.
-     */
-    private void registerPlayerDefaults(KeyRegistry keyRegistry,
-                                        List<PlayerActions> playerActions,
-                                        int playerCount)
+    private JBubbleBobbleUI setUpUI(Game game, UnitFactory unitFactory)
     {
-        ListIterator<PlayerActions> it = playerActions.listIterator();
-        while (it.hasNext())
-        {
-            int index = it.nextIndex();
-            PlayerActions actions = it.next();
-            if(playerCount == 1)
-            {
-                registerSinglePlayerDefaults(actions, keyRegistry);
-            }
-            else
-            {
-                registerMultiPlayerDefaults(actions, keyRegistry, index);
-            }
-        }
+        List<PlayerActions> playerActions = new ArrayList<>();
+
+        game.getPlayers().forEach(
+                player -> playerActions.add(new PlayerActions(player, game, unitFactory))
+        );
+
+        KeyRegistry keyRegistry
+                = KeyRegistryHandler.createKeyBindings(playerActions, new UtilActions());
+        JBubbleBobbleUI ui =  new JBubbleBobbleUI(game, keyRegistry);
+        game.setKeyListener(ui.getKeyListener());
+        return ui;
     }
 
-    /**
-     * Register the player to the default controls.
-     * @param playerActions Player actions.
-     * @param registry The registry to register to.
-     */
-    private void registerSinglePlayerDefaults(PlayerActions playerActions, KeyRegistry registry)
+    private void loadSpecialScreens(Game game, MapParser parser) throws IOException
     {
-        registry.register(new KeyCodeKey(KeyEvent.VK_UP), playerActions.getJump());
-        registry.register(new KeyCodeKey(KeyEvent.VK_LEFT), playerActions.getLeft());
-        registry.register(new KeyCodeKey(KeyEvent.VK_RIGHT), playerActions.getRight());
-        registry.register(new KeyCodeKey(KeyEvent.VK_SPACE), playerActions.getShoot());
-    }
+        InputStream map = getClass().getResourceAsStream("/game_over.txt");
+        Level gameOverLevel = parser.parseMap(map);
+        game.setGameOver(gameOverLevel);
 
-    /**
-     * Register multiplayer default keybindings.
-     * @param playerActions The PlayerActions on which to register.
-     * @param registry The registry to register keys in.
-     * @param player The index of the current player.
-     */
-    private void registerMultiPlayerDefaults(PlayerActions playerActions,
-                                             KeyRegistry registry,
-                                             int player)
-    {
-        switch (player)
-        {
-            case 0:
-                registry.register(new KeyCodeKey(KeyEvent.VK_W), playerActions.getJump());
-                registry.register(new KeyCodeKey(KeyEvent.VK_A), playerActions.getLeft());
-                registry.register(new KeyCodeKey(KeyEvent.VK_D), playerActions.getRight());
-                registry.register(new KeyCodeKey(KeyEvent.VK_SPACE), playerActions.getShoot());
-                break;
-            case 1:
-                registry.register(new KeyCodeKey(KeyEvent.VK_UP), playerActions.getJump());
-                registry.register(new KeyCodeKey(KeyEvent.VK_LEFT), playerActions.getLeft());
-                registry.register(new KeyCodeKey(KeyEvent.VK_RIGHT), playerActions.getRight());
-                registry.register(new KeyCodeKey(KeyEvent.VK_CONTROL), playerActions.getShoot());
-                break;
-            default:
-                throw new UnsupportedOperationException(
-                        "No defaults available for more than 2 players!"
-                );
-        }
-    }
-
-    /**
-     * Register utility defaults.
-     * @param utilActions Which utility set to register.
-     * @param registry Registry to register at.
-     */
-    private void registerUtilityDefaults(UtilActions utilActions,
-                                         KeyRegistry registry)
-    {
-        registry.register(new KeyCodeKey(KeyEvent.VK_EQUALS), utilActions.getVolumeUp());
-        registry.register(new KeyCodeKey(KeyEvent.VK_MINUS), utilActions.getVolumeDown());
-        registry.register(new KeyCodeKey(KeyEvent.VK_F1), utilActions.getDumpLog());
+        InputStream winMap = getClass().getResourceAsStream("/game_won.txt");
+        Level gameWonLevel = parser.parseMap(winMap);
+        game.setGameWon(gameWonLevel);
     }
 
     /**

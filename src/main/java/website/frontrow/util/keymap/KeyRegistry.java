@@ -39,6 +39,17 @@ public class KeyRegistry
     }
 
     /**
+     * Register a key with a given action.
+     *
+     * @param keyCode The key to bind.
+     * @param action The action to execute on this key.
+     */
+    public void register(int keyCode, KeyAction action)
+    {
+        register(new KeyCodeKey(keyCode), action);
+    }
+
+    /**
      * Unregisters a key.
      *
      * @param key Key to unregister
