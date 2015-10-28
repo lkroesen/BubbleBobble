@@ -61,6 +61,7 @@ public class ArtificialIntelligence
 			for(int i = 0; i < enemies.size(); i++)
 			{
 				Enemy enemy = enemies.get(i);
+				enemy.setPlayer((Player) player);
 				int moveToX = PathCalculation.calculateXPath((Mover) player, enemy);
 				int moveToY = PathCalculation.calculateYPath((Mover) player, enemy);
 					
@@ -102,26 +103,26 @@ public class ArtificialIntelligence
 			doRandomMove(enemy);
 			return;
 		}
-
 		if(y == 1)
 		{
 			fallOffPlatform(enemy);
 			return;
 		}
-
 		if(x == 1)
 		{
 			enemy.goRight();
 		}
-		
 		if(x == -1)
 		{
 			enemy.goLeft();
 		}
-		
 		if(y == -1)
 		{
 			enemy.jump();			
+		}
+		if(!enemy.getPlayer().isAlive())
+		{
+			nextPlayer();
 		}
 	}
 	
@@ -183,5 +184,30 @@ public class ArtificialIntelligence
     public void addToLog(String action)
     {
         Log.add(action);
+    }
+    
+    /**
+     * Assigns the enemies to the second player if the first dies.
+     */
+    public void nextPlayer()
+    {
+    	if(players.size() > 1)
+		{
+			this.player = this.players.get(1);
+			
+			for(int i = 0; i < enemies.size(); i++)
+			{
+				Enemy enemy = enemies.get(i);
+				if(enemy.isAlive())
+				{
+					enemy.setPlayer((Player) player);
+					int moveToX = PathCalculation.calculateXPath((Mover) player, enemy);
+					int moveToY = PathCalculation.calculateYPath((Mover) player, enemy);
+				
+					randomize(enemy);
+					doMoves(enemy, moveToX, moveToY);
+				}
+			}
+		}
     }
 }

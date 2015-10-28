@@ -6,8 +6,6 @@ import website.frontrow.board.behaviour.DefaultGravityBehaviour;
 import website.frontrow.board.behaviour.GravityBehaviour;
 
 import website.frontrow.level.Level;
-import website.frontrow.logger.Log;
-import website.frontrow.logger.Logable;
 import website.frontrow.sprite.Sprite;
 import website.frontrow.util.CollisionComputer;
 import website.frontrow.artificial.intelligence.ArtificialIntelligence;
@@ -24,7 +22,6 @@ import java.util.Map;
  */
 public abstract class Mover
     extends Unit
-    implements Logable
 {
     /**
      * Prime number used for hashing.
@@ -232,8 +229,10 @@ public abstract class Mover
     }
 
     @Override
-    public void addToLog(String action)
+    public void reset()
     {
-        Log.add(action);
+        super.reset();
+        motion = new Point(0, 0);
+        newMotion = new Point(0, 0);
     }
 }

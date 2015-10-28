@@ -47,6 +47,23 @@ public class Player
     private Set<PlayerObserver> observers = new HashSet<>();
 
     /**
+     * Reset the player to the default state.
+     */
+    @Override
+    public void reset()
+    {
+        super.reset();
+        ticksLeft = 0;
+        lives = GameConstants.DEFAULT_AMOUNT_OF_LIVES;
+        score = 0;
+
+        observers.forEach((o) -> {
+            o.livesChanged(this);
+            o.scoreChanged(this);
+        });
+    }
+
+    /**
      * The constructor of the Player Unit.
      * @param position A players starting position.
      * @param sprites The sprite for this player.
@@ -216,5 +233,14 @@ public class Player
         addToLog("[PLAYER]\t[SCORE]\tScore increased by " + value);
         this.score += value;
         observers.forEach(o -> o.scoreChanged(this));
+    }
+
+    /**
+     * Return a Set with the current Observers.
+     * @return Returns a Set with PlayerObserver.
+     */
+    public Set<PlayerObserver> getObservers()
+    {
+        return observers;
     }
 }

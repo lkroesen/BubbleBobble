@@ -41,6 +41,7 @@ public class CollisionComputerTest
                 Cell.WALL, Cell.WALL, Cell.WALL,
                 Cell.WALL, Cell.EMPTY, Cell.WALL,
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 3));
+
         CollisionComputer handler = new CollisionComputer(check);
         assertEquals(Cell.EMPTY, handler.checkLevelAABB(
                 new AABB(new Point(1, 1), new Point(2, 2)), new Point(0, 0)
@@ -57,6 +58,7 @@ public class CollisionComputerTest
                 Cell.WALL, Cell.WALL, Cell.WALL,
                 Cell.WALL, Cell.EMPTY, Cell.WALL,
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 3));
+
         CollisionComputer handler = new CollisionComputer(check);
         assertNotEquals(Cell.EMPTY, handler.checkLevelAABB(
                 new AABB(new Point(1.5, 1.5), new Point(2.5, 2.5)), new Point(0, 0)
@@ -73,6 +75,7 @@ public class CollisionComputerTest
                 Cell.WALL, Cell.WALL, Cell.WALL,
                 Cell.WALL, Cell.PLATFORM, Cell.WALL,
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 3));
+
         CollisionComputer handler = new CollisionComputer(check);
         assertEquals(Cell.EMPTY, handler.checkLevelAABB(
                 new AABB(new Point(1, 1), new Point(2, 2)), new Point(0, -1)
@@ -90,6 +93,7 @@ public class CollisionComputerTest
                 Cell.WALL, Cell.EMPTY, Cell.WALL,
                 Cell.WALL, Cell.PLATFORM, Cell.WALL,
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 4));
+
         CollisionComputer handler = new CollisionComputer(check);
         assertNotEquals(Cell.EMPTY, handler.checkLevelAABB(
                 new AABB(new Point(1, 1.1), new Point(2, 2.1)), new Point(0, 1)
@@ -106,6 +110,7 @@ public class CollisionComputerTest
                 Cell.WALL, Cell.WALL, Cell.WALL,
                 Cell.WALL, Cell.EMPTY, Cell.WALL,
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 3));
+
         CollisionComputer handler = new CollisionComputer(check);
         Player player = new Player(new Point(1, 1), null);
         player.setMotion(new Point(1, GameConstants.TICKS_PER_SEC));
@@ -123,11 +128,12 @@ public class CollisionComputerTest
                 Cell.WALL, Cell.EMPTY, Cell.WALL,
                 Cell.WALL, Cell.EMPTY, Cell.WALL,
                 Cell.WALL, Cell.WALL, Cell.WALL), 3, 4));
+
         CollisionComputer handler = new CollisionComputer(check);
         Player player = new Player(new Point(1, 1), null);
         player.setMotion(new Point(0, 3 * GameConstants.TICKS_PER_SEC));
-        Point c = handler.findNextPosition(player).getLocation();
-        assertEquals(new Point(1, 2), c);
+        Point location = handler.findNextPosition(player).getLocation();
+        assertEquals(new Point(1, 2), location);
     }
 
     /**
@@ -144,10 +150,10 @@ public class CollisionComputerTest
         when(level.getCells().getWidth()).thenReturn(10);
         when(level.getCells().getHeight()).thenReturn(10);
 
-        CollisionComputer ch = new CollisionComputer(level);
+        CollisionComputer collisionComputer = new CollisionComputer(level);
 
         Point targetLocation = new Point(5, 2);
-        Point finalLocation = ch.checkLevelBounds(mover, targetLocation);
+        Point finalLocation = collisionComputer.checkLevelBounds(mover, targetLocation);
 
         assertEquals(targetLocation, finalLocation);
     }
@@ -166,10 +172,10 @@ public class CollisionComputerTest
         when(level.getCells().getWidth()).thenReturn(10);
         when(level.getCells().getHeight()).thenReturn(10);
 
-        CollisionComputer ch = new CollisionComputer(level);
+        CollisionComputer collisionComputer = new CollisionComputer(level);
 
         Point targetLocation = new Point(10, 1);
-        Point finalLocation = ch.checkLevelBounds(mover, targetLocation);
+        Point finalLocation = collisionComputer.checkLevelBounds(mover, targetLocation);
 
         assertTrue(targetLocation.getX() > finalLocation.getX());
     }
@@ -188,10 +194,10 @@ public class CollisionComputerTest
         when(level.getCells().getWidth()).thenReturn(10);
         when(level.getCells().getHeight()).thenReturn(10);
 
-        CollisionComputer ch = new CollisionComputer(level);
+        CollisionComputer collisionComputer = new CollisionComputer(level);
 
         Point targetLocation = new Point(-1, 1);
-        Point finalLocation = ch.checkLevelBounds(mover, targetLocation);
+        Point finalLocation = collisionComputer.checkLevelBounds(mover, targetLocation);
 
         assertTrue(targetLocation.getX() < finalLocation.getX());
     }
@@ -210,10 +216,10 @@ public class CollisionComputerTest
         when(level.getCells().getWidth()).thenReturn(10);
         when(level.getCells().getHeight()).thenReturn(10);
 
-        CollisionComputer ch = new CollisionComputer(level);
+        CollisionComputer collisionComputer = new CollisionComputer(level);
 
         Point targetLocation = new Point(2, 11);
-        Point finalLocation = ch.checkLevelBounds(mover, targetLocation);
+        Point finalLocation = collisionComputer.checkLevelBounds(mover, targetLocation);
 
         assertTrue(targetLocation.getY() > finalLocation.getY());
     }
@@ -232,10 +238,10 @@ public class CollisionComputerTest
         when(level.getCells().getWidth()).thenReturn(10);
         when(level.getCells().getHeight()).thenReturn(10);
 
-        CollisionComputer ch = new CollisionComputer(level);
+        CollisionComputer collisionComputer = new CollisionComputer(level);
 
         Point targetLocation = new Point(2, -1);
-        Point finalLocation = ch.checkLevelBounds(mover, targetLocation);
+        Point finalLocation = collisionComputer.checkLevelBounds(mover, targetLocation);
 
         assertTrue(targetLocation.getY() < finalLocation.getY());
     }

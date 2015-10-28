@@ -131,7 +131,7 @@ public class Level
     /**
      * Tick all entities in this level.
      */
-    public void tick()
+    public synchronized void tick()
     {
         while(!toAdd.isEmpty())
         {
@@ -198,7 +198,7 @@ public class Level
      * @param width The width of the field the level has to draw itself on.
      * @param height The height of the field the level has to draw itself on.
      */
-    public void draw(Graphics graphics, int x, int y, int width, int height)
+    public synchronized void draw(Graphics graphics, int x, int y, int width, int height)
     {
         int numberOfCellsInWidth = cells.getWidth();
         int numberOfCellsInHeight = cells.getHeight();
@@ -390,4 +390,12 @@ public class Level
 
     }
 
+    /**
+     * Return a Set with the current Observers.
+     * @return Returns a Set with PlayerObserver.
+     */
+    public List<LevelObserver> getObservers()
+    {
+        return observers;
+    }
 }
