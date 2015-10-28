@@ -238,8 +238,8 @@ public class GridTest
     public void testNotTypeEqual()
     {
         Grid<Object> objectGrid = new Grid<>(4, 4);
-		// Use assertFalse instead of assertEquals, to make clear that we are
-		// testing equals.
+        // Use assertFalse instead of assertEquals, to make clear that we are
+        // testing equals.
         assertFalse(objectGrid.equals("Cat"));
     }
 
