@@ -62,7 +62,7 @@ public class Launcher implements Logable
      * @param filename The file name of the level to load.
      * @param playerCount The amount of players in this game.
      */
-    @SuppressWarnings("methodlength") // We need to make a GameFactory and UIBuilder
+    @SuppressWarnings("methodlength")
     public void start(String[] filename, int playerCount)
     {
         addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + ".");
@@ -131,12 +131,13 @@ public class Launcher implements Logable
                 TimeUnit.MILLISECONDS);
     }
 
-    /**
-     * Creates the key mappings for a single player game.
-     * @param game The game to control with the keys.
-     * @return The mapping.
-     */
-    // This method creates keymappings, causing it to be rather long.
+	/**
+	 * Creates the key mappings for the game. 
+	 * Because it's for both single- and multiplayer games 
+	 * this method is rather long.
+	 * @param game The game to control with the keys.
+	 * @return The mapping.
+	 */
     @SuppressWarnings("checkstyle:methodlength")
     private Map<Integer, Action> createKeyMappings(Game game)
     {
@@ -257,7 +258,6 @@ public class Launcher implements Logable
             });
         }
 
-        // Volume Control
         map.put(KeyEvent.VK_MINUS, () ->
         {
             addToLog("[KEY]\t< \'-\' > Pressed.");
@@ -270,7 +270,6 @@ public class Launcher implements Logable
             MusicPlayer.getInstance().volumeAdjust(1.0d);
         });
 
-        // Create a DumpLog
         map.put(KeyEvent.VK_F1, () ->
         {
             addToLog("[KEY]\t< F1 > Pressed.");

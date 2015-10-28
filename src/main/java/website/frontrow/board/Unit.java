@@ -25,7 +25,7 @@ public abstract class Unit
     /**
      * Current location of an entity.
      */
-    @SuppressWarnings("visibilitymodifier") // subclasses have to have access to this variable
+    @SuppressWarnings("visibilitymodifier")
     protected Point location;
 
     /**

@@ -47,7 +47,6 @@ public final class MusicPlayer
      */
     public void selectSong(String fileLocation)
     {
-        // Stop if there is no audio device.
         if(AudioDetector.getInstance().isNoAudio())
         {
             return;
@@ -84,7 +83,6 @@ public final class MusicPlayer
      */
     private void play()
     {
-        // Stop if there is no audio device.
         if(AudioDetector.getInstance().isNoAudio())
         {
             return;
@@ -100,7 +98,6 @@ public final class MusicPlayer
      */
     public void volumeAdjust(double delta)
     {
-        // Stop if there is no audio device.
         if(AudioDetector.getInstance().isNoAudio())
         {
             return;
@@ -117,7 +114,6 @@ public final class MusicPlayer
      */
     public boolean setLooping(Boolean looping)
     {
-        // Stop if there is no audio device.
         if(AudioDetector.getInstance().isNoAudio())
         {
             return toggleLooping;

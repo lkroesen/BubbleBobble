@@ -9,7 +9,6 @@ import website.frontrow.util.Point;
  * given the player information, a list of enemies and the current level.
  */
 @SuppressWarnings("checkstyle:hideutilityclassconstructor")
-/* This method has no use for a constructor because it always returns a path. */
 public abstract class PathCalculation 
 {
 	private static final double Y_OFFSET = 0.9;

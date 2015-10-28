@@ -58,7 +58,6 @@ public class JBubbleKeyListener implements KeyListener
     @Override
     public void keyTyped(KeyEvent keyEvent)
     {
-
     }
 
     /**
