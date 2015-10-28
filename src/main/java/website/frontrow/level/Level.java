@@ -75,7 +75,6 @@ public class Level
         this.units = new ArrayList<>(units);
         this.cells = new Grid<>(cells);
 
-        //Abbreviated u because of lambda expression.
         units.stream().filter(this::isEnemy).forEach(u -> numberOfEnemies++);
         addToLog("[LEVEL]\tLevel Object created");
     }
@@ -92,7 +91,6 @@ public class Level
         this.units = new ArrayList<>(units);
         this.cells = new Grid<>(cells);
 
-        //Abbreviated u because of lambda expression.
         units.stream().filter(this::isEnemy).forEach(u -> numberOfEnemies++);
         addToLog("[LEVEL]\tLevel Object created");
     }
@@ -148,7 +146,6 @@ public class Level
             if(!unit.isAlive())
             {
                 onUnitDeath(unit);
-                // The unit died during the tick, and must be removed.
                 it.remove();
             }
         }
@@ -158,7 +155,6 @@ public class Level
      * Handle special behavior on death.
      * @param unit Unit that has died.
      */
-    // TODO: Replace this with a behavior design pattern maybe?
     private void onUnitDeath(Unit unit)
     {
         if(unit instanceof Bubble)

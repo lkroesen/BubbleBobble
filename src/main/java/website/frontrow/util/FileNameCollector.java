@@ -55,7 +55,7 @@ public final class FileNameCollector
             JarFile jar = new JarFile(jarFile);
             stringList = loadFilesFromJar(jar, dir);
         }
-        else // Because of Java we need 2 different loaders for IDE's and Jars...
+        else // Because of Java we need 2 different loaders for IDE's and Jars.
         {
             stringList = loadFilesForIDE(dir);
         }
@@ -120,7 +120,6 @@ public final class FileNameCollector
 
         Scanner scanner = new Scanner(inputStream, "UTF-8");
 
-        // Get the amount of levels.
         while(scanner.hasNextLine())
         {
             stringList.add("/" + folder + scanner.nextLine());

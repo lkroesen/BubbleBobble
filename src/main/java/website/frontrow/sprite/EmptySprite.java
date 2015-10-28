@@ -30,7 +30,6 @@ public final class EmptySprite
     @Override
     public void draw(Graphics graphics, int x, int y, int width, int height)
     {
-        // Nothing
     }
 
     @Override
