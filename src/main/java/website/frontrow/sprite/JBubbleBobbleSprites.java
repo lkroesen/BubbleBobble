@@ -77,7 +77,7 @@ public final class JBubbleBobbleSprites
      * @return The map.
      */
     @SuppressWarnings("magicnumber")
-    public Map<Direction, Sprite> getPlayerSprite()
+    public Map<Direction, Sprite> getPlayerOneSprite()
     {
         return getDirectionalAnimatedSprite("/sprites/animated_player.png", 7);
     }

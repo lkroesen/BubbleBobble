@@ -1,6 +1,8 @@
 package website.frontrow.board;
 
+import java.util.Map;
 import website.frontrow.sprite.JBubbleBobbleSprites;
+import website.frontrow.sprite.Sprite;
 import website.frontrow.util.Point;
 
 /**
@@ -10,10 +12,19 @@ public class BasicUnitFactory
         implements UnitFactory
 {
     @Override
-    public Player createPlayer(Point location)
+    public Player createPlayer(Point location, int playerIndex)
     {
-        return new Player(location,
-                JBubbleBobbleSprites.getInstance().getPlayerSprite());
+        Map<Direction, Sprite> playerSprite;
+        switch(playerIndex)
+        {
+            case 0:
+                playerSprite = JBubbleBobbleSprites.getInstance().getPlayerOneSprite();break;
+            case 1:
+                playerSprite = JBubbleBobbleSprites.getInstance().getPlayerTwoSprite();break;
+            default:
+                playerSprite = JBubbleBobbleSprites.getInstance().getPlayerOneSprite();
+        }
+        return new Player(location, playerSprite);
     }
 
     @Override

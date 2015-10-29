@@ -12,7 +12,7 @@ public interface UnitFactory
      * @param location Starting location of this player.
      * @return A player
      */
-    Player createPlayer(Point location);
+    Player createPlayer(Point location, int playerIndex);
 
     /**
      * Creates an enemy at a given position.
