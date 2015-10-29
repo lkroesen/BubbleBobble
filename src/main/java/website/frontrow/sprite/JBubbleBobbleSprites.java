@@ -83,6 +83,16 @@ public final class JBubbleBobbleSprites
     }
 
     /**
+     * Creates a map with a sprite for each direction for the second player.
+     * @return The map.
+     */
+    @SuppressWarnings("magicnumber")
+    public Map<Direction, Sprite> getPlayerTwoSprite()
+    {
+        return getDirectionalAnimatedSprite("/sprites/animated_player_two.png", 7);
+    }
+
+    /**
      * Creates a map with a sprite for each direction for the enemies.
      * @return The map.
      */
