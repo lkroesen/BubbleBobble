@@ -10,6 +10,7 @@ public interface UnitFactory
     /**
      * Creates a player at a given location.
      * @param location Starting location of this player.
+     * @param playerIndex The index of the player in the game.
      * @return A player
      */
     Player createPlayer(Point location, int playerIndex);

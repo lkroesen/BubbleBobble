@@ -14,16 +14,9 @@ public class BasicUnitFactory
     @Override
     public Player createPlayer(Point location, int playerIndex)
     {
-        Map<Direction, Sprite> playerSprite;
-        switch(playerIndex)
-        {
-            case 0:
-                playerSprite = JBubbleBobbleSprites.getInstance().getPlayerOneSprite();break;
-            case 1:
-                playerSprite = JBubbleBobbleSprites.getInstance().getPlayerTwoSprite();break;
-            default:
-                playerSprite = JBubbleBobbleSprites.getInstance().getPlayerOneSprite();
-        }
+        Map<Direction, Sprite> playerSprite
+                = JBubbleBobbleSprites.getInstance().getPlayerSprite(playerIndex);
+
         return new Player(location, playerSprite);
     }
 

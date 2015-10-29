@@ -74,22 +74,20 @@ public final class JBubbleBobbleSprites
 
     /**
      * Creates a map with a sprite for each direction for the player.
+     * @param index The index of the player in the game.
      * @return The map.
      */
     @SuppressWarnings("magicnumber")
-    public Map<Direction, Sprite> getPlayerOneSprite()
+    public Map<Direction, Sprite> getPlayerSprite(int index)
     {
-        return getDirectionalAnimatedSprite("/sprites/animated_player.png", 7);
-    }
-
-    /**
-     * Creates a map with a sprite for each direction for the second player.
-     * @return The map.
-     */
-    @SuppressWarnings("magicnumber")
-    public Map<Direction, Sprite> getPlayerTwoSprite()
-    {
-        return getDirectionalAnimatedSprite("/sprites/animated_player_two.png", 7);
+        switch(index)
+        {
+            case 0:
+                return getDirectionalAnimatedSprite("/sprites/animated_player.png", 7);
+            case 1:
+                return getDirectionalAnimatedSprite("/sprites/animated_player_two.png", 7);
+            default: return getDirectionalAnimatedSprite("/sprites/animated_player.png", 7);
+        }
     }
 
     /**
