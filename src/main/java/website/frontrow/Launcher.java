@@ -133,13 +133,15 @@ public class Launcher implements Logable
 
     private void loadSpecialScreens(Game game, MapParser parser) throws IOException
     {
-        InputStream map = getClass().getResourceAsStream("/game_over.txt");
-        Level gameOverLevel = parser.parseMap(map);
-        game.setGameOver(gameOverLevel);
+        try (InputStream map = getClass().getResourceAsStream("/game_over.txt");
+             InputStream winMap = getClass().getResourceAsStream("/game_won.txt"))
+        {
+            Level gameOverLevel = parser.parseMap(map);
+            game.setGameOver(gameOverLevel);
 
-        InputStream winMap = getClass().getResourceAsStream("/game_won.txt");
-        Level gameWonLevel = parser.parseMap(winMap);
-        game.setGameWon(gameWonLevel);
+            Level gameWonLevel = parser.parseMap(winMap);
+            game.setGameWon(gameWonLevel);
+        }
     }
 
     /**
