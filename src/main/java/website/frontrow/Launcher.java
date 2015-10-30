@@ -62,7 +62,6 @@ public class Launcher implements Logable
      * @param filename The file name of the level to load.
      * @param playerCount The amount of players in this game.
      */
-    @SuppressWarnings("methodlength")
     public void start(String[] filename, int playerCount)
     {
         addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + ".");
@@ -85,19 +84,12 @@ public class Launcher implements Logable
             Map<Integer, Action> keyMappings = createKeyMappings(game);
             JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
 
-            InputStream map = getClass().getResourceAsStream("/game_over.txt");
-    		Level gameOverLevel = parser.parseMap(map);
-    		game.setGameOver(gameOverLevel);
-
-            InputStream winMap = getClass().getResourceAsStream("/game_won.txt");
-            Level gameWonLevel = parser.parseMap(winMap);
-            game.setGameWon(gameWonLevel);
+            setWinAndLoseMaps(game, parser);
 
             game.setKeyListener(ui.getKeyListener());
 
             ui.start();
             startScheduler(game);
-
         }
         catch (IOException e)
         {
@@ -131,13 +123,13 @@ public class Launcher implements Logable
                 TimeUnit.MILLISECONDS);
     }
 
-	/**
-	 * Creates the key mappings for the game. 
-	 * Because it's for both single- and multiplayer games 
-	 * this method is rather long.
-	 * @param game The game to control with the keys.
-	 * @return The mapping.
-	 */
+    /**
+     * Creates the key mappings for the game. 
+     * Because it's for both single- and multiplayer games 
+     * this method is rather long.
+     * @param game The game to control with the keys.
+     * @return The mapping.
+     */
     @SuppressWarnings("checkstyle:methodlength")
     private Map<Integer, Action> createKeyMappings(Game game)
     {
@@ -286,5 +278,22 @@ public class Launcher implements Logable
     public void addToLog(String action)
     {
         Log.add(action);
+    }
+    
+    /**
+     * Sets the maps that are loaded at winning or losing the game.
+     * @param game Game
+     * @param parser MapParser
+     * @throws IOException
+     */
+    public void setWinAndLoseMaps(Game game, MapParser parser) throws IOException
+    {
+        InputStream map = getClass().getResourceAsStream("/game_over.txt");
+	    Level gameOverLevel = parser.parseMap(map);
+	    game.setGameOver(gameOverLevel);
+
+        InputStream winMap = getClass().getResourceAsStream("/game_won.txt");
+        Level gameWonLevel = parser.parseMap(winMap);
+        game.setGameWon(gameWonLevel);
     }
 }

@@ -35,6 +35,7 @@ public class Bubble
     private static final long TIME_FLOAT_UPWARDS = 50;
 
     @SuppressWarnings("checkstyle:magicnumber")
+    // Time to kill the bubble is dependent on the time it has float upwards before.
     private static final long TIME_KILL = 450 + TIME_FLOAT_UPWARDS;
 
     /**
