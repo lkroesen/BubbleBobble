@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import website.frontrow.util.keymap.KeyCodeKey;
+import website.frontrow.util.keymap.KeyRegistry;
 
 /**
  * The key listener makes sure that when certain keys are pressed,
@@ -19,18 +21,18 @@ public class JBubbleKeyListener implements KeyListener
     /**
      * The mappings of keyCode to action.
      */
-    private final Map<Integer, Action> mapping;
+    private final KeyRegistry keyRegistry;
 
     private Map<Integer, Boolean> pressed = new HashMap<>();
     private Set<Integer> pressedKeys = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
     /**
      * Creates a JBubbleKeyListener.
-     * @param mapping The mapping to use for the keylistener.
+     * @param keyRegistry The mapping to use for the keylistener.
      */
-    public JBubbleKeyListener(Map<Integer, Action> mapping)
+    public JBubbleKeyListener(KeyRegistry keyRegistry)
     {
-        this.mapping = mapping;
+        this.keyRegistry = keyRegistry;
     }
 
     /**
@@ -39,11 +41,6 @@ public class JBubbleKeyListener implements KeyListener
      */
     public void keyPressed(KeyEvent keyEvent)
     {
-        if (mapping.get(keyEvent.getKeyCode()) == null)
-        {
-            return;
-        }
-
         if(pressed.get(keyEvent.getKeyCode()) == null || !pressed.get(keyEvent.getKeyCode()))
         {
             pressed.put(keyEvent.getKeyCode(), true);
@@ -74,20 +71,16 @@ public class JBubbleKeyListener implements KeyListener
 
     /**
      * Perform the actions of all the keys which are being pressed.
+     * And remove them in certain cases.
      */
     public void update()
     {
-        pressedKeys.forEach(keyCode -> mapping.get(keyCode).doAction());
-        cleanList();
-    }
-    
-    /**
-     * Clean jumps and bubbles out of the list so we don't spam them.
-     */
-    public void cleanList()
-    {
-        pressedKeys.remove(KeyEvent.VK_SPACE);
-        pressedKeys.remove(KeyEvent.VK_Z);
+        pressedKeys.forEach(keyCode -> {
+            if(keyRegistry.handle(new KeyCodeKey(keyCode)))
+            {
+                pressedKeys.remove(keyCode);
+            }
+        });
     }
 
 }
