@@ -1,5 +1,7 @@
 package website.frontrow.util.keymap;
 
+import java.awt.event.KeyEvent;
+
 /**
  * A simple charCode key implementation.
  */
@@ -26,6 +28,12 @@ public class KeyCodeKey extends Key
     public Integer getKeyCode()
     {
         return keyCode;
+    }
+
+    @Override
+    public String toString()
+    {
+        return KeyEvent.getKeyText(keyCode);
     }
 
     @Override

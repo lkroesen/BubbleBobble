@@ -22,6 +22,15 @@ public class SingleKeyAction
         this.reset = reset;
     }
 
+    /**
+     * Get the key this action is currently bound to.
+     * @return Key this action is bound to.
+     */
+    public Key getCurrentKey()
+    {
+        return currentKey;
+    }
+
     @Override
     protected void unbind(Key key, KeyRegistry registry)
     {

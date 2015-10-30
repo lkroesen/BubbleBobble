@@ -10,10 +10,10 @@ import website.frontrow.util.keymap.SingleKeyAction;
  */
 public class PlayerActions
 {
-    private KeyAction jump;
-    private KeyAction left;
-    private KeyAction right;
-    private KeyAction shoot;
+    private SingleKeyAction jump;
+    private SingleKeyAction left;
+    private SingleKeyAction right;
+    private SingleKeyAction shoot;
 
     /**
      * Create a PlayerActions object.
@@ -34,7 +34,7 @@ public class PlayerActions
      * (For example to rebind)
      * @return The jump action.
      */
-    public KeyAction getJump()
+    public SingleKeyAction getJump()
     {
         return jump;
     }
@@ -44,7 +44,7 @@ public class PlayerActions
      * (For example to rebind)
      * @return The go left action.
      */
-    public KeyAction getLeft()
+    public SingleKeyAction getLeft()
     {
         return left;
     }
@@ -54,7 +54,7 @@ public class PlayerActions
      * (For example to rebind)
      * @return The go right action.
      */
-    public KeyAction getRight()
+    public SingleKeyAction getRight()
     {
         return right;
     }
@@ -64,7 +64,7 @@ public class PlayerActions
      * (For example to rebind)
      * @return The shoot action.
      */
-    public KeyAction getShoot()
+    public SingleKeyAction getShoot()
     {
         return shoot;
     }

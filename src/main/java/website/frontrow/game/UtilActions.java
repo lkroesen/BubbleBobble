@@ -11,10 +11,10 @@ import website.frontrow.util.keymap.SingleKeyAction;
  */
 public class UtilActions
 {
-    private KeyAction volumeUp;
-    private KeyAction volumeDown;
-    private KeyAction dumpLog;
-    private KeyAction toggleLog;
+    private SingleKeyAction volumeUp;
+    private SingleKeyAction volumeDown;
+    private SingleKeyAction dumpLog;
+    private SingleKeyAction toggleLog;
 
     /**
      * Create util actions.
@@ -31,7 +31,7 @@ public class UtilActions
      * Get the action for volume up.
      * @return KeyAction for volume up.
      */
-    public KeyAction getVolumeUp()
+    public SingleKeyAction getVolumeUp()
     {
         return volumeUp;
     }
@@ -40,7 +40,7 @@ public class UtilActions
      * Get the action for volume down.
      * @return KeyAction for volume down.
      */
-    public KeyAction getVolumeDown()
+    public SingleKeyAction getVolumeDown()
     {
         return volumeDown;
     }
@@ -49,7 +49,7 @@ public class UtilActions
      * Get the action for dumping a log.
      * @return KeyAction for dumping a log.
      */
-    public KeyAction getDumpLog()
+    public SingleKeyAction getDumpLog()
     {
         return dumpLog;
     }
@@ -58,7 +58,7 @@ public class UtilActions
      * Get the action for toggling the printing.
      * @return KeyAction for toggling printing the log.
      */
-    public KeyAction getToggleLog()
+    public SingleKeyAction getToggleLog()
     {
         return toggleLog;
     }

@@ -5,6 +5,8 @@ package website.frontrow.util.keymap;
  */
 public abstract class Key
 {
+    @Override
+    public abstract String toString();
 
     @Override
     public abstract boolean equals(Object other);

@@ -65,7 +65,7 @@ public class JBubbleBobbleUITest
     @Test
     public void testConstructor()
     {
-        JBubbleBobbleUI jBubbleBobbleUI = new JBubbleBobbleUI(game, mockedRegistry);
+        JBubbleBobbleUI jBubbleBobbleUI = new JBubbleBobbleUI(game, mockedRegistry, null);
         assertNotNull(jBubbleBobbleUI);
     }
 }
