@@ -79,7 +79,6 @@ public class Launcher implements Logable
             addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + " succeeded.");
 
             Game game = new Game(levelList, unitFactory, playerCount);
-
             JBubbleBobbleUI ui = setUpUI(game, unitFactory);
             loadSpecialScreens(game, parser);
 
