@@ -22,9 +22,9 @@ public class PlayingFieldPanel
         extends JPanel
         implements Logable
 {
-    private static final int BLOCK_SIZE = 32; //Pixels
+    private static final int BLOCK_SIZE = 32;
 
-    private static final int BORDER_WIDTH = 20; //Pixels
+    private static final int BORDER_WIDTH = 20;
 
     private Game game;
 

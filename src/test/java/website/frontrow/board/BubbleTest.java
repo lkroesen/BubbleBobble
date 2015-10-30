@@ -184,7 +184,6 @@ public class BubbleTest
         Enemy enemy = mock(Enemy.class);
         enemy.setLocation(bubble.getLocation());
     	
-        // The bubble does NOT capture the enemy.
         assertEquals(bubble.getContains(), null);
     }
 

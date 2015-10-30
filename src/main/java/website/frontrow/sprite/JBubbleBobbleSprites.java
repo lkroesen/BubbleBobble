@@ -18,7 +18,6 @@ public final class JBubbleBobbleSprites
      */
     private JBubbleBobbleSprites()
     {
-
     }
 
     /**
@@ -39,7 +38,7 @@ public final class JBubbleBobbleSprites
     /**
      * The size of a single sprite frame in pixels.
      */
-    private static final int SPRITE_SIZE = 16; //pixels;
+    private static final int SPRITE_SIZE = 16;
 
     private static final int FRAMES_DELAY = 300;
 
