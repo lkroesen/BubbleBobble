@@ -64,7 +64,7 @@ public class JBubbleBobbleSpritesTest
     @Test
     public void testGetDirectionalPlayerSprite()
     {
-        directionalSprite = jBubbleBobbleSprites.getPlayerSprite();
+        directionalSprite = jBubbleBobbleSprites.getPlayerSprite(0);
         assertEquals(directionalSprite.size(), 4);
     }
 

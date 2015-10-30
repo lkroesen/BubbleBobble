@@ -115,7 +115,6 @@ public class EnemyTest
 
         testMover.tick(emptyLevel);
         
-        //An enemy might move
         assertEquals(0.25, testMover.getLocation().getX(), 2);
     }
     
@@ -180,8 +179,6 @@ public class EnemyTest
     public void testGetRandom()
     {
         Enemy enemy = new Enemy(super.FIRST_TEST_POINT, null);
-        // Not assertEquals, because that apparently doesn't 
-        // accept two floats.
         assertTrue(enemy.getRandom() == 1.00f);
     }
 	
@@ -193,8 +190,6 @@ public class EnemyTest
     public void testSetRandom()
     {
         Enemy enemy = new Enemy(super.FIRST_TEST_POINT, null);
-        // Not assertEquals, because that apparently doesn't 
-        // accept two floats.
         assertTrue(enemy.getRandom() == 1.00f);
 
         enemy.setRandom(2.00f);

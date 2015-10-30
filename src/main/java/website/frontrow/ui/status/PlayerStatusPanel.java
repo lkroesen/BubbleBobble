@@ -120,20 +120,15 @@ public class PlayerStatusPanel
     @Override
     public void playerDied(Player player)
     {
-        // Nothing yet.
     }
 
     @Override
     public void invincible(Player player)
     {
-        // Nothing yet.
-        // Maybe start flashing hearts.
     }
 
     @Override
     public void notInvincible(Player player)
     {
-        // Nothing yet.
-        // Maybe stop flashing hearts.
     }
 }

@@ -2,6 +2,7 @@ package website.frontrow.board;
 
 import website.frontrow.board.observer.PlayerObserver;
 import website.frontrow.board.observer.ScoreReceiver;
+import website.frontrow.game.Game;
 import website.frontrow.game.GameConstants;
 import website.frontrow.level.Level;
 import website.frontrow.logger.Log;
@@ -56,6 +57,11 @@ public class Player
         ticksLeft = 0;
         lives = GameConstants.DEFAULT_AMOUNT_OF_LIVES;
         score = 0;
+
+        observers.forEach((o) -> {
+            o.livesChanged(this);
+            o.scoreChanged(this);
+        });
     }
 
     /**
@@ -193,7 +199,29 @@ public class Player
         observers.forEach((o) -> o.livesChanged(this));
         addToLog("[PLAYER]\t Player earned a life, total lives is now: " + lives);
     }
-    
+
+    /**
+     * Shoot a bubble.
+     * @param game The game in which to shoot.
+     * @param unitFactory The unit factory with which to generate a bubble.
+     */
+    public void shoot(Game game, UnitFactory unitFactory)
+    {
+        if(game.isRunning())
+        {
+            if(!this.isAlive())
+            {
+                return;
+            }
+            game.getLevel().addUnit(
+                    unitFactory.createBubble(this.getLocation(),
+                            new Point(this.getDirection().getDeltaX()
+                                      *
+                                      Bubble.BUBBLE_STARTING_SPEED, 0),
+                            this));
+        }
+    }
+
     /**
      * Returns whether or not the player still has lives left.
      * @return boolean
@@ -238,4 +266,5 @@ public class Player
     {
         return observers;
     }
+
 }

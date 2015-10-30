@@ -24,8 +24,8 @@ import static org.mockito.Mockito.verify;
 public class BubbleTest
         extends MoverTest
 {
-	private static final int TIME_FLOAT_UPWARDS = 50;
-	private static final int TIME_ALMOST_KILL = 499;
+	private static final int TIME_FLOAT_UPWARDS = 80;
+	private static final int TIME_ALMOST_KILL = 529;
 	private static final Point FLOAT_UP_MOTION = new Point(0, -2);
 
     /**
@@ -184,7 +184,6 @@ public class BubbleTest
         Enemy enemy = mock(Enemy.class);
         enemy.setLocation(bubble.getLocation());
     	
-        // The bubble does NOT capture the enemy.
         assertEquals(bubble.getContains(), null);
     }
 
