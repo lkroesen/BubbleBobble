@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JToggleButton;
 import website.frontrow.util.keymap.Key;
+import website.frontrow.util.keymap.KeyActionObserver;
 import website.frontrow.util.keymap.KeyCodeKey;
 import website.frontrow.util.keymap.KeyRegistry;
 import website.frontrow.util.keymap.SingleKeyAction;
@@ -11,7 +12,7 @@ import website.frontrow.util.keymap.SingleKeyAction;
 /**
  * A button that rebinds keys.
  */
-public class SingleKeyRebindButton extends JToggleButton implements KeyListener
+public class SingleKeyRebindButton extends JToggleButton implements KeyListener, KeyActionObserver
 {
     private KeyRegistry registry;
     private SingleKeyAction action;
@@ -26,18 +27,15 @@ public class SingleKeyRebindButton extends JToggleButton implements KeyListener
         this.registry = registry;
         this.action = action;
         updateText();
+        action.registerObserver(this);
         this.addKeyListener(this);
     }
 
     private void rebind(Key key)
     {
-        if(key instanceof KeyCodeKey
-           &&
-           ((KeyCodeKey) key).getKeyCode().equals(KeyEvent.VK_ESCAPE))
-        {
-            setSelected(false);
-        }
-        else
+        if (!(key instanceof KeyCodeKey
+              &&
+             ((KeyCodeKey) key).getKeyCode().equals(KeyEvent.VK_ESCAPE)))
         {
             registry.register(key, action);
         }
@@ -62,10 +60,15 @@ public class SingleKeyRebindButton extends JToggleButton implements KeyListener
     {
         if(isSelected())
         {
-            this.rebind(new KeyCodeKey(e.getKeyCode()));
             setSelected(false);
-            updateText();
+            this.rebind(new KeyCodeKey(e.getKeyCode()));
         }
+    }
+
+    @Override
+    public void onKeyChange(Key newKey)
+    {
+        updateText();
     }
 
     @Override
@@ -77,4 +80,5 @@ public class SingleKeyRebindButton extends JToggleButton implements KeyListener
     public void keyReleased(KeyEvent e)
     {
     }
+
 }
