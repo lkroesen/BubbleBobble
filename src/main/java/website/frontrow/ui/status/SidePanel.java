@@ -13,6 +13,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import java.util.HashMap;
 import java.util.Map;
+import website.frontrow.ui.keybinding.RebindFrame;
 
 /**
  * The side panel for the ui.
@@ -24,13 +25,14 @@ public class SidePanel
     /**
      * Creates a sidepanel to contain the score, buttons and other statistics.
      * @param game The game to display the statistics of.
+     * @param rebindFrame keybinding menu to show.
      */
-    public SidePanel(Game game)
+    public SidePanel(Game game, RebindFrame rebindFrame)
     {
         super();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        add(new ButtonPanel(createButtonMappings(game)));
+        add(new ButtonPanel(createButtonMappings(game, rebindFrame)));
         add(new StatusLabelPanel(game));
 
         add(new StatusPanel(game.getPlayers()));
@@ -42,9 +44,10 @@ public class SidePanel
     /**
      * Create the button mappings for this sidepanel.
      * @param game The current game
+     * @param rebindFrame The key binding menu to show.
      * @return The button mappings.
      */
-    public Map<String, Action> createButtonMappings(Game game)
+    public Map<String, Action> createButtonMappings(Game game, RebindFrame rebindFrame)
     {
         Map<String, Action> buttonMappings = new HashMap<>();
 
@@ -58,7 +61,7 @@ public class SidePanel
             else
             {
                 game.start();
-
+                MusicPlayer.getInstance().stop();
                 MusicPlayer.getInstance().setLooping(true);
                 MusicPlayer.getInstance().selectSong(Songs.QUEST_BEGINS);
             }
@@ -66,6 +69,10 @@ public class SidePanel
         buttonMappings.put("Restart", () ->
         {
             game.restart();
+        });
+        buttonMappings.put("Keybindings", () ->
+        {
+            rebindFrame.setVisible(true);
         });
 
         return buttonMappings;

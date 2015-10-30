@@ -14,7 +14,7 @@ import website.frontrow.util.Grid;
 import website.frontrow.util.Point;
 
 import java.util.ArrayList;
-import java.util.Map;
+import website.frontrow.util.keymap.KeyRegistry;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -24,7 +24,7 @@ import static org.junit.Assert.assertNotNull;
 public class JBubbleBobbleUITest
 {
     @Mock
-    private Map<Integer, Action> mockedMap;
+    private KeyRegistry mockedRegistry;
 
     private Level level;
     private Game game;
@@ -65,7 +65,7 @@ public class JBubbleBobbleUITest
     @Test
     public void testConstructor()
     {
-        JBubbleBobbleUI jBubbleBobbleUI = new JBubbleBobbleUI(game, mockedMap);
+        JBubbleBobbleUI jBubbleBobbleUI = new JBubbleBobbleUI(game, mockedRegistry, null);
         assertNotNull(jBubbleBobbleUI);
     }
 }

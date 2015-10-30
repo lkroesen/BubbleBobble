@@ -4,9 +4,8 @@ import website.frontrow.game.Game;
 import website.frontrow.game.GameConstants;
 import website.frontrow.logger.Log;
 import website.frontrow.logger.Logable;
+import website.frontrow.ui.keybinding.RebindFrame;
 import website.frontrow.ui.status.SidePanel;
-
-import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
@@ -18,6 +17,7 @@ import java.awt.BorderLayout;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import website.frontrow.util.keymap.KeyRegistry;
 
 /**
  * The main ui for the game.
@@ -33,16 +33,17 @@ public class JBubbleBobbleUI
     /**
      * Creates a JBubble Bobble UI.
      * @param game The game to display in the ui.
-     * @param integerActionMap The key listener mapping.
+     * @param keyRegistry The key registry.
+     * @param rebindFrame The rebinding window.
      */
-    public JBubbleBobbleUI(Game game, Map<Integer, Action> integerActionMap)
+    public JBubbleBobbleUI(Game game, KeyRegistry keyRegistry, RebindFrame rebindFrame)
     {
         super("Bubble Bobble");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setFocusable(true);
 
-        this.keyListener = new JBubbleKeyListener(integerActionMap);
+        this.keyListener = new JBubbleKeyListener(keyRegistry);
         addKeyListener(this.keyListener);
 
         Container contentPanel = getContentPane();
@@ -50,7 +51,7 @@ public class JBubbleBobbleUI
         contentPanel.setLayout(new BorderLayout());
 
         playingFieldPanel = new PlayingFieldPanel(game);
-        SidePanel sidePanel = new SidePanel(game);
+        SidePanel sidePanel = new SidePanel(game, rebindFrame);
 
         contentPanel.add(playingFieldPanel, BorderLayout.LINE_START);
         contentPanel.add(sidePanel, BorderLayout.LINE_END);

@@ -1,34 +1,32 @@
 package website.frontrow;
 
+import java.util.List;
 import website.frontrow.board.BasicUnitFactory;
-import website.frontrow.board.Bubble;
-import website.frontrow.board.Player;
 import website.frontrow.board.UnitFactory;
 import website.frontrow.game.Game;
+import website.frontrow.game.PlayerActions;
+import website.frontrow.game.UtilActions;
 import website.frontrow.level.Level;
 import website.frontrow.level.MapParser;
 import website.frontrow.logger.DumpLog;
 import website.frontrow.logger.Log;
 import website.frontrow.music.Songs;
-import website.frontrow.sprite.JBubbleBobbleSprites;
-import website.frontrow.ui.Action;
 import website.frontrow.ui.JBubbleBobbleUI;
 import website.frontrow.ui.ModeMenu;
 import website.frontrow.game.GameConstants;
-import website.frontrow.util.Point;
 import website.frontrow.logger.Logable;
 import website.frontrow.music.MusicPlayer;
 
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import website.frontrow.ui.keybinding.RebindFrame;
+import website.frontrow.util.keymap.KeyRegistry;
+import website.frontrow.util.keymap.KeyRegistryHandler;
 
 /**
  * Instantiates the game so it can be played.
@@ -59,41 +57,38 @@ public class Launcher implements Logable
 
     /**
      * Starts the game.
+     *
      * @param filename The file name of the level to load.
      * @param playerCount The amount of players in this game.
      */
     public void start(String[] filename, int playerCount)
     {
-        addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + ".");
-
         try
         {
-            MapParser parser = new MapParser(new BasicUnitFactory());
-            ArrayList<Level> levelList = new ArrayList<>();
             UnitFactory unitFactory = new BasicUnitFactory();
+            MapParser parser = new MapParser(unitFactory);
+            ArrayList<Level> levelList = new ArrayList<>();
+            addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + ".");
             for(String levelFileName : filename)
             {
                 InputStream map = getClass().getResourceAsStream(levelFileName);
                 Level level = parser.parseMap(map);
                 levelList.add(level);
             }
-            
+
             addToLog("[LAUNCHER]\tLoading files: " + Arrays.toString(filename) + " succeeded.");
 
             Game game = new Game(levelList, unitFactory, playerCount);
-            Map<Integer, Action> keyMappings = createKeyMappings(game);
-            JBubbleBobbleUI ui = new JBubbleBobbleUI(game, keyMappings);
 
-            setWinAndLoseMaps(game, parser);
-
-            game.setKeyListener(ui.getKeyListener());
+            JBubbleBobbleUI ui = setUpUI(game, unitFactory);
+            loadSpecialScreens(game, parser);
 
             ui.start();
             startScheduler(game);
         }
         catch (IOException e)
         {
-            addToLog("[ERROR]\tLoading file: " + Arrays.toString(filename) + " failed.");
+            addToLog("[ERROR]\tLaunching the game failed.");
             DumpLog.getInstance().createDump();
             throw new RuntimeException();
         }
@@ -123,151 +118,33 @@ public class Launcher implements Logable
                 TimeUnit.MILLISECONDS);
     }
 
-    /**
-     * Creates the key mappings for the game. 
-     * Because it's for both single- and multiplayer games 
-     * this method is rather long.
-     * @param game The game to control with the keys.
-     * @return The mapping.
-     */
-    @SuppressWarnings("checkstyle:methodlength")
-    private Map<Integer, Action> createKeyMappings(Game game)
+    private JBubbleBobbleUI setUpUI(Game game, UnitFactory unitFactory)
     {
-        Map<Integer, Action> map = new HashMap<>();
+        List<PlayerActions> playerActions = new ArrayList<>();
 
-        if(game.getPlayers().size() == 1)
+        game.getPlayers().forEach(
+                player -> playerActions.add(new PlayerActions(player, game, unitFactory))
+        );
+        UtilActions utilActions = new UtilActions();
+        KeyRegistry keyRegistry
+                = KeyRegistryHandler.createKeyBindings(playerActions, utilActions);
+        RebindFrame rebindFrame = new RebindFrame(keyRegistry, playerActions, utilActions);
+        JBubbleBobbleUI ui =  new JBubbleBobbleUI(game, keyRegistry, rebindFrame);
+        game.setKeyListener(ui.getKeyListener());
+        return ui;
+    }
+
+    private void loadSpecialScreens(Game game, MapParser parser) throws IOException
+    {
+        try (InputStream map = getClass().getResourceAsStream("/game_over.txt");
+             InputStream winMap = getClass().getResourceAsStream("/game_won.txt"))
         {
-            map.put(KeyEvent.VK_LEFT, () ->
-            {
-                addToLog("[KEY]\t< \'<-\' > Pressed.");
-                game.getPlayers().get(0).goLeft();
-            });
+            Level gameOverLevel = parser.parseMap(map);
+            game.setGameOver(gameOverLevel);
 
-            map.put(KeyEvent.VK_RIGHT, () ->
-            {
-                addToLog("[KEY]\t< \'->\' > Pressed.");
-                game.getPlayers().get(0).goRight();
-            });
-
-            map.put(KeyEvent.VK_SPACE, () ->
-            {
-                addToLog("[KEY]\t< \' \' > Pressed.");
-                game.getPlayers().get(0).jump();
-            });
-
-            map.put(KeyEvent.VK_Z, () ->
-            {
-                addToLog("[KEY]\t< \'Z\' > Pressed.");
-
-                if(game.isRunning())
-                {
-                    Player player = game.getPlayers().get(0);
-                    if(!player.isAlive())
-                    {
-                        return;
-                    }
-                    Bubble bubble = new Bubble(player.getLocation(),
-                            new Point(player.getDirection().getDeltaX() * 4, 0),
-                            JBubbleBobbleSprites.getInstance().getBubbleSprite(),
-                            player);
-
-                    game.getLevel().addUnit(bubble);
-                }
-            });
+            Level gameWonLevel = parser.parseMap(winMap);
+            game.setGameWon(gameWonLevel);
         }
-        else
-        {
-        	map.put(KeyEvent.VK_A, () ->
-            {
-                addToLog("[KEY]\t< \'<-\' > Pressed.");
-                game.getPlayers().get(0).goLeft();
-            });
-
-            map.put(KeyEvent.VK_D, () ->
-            {
-                addToLog("[KEY]\t< \'->\' > Pressed.");
-                game.getPlayers().get(0).goRight();
-            });
-
-            map.put(KeyEvent.VK_W, () ->
-            {
-                addToLog("[KEY]\t< \' \' > Pressed.");
-                game.getPlayers().get(0).jump();
-            });
-
-            map.put(KeyEvent.VK_SPACE, () ->
-            {
-                addToLog("[KEY]\t< \'Z\' > Pressed.");
-
-                if(game.isRunning())
-                {
-                    Player player = game.getPlayers().get(0);
-                    if(!player.isAlive())
-                    {
-                        return;
-                    }
-                    game.getLevel().addUnit(
-                            new Bubble(player.getLocation(),
-                                    new Point(player.getDirection().getDeltaX() * 4, 0),
-                                    JBubbleBobbleSprites.getInstance().getBubbleSprite()));
-                }
-            });
-
-            map.put(KeyEvent.VK_LEFT, () ->
-            {
-                addToLog("[KEY]\t< \'<-\' > Pressed.");
-                game.getPlayers().get(1).goLeft();
-            });
-
-            map.put(KeyEvent.VK_RIGHT, () ->
-            {
-                addToLog("[KEY]\t< \'->\' > Pressed.");
-                game.getPlayers().get(1).goRight();
-            });
-
-            map.put(KeyEvent.VK_UP, () ->
-            {
-                addToLog("[KEY]\t< \' \' > Pressed.");
-                game.getPlayers().get(1).jump();
-            });
-
-            map.put(KeyEvent.VK_CONTROL, () ->
-            {
-                addToLog("[KEY]\t< \'Z\' > Pressed.");
-
-                if(game.isRunning())
-                {
-                    Player player = game.getPlayers().get(1);
-                    if(!player.isAlive())
-                    {
-                        return;
-                    }
-                    game.getLevel().addUnit(
-                            new Bubble(player.getLocation(),
-                                    new Point(player.getDirection().getDeltaX() * 4, 0),
-                                    JBubbleBobbleSprites.getInstance().getBubbleSprite()));
-                }
-            });
-        }
-
-        map.put(KeyEvent.VK_MINUS, () ->
-        {
-            addToLog("[KEY]\t< \'-\' > Pressed.");
-            MusicPlayer.getInstance().volumeAdjust(-1.0d);
-        });
-
-        map.put(KeyEvent.VK_EQUALS, () ->
-        {
-            addToLog("[KEY]\t< \'=\' > Pressed.");
-            MusicPlayer.getInstance().volumeAdjust(1.0d);
-        });
-
-        map.put(KeyEvent.VK_F1, () ->
-        {
-            addToLog("[KEY]\t< F1 > Pressed.");
-            DumpLog.getInstance().createDump();
-        });
-        return map;
     }
 
     /**
@@ -278,22 +155,5 @@ public class Launcher implements Logable
     public void addToLog(String action)
     {
         Log.add(action);
-    }
-    
-    /**
-     * Sets the maps that are loaded at winning or losing the game.
-     * @param game Game
-     * @param parser MapParser
-     * @throws IOException
-     */
-    public void setWinAndLoseMaps(Game game, MapParser parser) throws IOException
-    {
-        InputStream map = getClass().getResourceAsStream("/game_over.txt");
-	    Level gameOverLevel = parser.parseMap(map);
-	    game.setGameOver(gameOverLevel);
-
-        InputStream winMap = getClass().getResourceAsStream("/game_won.txt");
-        Level gameWonLevel = parser.parseMap(winMap);
-        game.setGameWon(gameWonLevel);
     }
 }

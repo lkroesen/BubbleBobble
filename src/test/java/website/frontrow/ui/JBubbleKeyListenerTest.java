@@ -8,10 +8,11 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.awt.event.KeyEvent;
-import java.util.HashMap;
-import java.util.Map;
+import website.frontrow.util.keymap.KeyAction;
+import website.frontrow.util.keymap.KeyCodeKey;
+import website.frontrow.util.keymap.KeyRegistry;
 
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -22,7 +23,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class JBubbleKeyListenerTest
 {
-    private Map<Integer, Action> mapping;
+    private KeyRegistry keyRegistry;
 
     @Mock
     private KeyEvent event;
@@ -33,7 +34,7 @@ public class JBubbleKeyListenerTest
     @Before
     public void setUp()
     {
-        mapping = new HashMap<>();
+        keyRegistry = new KeyRegistry();
     }
 
     /**
@@ -42,7 +43,7 @@ public class JBubbleKeyListenerTest
     @After
     public void tearDown()
     {
-        mapping = null;
+        keyRegistry = null;
     }
 
     /**
@@ -51,17 +52,16 @@ public class JBubbleKeyListenerTest
     @Test
     public void testKeyPressed()
     {
-        Action action = mock(Action.class);
-        mapping.put(KeyEvent.VK_ENTER, action);
-
-        JBubbleKeyListener listener = new JBubbleKeyListener(mapping);
+        KeyAction action = mock(KeyAction.class);
+        keyRegistry.register(new KeyCodeKey(KeyEvent.VK_ENTER), action);
+        JBubbleKeyListener listener = new JBubbleKeyListener(keyRegistry);
 
         when(event.getKeyCode()).thenReturn(KeyEvent.VK_ENTER);
 
         listener.keyPressed(event);
         listener.update();
         
-        verify(action).doAction();
+        verify(action).execute();
     }
 
     /**
@@ -70,13 +70,14 @@ public class JBubbleKeyListenerTest
     @Test
     public void testKeyPressedUnknownKey()
     {
-        Action action = mock(Action.class);
-        mapping.put(KeyEvent.VK_ENTER, action);
-        JBubbleKeyListener listener = new JBubbleKeyListener(mapping);
+        KeyAction action = mock(KeyAction.class);
+        keyRegistry.register(new KeyCodeKey(KeyEvent.VK_ENTER), action);
+        JBubbleKeyListener listener = new JBubbleKeyListener(keyRegistry);
 
         when(event.getKeyCode()).thenReturn(KeyEvent.VK_DOWN);
+
         listener.keyPressed(event);
-        verifyZeroInteractions(action);
+        verify(action, never()).execute();
     }
 
     /**
@@ -85,14 +86,14 @@ public class JBubbleKeyListenerTest
     @Test
     public void testKeyTyped()
     {
-        Action action = mock(Action.class);
-        mapping.put(KeyEvent.VK_ENTER, action);
-        JBubbleKeyListener listener = new JBubbleKeyListener(mapping);
+        KeyAction action = mock(KeyAction.class);
+        keyRegistry.register(new KeyCodeKey(KeyEvent.VK_ENTER), action);
+        JBubbleKeyListener listener = new JBubbleKeyListener(keyRegistry);
 
         when(event.getKeyCode()).thenReturn(KeyEvent.VK_ENTER);
         listener.keyTyped(event);
 
-        verifyZeroInteractions(action);
+        verify(action, never()).execute();
     }
 
     /**
@@ -101,13 +102,13 @@ public class JBubbleKeyListenerTest
     @Test
     public void testKeyReleased()
     {
-        Action action = mock(Action.class);
-        mapping.put(KeyEvent.VK_ENTER, action);
-        JBubbleKeyListener listener = new JBubbleKeyListener(mapping);
+        KeyAction action = mock(KeyAction.class);
+        keyRegistry.register(new KeyCodeKey(KeyEvent.VK_ENTER), action);
+        JBubbleKeyListener listener = new JBubbleKeyListener(keyRegistry);
 
         when(event.getKeyCode()).thenReturn(KeyEvent.VK_ENTER);
         listener.keyReleased(event);
 
-        verifyZeroInteractions(action);
+        verify(action, never()).execute();
     }
 }

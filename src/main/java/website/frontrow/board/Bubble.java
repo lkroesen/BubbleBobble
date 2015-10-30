@@ -247,4 +247,9 @@ public class Bubble
     		addToLog("[BUBBLE]\t was empty and popped");
     	}
     }
+
+    /**
+     * The speed at which a bubble starts when fired.
+     */
+    public static final int BUBBLE_STARTING_SPEED = 4;
 }
