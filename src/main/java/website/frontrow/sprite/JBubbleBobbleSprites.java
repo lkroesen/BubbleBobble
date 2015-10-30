@@ -57,7 +57,7 @@ public final class JBubbleBobbleSprites
      * The bubble sprite.
      * @return The sprite.
      */
-
+    @SuppressWarnings("magicnumber") // number of frames
     public Map<Direction, Sprite> getBubbleSprite()
     {
         return getDirectionalAnimatedSprite("/sprites/animated_projectile.png", 12);
@@ -77,7 +77,7 @@ public final class JBubbleBobbleSprites
      * @param index The index of the player in the game.
      * @return The map.
      */
-    @SuppressWarnings("magicnumber")
+    @SuppressWarnings("magicnumber") // number of frames
     public Map<Direction, Sprite> getPlayerSprite(int index)
     {
         switch(index)
@@ -94,6 +94,7 @@ public final class JBubbleBobbleSprites
      * Creates a map with a sprite for each direction for the enemies.
      * @return The map.
      */
+    @SuppressWarnings("magicnumber") // number of frames
     public Map<Direction, Sprite> getEnemySprite()
     {
         return getDirectionalAnimatedSprite("/sprites/animated_zen.png", 4);
@@ -103,6 +104,7 @@ public final class JBubbleBobbleSprites
      * Creates a map with a sprite for each direction for captured enemies.
      * @return The map.
      */
+    @SuppressWarnings("magicnumber") // number of frames
     public Map<Direction, Sprite> getCapturedEnemySprite()
     {
         // TODO: Fix Frames for an animation of bubble.
@@ -114,6 +116,7 @@ public final class JBubbleBobbleSprites
      * @param resource The resource to cut the sprites from.
      * @return The map with sprites for all directions.
      */
+    @SuppressWarnings("unused") // We might want to use this in the future for non animated sprites.
     private Map<Direction, Sprite> getDirectionalSprite(String resource)
     {
         Sprite compoundSprites = loadSprite(resource);
