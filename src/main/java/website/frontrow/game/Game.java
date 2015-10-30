@@ -57,7 +57,7 @@ public class Game
         this.levelPack = levels;
         for(int i = 0; i < playerCount; i++)
         {
-            players.add(unitFactory.createPlayer(new Point(0, 0)));
+            players.add(unitFactory.createPlayer(new Point(0, 0), i));
         }
         loadCurrentLevel();
 

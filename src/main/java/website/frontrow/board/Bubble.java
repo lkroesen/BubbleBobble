@@ -32,7 +32,7 @@ public class Bubble
     
     private long timeEmpty = 0;
     
-    private static final long TIME_FLOAT_UPWARDS = 50;
+    private static final long TIME_FLOAT_UPWARDS = 80;
 
     @SuppressWarnings("checkstyle:magicnumber")
     // Time to kill the bubble is dependent on the time it has float upwards before.
@@ -47,6 +47,8 @@ public class Bubble
      * The receiver of the score when the bubble kills something.
      */
     private ScoreReceiver scoreReceiver;
+
+    private Map<Direction, Sprite> capturedSprite;
 
     /**
      * Constructor of the Bubble Unit.
@@ -70,6 +72,7 @@ public class Bubble
     {
         super(true, position, motion, sprites, BubbleGravityBehaviour.getInstance());
         this.scoreReceiver = creator;
+        this.capturedSprite = JBubbleBobbleSprites.getInstance().getCapturedEnemySprite();
         addToLog("[BUBBLE]\t[SPAWN]\tBubble created.");
     }
 
@@ -149,16 +152,13 @@ public class Bubble
     {
         if (contains != null)
         {
-            return JBubbleBobbleSprites.getInstance().getCapturedEnemySprite().get(getDirection());
+            return capturedSprite.get(getDirection());
         }
-        else if (hit)
+        if(this.getMotion().getY() < 0)
         {
-            return JBubbleBobbleSprites.getInstance().getBubbleSprite().get(Direction.UP);
+            return super.getSprites().get(Direction.UP);
         }
-        else
-        {
-            return JBubbleBobbleSprites.getInstance().getBubbleSprite().get(getDirection());
-        }
+        return super.getSprite();
     }
 
     @Override

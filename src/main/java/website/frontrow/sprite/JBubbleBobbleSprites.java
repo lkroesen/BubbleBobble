@@ -56,10 +56,10 @@ public final class JBubbleBobbleSprites
      * The bubble sprite.
      * @return The sprite.
      */
-
+    @SuppressWarnings("magicnumber") // number of frames
     public Map<Direction, Sprite> getBubbleSprite()
     {
-        return getDirectionalSprite("/sprites/bubble.png");
+        return getDirectionalAnimatedSprite("/sprites/animated_projectile.png", 12);
     }
 
     /**
@@ -73,30 +73,41 @@ public final class JBubbleBobbleSprites
 
     /**
      * Creates a map with a sprite for each direction for the player.
+     * @param index The index of the player in the game.
      * @return The map.
      */
-    @SuppressWarnings("magicnumber")
-    public Map<Direction, Sprite> getPlayerSprite()
+    @SuppressWarnings("magicnumber") // number of frames
+    public Map<Direction, Sprite> getPlayerSprite(int index)
     {
-        return getDirectionalAnimatedSprite("/sprites/animated_player.png", 7);
+        switch(index)
+        {
+            case 0:
+                return getDirectionalAnimatedSprite("/sprites/animated_player.png", 7);
+            case 1:
+                return getDirectionalAnimatedSprite("/sprites/animated_player_two.png", 7);
+            default: return getDirectionalAnimatedSprite("/sprites/animated_player.png", 7);
+        }
     }
 
     /**
      * Creates a map with a sprite for each direction for the enemies.
      * @return The map.
      */
+    @SuppressWarnings("magicnumber") // number of frames
     public Map<Direction, Sprite> getEnemySprite()
     {
-        return getDirectionalSprite("/sprites/enemy.png");
+        return getDirectionalAnimatedSprite("/sprites/animated_zen.png", 4);
     }
 
     /**
      * Creates a map with a sprite for each direction for captured enemies.
      * @return The map.
      */
+    @SuppressWarnings("magicnumber") // number of frames
     public Map<Direction, Sprite> getCapturedEnemySprite()
     {
-        return getDirectionalSprite("/sprites/Bubble_Containing_Zen.png");
+        // TODO: Fix Frames for an animation of bubble.
+        return getDirectionalAnimatedSprite("/sprites/animated_zen_captured.png", 12);
     }
 
     /**
@@ -104,6 +115,7 @@ public final class JBubbleBobbleSprites
      * @param resource The resource to cut the sprites from.
      * @return The map with sprites for all directions.
      */
+    @SuppressWarnings("unused") // We might want to use this in the future for non animated sprites.
     private Map<Direction, Sprite> getDirectionalSprite(String resource)
     {
         Sprite compoundSprites = loadSprite(resource);
