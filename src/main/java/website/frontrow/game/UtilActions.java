@@ -3,7 +3,6 @@ package website.frontrow.game;
 import website.frontrow.logger.DumpLog;
 import website.frontrow.logger.Log;
 import website.frontrow.music.MusicPlayer;
-import website.frontrow.util.keymap.KeyAction;
 import website.frontrow.util.keymap.SingleKeyAction;
 
 /**

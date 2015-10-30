@@ -11,6 +11,11 @@ import website.frontrow.util.keymap.KeyRegistry;
  */
 public class UtilRebindPanel extends JPanel
 {
+    /**
+     * Create an UtilRebindPanel.
+     * @param registry Registry to register to.
+     * @param actions Actions to rebind.
+     */
     public UtilRebindPanel(KeyRegistry registry, UtilActions actions)
     {
         this.setLayout(new GridLayout(0, 2));

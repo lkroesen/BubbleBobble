@@ -16,24 +16,30 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 /**
- * Test the SingleKeyRebindButton
+ * Test the SingleKeyRebindButton.
  */
 @RunWith(MockitoJUnitRunner.class)
 public class SingleKeyRebindButtonTest
 {
     @Mock
-    KeyRegistry registry;
+    private KeyRegistry registry;
 
-    SingleKeyAction action = new SingleKeyAction(null, true);
+    private SingleKeyAction action = new SingleKeyAction(null, true);
 
-    SingleKeyRebindButton button;
+    private SingleKeyRebindButton button;
 
+    /**
+     * Prepare the button!
+     */
     @Before
     public void prepare()
     {
         button = new SingleKeyRebindButton(registry, action);
     }
 
+    /**
+     * Test whether pressing a key without selecting does nothing.
+     */
     @Test
     public void testPressKeyWithoutSelecting()
     {
@@ -41,6 +47,9 @@ public class SingleKeyRebindButtonTest
         verifyNoMoreInteractions(registry);
     }
 
+    /**
+     * Test whether pressing a key (other than esc) stops rebinding.
+     */
     @Test
     public void testPressKeyWithSelecting()
     {
@@ -49,6 +58,9 @@ public class SingleKeyRebindButtonTest
         verify(registry).register(any(), eq(action));
     }
 
+    /**
+     * Test whether esc cancels rebinding.
+     */
     @Test
     public void testPressEscWithSelecting()
     {
@@ -58,6 +70,9 @@ public class SingleKeyRebindButtonTest
         assertFalse(button.isSelected());
     }
 
+    /**
+     * Test whether keyReleased really does do nothing.
+     */
     @Test
     public void testKeyReleasedDoesNothing()
     {
@@ -67,6 +82,9 @@ public class SingleKeyRebindButtonTest
         assertTrue(button.isSelected());
     }
 
+    /**
+     * Test whether keyTyped really does do nothing.
+     */
     @Test
     public void testKeyTypedDoesNothing()
     {

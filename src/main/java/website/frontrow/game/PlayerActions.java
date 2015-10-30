@@ -2,7 +2,6 @@ package website.frontrow.game;
 
 import website.frontrow.board.Player;
 import website.frontrow.board.UnitFactory;
-import website.frontrow.util.keymap.KeyAction;
 import website.frontrow.util.keymap.SingleKeyAction;
 
 /**

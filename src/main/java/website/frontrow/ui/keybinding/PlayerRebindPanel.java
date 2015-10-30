@@ -11,6 +11,11 @@ import website.frontrow.util.keymap.KeyRegistry;
  */
 public class PlayerRebindPanel extends JPanel
 {
+    /**
+     * Create a rebind panel for a player.
+     * @param registry Registry to register key changes to.
+     * @param playerActions The actions to register.
+     */
     public PlayerRebindPanel(KeyRegistry registry, PlayerActions playerActions)
     {
         this.setLayout(new GridLayout(0, 2));

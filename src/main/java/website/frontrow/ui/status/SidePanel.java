@@ -25,7 +25,7 @@ public class SidePanel
     /**
      * Creates a sidepanel to contain the score, buttons and other statistics.
      * @param game The game to display the statistics of.
-     * @param rebindFrame
+     * @param rebindFrame keybinding menu to show.
      */
     public SidePanel(Game game, RebindFrame rebindFrame)
     {
@@ -44,6 +44,7 @@ public class SidePanel
     /**
      * Create the button mappings for this sidepanel.
      * @param game The current game
+     * @param rebindFrame The key binding menu to show.
      * @return The button mappings.
      */
     public Map<String, Action> createButtonMappings(Game game, RebindFrame rebindFrame)

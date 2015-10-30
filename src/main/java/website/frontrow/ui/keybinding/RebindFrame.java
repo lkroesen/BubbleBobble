@@ -16,31 +16,38 @@ import website.frontrow.util.keymap.KeyRegistry;
  */
 public class RebindFrame extends JFrame
 {
+
+    private static final int DEFAULT_WIDTH  = 300;
+    private static final int DEFAULT_HEIGHT = 400;
     /**
      * Create north aligned wrapper panel.
      * @param registry Registry to register to.
      * @param playerActionsList PlayerActions to add rebinding for.
      * @param utilActions UtilityActions to add rebinding for.
      */
-    public RebindFrame(KeyRegistry registry, List<PlayerActions> playerActionsList, UtilActions utilActions)
+    public RebindFrame(KeyRegistry registry,
+                       List<PlayerActions> playerActionsList, UtilActions utilActions)
     {
         this.setLayout(new BorderLayout());
-        this.setSize(300, 500);
+        this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         JTabbedPane tabbedPane = new JTabbedPane();
         ListIterator<PlayerActions> playerActionsListIterator = playerActionsList.listIterator();
         while (playerActionsListIterator.hasNext())
         {
-            tabbedPane.addTab("Player " + playerActionsListIterator.nextIndex(),
-                    createNorthAlignedWrapperPanel(
-                            new PlayerRebindPanel(registry, playerActionsListIterator.next()))
-            );
+            JPanel playerPanel = createNorthAlignedWrapperPanel(
+                    new PlayerRebindPanel(registry, playerActionsListIterator.next()));
+            tabbedPane.addTab("Player " + (playerActionsListIterator.nextIndex()),
+                    playerPanel);
         }
-        tabbedPane.addTab("Utilities",
-                createNorthAlignedWrapperPanel(
-                        new UtilRebindPanel(registry, utilActions)));
+        JPanel utilityPanel =
+                createNorthAlignedWrapperPanel(new UtilRebindPanel(registry, utilActions));
+        tabbedPane.addTab("Utilities", utilityPanel);
+
         add(tabbedPane, BorderLayout.CENTER);
     }
 
+    // PMD is being weird, as this method is being used in the method above.
+    @SuppressWarnings("unused")
     private JPanel createNorthAlignedWrapperPanel(Component component)
     {
         JPanel result = new JPanel(new BorderLayout());

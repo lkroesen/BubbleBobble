@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import website.frontrow.ui.keybinding.PlayerRebindPanel;
 import website.frontrow.ui.keybinding.RebindFrame;
 import website.frontrow.util.keymap.KeyRegistry;
 import website.frontrow.util.keymap.KeyRegistryHandler;

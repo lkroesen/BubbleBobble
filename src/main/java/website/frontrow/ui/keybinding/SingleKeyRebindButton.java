@@ -33,7 +33,7 @@ public class SingleKeyRebindButton extends JToggleButton implements KeyListener
     {
         if(key instanceof KeyCodeKey
            &&
-           ((KeyCodeKey)key).getKeyCode().equals(KeyEvent.VK_ESCAPE))
+           ((KeyCodeKey) key).getKeyCode().equals(KeyEvent.VK_ESCAPE))
         {
             setSelected(false);
         }
